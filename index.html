@@ -12,14 +12,10 @@
     document.addEventListener('DOMContentLoaded', function() {
         const spans = document.querySelectorAll('section > span');
         let currentImageIndex = 0;
-        const totalImages = 15; 
+        const totalImages = 15;
 
-        // Apply flickering effects
         spans.forEach(span => {
-            // Remove existing flicker classes
             span.classList.remove('flicker-i', 'flicker-t');
-
-            // Randomly add either flicker-i or flicker-t
             if (Math.random() < 0.5) {
                 span.classList.add('flicker-i');
             } else {
@@ -27,12 +23,10 @@
             }
         });
 
-        // Function to update image sources
         function updateImages() {
             spans.forEach((span, index) => {
                 const img = span.querySelector('img');
                 if (img) {
-                    // Calculate image index with wraparound
                     const imgIndex = (currentImageIndex + index) % totalImages;
                     img.src = `./images/${imgIndex}.jpg`;
                 }
@@ -41,10 +35,7 @@
             currentImageIndex = (currentImageIndex + 1) % totalImages;
         }
 
-        // Set initial image sources
         updateImages();
-
-        // Change images every 2 seconds
         setInterval(updateImages, 2000);
     });
 </script>
@@ -110,6 +101,14 @@
     <span class="flicker-i"><img src="" alt=""></span>
     <span class="flicker-t"><img src="" alt=""></span>
     <span class="flicker-i"><img src="" alt=""></span>
+    <span class="flicker-t"><img src="" alt=""></span>
+    <span class="flicker-i"><img src="" alt=""></span>
+    <span class="flicker-t"><img src="" alt=""></span>
+    <span class="flicker-i"><img src="" alt=""></span>
+    <div class="bg"></div>
+    <div class="logo">
+        <img src="images/logo.png" alt="">
+    </div>
 </section>
 </body>
 </html>
