@@ -12,6 +12,6 @@ defineProps({
 
 <template>
     <GuestLayout :meta="{title: 'asdasd'}">
-        {{ phpVersion }}
+        hhhhhhhhh
     </GuestLayout>
 </template>
