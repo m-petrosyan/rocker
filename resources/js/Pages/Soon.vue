@@ -5,7 +5,7 @@ import GuestLayout from '@/Layouts/GuestLayout.vue';
 // Number of divs to display
 const totalDivs = 70;
 // Total number of images available
-const totalImages = 15;
+const totalImages = 21;
 // Interval in milliseconds for image changes
 const changeInterval = 2000;
 
