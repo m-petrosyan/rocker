@@ -1,4 +1,5 @@
 import '../css/app.css';
+import '../css/main.scss';
 import './bootstrap';
 
 import { createInertiaApp } from '@inertiajs/vue3';
@@ -7,6 +8,12 @@ import { createApp, h } from 'vue';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js');
+    });
+}
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
