@@ -32,7 +32,7 @@
         margin: 0 0 0.5rem 0;
         letter-spacing: 0;
       ">
-                Установить Rocker.am
+                Install Rocker.am events
             </p>
             <div style="
         display: flex;
@@ -51,7 +51,7 @@
             cursor: pointer;
           "
                 >
-                    Позже
+                    Later
                 </button>
                 <button
                     @click="install"
@@ -66,7 +66,7 @@
             cursor: pointer;
           "
                 >
-                    Установить
+                    Install
                 </button>
             </div>
         </div>
