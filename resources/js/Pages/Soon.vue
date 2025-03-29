@@ -102,6 +102,9 @@ section {
 
 section div {
     width: 10%;
+    @media (max-width: 1200px) {
+        width: 20%;
+    }
 }
 
 section div img {
