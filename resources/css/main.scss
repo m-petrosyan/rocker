@@ -1,0 +1,30 @@
+@use "vars.css";
+
+@font-face {
+    font-family: 'Helvetica';
+    src: url('/fonts/Helvetica.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Helvetica';
+    src: url('/fonts/Helvetica-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+* {
+    font-family: 'Helvetica', Arial, sans-serif;
+
+}
+
+p {
+
+}
+
+a {
+    &:hover {
+        opacity: 0.7;
+    }
+}
