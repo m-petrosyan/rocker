@@ -23,7 +23,7 @@ export default defineConfig({
             includeAssets: ['icon-192.png', 'icon-512.png'],
             manifest: {
                 name: 'Rocker.am',
-                short_name: 'ZheshtEvents',
+                short_name: 'Rocker events',
                 start_url: '/',
                 display: 'standalone',
                 background_color: '#000000',

@@ -1,6 +1,6 @@
 {
   "name": "Rocker.am",
-  "short_name": "ZheshtEvents",
+  "short_name": "Rocker events",
   "description": "Metal upcoming events",
   "start_url": "/",
   "display": "standalone",
