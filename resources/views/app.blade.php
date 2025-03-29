@@ -3,13 +3,20 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Scripts -->
+    <meta name="theme-color" content="#000000">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="apple-touch-icon" href="/icon-192.png">
+
     @routes
-    @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
+    @vite([
+        'resources/js/app.js',
+        "resources/js/Pages/{$page['component']}.vue"
+    ])
     @inertiaHead
-    <link rel="manifest" href="/manifest.webmanifest">  <!-- или /manifest.json -->
 </head>
-<body class="font-sans antialiased">
+<body class="font-sans antialiased bg-gray-900 text-white">
 @inertia
 </body>
 </html>

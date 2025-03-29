@@ -1,32 +1,73 @@
 <template>
-    <div v-if="showInstallPrompt" class="fixed bottom-4 right-4 z-50">
-        <div class="bg-gray-900 border border-gray-700 rounded-lg shadow-xl p-4 max-w-xs">
-            <div class="flex items-start">
-                <img
-                    src="/icon-192.png"
-                    class="w-12 h-12 mr-3 rounded"
-                    alt="App icon"
+    <div
+        v-if="showPrompt"
+        style="
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      z-index: 50;
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      display: flex;
+      gap: 0.75rem;
+      max-width: 20rem;
+    "
+    >
+        <img
+            src="/icons/icon-192.png"
+            style="
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 0.25rem;
+      "
+            alt="Rocker.am"
+        >
+        <div>
+            <p style="
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: white;
+        margin: 0 0 0.5rem 0;
+        letter-spacing: 0;
+      ">
+                Установить Rocker.am
+            </p>
+            <div style="
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.5rem;
+      ">
+                <button
+                    @click="dismiss"
+                    style="
+            color: #999;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            letter-spacing: 0;
+            background: none;
+            border: none;
+            cursor: pointer;
+          "
                 >
-                <div>
-                    <h3 class="font-bold text-white">Установить Rocker.am</h3>
-                    <p class="text-gray-400 text-sm mt-1">
-                        Добавьте приложение на главный экран для быстрого доступа
-                    </p>
-                    <div class="flex justify-end space-x-2 mt-3">
-                        <button
-                            @click="dismissPrompt"
-                            class="px-3 py-1 text-gray-400 hover:text-white text-sm"
-                        >
-                            Позже
-                        </button>
-                        <button
-                            @click="installApp"
-                            class="px-3 py-1 bg-red-600 hover:bg-red-700 rounded text-sm"
-                        >
-                            Установить
-                        </button>
-                    </div>
-                </div>
+                    Позже
+                </button>
+                <button
+                    @click="install"
+                    style="
+            background: #dc2626;
+            color: white;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            letter-spacing: 0;
+            border: none;
+            cursor: pointer;
+          "
+                >
+                    Установить
+                </button>
             </div>
         </div>
     </div>
@@ -34,51 +75,49 @@
 
 <script setup>
 import { onMounted, ref } from 'vue';
+import { router } from '@inertiajs/vue3'; // Импортируем router
 
-const showInstallPrompt = ref(false);
-let deferredPrompt = null;
+const showPrompt = ref(false);
+let deferredEvent = null;
 
+const isInstalled = () => {
+    return window.matchMedia('(display-mode: standalone)').matches ||
+        window.navigator.standalone;
+};
 
-// Проверяем, можно ли показать промпт
 onMounted(() => {
+    if (isInstalled() || localStorage.getItem('pwaDismissed')) return;
+
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
-        deferredPrompt = e;
+        deferredEvent = e;
+        setTimeout(() => showPrompt.value = true, 10000);
+    });
 
-        // Показываем только если приложение еще не установлено
-        if (!isRunningAsPWA()) {
-            // Задержка для лучшего UX (чтобы не показывать сразу при загрузке)
-            setTimeout(() => {
-                showInstallPrompt.value = true;
-            }, 10000); // 10 секунд задержки
-        }
+    // Обработчик успешной установки
+    window.addEventListener('appinstalled', () => {
+        router.visit('/events'); // Перенаправляем на /events
     });
 });
 
-// Проверка, установлено ли приложение
-const isRunningAsPWA = () => {
-    return window.matchMedia('(display-mode: standalone)').matches ||
-        window.navigator.standalone ||
-        document.referrer.includes('android-app://');
-};
-
-// Установка приложения
-const installApp = async () => {
-    if (deferredPrompt) {
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        if (outcome === 'accepted') {
-            console.log('User accepted install');
-        }
-        deferredPrompt = null;
-        showInstallPrompt.value = false;
+const install = async () => {
+    if (!deferredEvent) return;
+    deferredEvent.prompt();
+    const { outcome } = await deferredEvent.userChoice;
+    if (outcome === 'accepted') {
+        localStorage.setItem('pwaInstalled', 'true');
+        router.visit('/events'); // Перенаправляем сразу после установки
     }
+    close();
 };
 
-// Скрытие промпта
-const dismissPrompt = () => {
-    showInstallPrompt.value = false;
-    // Можно сохранить в localStorage, чтобы не показывать снова
-    localStorage.setItem('pwaPromptDismissed', 'true');
+const dismiss = () => {
+    localStorage.setItem('pwaDismissed', 'true');
+    close();
+};
+
+const close = () => {
+    showPrompt.value = false;
+    deferredEvent = null;
 };
 </script>
