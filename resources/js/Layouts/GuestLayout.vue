@@ -1,11 +1,12 @@
 <script setup>
 import { Head } from '@inertiajs/vue3';
-import MainNavbar from '@/Components/Nav/MainNavbar.vue';
+import PWAinstall from '@/Components/PWAinstall.vue';
 
 defineProps({
     meta: {
         type: Object,
-        required: true
+        required: false,
+        default: 'rocker'
     }
 });
 </script>
@@ -15,10 +16,11 @@ defineProps({
     <div
         class="min-h-screen  bg-black text-white pt-6 sm:pt-0"
     >
-        <MainNavbar />
+        <!--        <MainNavbar />-->
         <div
         >
             <slot />
+            <PWAinstall />
         </div>
     </div>
 </template>
