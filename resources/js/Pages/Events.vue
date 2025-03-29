@@ -1,7 +1,10 @@
 <script setup>
 
+import GuestLayout from '@/Layouts/GuestLayout.vue';
 </script>
 
 <template>
-    Events page Hello
+    <GuestLayout>
+        Events page Hello
+    </GuestLayout>
 </template>
