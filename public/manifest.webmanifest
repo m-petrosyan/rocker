@@ -2,7 +2,7 @@
   "name": "Rocker.am",
   "short_name": "Rocker events",
   "description": "Metal upcoming events",
-  "start_url": "/",
+  "start_url": "/events",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",

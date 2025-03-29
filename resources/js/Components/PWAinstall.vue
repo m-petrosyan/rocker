@@ -93,11 +93,6 @@ onMounted(() => {
         deferredEvent = e;
         setTimeout(() => showPrompt.value = true, 10000);
     });
-
-    // Обработчик успешной установки
-    window.addEventListener('appinstalled', () => {
-        router.visit('/events'); // Перенаправляем на /events
-    });
 });
 
 const install = async () => {
