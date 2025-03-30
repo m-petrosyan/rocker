@@ -1,10 +1,16 @@
 <script setup>
-
 import GuestLayout from '@/Layouts/GuestLayout.vue';
+
+defineProps({
+    events: {
+        type: Array,
+        default: () => []
+    }
+});
 </script>
 
 <template>
     <GuestLayout>
-        Events page Hello
+        {{ events }}
     </GuestLayout>
 </template>
