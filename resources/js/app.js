@@ -29,7 +29,7 @@ createInertiaApp({
 
         app.use(VueGtag, {
             property: {
-                id: 'G-W17H1ZL9FX',
+                id: 'G-FJN078W8B8',
                 params: {
                     app_name: appName,
                     app_version: '1.0.0'
