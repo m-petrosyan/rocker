@@ -10,7 +10,7 @@ class EventController extends Controller
 {
     public function index(): Response
     {
-        $response = Http::get('https://metal-events-bot.mpetrosyan.com/api/event');
+        $response = Http::get('https://bot.rocker.am/api/event');
 
         return Inertia::render('Events', [
             'events' => $response->json(),

@@ -58,7 +58,6 @@ onBeforeUnmount(() => {
 });
 </script>
 
-
 <template>
     <GuestLayout>
         <section>
@@ -76,7 +75,6 @@ onBeforeUnmount(() => {
         </section>
     </GuestLayout>
 </template>
-
 
 <style scoped>
 :root {

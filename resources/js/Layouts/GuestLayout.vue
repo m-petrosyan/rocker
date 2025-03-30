@@ -1,6 +1,8 @@
 <script setup>
-import { Head } from '@inertiajs/vue3';
+import { Head, usePage } from '@inertiajs/vue3';
 import PWAinstall from '@/Components/PWAinstall.vue';
+import MainNavbar from '@/Components/Nav/MainNavbar.vue';
+
 
 defineProps({
     meta: {
@@ -9,6 +11,8 @@ defineProps({
         default: 'rocker'
     }
 });
+
+const page = usePage();
 </script>
 
 <template>
@@ -16,10 +20,12 @@ defineProps({
     <div
         class="min-h-screen  bg-black text-white pt-6 sm:pt-0"
     >
-        <!--        <MainNavbar />-->
+        <MainNavbar v-if="page.url !== '/'" />
         <div
         >
-            <slot />
+            <main class="my-20">
+                <slot />
+            </main>
             <PWAinstall />
         </div>
     </div>
