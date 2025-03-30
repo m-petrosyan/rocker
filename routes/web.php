@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -8,9 +9,7 @@ Route::get('/', function () {
     return Inertia::render('Soon');
 })->name('home');
 
-Route::get('/events', function () {
-    return Inertia::render('Events');
-})->name('events');
+Route::get('/events', [EventController::class, 'index'])->name('events');
 
 
 Route::get('/dashboard', function () {
