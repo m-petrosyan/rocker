@@ -16,7 +16,7 @@ defineProps({
             <div class="flex flex-col gap-y-10">
                 <div v-for="event in events.data" :key="event.id" class="mb-2 h-[600px]">
                     <div class="relative h-full">
-                        <img :src="event.poster" :alt="event.title" class="w-full h-full object-cover object-center" />
+                        <img :src="event.poster" :alt="event.title" class="w-full h-full object-fill object-center" />
                         <div class="absolute bottom-0 w-full h-52 bg-gradient-to-t from-black to-transparent">
                             <h3 class="text-2xl text-center pt-32">{{ event.title }} </h3>
                             <p class="text-center text-gray-300">{{ event.location }}</p>
