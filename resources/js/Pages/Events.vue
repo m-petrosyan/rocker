@@ -11,6 +11,7 @@ defineProps({
 
 <template>
     <GuestLayout :meta="{title: 'Events'}">
+        <p>{{ this.$isPWA ? 'pwa' : 'web' }}</p>
         <div class="flex flex-col max-w-screen-sm mx-auto">
             <h1 class="text-2xl font-bold">Events</h1>
             <div class="flex flex-col gap-y-10">
