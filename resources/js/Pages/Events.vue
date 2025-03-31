@@ -11,14 +11,15 @@ defineProps({
 
 <template>
     <GuestLayout :meta="{title: 'Events'}">
-        <p>{{ $isPWA ? 'pwa' : 'web' }}</p>
         <div class="flex flex-col max-w-screen-sm mx-auto">
             <h1 class="text-2xl font-bold">Events</h1>
             <div class="flex flex-col gap-y-10">
                 <div v-for="event in events.data" :key="event.id" class="mb-2 h-[600px]">
-                    <div class="relative h-full">
-                        <img :src="event.poster" :alt="event.title" class="w-full h-full object-fill object-center" />
-                        <div class="absolute bottom-0 w-full h-52 bg-gradient-to-t from-black to-transparent">
+                    <div class="relative h-full" :style="{ backgroundImage: `url(${event.poster})`}">
+                        <div class="absolute inset-0 backdrop-blur-md z-0"></div>
+                        <img :src="event.poster" :alt="event.title"
+                             class="absolute w-full h-full object-contain object-center z-10" />
+                        <div class="absolute z-20 bottom-0 w-full h-52 bg-gradient-to-t from-black to-transparent">
                             <h3 class="text-2xl text-center pt-32">{{ event.title }} </h3>
                             <p class="text-center text-gray-300">{{ event.location }}</p>
                             <p class="text-center"><b>{{ event.start_date }}</b> <span>{{ event.start_time }}</span></p>

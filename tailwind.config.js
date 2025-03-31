@@ -16,7 +16,9 @@ export default {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans]
             },
             colors: {
-                gray: 'var(--gray)'
+                gray: 'var(--gray)',
+                orange: '#FF5722',
+                pwaNavbg: 'rgba(50,62,74,0.58)'
             },
             fontSize: {
                 'sm': '13px'

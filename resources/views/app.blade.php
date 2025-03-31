@@ -7,8 +7,8 @@
 
     <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.webmanifest">
-    <link rel="apple-touch-icon" href="/icon-192.png">
-
+    <link rel="apple-touch-icon" href="/favicon-apple.png">
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     @routes
     @vite([
         'resources/js/app.js',

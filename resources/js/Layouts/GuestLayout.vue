@@ -2,6 +2,8 @@
 import { Head, usePage } from '@inertiajs/vue3';
 import PWAinstall from '@/Components/PWAinstall.vue';
 import MainNavbar from '@/Components/Nav/MainNavbar.vue';
+import Footer from '@/Components/Footer/Footer.vue';
+import PwaNavbar from '@/Components/Nav/PwaNavbar.vue';
 
 
 defineProps({
@@ -20,7 +22,8 @@ const page = usePage();
     <div
         class="min-h-screen  bg-black text-white pt-6 sm:pt-0"
     >
-        <MainNavbar v-if="page.url !== '/'" />
+        <MainNavbar v-if="page.url !== '/' && !true " />
+        <PwaNavbar v-else-if="page.url !== '/'" />
         <div
         >
             <main class="my-20">
@@ -29,4 +32,5 @@ const page = usePage();
             <PWAinstall />
         </div>
     </div>
+    <Footer />
 </template>

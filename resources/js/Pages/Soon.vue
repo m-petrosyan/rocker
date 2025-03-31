@@ -70,7 +70,7 @@ onBeforeUnmount(() => {
             </div>
             <div class="bg"></div>
             <div class="logo">
-                <img src="/images/logo.png" />
+                <img src="/images/logocs.png" />
             </div>
         </section>
     </GuestLayout>

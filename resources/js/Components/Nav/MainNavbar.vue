@@ -3,11 +3,26 @@ import { Link } from '@inertiajs/vue3';
 </script>
 
 <template>
-    <div class="flex gap-x-2 mx-auto w-fit pt-5 text-gray text-sm tracking-widest uppercase">
-        <p class=" ">Home</p>
+    <div class="flex items-center gap-x-2 mx-auto w-fit pt-5 text-gray text-sm tracking-widest uppercase">
         <Link
             :href="route('home')">
-            Menu
+            Events
+        </Link>
+        <Link
+            :href="route('home')">
+            Blog
+        </Link>
+        <Link
+            :href="route('home')">
+            <img src="/images/logo.png" alt="logo" class="w-10 logo" />
+        </Link>
+        <Link
+            :href="route('home')">
+            Gallery
+        </Link>
+        <Link
+            :href="route('home')">
+            Bands
         </Link>
 
         <Link
@@ -19,3 +34,6 @@ import { Link } from '@inertiajs/vue3';
         </Link>
     </div>
 </template>
+<style>
+
+</style>
