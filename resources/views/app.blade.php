@@ -12,7 +12,7 @@
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
-
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.png') }}" />
     @routes
     @vite([
         'resources/js/app.js',
