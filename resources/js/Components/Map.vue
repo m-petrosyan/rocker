@@ -1,13 +1,13 @@
 <template>
     <GoogleMap
-        v-if="cordinates"
+        v-if="center"
         api-key="AIzaSyCovr1rcKSduU9SLpe_IX-EzuF-_sVVAlY"
-        :center="cordinates"
+        :center="center"
         :zoom="15"
         :styles="darkTheme"
         style="width: 100%; height: 500px"
     >
-        <Marker :options="{ position: cordinates }" />
+        <Marker :options="{ position: center }" />
     </GoogleMap>
 </template>
 
@@ -16,7 +16,7 @@ import { GoogleMap, Marker } from 'vue3-google-map';
 
 
 const props = defineProps({
-    cordinates: {
+    center: {
         type: Object,
         required: true
     }
