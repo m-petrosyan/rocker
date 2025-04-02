@@ -12,8 +12,23 @@
 
 <script setup>
 import { GoogleMap, Marker } from 'vue3-google-map';
+import { computed } from 'vue';
 
-const center = { lat: 40.1895131, lng: 44.521072 };
+// const center2 = { lat: 40.1895131, lng: 44.521072 };
+
+const props = defineProps({
+    cordinates: {
+        type: Object,
+        required: true
+    }
+});
+
+const center = computed(() => {
+    return {
+        lat: props.cordinates.latitude,
+        lng: props.cordinates.longitude
+    };
+});
 
 const darkTheme = [
     { elementType: 'geometry', stylers: [{ color: '#212121' }] },
