@@ -1,5 +1,6 @@
 <template>
     <GoogleMap
+        v-if="cordinates"
         api-key="AIzaSyCovr1rcKSduU9SLpe_IX-EzuF-_sVVAlY"
         :center="center"
         :zoom="15"
@@ -12,11 +13,22 @@
 
 <script setup>
 import { GoogleMap, Marker } from 'vue3-google-map';
+import { computed } from 'vue';
 
-// Define center coordinates
-const center = { lat: 40.689247, lng: -74.044502 };
+const props = defineProps({
+    cordinates: {
+        type: Object,
+        required: true
+    }
+});
 
-// Hardcoded dark theme styles
+const center = computed(() => {
+    return {
+        lat: props.cordinates.latitude,
+        lng: props.cordinates.longitude
+    };
+});
+
 const darkTheme = [
     { elementType: 'geometry', stylers: [{ color: '#212121' }] },
     { elementType: 'labels.icon', stylers: [{ visibility: 'off' }] },
