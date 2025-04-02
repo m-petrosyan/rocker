@@ -13,7 +13,6 @@
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.png') }}" />
-    {{--    <script src="https://unpkg.com/vue3-google-map"></script>--}}
     @routes
     @vite([
         'resources/js/app.js',

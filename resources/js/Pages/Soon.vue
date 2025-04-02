@@ -1,7 +1,6 @@
 <script setup>
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import PWAinstall from '@/Components/PWAinstall.vue';
-import Map from '@/Components/Map.vue';
 
 // Number of divs to display
 const totalDivs = 70;
@@ -60,8 +59,6 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-
-    <Map />
     <section>
         <div
             v-for="(div, index) in divs"
