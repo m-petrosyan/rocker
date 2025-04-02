@@ -25,8 +25,8 @@ const props = defineProps({
 });
 
 const center = {
-    lat: props.cordinates?.latitude ?? 40.689247,
-    lng: props.cordinates?.longitude ?? -74.044502
+    lat: 40.689247,
+    lng: -74.044502
 };
 
 const darkTheme = [
