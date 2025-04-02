@@ -42,11 +42,20 @@
             padding: 10px 20px;
             font-size: 16px;
             color: #ffffff !important;
-            background-color: #ffc107;
+            background-color: #ff5722;
             text-decoration: none !important;
             border-radius: 5px;
         }
 
+        .code {
+            padding-top: 5px;
+        }
+
+        .code strong {
+            background-color: #201f2d;
+            padding: 10px;
+            margin-top: 5px;
+        }
 
         .footer {
             text-align: center;
@@ -69,7 +78,7 @@
             <p>Please verify your email address by clicking the button below:</p>
             <a href="{{$url}}" class="button">Verify Email</a>
             <p>Alternatively, use the following verification code:</p>
-            <p><strong>{{$code}}</strong></p>
+            <p class="code"><strong>{{$code}}</strong></p>
             <p>If you did not sign up for this course, you can safely ignore this email.</p>
         </td>
     </tr>

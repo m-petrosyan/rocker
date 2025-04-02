@@ -17,6 +17,7 @@ export default {
             },
             colors: {
                 gray: 'var(--gray)',
+                darkgray: '#666666',
                 orange: '#FF5722',
                 pwaNavbg: 'rgba(50,62,74,0.58)'
             },
