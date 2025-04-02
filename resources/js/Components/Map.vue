@@ -13,7 +13,7 @@
 <script setup>
 import { GoogleMap, Marker } from 'vue3-google-map';
 
-const center = { lat: 40.689247, lng: -74.044502 };
+const center = { lat: 40.1895131, lng: 44.521072 };
 
 const darkTheme = [
     { elementType: 'geometry', stylers: [{ color: '#212121' }] },
