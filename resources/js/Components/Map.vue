@@ -16,11 +16,13 @@ import { GoogleMap, Marker } from 'vue3-google-map';
 
 
 const props = defineProps({
-    center: {
+    cordinates: {
         type: Object,
         required: true
     }
 });
+
+const center = { lng: 44.521072, lat: 40.1895131 };
 
 const darkTheme = [
     { elementType: 'geometry', stylers: [{ color: '#212121' }] },

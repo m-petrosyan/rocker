@@ -31,7 +31,9 @@ defineProps({
             </div>
         </div>
         <pre class="text-pretty">{{ event.content }}</pre>
-        <Map :center="{lng: event.cordinates.longitude, lat: event.cordinates.latitude}" />
+        {{ event.cordinates.longitude }}
+        {{ event.cordinates.latitude }}
+        <Map :cordinates="{lng: event.cordinates.longitude, lat: event.cordinates.latitude}" />
         <!--        <div-->
         <!--            class="absolute inset-0 bg-orange text-xl w-28 h-28 z-20 flex flex-col justify-center items-center">-->
         <!--            <p class="text-4xl font-bold">-->
