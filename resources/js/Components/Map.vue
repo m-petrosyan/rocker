@@ -1,6 +1,5 @@
 <template>
     <GoogleMap
-        v-if="center.lat && center.lng"
         api-key="AIzaSyCovr1rcKSduU9SLpe_IX-EzuF-_sVVAlY"
         :center="center"
         :zoom="15"
