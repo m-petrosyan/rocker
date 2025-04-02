@@ -31,8 +31,10 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
+        "@fawmi/vue-google-maps": "^0.9.79",
         "moment-timezone": "^0.5.48",
         "vite-plugin-pwa": "^0.21.2",
-        "vue-gtag-next": "^1.14.0"
+        "vue-gtag-next": "^1.14.0",
+        "vue3-google-map": "^0.21.1"
     }
 }

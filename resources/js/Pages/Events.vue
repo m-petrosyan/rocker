@@ -9,6 +9,7 @@ defineProps({
         default: () => []
     }
 });
+
 </script>
 
 <template>
