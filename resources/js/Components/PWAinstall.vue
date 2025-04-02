@@ -75,7 +75,6 @@
 
 <script setup>
 import { onMounted, ref } from 'vue';
-import { router } from '@inertiajs/vue3'; // Импортируем router
 
 const showPrompt = ref(false);
 let deferredEvent = null;
@@ -101,7 +100,7 @@ const install = async () => {
     const { outcome } = await deferredEvent.userChoice;
     if (outcome === 'accepted') {
         localStorage.setItem('pwaInstalled', 'true');
-        router.visit('/events'); // Перенаправляем сразу после установки
+        // router.visit('/events'); // Перенаправляем сразу после установки
     }
     close();
 };
