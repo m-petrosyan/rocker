@@ -24,7 +24,7 @@ const page = usePage();
     >
         <slot name="header" />
         <MainNavbar v-if="page.url !== '/' && !$isPWA" />
-        <main class="my-20">
+        <main class="my-20 max-w-screen-sm md:max-w-screen-xl mx-auto">
             <slot />
         </main>
         <PWAinstall />

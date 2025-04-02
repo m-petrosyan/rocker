@@ -1,7 +1,7 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import moment from 'moment-timezone';
-
+import NavLink from '@/Components/NavLink.vue';
 
 defineProps({
     events: {
@@ -9,18 +9,18 @@ defineProps({
         default: () => []
     }
 });
-
 </script>
 
 <template>
     <GuestLayout :meta="{title: 'Events'}">
-        <div class="flex flex-col max-w-screen-sm md:max-w-screen-xl mx-auto">
+        <div class="flex flex-col mx-auto">
             <div class="mb-10 text-gray">
                 <h1 class="text-xl font-bold text-center mb-5">Events</h1>
             </div>
             <div class="grid  md:grid-cols-2 lg:grid-cols-4 md:grid-rows-6 md:gap-4 gap-y-10">
                 <div v-for="event in events.data" :key="event.id" class="mb-2 h-[600px] md:h-[400px]">
-                    <div class="relative h-full" :style="{ backgroundImage: `url(${event.poster})`}">
+                    <NavLink :href="route('events.show', event.id)" class="relative h-full w-full"
+                             :style="{ backgroundImage: `url(${event.poster})`}">
                         <div class="absolute inset-0 backdrop-blur-md z-0 brightness-50"></div>
                         <img :src="event.poster" :alt="event.title"
                              class="absolute w-full h-full object-contain object-center z-10" />
@@ -36,7 +36,7 @@ defineProps({
                             <h3 class="text-2xl text-center pt-20">{{ event.title }} </h3>
                             <p class="text-center text-gray-300">{{ event.location }}</p>
                         </div>
-                    </div>
+                    </NavLink>
                 </div>
             </div>
         </div>

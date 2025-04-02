@@ -12,8 +12,17 @@ class EventController extends Controller
     {
         $response = Http::get('https://bot.rocker.am/api/event');
 
-        return Inertia::render('Events', [
+        return Inertia::render('Events/Events', [
             'events' => $response->json(),
+        ]);
+    }
+
+    public function show($eventId): Response
+    {
+        $response = Http::get('https://bot.rocker.am/api/event/'.$eventId);
+
+        return Inertia::render('Events/Event', [
+            'event' => $response->json()['data'],
         ]);
     }
 }

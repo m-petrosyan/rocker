@@ -9,7 +9,7 @@ Route::get('/', function () {
     return Inertia::render('Soon');
 })->name('home');
 
-Route::get('/events', [EventController::class, 'index'])->name('events');
+Route::resource('/events', EventController::class)->only('index', 'show');
 
 
 Route::get('/dashboard', function () {
