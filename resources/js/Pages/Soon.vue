@@ -1,6 +1,6 @@
 <script setup>
 import { onBeforeUnmount, onMounted, ref } from 'vue';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
+import PWAinstall from '@/Components/PWAinstall.vue';
 
 // Number of divs to display
 const totalDivs = 70;
@@ -59,21 +59,20 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <GuestLayout>
-        <section>
-            <div
-                v-for="(div, index) in divs"
-                :key="index"
-                :class="div.flickerClass"
-            >
-                <img :src="div.imageSrc" :alt="`Image ${div.currentImageIndex}`">
-            </div>
-            <div class="bg"></div>
-            <div class="logo">
-                <img src="/images/logocs.png" />
-            </div>
-        </section>
-    </GuestLayout>
+    <section>
+        <div
+            v-for="(div, index) in divs"
+            :key="index"
+            :class="div.flickerClass"
+        >
+            <img :src="div.imageSrc" :alt="`Image ${div.currentImageIndex}`">
+        </div>
+        <div class="bg"></div>
+        <div class="logo">
+            <img src="/images/logocs.png" />
+        </div>
+    </section>
+    <PWAinstall />
 </template>
 
 <style scoped>
