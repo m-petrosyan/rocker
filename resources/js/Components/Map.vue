@@ -7,7 +7,7 @@
         :styles="darkTheme"
         style="width: 100%; height: 500px"
     >
-        <Marker :options="{ position: center }" />
+        <Marker :options="{ position: cordinates }" />
     </GoogleMap>
 </template>
 
