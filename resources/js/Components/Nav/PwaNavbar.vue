@@ -8,7 +8,7 @@ import BandIcon from '@/Components/Icons/BandIcon.vue';
 <!--bg-pwaNavbg-->
 <template>
     <div
-        class="z-50 fixed bottom-0 w-full bg-pwaNavbg">
+        class="z-50 sticky bottom-0 w-full bg-pwaNavbg">
         <div class="flex items-center gap-x-2 mx-auto w-fit pt-2 text-gray text-sm tracking-widest uppercase">
 
             <Link

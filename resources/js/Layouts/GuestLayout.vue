@@ -22,15 +22,12 @@ const page = usePage();
     <div
         class="min-h-screen  bg-black text-white pt-6 sm:pt-0"
     >
-        <MainNavbar v-if="page.url !== '/' && !$isPWA " />
-        <PwaNavbar v-else-if="page.url !== '/'" />
-        <div
-        >
-            <main class="my-20">
-                <slot />
-            </main>
-            <PWAinstall />
-        </div>
+        <MainNavbar v-if="page.url !== '/' && !$isPWA" />
+        <main class="my-20">
+            <slot />
+        </main>
+        <PWAinstall />
     </div>
     <Footer />
+    <PwaNavbar v-if="page.url !== '/' && $isPWA" />
 </template>
