@@ -1,6 +1,6 @@
 <template>
     <GoogleMap
-        api-key="YOUR_GOOGLE_MAPS_API_KEY"
+        api-key="AIzaSyCovr1rcKSduU9SLpe_IX-EzuF-_sVVAlY"
         :center="center"
         :zoom="15"
         :styles="darkTheme"
