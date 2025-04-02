@@ -1,10 +1,22 @@
+<template>
+    <GoogleMap
+        api-key="YOUR_GOOGLE_MAPS_API_KEY"
+        :center="center"
+        :zoom="15"
+        :styles="darkTheme"
+        style="width: 100%; height: 500px"
+    >
+        <Marker :options="{ position: center }" />
+    </GoogleMap>
+</template>
+
 <script setup>
 import { GoogleMap, Marker } from 'vue3-google-map';
 
-// Define coordinates (ensure this is reactive or passed correctly)
-const cordinates = { lat: 40.689247, lng: -74.044502 };
+// Define center coordinates
+const center = { lat: 40.689247, lng: -74.044502 };
 
-// Dark theme styles (JSON array for Google Maps)
+// Hardcoded dark theme styles
 const darkTheme = [
     { elementType: 'geometry', stylers: [{ color: '#212121' }] },
     { elementType: 'labels.icon', stylers: [{ visibility: 'off' }] },
@@ -16,15 +28,3 @@ const darkTheme = [
     { featureType: 'poi', elementType: 'geometry', stylers: [{ color: '#1a1a1a' }] }
 ];
 </script>
-
-<template>
-    <GoogleMap
-        api-key="YOUR_API_KEY"
-        style="width: 100%; height: 500px"
-        :center="cordinates"
-        :zoom="15"
-        :map-options="{ styles: darkTheme }"
-    >
-        <Marker :options="{ position: cordinates }" />
-    </GoogleMap>
-</template>
