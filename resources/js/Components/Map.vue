@@ -1,11 +1,9 @@
 <template>
     <GoogleMap
-        v-if="cordinates"
         api-key="AIzaSyCovr1rcKSduU9SLpe_IX-EzuF-_sVVAlY"
         :center="center"
         :zoom="15"
         :styles="darkTheme"
-        :map-options="mapOptions"
         style="width: 100%; height: 500px"
     >
         <Marker :options="{ position: center }" />
@@ -14,21 +12,8 @@
 
 <script setup>
 import { GoogleMap, Marker } from 'vue3-google-map';
-import { computed } from 'vue';
 
-const props = defineProps({
-    cordinates: {
-        type: Object,
-        required: true
-    }
-});
-
-const center = computed(() => {
-    return {
-        lat: props.cordinates.latitude,
-        lng: props.cordinates.longitude
-    };
-});
+const center = { lat: 40.689247, lng: -74.044502 };
 
 const darkTheme = [
     { elementType: 'geometry', stylers: [{ color: '#212121' }] },
@@ -40,11 +25,4 @@ const darkTheme = [
     { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#000000' }] },
     { featureType: 'poi', elementType: 'geometry', stylers: [{ color: '#1a1a1a' }] }
 ];
-
-// Map options to disable satellite, map type controls, and Street View Pegman
-const mapOptions = {
-    styles: darkTheme, // Include styles here too for compatibility
-    mapTypeControl: false, // Removes Map/Satellite toggle
-    streetViewControl: false // Removes Pegman (Street View icon)
-};
 </script>
