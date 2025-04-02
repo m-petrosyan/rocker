@@ -1,13 +1,13 @@
 <template>
     <GoogleMap
-        v-if="center"
+        v-if="cordinates"
         api-key="AIzaSyCovr1rcKSduU9SLpe_IX-EzuF-_sVVAlY"
-        :center="center"
+        :center="cordinates"
         :zoom="15"
         :styles="darkTheme"
         style="width: 100%; height: 500px"
     >
-        <Marker :options="{ position: center }" />
+        <Marker :options="{ position: cordinates }" />
     </GoogleMap>
 </template>
 
@@ -22,7 +22,10 @@ const props = defineProps({
     }
 });
 
-const center = { lng: 44.521072, lat: 40.1895131 };
+// const center = {
+//     lat: 40.689247,
+//     lng: -74.044502
+// };
 
 const darkTheme = [
     { elementType: 'geometry', stylers: [{ color: '#212121' }] },
