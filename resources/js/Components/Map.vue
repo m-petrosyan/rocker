@@ -8,8 +8,8 @@ defineProps({
     }
 });
 
-// Define dark theme styles (example from Snazzy Maps or custom)
-const darkThemeStyles = [
+// Example dark theme style (you can customize this further)
+const darkTheme = [
     { elementType: 'geometry', stylers: [{ color: '#212121' }] },
     { elementType: 'labels.icon', stylers: [{ visibility: 'off' }] },
     { elementType: 'labels.text.fill', stylers: [{ color: '#757575' }] },
@@ -28,11 +28,6 @@ const darkThemeStyles = [
         featureType: 'water',
         elementType: 'geometry',
         stylers: [{ color: '#000000' }]
-    },
-    {
-        featureType: 'poi',
-        elementType: 'geometry',
-        stylers: [{ color: '#424242' }]
     }
 ];
 </script>
@@ -43,7 +38,7 @@ const darkThemeStyles = [
         style="width: 100%; height: 500px"
         :center="cordinates"
         :zoom="15"
-        :styles="darkThemeStyles"
+        :map-options="{ styles: darkTheme }"
     >
         <Marker :options="{ position: cordinates }" />
     </GoogleMap>
