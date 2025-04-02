@@ -4,6 +4,7 @@
         :center="center"
         :zoom="15"
         :styles="darkTheme"
+        :map-options="mapOptions"
         style="width: 100%; height: 500px"
     >
         <Marker :options="{ position: center }" />
@@ -14,7 +15,6 @@
 import { GoogleMap, Marker } from 'vue3-google-map';
 import { computed } from 'vue';
 
-// const center2 = { lat: 40.1895131, lng: 44.521072 };
 
 const props = defineProps({
     cordinates: {
@@ -25,8 +25,8 @@ const props = defineProps({
 
 const center = computed(() => {
     return {
-        lat: props.cordinates.latitude,
-        lng: props.cordinates.longitude
+        lat: props.cordinates?.latitude ?? 40.689247,
+        lng: props.cordinates?.longitude ?? -74.044502
     };
 });
 
@@ -40,4 +40,10 @@ const darkTheme = [
     { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#000000' }] },
     { featureType: 'poi', elementType: 'geometry', stylers: [{ color: '#1a1a1a' }] }
 ];
+
+const mapOptions = {
+    styles: darkTheme, // Include styles here too for compatibility
+    mapTypeControl: false, // Removes Map/Satellite toggle
+    streetViewControl: false // Removes Pegman (Street View icon)
+};
 </script>
