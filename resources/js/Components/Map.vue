@@ -1,5 +1,6 @@
 <template>
     <GoogleMap
+        v-if="center.lat && center.lng"
         api-key="AIzaSyCovr1rcKSduU9SLpe_IX-EzuF-_sVVAlY"
         :center="center"
         :zoom="15"
@@ -19,7 +20,8 @@ import { computed } from 'vue';
 const props = defineProps({
     cordinates: {
         type: Object,
-        required: true
+        required: true,
+        default: () => ({ latitude: 40.689247, longitude: -74.044502 }) //
     }
 });
 
