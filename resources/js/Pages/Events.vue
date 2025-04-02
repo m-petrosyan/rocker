@@ -14,7 +14,9 @@ defineProps({
 <template>
     <GuestLayout :meta="{title: 'Events'}">
         <div class="flex flex-col max-w-screen-sm md:max-w-screen-xl mx-auto">
-            <h1 class="text-2xl font-bold">Events</h1>
+            <div class="mb-10 text-gray">
+                <h1 class="text-xl font-bold text-center mb-5">Events</h1>
+            </div>
             <div class="grid  md:grid-cols-2 lg:grid-cols-4 md:grid-rows-6 md:gap-4 gap-y-10">
                 <div v-for="event in events.data" :key="event.id" class="mb-2 h-[600px] md:h-[400px]">
                     <div class="relative h-full" :style="{ backgroundImage: `url(${event.poster})`}">

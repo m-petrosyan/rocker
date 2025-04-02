@@ -22,6 +22,7 @@ const page = usePage();
     <div
         class="min-h-screen  bg-black text-white pt-6 sm:pt-0"
     >
+        <slot name="header" />
         <MainNavbar v-if="page.url !== '/' && !$isPWA" />
         <main class="my-20">
             <slot />
