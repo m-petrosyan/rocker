@@ -19,16 +19,18 @@ const page = usePage();
 
 <template>
     <Head :title="meta.title" />
-    <div
-        class="min-h-screen  bg-black text-white pt-6 sm:pt-0"
-    >
-        <slot name="header" />
+    <section class="min-h-screen bg-black text-white pt-6 sm:pt-0">
         <MainNavbar v-if="page.url !== '/' && !$isPWA" />
+        <header v-if="$slots.header" class="my-10 text-gray">
+            <h1 class="text-xl font-bold text-center mb-5">
+                <slot name="header" />
+            </h1>
+        </header>
         <main class="my-20 max-w-screen-sm md:max-w-screen-xl mx-auto">
             <slot />
         </main>
         <PWAinstall />
-    </div>
+    </section>
     <Footer />
     <PwaNavbar v-if="page.url !== '/' && $isPWA" />
 </template>

@@ -13,11 +13,11 @@ defineProps({
 
 <template>
     <GuestLayout :meta="{title: 'Events'}">
+        <template #header>
+            Events
+        </template>
         <div class="flex flex-col mx-auto">
-            <div class="mb-10 text-gray">
-                <h1 class="text-xl font-bold text-center mb-5">Events</h1>
-            </div>
-            <div class="grid  md:grid-cols-2 lg:grid-cols-4 md:grid-rows-6 md:gap-4 gap-y-10">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 md:grid-rows-6 md:gap-4 gap-y-10">
                 <div v-for="event in events.data" :key="event.id" class="mb-2 h-[600px] md:h-[400px]">
                     <NavLink :href="route('events.show', event.id)" class="relative h-full w-full"
                              :style="{ backgroundImage: `url(${event.poster})`}">
@@ -25,7 +25,7 @@ defineProps({
                         <img :src="event.poster" :alt="event.title"
                              class="absolute w-full h-full object-contain object-center z-10" />
                         <div
-                            class="absolute inset-0 bg-orange text-xl w-28 h-28 z-20 flex flex-col justify-center items-center">
+                            class="absolute left-4  bg-orange text-xl w-28 h-28 z-20 flex flex-col justify-center items-center">
                             <p class="text-4xl font-bold">
                                 {{ moment(event.start_date, 'DD.MM.YY').format('D').toUpperCase() }}</p>
                             <p>{{ moment(event.start_date, 'DD.MM.YY').format('MMMM').toUpperCase() }}</p>
