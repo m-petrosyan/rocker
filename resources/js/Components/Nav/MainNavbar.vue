@@ -9,19 +9,19 @@ import { Link } from '@inertiajs/vue3';
             Events
         </Link>
         <Link
-            :href="route('home')">
+            :href="route('events.index')">
             Blog
         </Link>
         <Link
-            :href="route('home')">
+            :href="route('events.index')">
             <img src="/images/logo.png" alt="logo" class="w-10 logo" />
         </Link>
         <Link
-            :href="route('home')">
+            :href="route('gallery')">
             Gallery
         </Link>
         <Link
-            :href="route('home')">
+            :href="route('events.index')">
             Bands
         </Link>
 

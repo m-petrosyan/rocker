@@ -10,6 +10,14 @@ Route::get('/', function () {
 })->name('home');
 
 Route::resource('/events', EventController::class)->only('index', 'show');
+Route::get(
+    '/gallery',
+    function () {
+        return Inertia::render('Gallery/Gallery', [
+            'galleries' => 'some data',
+        ]);
+    }
+)->name('gallery');
 
 
 Route::get('/dashboard', function () {

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BandLinks extends Model
+class Links extends Model
 {
     //
 }
