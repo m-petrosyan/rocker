@@ -31,20 +31,21 @@ const center = computed(() => {
 });
 
 const darkTheme = [
-    { elementType: 'geometry', stylers: [{ color: '#212121' }] }, // Background
-    { elementType: 'labels.icon', stylers: [{ visibility: 'on' }] }, // Icons visible
-    { elementType: 'labels.text.fill', stylers: [{ color: '#757575' }] }, // Text color
-    { elementType: 'labels.text.stroke', stylers: [{ color: '#212121' }] }, // Text stroke
+    { elementType: 'geometry', stylers: [{ color: '#212121' }] }, // Фон
+    { elementType: 'labels.icon', stylers: [{ visibility: 'off' }] }, // Убираем иконки
+    { elementType: 'labels.text.fill', stylers: [{ color: '#757575' }] }, // Цвет текста
+    { elementType: 'labels.text.stroke', stylers: [{ color: '#212121' }] }, // Обводка текста
     { featureType: 'administrative', elementType: 'geometry', stylers: [{ color: '#757575' }] },
-    { featureType: 'road', elementType: 'geometry.fill', stylers: [{ color: '#2c2c2c' }] }, // Roads
-    { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#000000' }] }, // Water
-    { featureType: 'poi', elementType: 'geometry', stylers: [{ color: '#1a1a1a' }] }, // Points of interest
-    { featureType: 'building', elementType: 'geometry', stylers: [{ color: '#333333' }] } // Ensure buildings are visible
+    { featureType: 'road', elementType: 'geometry.fill', stylers: [{ color: '#2c2c2c' }] }, // Дороги
+    { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#000000' }] }, // Вода
+    { featureType: 'poi', elementType: 'geometry', stylers: [{ color: '#1a1a1a' }] }, // Точки интереса
+    { featureType: 'building', elementType: 'geometry', stylers: [{ color: '#444444' }] } // Силуэты зданий
 ];
 
 const mapOptions = {
-    mapTypeId: 'roadmap', // Force roadmap type (supports 3D buildings)
-    mapTypeControl: false, // No Map/Satellite toggle
-    streetViewControl: false // No Pegman
+    mapTypeId: 'roadmap', // Тип карты для отображения зданий
+    mapTypeControl: false, // Без переключения типов
+    streetViewControl: false, // Без Pegman
+    tilt: 45 // Наклон для 3D-видимости зданий
 };
 </script>
