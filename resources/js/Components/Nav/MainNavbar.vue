@@ -5,7 +5,7 @@ import { Link } from '@inertiajs/vue3';
 <template>
     <div class="flex items-center gap-x-2 mx-auto w-fit pt-5 text-gray text-sm tracking-widest uppercase">
         <Link
-            :href="route('home')">
+            :href="route('events.index')">
             Events
         </Link>
         <Link

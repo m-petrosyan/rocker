@@ -13,17 +13,17 @@ import BandIcon from '@/Components/Icons/BandIcon.vue';
 
             <Link
                 class="p-2 rounded-full"
-                :href="route('events')">
+                :href="route('events.index')">
                 <EventIcon />
             </Link>
             <Link
                 class="p-2 rounded-full"
-                :href="route('events')">
+                :href="route('home')">
                 <BlogIcon />
             </Link>
             <Link
                 class="hover:bg-orange p-2 rounded-full"
-                :href="route('events')">
+                :href="route('home')">
                 <img src="/images/logo.png" alt="logo" class="w-10 logo" />
             </Link>
             <Link
@@ -33,7 +33,7 @@ import BandIcon from '@/Components/Icons/BandIcon.vue';
             </Link>
             <Link
                 class="p-2 rounded-full"
-                :href="route('events')">
+                :href="route('home')">
                 <BandIcon />
             </Link>
 

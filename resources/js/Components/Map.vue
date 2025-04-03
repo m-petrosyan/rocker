@@ -3,7 +3,7 @@
         v-if="center"
         api-key="AIzaSyCovr1rcKSduU9SLpe_IX-EzuF-_sVVAlY"
         :center="center"
-        :zoom="15"
+        :zoom="18"
         :styles="darkTheme"
         class="w-full h-[500px]"
     >
