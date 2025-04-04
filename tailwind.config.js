@@ -21,7 +21,8 @@ export default {
                 graydark: '#141414',
                 orange: '#FF5722',
                 red: '#f44336',
-                pwaNavbg: 'rgba(50,62,74,0.58)'
+                pwaNavbg: 'rgba(50,62,74,0.58)',
+                green: '#4caf50'
             },
             fontSize: {
                 'sm': '13px'
