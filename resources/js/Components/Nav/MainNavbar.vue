@@ -21,13 +21,23 @@ const menu = [
                 <span v-if="item.name">{{ item.name }}</span>
             </Link>
         </div>
-        <Link
-            v-if="$page.props.auth.user"
-            :href="route('profile.index')"
-            class="absolute right-0 rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-        >
-            Profile
-        </Link>
+        <div v-if="$page.props.auth.user" class="absolute right-0 ">
+            <Link
+                :href="route('profile.index',$page.props.auth.user.full_name)"
+                class="px-3 py-2 text-white"
+            >
+                Profile
+            </Link>
+            <Link
+                :href="route('logout')"
+                method="post"
+                as="button"
+                class="px-3 py-2 text-white"
+            >Log Out
+            </Link
+            >
+        </div>
+
     </nav>
 </template>
 <style>

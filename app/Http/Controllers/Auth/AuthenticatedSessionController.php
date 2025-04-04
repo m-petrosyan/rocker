@@ -33,7 +33,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('profile.index', absolute: false));
+        return redirect()->intended(route('profile.index', ['username' => auth()->user()->username], absolute: false));
     }
 
     /**

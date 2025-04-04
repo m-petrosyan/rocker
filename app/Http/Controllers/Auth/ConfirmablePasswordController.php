@@ -36,6 +36,6 @@ class ConfirmablePasswordController extends Controller
 
         $request->session()->put('auth.password_confirmed_at', time());
 
-        return redirect()->intended(route('profile.index', absolute: false));
+        return redirect()->intended(route('profile.index', ['username' => auth()->user()->username], absolute: false));
     }
 }
