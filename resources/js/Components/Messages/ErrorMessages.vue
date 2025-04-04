@@ -1,5 +1,4 @@
 <script setup>
-
 const props = defineProps({
     messages: Object
 });
@@ -14,7 +13,3 @@ const props = defineProps({
         </div>
     </div>
 </template>
-
-<style lang="scss" scoped>
-
-</style>

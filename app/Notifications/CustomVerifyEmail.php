@@ -32,7 +32,7 @@ class CustomVerifyEmail extends VerifyEmail
             ]
         );
 
-        return ['url' => config('app.fe').'/verification?code='.urlencode($hash), 'hash' => $hash];
+        return ['url' => config('app.url').'/verification?code='.urlencode($hash), 'hash' => $hash];
     }
 
 

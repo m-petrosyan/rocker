@@ -9,11 +9,8 @@ use Inertia\Response;
 
 class EventController extends Controller
 {
-    protected EventService $eventService;
-
-    public function __construct(EventService $eventService)
+    public function __construct(protected EventService $eventService)
     {
-        $this->eventService = $eventService;
     }
 
     public function index(): Response
