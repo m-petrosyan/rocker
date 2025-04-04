@@ -1,12 +1,13 @@
 import '../css/app.css';
 import '../css/main.scss';
+import '../css/prime.scss';
 import './bootstrap';
-
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createApp, h } from 'vue';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 import VueGtag from 'vue-gtag-next';
+import PrimeVue from 'primevue/config';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -25,17 +26,17 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         const app = createApp({ render: () => h(App, props) })
             .use(plugin)
-            .use(ZiggyVue);
-
-        app.use(VueGtag, {
-            property: {
-                id: 'G-FJN078W8B8',
-                params: {
-                    app_name: appName,
-                    app_version: '1.0.0'
+            .use(PrimeVue)
+            .use(ZiggyVue)
+            .use(VueGtag, {
+                property: {
+                    id: 'G-FJN078W8B8',
+                    params: {
+                        app_name: appName,
+                        app_version: '1.0.0'
+                    }
                 }
-            }
-        });
+            });
 
         app.config.globalProperties.$isPWA =
             window.matchMedia('(display-mode: standalone)').matches ||

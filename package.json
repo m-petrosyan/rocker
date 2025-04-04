@@ -32,12 +32,16 @@
     },
     "dependencies": {
         "@fawmi/vue-google-maps": "^0.9.79",
+        "@primeuix/themes": "^1.0.1",
+        "@vuepic/vue-datepicker": "^11.0.2",
         "@vueuse/core": "^13.0.0",
         "@vueuse/integrations": "^13.0.0",
         "async-validator": "^4.2.5",
         "moment-timezone": "^0.5.48",
+        "primevue": "^4.3.3",
         "qrcode": "^1.5.4",
         "vite-plugin-pwa": "^0.21.2",
+        "vue-debounce": "^5.0.1",
         "vue-gtag-next": "^1.14.0",
         "vue-multiselect": "^3.2.0",
         "vue3-google-map": "^0.21.1"

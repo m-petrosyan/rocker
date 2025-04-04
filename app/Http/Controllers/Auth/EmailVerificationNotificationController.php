@@ -54,13 +54,11 @@ class EmailVerificationNotificationController extends Controller
             return back()->withErrors(['error' => "Email already verified."]);
         }
 
-        auth()->user()->markEmailAsVerified();
+        session()->flash('message', 'Email successfully verified.');
 
+        auth()->user()->markEmailAsVerified();
         auth()->user()->verification()->delete();
 
-        return back()->with(
-            'status',
-            'Email successfully verified.'
-        );
+        return redirect()->back();
     }
 }

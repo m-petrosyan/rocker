@@ -6,23 +6,30 @@ import ErrorMessages from '@/Components/Messages/ErrorMessages.vue';
 import SuccessMessages from '@/Components/Messages/SuccessMessages.vue';
 import TextInput from '@/Components/Forms/TextInput.vue';
 import { onMounted } from 'vue';
+import { getUrlQuery } from '@/Helpers/urlHelper.js';
 
-const props = defineProps({
+defineProps({
     status: {
         type: String
     }
 });
 
 const form = useForm({
-    code: ''
+    code: getUrlQuery('code')
 });
+
 
 const submit = () => {
     form.post(route('verification.send'));
 };
 
+
 onMounted(() => {
-    // submit();
+    if (form.code) {
+        verify();
+    } else {
+        submit();
+    }
 });
 
 const verify = async () => {

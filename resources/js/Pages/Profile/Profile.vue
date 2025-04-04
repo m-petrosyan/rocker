@@ -18,7 +18,7 @@ import QrGenerate from '@/Components/Profile/QrGenerate.vue';
         <!--        </template>-->
 
         <div>
-            <div class="mx-auto bg-graydark  py-2 sm:px-6 lg:px-8">
+            <div class="mx-auto bg-graydark py-2 sm:px-6 lg:px-8">
                 <div class="text-center w-fit mx-auto">
                     <div class="relative">
                         <img

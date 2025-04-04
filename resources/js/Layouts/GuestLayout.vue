@@ -4,6 +4,7 @@ import PWAinstall from '@/Components/PWAinstall.vue';
 import MainNavbar from '@/Components/Nav/MainNavbar.vue';
 import Footer from '@/Components/Footer/Footer.vue';
 import PwaNavbar from '@/Components/Nav/PwaNavbar.vue';
+import FleshNotification from '@/Components/Messages/FleshNotification.vue';
 
 
 defineProps({
@@ -19,6 +20,7 @@ const page = usePage();
 
 <template>
     <Head :title="meta.title" />
+    <FleshNotification />
     <section class="min-h-screen bg-black text-white pt-6 sm:pt-0">
         <MainNavbar v-if="page.url !== '/' && !$isPWA" />
         <header v-if="$slots.header" class="my-10 text-gray">

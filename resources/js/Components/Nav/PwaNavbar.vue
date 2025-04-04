@@ -10,7 +10,6 @@ import BandIcon from '@/Components/Icons/BandIcon.vue';
     <div
         class="z-50 sticky bottom-0 w-full bg-pwaNavbg">
         <div class="flex items-center gap-x-2 mx-auto w-fit pt-2 text-gray text-sm tracking-widest uppercase">
-
             <Link
                 class="p-2 rounded-full"
                 :href="route('events.index')">
@@ -47,7 +46,7 @@ import BandIcon from '@/Components/Icons/BandIcon.vue';
         </div>
     </div>
 </template>
-<style class="scss">
+<style scoped class="scss">
 a:hover {
     svg {
         fill: theme('colors.orange');

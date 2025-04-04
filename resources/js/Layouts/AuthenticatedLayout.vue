@@ -1,6 +1,7 @@
 <script setup>
 import { Head } from '@inertiajs/vue3';
 import AuthNavbar from '@/Components/Nav/AuthNavbar.vue';
+import FleshNotification from '@/Components/Messages/FleshNotification.vue';
 
 defineProps({
     meta: {
@@ -13,6 +14,7 @@ defineProps({
 
 <template>
     <Head :title="meta.title" />
+    <FleshNotification />
     <section class="min-h-screen bg-black text-white pt-6 sm:pt-0">
         <AuthNavbar />
         <header v-if="$slots.header" class="my-10 text-gray">

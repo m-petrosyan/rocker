@@ -19,7 +19,9 @@ export default {
                 gray: 'var(--gray)',
                 graydarker: '#666666',
                 graydark: '#141414',
+                graydark2: '#262626',
                 orange: '#FF5722',
+                orangeTransparetn: '#ff57224d',
                 red: '#f44336',
                 pwaNavbg: 'rgba(50,62,74,0.58)',
                 green: '#4caf50'
