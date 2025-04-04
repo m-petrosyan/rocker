@@ -3,6 +3,7 @@ import GuestLayout from '@/Layouts/GuestLayout.vue';
 import moment from 'moment-timezone';
 import NavLink from '@/Components/NavLink.vue';
 import MultiSelect from '@/Components/Forms/MultiSelect.vue';
+import EventIcon from '@/Components/Icons/EventIcon.vue';
 
 defineProps({
     events: {
@@ -40,7 +41,17 @@ defineProps({
                         </div>
                     </NavLink>
                 </div>
+                <NavLink :href="route('events.create')"
+                         class="border-dashed hover:bg-graydark2 hover:font-bold border-2 border-graydark2 flex items-center gap-2 p-4">
+                    <div
+                        class="flex flex-col gap-y-4 items-center w-32 p-4 rounded-lg mx-auto ">
+                        <EventIcon />
+                        <h3>Add event</h3>
+                    </div>
+                </NavLink>
             </div>
         </div>
+
+
     </GuestLayout>
 </template>

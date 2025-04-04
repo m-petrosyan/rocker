@@ -23,7 +23,7 @@ defineProps({
             </h1>
         </header>
         <!-- Page Content -->
-        <main class="my-20 max-w-screen-sm md:max-w-screen-xl mx-auto">
+        <main class="my-5 max-w-screen-sm md:max-w-screen-xl mx-auto">
             <slot />
         </main>
     </section>

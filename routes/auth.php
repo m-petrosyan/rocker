@@ -18,9 +18,8 @@ Route::middleware(['auth', 'verified'])->prefix('profile')->group(function () {
     Route::patch('/settings', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/settings', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::prefix('events')->group(function () {
-        Route::resource('/', EventController::class)->except('show');
-    });
+
+    Route::resource('events', EventController::class)->except('show');
 });
 
 Route::middleware('auth')->group(function () {

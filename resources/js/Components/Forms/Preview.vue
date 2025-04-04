@@ -32,7 +32,7 @@ const previewStyle = computed(() => {
         <input type="file" hidden accept="image/*" id="preview"
                @change="changePreview">
         <label
-            :class="['absolute h-full w-full z-10 flex h-inherit min-h-60 w-inherit items-center justify-center border-dashed border-2 border-orangeTransparetn cursor-pointer rounded-md bg-no-repeat bg-center bg-contain rounded-10 mx-auto',label]"
+            :class="['absolute h-full w-full z-10 flex h-inherit min-h-60 w-inherit items-center justify-center border-dashed border-2 border-graydark2 cursor-pointer rounded-md bg-no-repeat bg-center bg-contain rounded-10 mx-auto',label]"
             for="preview"
             :style="previewStyle">
             <span v-if="!Object.keys(previewStyle).length">Click to upload preview</span>

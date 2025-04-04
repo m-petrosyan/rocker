@@ -29,8 +29,8 @@ const format = (date) => {
     const minute = dateFormat(date.getMinutes());
     const time = hour + ':' + minute;
     emit('update:start_date', `${year}-${month}-${day}`);
-    emit('update:start_time', `time`);
-    return `Selected date is ${day}/${month}/${year} ${time}`;
+    emit('update:start_time', time);
+    return `Selected date/time ${day}/${month}/${year} ${time}`;
 };
 </script>
 
@@ -39,3 +39,26 @@ const format = (date) => {
         <VueDatePicker :format="format" :flow="def.flow" dark inline />
     </div>
 </template>
+<style scoped lang="scss">
+:deep(.dp__main) {
+    display: block !important;
+
+    .dp__cell_inner {
+        &:hover {
+            background-color: theme('colors.orange');
+        }
+
+        &.dp__active_date {
+            background-color: theme('colors.red');
+        }
+    }
+
+    .dp__action_buttons {
+        display: none;
+    }
+
+    .dp--tp-wrap {
+        margin: auto;
+    }
+}
+</style>

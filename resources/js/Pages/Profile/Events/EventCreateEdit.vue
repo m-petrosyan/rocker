@@ -89,40 +89,50 @@ const optionsSet = () => {
         <div v-if="!data.created" class="mx-auto bg-graydark py-2 sm:px-6 lg:px-8">
             <ErrorMessages :messages="$page.props.errors" />
             <form @submit.prevent="createEvent" class="flex flex-col gap-y-2">
-                <Preview
-                    class="h-96"
-                    label="h-full"
-                    :image="form.poster"
-                    v-model:preview="form.previewFile"
-                    v-model:file="data.preview" />
-                <RadioSwichButton v-model:selectedOption="form.type" :options="types" />
-                <div>
-                    <input class="w-full" type="text" v-model="form.title" placeholder="Title"
-                           tabindex="1"
-                           enterkeyhint="next">
+
+                <div class="flex gap-x-4">
+                    <div class="w-1/2">
+                        <Preview
+                            class="h-full"
+                            label="h-full"
+                            :image="form.poster"
+                            v-model:preview="form.previewFile"
+                            v-model:file="data.preview" />
+
+                    </div>
+                    <div class="w-1/2 flex flex-col gap-y-2">
+                        <div>
+                            <input class="w-full bg-graydark2" type="text" v-model="form.title" placeholder="Title"
+                                   tabindex="1"
+                                   enterkeyhint="next">
+                        </div>
+                        <RadioSwichButton v-model:selectedOption="form.type" :options="types" />
+                        <RadioSwichButton v-model:selectedOption="form.genre" :options="genres" />
+                        <GoogleAutocomplate :form="form" />
+                        <DatePicker v-model:start_date="form.start_date" v-model:start_time="form.start_time" />
+                    </div>
                 </div>
-                <div class="relative">
-                            <textarea class="w-full" type="text" rows="10" v-model="form.content" placeholder="Content"
+                <div class="relative mt-2">
+                            <textarea class="w-full bg-graydark2" type="text" rows="10" v-model="form.content"
+                                      placeholder="Content"
                                       tabindex="2"
                                       enterkeyhint="next">
                             </textarea>
-                    <span class="absolute top-0 right-4 text-md"
-                          :class="form.content?.length >= 730 ? 'text-red' : 'text-graydark'">
+                    <span class="absolute top-0 right-0 px-1 text-md"
+                          :class="form.content?.length >= 730 ? 'text-white bg-red' : 'text-gray'">
                         {{ form.content?.length }}
                     </span>
                 </div>
-                <RadioSwichButton v-model:selectedOption="form.genre" :options="genres" />
-                <GoogleAutocomplate :form="form" />
-                <DatePicker v-model:start_date="form.start_date" v-model:start_time="form.start_time" />
-                <div class="options rounded-l-md ">
-                    <div>
-                        <input class="w-full bg-graydark2 border-none" type="text" v-model="form.price"
+
+                <div class="flex gap-x-2">
+                    <div class="w-1/2">
+                        <input class="w-full bg-graydark2" type="text" v-model="form.price"
                                placeholder="price">
-                        <input class="w-full bg-graydark2 border-none mt-2" type="url" v-model="form.ticket"
+                        <input class="w-full bg-graydark2 mt-2" type="url" v-model="form.ticket"
                                placeholder="ticket link">
                     </div>
-                    <div class="mt-5">
-                        <input id="event" class="w-full mt-2 bg-graydark2 border-none" type="url" v-model="form.link"
+                    <div class="w-1/2">
+                        <input id="event" class="w-full bg-graydark2" type="url" v-model="form.link"
                                placeholder="event link">
                     </div>
                 </div>
