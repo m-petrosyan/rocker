@@ -10,15 +10,22 @@ class ProfileController
 {
     public function index(): Response
     {
-        $user = auth()?->user() ?? User::query()->where('username', request()->route('username'))->first();
-        $owner = false;
-        if ($user) {
-            $owner = !request()->route('username') || auth()?->user()->username === request()->route('username');
+        if (!request()->route('username')) {
+            $user = auth()?->user();
+            $owner = true;
+            if (!$user) {
+                abort(404);
+            }
+        } else {
+            $user = User::query()->where('username', request()->route('username'))->first();
+            $owner = false;
+            if ($user) {
+                $owner = !request()->route('username') || auth()?->user()->username === request()->route('username');
+            } else {
+                abort(404);
+            }
         }
 
-        if (!$user && !request()->route('username')) {
-            abort(404);
-        }
 
         return Inertia::render('Profile/Profile', [
             'user' => $user,

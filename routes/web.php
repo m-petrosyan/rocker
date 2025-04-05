@@ -24,7 +24,7 @@ Route::get(
 Route::get('verification', EmailVerificationPromptController::class)
     ->name('verification.notice');
 Route::get('profile/{username}', [ProfileController::class, 'index'])->name(
-    'index'
+    'profile.show'
 );
 
 require_once __DIR__.'/guest.php';
