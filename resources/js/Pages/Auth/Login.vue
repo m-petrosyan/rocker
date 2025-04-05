@@ -9,30 +9,30 @@ import { Link, useForm } from '@inertiajs/vue3';
 
 defineProps({
     canResetPassword: {
-        type: Boolean
+        type: Boolean,
     },
     status: {
-        type: String
-    }
+        type: String,
+    },
 });
 
 const form = useForm({
     email: '',
     password: '',
-    remember: false
+    remember: false,
 });
 
 const submit = () => {
     form.post(route('login'), {
-        onFinish: () => form.reset('password')
+        onFinish: () => form.reset('password'),
     });
 };
 </script>
 
 <template>
-    <GuestLayout :title="{title:'Log in'}">
-        <div class="max-w-md mx-auto mt-10 p-6 rounded-lg bg-graydark">
-            <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
+    <GuestLayout :meta="{ title: 'Log in' }">
+        <div class="mx-auto mt-10 max-w-md rounded-lg bg-graydark p-6">
+            <div v-if="status" class="text-green-600 mb-4 text-sm font-medium">
                 {{ status }}
             </div>
 
@@ -70,9 +70,12 @@ const submit = () => {
 
                 <div class="mt-4 block">
                     <label class="flex items-center">
-                        <Checkbox name="remember" v-model:checked="form.remember" />
-                        <span class="ms-2 text-sm text-gray-600"
-                        >Remember me</span
+                        <Checkbox
+                            name="remember"
+                            v-model:checked="form.remember"
+                        />
+                        <span class="text-gray-600 ms-2 text-sm"
+                            >Remember me</span
                         >
                     </label>
                 </div>
@@ -81,7 +84,7 @@ const submit = () => {
                     <Link
                         v-if="canResetPassword"
                         :href="route('password.request')"
-                        class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        class="text-gray-600 hover:text-gray-900 rounded-md text-sm underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     >
                         Forgot your password?
                     </Link>

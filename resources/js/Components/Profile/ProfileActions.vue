@@ -8,32 +8,38 @@ import GalleryIcon from '@/Components/Icons/GalleryIcon.vue';
 const menu = [
     {
         name: 'Add event',
-        route: route('events.create'),
-        icon: EventIcon
+        route: route('profile.events.create'),
+        icon: EventIcon,
     },
     {
         name: 'Add blog',
-        route: route('profile.edit'),
-        icon: BlogIcon
+        route: route('profile.profile.edit'),
+        icon: BlogIcon,
     },
     {
         name: 'Add gallery',
-        route: route('profile.edit'),
-        icon: GalleryIcon
+        route: route('profile.profile.edit'),
+        icon: GalleryIcon,
     },
     {
         name: 'Add band',
-        route: route('profile.edit'),
-        icon: BandIcon
-    }
+        route: route('profile.profile.edit'),
+        icon: BandIcon,
+    },
 ];
 </script>
 
 <template>
-    <div class="grid grid-cols-4 mt-6">
-        <NavLink v-for="item in menu" :key="item.name" :href="item.route"
-                 class="flex items-center gap-2 p-4">
-            <div class="flex flex-col gap-y-4 items-center bg-black hover:bg-orange w-32 p-4 rounded-lg mx-auto ">
+    <div class="mt-6 grid grid-cols-4">
+        <NavLink
+            v-for="item in menu"
+            :key="item.name"
+            :href="item.route"
+            class="flex items-center gap-2 p-4"
+        >
+            <div
+                class="mx-auto flex w-32 flex-col items-center gap-y-4 rounded-lg bg-black p-4 hover:bg-orange"
+            >
                 <component :is="item.icon" />
                 <h3>{{ item.name }}</h3>
             </div>

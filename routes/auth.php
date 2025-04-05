@@ -10,13 +10,13 @@ use App\Http\Controllers\Profile\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::middleware(['auth', 'verified'])->prefix('profile')->group(function () {
+Route::middleware(['auth', 'verified'])->as('profile.')->prefix('profile')->group(function () {
     Route::get('/{username}', [\App\Http\Controllers\Profile\ProfileController::class, 'index'])->name(
         'profile.index'
     );
-    Route::get('/settings', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/settings', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/settings', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/settings', [ProfileController::class, 'edit'])->name('edit');
+    Route::patch('/settings', [ProfileController::class, 'update'])->name('update');
+    Route::delete('/settings', [ProfileController::class, 'destroy'])->name('destroy');
 
 
     Route::resource('events', EventController::class)->except('show');

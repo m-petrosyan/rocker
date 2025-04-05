@@ -20,5 +20,5 @@ Route::get(
 )->name('gallery');
 
 
-require __DIR__.'/guest.php';
-require __DIR__.'/auth.php';
+require_once __DIR__.'/guest.php';
+require_once __DIR__.'/auth.php';

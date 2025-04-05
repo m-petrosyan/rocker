@@ -10,19 +10,17 @@ import { getUrlQuery } from '@/Helpers/urlHelper.js';
 
 defineProps({
     status: {
-        type: String
-    }
+        type: String,
+    },
 });
 
 const form = useForm({
-    code: getUrlQuery('code')
+    code: getUrlQuery('code'),
 });
-
 
 const submit = () => {
     form.post(route('verification.send'));
 };
-
 
 onMounted(() => {
     if (form.code) {
@@ -38,13 +36,14 @@ const verify = async () => {
 </script>
 
 <template>
-    <GuestLayout :meta="{title:'Email Verification'}">
-        <div class="w-1/3 mx-auto bg-graydark p-6 rounded-lg">
+    <GuestLayout :meta="{ title: 'Email Verification' }">
+        <div class="mx-auto w-1/3 rounded-lg bg-graydark p-6">
             <ErrorMessages :messages="$page.props.errors" />
-            <h3 class="mb-4 text-md text-gray-600">
-                Thanks for signing up! Before getting started, could you verify your
-                email address by clicking on the link we just emailed to you? If you
-                didn't receive the email, we will gladly send you another.
+            <h3 class="text-md text-gray-600 mb-4">
+                Thanks for signing up! Before getting started, could you verify
+                your email address by clicking on the link we just emailed to
+                you? If you didn't receive the email, we will gladly send you
+                another.
             </h3>
             <SuccessMessages :message="status" />
             <form @submit.prevent="verify">
