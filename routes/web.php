@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -19,6 +20,8 @@ Route::get(
     }
 )->name('gallery');
 
+Route::get('verification', EmailVerificationPromptController::class)
+    ->name('verification.notice');
 
 require_once __DIR__.'/guest.php';
 require_once __DIR__.'/auth.php';

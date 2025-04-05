@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Models\UserVerify;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 
@@ -17,7 +16,7 @@ class UserRegisterService
         //
 //        ->assignRole('user')
 
-        event(new Registered($user));
+//        event(new Registered($user));
 
         $user->createToken('auth_token')->plainTextToken;
     }

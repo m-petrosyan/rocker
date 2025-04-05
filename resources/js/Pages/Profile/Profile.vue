@@ -1,5 +1,5 @@
 <script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import ProfileLayout from '@/Layouts/ProfileLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import ProfileActions from '@/Components/Profile/ProfileActions.vue';
 import QrGenerate from '@/Components/Profile/QrGenerate.vue';
@@ -8,7 +8,7 @@ import QrGenerate from '@/Components/Profile/QrGenerate.vue';
 <template>
     <Head title="Profile" />
 
-    <AuthenticatedLayout>
+    <ProfileLayout>
         <!--        <template #header>-->
         <!--            <h2-->
         <!--                class="text-xl font-semibold leading-tight text-gray-800"-->
@@ -36,5 +36,5 @@ import QrGenerate from '@/Components/Profile/QrGenerate.vue';
                 <ProfileActions class="w-1/2 mx-auto" />
             </div>
         </div>
-    </AuthenticatedLayout>
+    </ProfileLayout>
 </template>

@@ -1,28 +1,28 @@
 <script setup>
-import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/Forms/TextInput.vue';
 import { Link, useForm } from '@inertiajs/vue3';
+import AuthLayouth from '@/Layouts/AuthLayouth.vue';
 
 const form = useForm({
     name: '',
     username: '',
     email: '',
     password: '',
-    password_confirmation: '',
+    password_confirmation: ''
 });
 
 const submit = () => {
     form.post(route('register'), {
-        onFinish: () => form.reset('password', 'password_confirmation'),
+        onFinish: () => form.reset('password', 'password_confirmation')
     });
 };
 </script>
 
 <template>
-    <GuestLayout title="Register">
+    <AuthLayouth title="Register">
         <form @submit.prevent="submit">
             <div>
                 <InputLabel for="name" value="Name" />
@@ -124,5 +124,5 @@ const submit = () => {
                 </PrimaryButton>
             </div>
         </form>
-    </GuestLayout>
+    </AuthLayouth>
 </template>

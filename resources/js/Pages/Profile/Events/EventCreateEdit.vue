@@ -1,6 +1,6 @@
 <script setup>
 import { reactive } from 'vue';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import ProfileLayout from '@/Layouts/ProfileLayout.vue';
 import RadioSwichButton from '@/Components/Forms/RadioSwichButton.vue';
 import ErrorMessages from '@/Components/Messages/ErrorMessages.vue';
 import { useForm } from '@inertiajs/vue3';
@@ -85,7 +85,7 @@ const optionsSet = () => {
 </script>
 
 <template>
-    <AuthenticatedLayout title="Event create" :role="role">
+    <ProfileLayout title="Event create" :role="role">
         <div v-if="!data.created" class="mx-auto bg-graydark py-2 sm:px-6 lg:px-8">
             <ErrorMessages :messages="$page.props.errors" />
             <form @submit.prevent="createEvent" class="flex flex-col gap-y-2">
@@ -148,5 +148,5 @@ const optionsSet = () => {
             </h2>
             <!--            <YellowButton text="Events list" navigate="events.index" />-->
         </div>
-    </AuthenticatedLayout>
+    </ProfileLayout>
 </template>

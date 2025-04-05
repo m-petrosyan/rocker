@@ -59,6 +59,7 @@ class EmailVerificationNotificationController extends Controller
         auth()->user()->markEmailAsVerified();
         auth()->user()->verification()->delete();
 
-        return redirect()->back();
+        return redirect()->route('profile.index', ['username' => auth()->user()->username])
+            ->with('status', 'Email successfully verified.');
     }
 }

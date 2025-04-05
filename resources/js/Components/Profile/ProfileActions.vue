@@ -9,23 +9,23 @@ const menu = [
     {
         name: 'Add event',
         route: route('profile.events.create'),
-        icon: EventIcon,
+        icon: EventIcon
     },
     {
         name: 'Add blog',
-        route: route('profile.profile.edit'),
-        icon: BlogIcon,
+        route: route('profile.edit'),
+        icon: BlogIcon
     },
     {
         name: 'Add gallery',
-        route: route('profile.profile.edit'),
-        icon: GalleryIcon,
+        route: route('profile.edit'),
+        icon: GalleryIcon
     },
     {
         name: 'Add band',
-        route: route('profile.profile.edit'),
-        icon: BandIcon,
-    },
+        route: route('profile.edit'),
+        icon: BandIcon
+    }
 ];
 </script>
 
