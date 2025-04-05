@@ -23,7 +23,7 @@ const menu = [
         </div>
         <div v-if="$page.props.auth.user" class="absolute right-0 ">
             <Link
-                :href="route('profile.index',$page.props.auth.user.full_name)"
+                :href="route('profile.index',$page.props.auth.user.username)"
                 class="px-3 py-2 text-white"
             >
                 Profile

@@ -32,7 +32,7 @@ class EmailVerificationNotificationController extends Controller
             return back()->withErrors(['error' => "Please wait $seconds seconds before trying again."]);
         }
 
-        $request->user()->sendEmailVerificationNotification();
+//        $request->user()->sendEmailVerificationNotification();
 
         $limiter->hit($key, 120);
 

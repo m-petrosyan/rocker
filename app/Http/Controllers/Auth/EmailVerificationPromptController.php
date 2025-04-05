@@ -16,9 +16,13 @@ class EmailVerificationPromptController extends Controller
      */
     public function __invoke(Request $request): RedirectResponse|Response
     {
+//        dd($request?->user());
+//        dd(auth()->user()->username);
+//        dd($request?->user()?->hasVerifiedEmail());
         if ($request?->user()) {
             event(new Registered($request?->user()));
         }
+
 
         return $request?->user()?->hasVerifiedEmail()
             ? redirect()->intended(route('profile.index', ['username' => auth()->user()->username], absolute: false))
