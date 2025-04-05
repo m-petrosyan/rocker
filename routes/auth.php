@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified'])->as('profile.')->prefix('profile')->group(function () {
     Route::get('/{username}', [\App\Http\Controllers\Profile\ProfileController::class, 'index'])->name(
-        'profile.index'
+        'index'
     );
     Route::get('/settings', [ProfileController::class, 'edit'])->name('edit');
     Route::patch('/settings', [ProfileController::class, 'update'])->name('update');
