@@ -34,7 +34,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
         if (auth()->user()->hasVerifiedEmail()) {
             return redirect()->intended(
-                route('profile.index', ['username' => auth()->user()->username], absolute: false)
+                route('profile.show', ['username' => auth()->user()->username])
             );
         } else {
             return redirect()->route('verification.notice')->with([
