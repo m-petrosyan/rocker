@@ -74,7 +74,7 @@
     </tr>
     <tr>
         <td class="content">
-            <p>Hey {{$user->full_name}}</p>
+            <p>Hey {{$user->name}}</p>
             <p>Please verify your email address by clicking the button below:</p>
             <a href="{{$url}}" class="button">Verify Email</a>
             <p>Alternatively, use the following verification code:</p>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\Profile\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -22,6 +23,9 @@ Route::get(
 
 Route::get('verification', EmailVerificationPromptController::class)
     ->name('verification.notice');
+Route::get('profile/{username}', [ProfileController::class, 'index'])->name(
+    'index'
+);
 
 require_once __DIR__.'/guest.php';
 require_once __DIR__.'/auth.php';

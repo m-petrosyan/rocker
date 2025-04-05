@@ -2,7 +2,6 @@
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import moment from 'moment-timezone';
 import NavLink from '@/Components/NavLink.vue';
-import MultiSelect from '@/Components/Forms/MultiSelect.vue';
 
 defineProps({
     events: {
@@ -17,7 +16,7 @@ defineProps({
         <template #header>
             Events
         </template>
-        <MultiSelect class="w-48" />
+        <!--        <MultiSelect class="w-48" />-->
         <div class="flex flex-col mx-auto">
             <div class="grid md:grid-cols-2 lg:grid-cols-4 md:grid-rows-6 md:gap-4 gap-y-10">
                 <div v-for="event in events.data" :key="event.id" class="h-[600px] md:h-[400px]">

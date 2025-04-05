@@ -3,6 +3,17 @@ import ProfileLayout from '@/Layouts/ProfileLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import ProfileActions from '@/Components/Profile/ProfileActions.vue';
 import QrGenerate from '@/Components/Profile/QrGenerate.vue';
+
+defineProps({
+    user: {
+        type: Object,
+        required: true
+    },
+    owner: {
+        type: Boolean,
+        required: true
+    }
+});
 </script>
 
 <template>
@@ -29,11 +40,11 @@ import QrGenerate from '@/Components/Profile/QrGenerate.vue';
                         <QrGenerate />
                     </div>
                     <div class="p-6 text-gray-900">
-                        {{ $page.props.auth.user.full_name }}
+                        {{ user.name }}
                     </div>
 
                 </div>
-                <ProfileActions class="w-1/2 mx-auto" />
+                <ProfileActions v-if="owner" class="w-1/2 mx-auto" />
             </div>
         </div>
     </ProfileLayout>

@@ -74,7 +74,7 @@
     </tr>
     <tr>
         <td class="content">
-            <p>Hey {{$user->full_name}}</p>
+            <p>Hey {{$user->name}}</p>
             <p>You are receiving this email because we received a password reset request for your account.</p>
             <a href="{{$url}}" class="button">Reset Password</a>
         </td>
