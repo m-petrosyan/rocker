@@ -27,7 +27,7 @@ class CustomResetPassword extends Notification
         ], false));
 
         return (new MailMessage)
-            ->subject('Сброс пароля')
+            ->subject('Reset Password')
             ->view('emails.forgot-password', ['url' => $url, 'user' => $notifiable]);
     }
 }
