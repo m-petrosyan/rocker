@@ -3,7 +3,6 @@ import GuestLayout from '@/Layouts/GuestLayout.vue';
 import moment from 'moment-timezone';
 import NavLink from '@/Components/NavLink.vue';
 import MultiSelect from '@/Components/Forms/MultiSelect.vue';
-import EventIcon from '@/Components/Icons/EventIcon.vue';
 
 defineProps({
     events: {
@@ -21,14 +20,14 @@ defineProps({
         <MultiSelect class="w-48" />
         <div class="flex flex-col mx-auto">
             <div class="grid md:grid-cols-2 lg:grid-cols-4 md:grid-rows-6 md:gap-4 gap-y-10">
-                <div v-for="event in events.data" :key="event.id" class="mb-2 h-[600px] md:h-[400px]">
+                <div v-for="event in events.data" :key="event.id" class="h-[600px] md:h-[400px]">
                     <NavLink :href="route('events.show', event.id)" class="relative h-full w-full"
                              :style="{ backgroundImage: `url(${event.poster})`}">
                         <div class="absolute inset-0 backdrop-blur-md z-0 brightness-50"></div>
                         <img :src="event.poster" :alt="event.title"
                              class="absolute w-full h-full object-contain object-center z-10" />
                         <div
-                            class="absolute left-4  bg-orange text-xl w-28 h-28 z-20 flex flex-col justify-center items-center">
+                            class="absolute left-0 bg-orange text-xl w-28 h-28 z-20 flex flex-col justify-center items-center">
                             <p class="text-4xl font-bold">
                                 {{ moment(event.start_date, 'DD.MM.YY').format('D').toUpperCase() }}</p>
                             <p>{{ moment(event.start_date, 'DD.MM.YY').format('MMMM').toUpperCase() }}</p>
@@ -41,11 +40,11 @@ defineProps({
                         </div>
                     </NavLink>
                 </div>
-                <NavLink :href="route('events.create')"
-                         class="border-dashed hover:bg-graydark2 hover:font-bold border-2 border-graydark2 flex items-center gap-2 p-4">
+                <NavLink :href="route('profile.events.create')"
+                         class="h-[600px] md:h-[400px] border-dashed hover:bg-graydark2 border-2 border-graydark2 hover:border-orange flex items-center gap-2 p-4">
                     <div
                         class="flex flex-col gap-y-4 items-center w-32 p-4 rounded-lg mx-auto ">
-                        <EventIcon />
+                        <h2 class="text-3xl">+</h2>
                         <h3>Add event</h3>
                     </div>
                 </NavLink>
