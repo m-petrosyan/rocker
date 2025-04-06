@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Models\UserVerify;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,8 +16,6 @@ class UserRegisterService
             ->create($attributes);
         //
 //        ->assignRole('user')
-
-//        event(new Registered($user));
 
         $user->createToken('auth_token')->plainTextToken;
     }
@@ -46,5 +45,16 @@ class UserRegisterService
         }
 
         return $isMatch;
+    }
+
+    public function emailSender(object $request): void
+    {
+        if (!session()->has('email')) {
+            if ($request?->user() && !$request->query('code')) {
+                $user = $request->user();
+                event(new Registered($user));
+                session()->put('email', $user->email);
+            }
+        }
     }
 }

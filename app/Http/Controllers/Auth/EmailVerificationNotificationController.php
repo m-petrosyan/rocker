@@ -32,7 +32,7 @@ class EmailVerificationNotificationController extends Controller
             return back()->withErrors(['error' => "Please wait $seconds seconds before trying again."]);
         }
 
-//        $request->user()->sendEmailVerificationNotification();
+        $request->user()->sendEmailVerificationNotification();
 
         $limiter->hit($key, 120);
 
@@ -59,7 +59,7 @@ class EmailVerificationNotificationController extends Controller
         auth()->user()->markEmailAsVerified();
         auth()->user()->verification()->delete();
 
-        return redirect()->route('profile.index', ['username' => auth()->user()->username])
+        return redirect()->route('profile.show', ['username' => auth()->user()->username])
             ->with('status', 'Email successfully verified.');
     }
 }
