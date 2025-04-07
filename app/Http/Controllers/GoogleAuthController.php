@@ -19,21 +19,40 @@ class GoogleAuthController extends Controller
     {
         try {
             $googleUser = Socialite::driver('google')->user();
-            $user = User::updateOrCreate(
+            $user = User::query()->updateOrCreate(
                 ['email' => $googleUser->getEmail()],
                 [
                     'name' => $googleUser->getName(),
-                    'username' => $googleUser->getName(),
+                    'username' => $this->generateUniqueUsername($googleUser->getName()),
+                    'email_verified_at' => now(),
                     'google_id' => $googleUser->getId(),
-                    'password' => bcrypt(uniqid()), // Случайный пароль
+                    'password' => bcrypt(uniqid()),
                 ]
             );
 
             Auth::login($user);
 
-            return Inertia::location('/dashboard'); // Перенаправление на страницу после входа
+            return Inertia::location('/profile', [
+                'username' => $user->username,
+            ]);
         } catch (\Exception $e) {
             return redirect('/login')->with('error', 'Ошибка входа через Google.');
         }
     }
+
+
+    protected function generateUniqueUsername(string $name): string
+    {
+        $username = strtolower(str_replace(' ', '', $name));
+        $originalUsername = $username;
+        $count = 1;
+
+        while (User::where('username', $username)->exists()) {
+            $username = $originalUsername.$count;
+            $count++;
+        }
+
+        return $username;
+    }
+
 }
