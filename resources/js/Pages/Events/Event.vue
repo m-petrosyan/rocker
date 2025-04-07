@@ -2,13 +2,15 @@
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import moment from 'moment-timezone';
 import Map from '@/Components/Map.vue';
+import GoogleCalendar from '@/Components/Socials/GoogleCalendar.vue';
 
-defineProps({
+const props = defineProps({
     event: {
         type: Array,
         default: () => []
     }
 });
+
 </script>
 
 <template>
@@ -33,7 +35,10 @@ defineProps({
         <h3 class="text-2xl text-center mt-2">{{ event.title }} </h3>
         <pre class="text-pretty text-center mt-8">{{ event.content }}</pre>
         <p class="text-center text-orange">{{ event.location }}</p>
+        <GoogleCalendar :event class="mx-auto mt-4" />
         <Map :cordinates="event.cordinates" />
+
+
         <!--        <div-->
         <!--            class="absolute inset-0 bg-orange text-xl w-28 h-28 z-20 flex flex-col justify-center items-center">-->
         <!--            <p class="text-4xl font-bold">-->
