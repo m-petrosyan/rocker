@@ -28,7 +28,7 @@ class EventController
                     file_get_contents($request->file('poster_file')->getRealPath()),
                     $request->file('poster_file')->getClientOriginalName()
                 )
-                ->post('http://bot.rocker.loc/api/event', [
+                ->post('https://bot.rocker.am/api/event', [
                     'rocker' => [
                         'username' => auth()->user()->username,
                         'admin' => 1,
