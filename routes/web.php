@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\Profile\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -26,6 +27,9 @@ Route::get('verification', EmailVerificationPromptController::class)
 Route::get('profile/{username}', [ProfileController::class, 'index'])->name(
     'profile.show'
 );
+
+Route::get('/auth/google', [GoogleAuthController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('/auth/google/callback', [GoogleAuthController::class, 'handleGoogleCallback']);
 
 require_once __DIR__.'/guest.php';
 require_once __DIR__.'/auth.php';

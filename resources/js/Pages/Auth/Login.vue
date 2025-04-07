@@ -6,27 +6,30 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/Forms/TextInput.vue';
 import { Link, useForm } from '@inertiajs/vue3';
 import AuthLayouth from '@/Layouts/AuthLayouth.vue';
+import { computed } from 'vue';
 
 defineProps({
     canResetPassword: {
-        type: Boolean
+        type: Boolean,
     },
     status: {
-        type: String
-    }
+        type: String,
+    },
 });
 
 const form = useForm({
     email: '',
     password: '',
-    remember: false
+    remember: false,
 });
 
 const submit = () => {
     form.post(route('login'), {
-        onFinish: () => form.reset('password')
+        onFinish: () => form.reset('password'),
     });
 };
+
+const googleAuthUrl = computed(() => route('auth.google'));
 </script>
 
 <template>
@@ -34,7 +37,10 @@ const submit = () => {
         <div v-if="status" class="text-green-600 mb-4 text-sm font-medium">
             {{ status }}
         </div>
-
+        <div>
+            <h1>Вход</h1>
+            <a :href="googleAuthUrl" class="google-btn">Войти через Google</a>
+        </div>
         <form @submit.prevent="submit">
             <div>
                 <InputLabel for="email" value="Email" />
@@ -69,13 +75,8 @@ const submit = () => {
 
             <div class="mt-4 block">
                 <label class="flex items-center">
-                    <Checkbox
-                        name="remember"
-                        v-model:checked="form.remember"
-                    />
-                    <span class="text-gray-600 ms-2 text-sm"
-                    >Remember me</span
-                    >
+                    <Checkbox name="remember" v-model:checked="form.remember" />
+                    <span class="text-gray-600 ms-2 text-sm">Remember me</span>
                 </label>
             </div>
 
@@ -99,3 +100,14 @@ const submit = () => {
         </form>
     </AuthLayouth>
 </template>
+
+<style>
+.google-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4285f4;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+</style>
