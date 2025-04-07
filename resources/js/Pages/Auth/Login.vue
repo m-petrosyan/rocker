@@ -6,7 +6,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/Forms/TextInput.vue';
 import { Link, useForm } from '@inertiajs/vue3';
 import AuthLayouth from '@/Layouts/AuthLayouth.vue';
-import { computed } from 'vue';
+import GoogleLogin from '@/Components/Forms/GoogleLogin.vue';
 
 defineProps({
     canResetPassword: {
@@ -29,8 +29,6 @@ const submit = () => {
         onFinish: () => form.reset('password'),
     });
 };
-
-const googleAuthUrl = computed(() => route('auth.google'));
 </script>
 
 <template>
@@ -38,11 +36,8 @@ const googleAuthUrl = computed(() => route('auth.google'));
         <div v-if="status" class="text-green-600 mb-4 text-sm font-medium">
             {{ status }}
         </div>
-        <h1 class="text-center">Login</h1>
-        <div>
-            <a :href="googleAuthUrl" class="google-btn">Login with Google</a>
-        </div>
-        <form @submit.prevent="submit">
+        <GoogleLogin />
+        <form @submit.prevent="submit" class="mt-5">
             <div>
                 <InputLabel for="email" value="Email" />
 
@@ -101,14 +96,3 @@ const googleAuthUrl = computed(() => route('auth.google'));
         </form>
     </AuthLayouth>
 </template>
-
-<style>
-.google-btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #4285f4;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-}
-</style>
