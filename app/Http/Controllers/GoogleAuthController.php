@@ -29,7 +29,7 @@ class GoogleAuthController extends Controller
                     'password' => bcrypt(uniqid()),
                 ]
             );
-
+            dd($user);
             Auth::login($user);
 
             return Inertia::location('/profile', [
