@@ -9,5 +9,5 @@ export const formatUtcDateTime = (dateTime, outputFormat = 'DD/MM/YYYY HH:mm') =
 };
 
 export const date_time_utc = (date, time) => {
-    return moment(`${date} ${time}`, 'DD.MM.YY HH:mm').utc().format('YYYYMMDDTHHmmss') + 'Z';
+    return moment(`${date} ${time}`, 'DD.MM.YY HH:mm').utc().tz(moment.tz.guess()).format('YYYYMMDDTHHmmss') + 'Z';
 };
