@@ -7,7 +7,7 @@ import { useForm } from '@inertiajs/vue3';
 import DatePicker from '@/Components/Forms/DatePicker.vue';
 import Preview from '@/Components/Forms/Preview.vue';
 import GoogleAutocomplate from '@/Components/Map/GoogleAutocomplate.vue';
-
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 
 const props = defineProps({
     event: {
@@ -53,22 +53,22 @@ const form = useForm(
         cordinates: null,
         start_date: null,
         start_time: null,
-        poster: null
+        poster_file: null
     });
 
 const createEvent = () => {
-    data.disable = true;
+    // data.disable = true;
     optionsSet();
-    form.post(route(form.id ? 'event.update' : 'event.store', form), {
+    form.post(route(props.event?.id ? 'profile.events.update' : 'profile.events.store', props.event?.id), {
         onSuccess: () => {
-            data.created = true;
+            // data.created = true;
         },
         onError: () => {
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
             });
-            data.disable = false;
+            // data.disable = false;
         },
         preserveScroll: true
     });
@@ -87,7 +87,7 @@ const optionsSet = () => {
 <template>
     <ProfileLayout title="Event create" :role="role">
         <div v-if="!data.created" class="mx-auto bg-graydark py-2 sm:px-6 lg:px-8">
-            <ErrorMessages :messages="$page.props.errors" />
+            <ErrorMessages :messages="$page.props.errors" class="mb-5" />
             <form @submit.prevent="createEvent" class="flex flex-col gap-y-2">
 
                 <div class="flex gap-x-4">
@@ -96,7 +96,7 @@ const optionsSet = () => {
                             class="h-full"
                             label="h-full"
                             :image="form.poster"
-                            v-model:preview="form.previewFile"
+                            v-model:preview="form.poster_file"
                             v-model:file="data.preview" />
 
                     </div>
@@ -139,7 +139,13 @@ const optionsSet = () => {
                 <br>
                 <!--                <YellowButton :disable="data.disable" :text="form.id ? 'Update': 'Create'" />-->
                 <!--                <RedButton text="Cancel" navigate="event.index" />-->
-                <br>
+                <PrimaryButton
+                    class="ms-4"
+                    :class="{ 'opacity-25': form.processing }"
+                    :disabled="form.processing"
+                >
+                    Create
+                </PrimaryButton>
             </form>
         </div>
         <div v-else class="flex flex-col items-center justify-center h-dvh">

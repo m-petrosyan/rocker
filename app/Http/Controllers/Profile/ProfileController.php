@@ -26,7 +26,6 @@ class ProfileController
             }
         }
 
-
         return Inertia::render('Profile/Profile', [
             'user' => $user,
             'owner' => $owner,
