@@ -29,12 +29,12 @@ class GoogleAuthController extends Controller
                     'password' => bcrypt(uniqid()),
                 ]
             );
-            dd($user);
+
             Auth::login($user);
 
-            return Inertia::location('/profile', [
+            return Inertia::location(route('profile.show', [
                 'username' => $user->username,
-            ]);
+            ]));
         } catch (\Exception $e) {
             return redirect('/login')->with('error', 'Google login error.');
         }
