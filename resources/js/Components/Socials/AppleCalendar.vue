@@ -2,7 +2,6 @@
 import { toIso8601WithEnd } from '@/Helpers/dateFormatHelper.js';
 import Icalcon from '@/Components/Icons/Icalcon.vue';
 
-// Пропсы для передачи данных события
 const props = defineProps({
     event: {
         type: Object,
@@ -13,7 +12,6 @@ const props = defineProps({
 // Генерация времени начала и окончания события
 const date = toIso8601WithEnd('10.04.25', '15:00');
 
-// Функция для работы с данными ICS без сохранения файла
 const generateIcsContent = () => {
     const icsContent = [
         'BEGIN:VCALENDAR',
@@ -30,10 +28,7 @@ const generateIcsContent = () => {
         'END:VCALENDAR'
     ].join('\r\n');
 
-    // Вывод данных в консоль
-    console.log('ICS Content:\n', icsContent);
 
-    // Если нужно отправить данные на сервер
     fetch('/save-event', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -45,6 +40,5 @@ const generateIcsContent = () => {
 <template>
     <button @click="generateIcsContent">
         <Icalcon />
-        Показать ICS данные
     </button>
 </template>
