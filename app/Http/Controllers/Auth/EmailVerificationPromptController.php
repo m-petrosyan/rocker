@@ -23,7 +23,7 @@ class EmailVerificationPromptController extends Controller
         $this->userRegisterService->emailSender($request);
 
         return $request?->user()?->hasVerifiedEmail()
-            ? redirect()->intended(route('profile.index', ['username' => auth()->user()->username], absolute: false))
+            ? redirect()->intended(route('profile.show', ['username' => auth()->user()->username], absolute: false))
             : Inertia::render('Auth/VerifyEmail', ['status' => session('status')]);
     }
 }

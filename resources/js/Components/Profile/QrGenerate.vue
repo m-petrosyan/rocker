@@ -3,8 +3,12 @@ import { useQRCode } from '@vueuse/integrations/useQRCode';
 import { ref } from 'vue';
 import QrIcon from '@/Components/Icons/QrIcon.vue';
 
-const text = ref(window.location.href);
-const qrCode = useQRCode(text);
+const props = defineProps({
+    url: String,
+});
+
+// const text = ref(window.location.href);
+const qrCode = useQRCode(props.url);
 const showQr = ref(false);
 </script>
 
@@ -14,15 +18,15 @@ const showQr = ref(false);
             <div
                 v-show="showQr"
                 @click="showQr = !showQr"
-                class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50"
+                class="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-black bg-opacity-50"
             >
                 <Transition name="scale">
                     <img
                         v-show="showQr"
                         :src="qrCode"
-                        class="border-2 rounded-xl"
+                        class="rounded-xl border-2"
                         alt="QR Code"
-                    >
+                    />
                 </Transition>
             </div>
         </Transition>

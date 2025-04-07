@@ -7,12 +7,16 @@ import QrGenerate from '@/Components/Profile/QrGenerate.vue';
 defineProps({
     user: {
         type: Object,
-        required: true
+        required: true,
     },
     owner: {
         type: Boolean,
-        required: true
-    }
+        required: true,
+    },
+    url: {
+        type: String,
+        required: true,
+    },
 });
 </script>
 
@@ -30,21 +34,20 @@ defineProps({
 
         <div>
             <div class="mx-auto bg-graydark py-2 sm:px-6 lg:px-8">
-                <div class="text-center w-fit mx-auto">
+                <div class="mx-auto w-fit text-center">
                     <div class="relative">
                         <img
                             src="/images/user.avif"
                             alt="Profile Picture"
-                            class="w-32 h-32 rounded-full mx-auto mt-6 object-cover"
+                            class="mx-auto mt-6 h-32 w-32 rounded-full object-cover"
                         />
-                        <QrGenerate v-if="owner" />
+                        <QrGenerate v-if="url" :url />
                     </div>
-                    <div class="p-6 text-gray-900">
+                    <div class="text-gray-900 p-6">
                         {{ user.name }}
                     </div>
-
                 </div>
-                <ProfileActions v-if="owner" class="w-1/2 mx-auto" />
+                <ProfileActions v-if="owner" class="mx-auto w-1/2" />
             </div>
         </div>
     </ProfileLayout>
