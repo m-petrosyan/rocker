@@ -20,7 +20,7 @@ class ProfileController
             $user = User::query()->where('username', request()->route('username'))->first();
             $owner = false;
             if ($user) {
-                $owner = !request()->route('username') || auth()?->user()->username === request()->route('username');
+                $owner = !request()->route('username') || auth()?->user()?->username === request()->route('username');
             } else {
                 abort(404);
             }

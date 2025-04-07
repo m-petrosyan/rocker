@@ -9,7 +9,6 @@ const props = defineProps({
     }
 });
 
-// Генерация временных меток начала и окончания события
 const date = toIso8601WithEnd('10.04.25', '15:00');
 
 const addToICalendar = () => {
@@ -28,17 +27,14 @@ const addToICalendar = () => {
         'END:VCALENDAR'
     ].join('\r\n');
 
-    // Создаем Blob с ICS-контентом
     const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
     const url = URL.createObjectURL(blob);
 
-    // Создаем скрытый iframe для попытки открытия ICS-файла напрямую
     const iframe = document.createElement('iframe');
     iframe.style.display = 'none';
     iframe.src = url;
     document.body.appendChild(iframe);
 
-    // Освобождаем ресурсы через короткий промежуток времени
     setTimeout(() => {
         document.body.removeChild(iframe);
         URL.revokeObjectURL(url);
@@ -48,6 +44,6 @@ const addToICalendar = () => {
 
 <template>
     <button @click="addToICalendar">
-        <Icalcon />
+        <Icalcon class="saturate-50 hover:saturate-100" />
     </button>
 </template>

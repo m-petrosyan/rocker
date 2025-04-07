@@ -26,6 +26,6 @@ const addToGoogleCalendar = () => {
 
 <template>
     <button @click="addToGoogleCalendar">
-        <GoogleCalendarIcon />
+        <GoogleCalendarIcon class="saturate-50 hover:saturate-100" />
     </button>
 </template>

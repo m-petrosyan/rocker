@@ -37,7 +37,7 @@ defineProps({
                             alt="Profile Picture"
                             class="w-32 h-32 rounded-full mx-auto mt-6 object-cover"
                         />
-                        <QrGenerate />
+                        <QrGenerate v-if="owner" />
                     </div>
                     <div class="p-6 text-gray-900">
                         {{ user.name }}

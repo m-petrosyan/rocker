@@ -41,10 +41,6 @@ const props = defineProps({
         <h3 class="text-2xl text-center mt-2">{{ event.title }} </h3>
         <pre class="text-pretty text-center mt-8">{{ event.content }}</pre>
         <p class="text-center text-orange">{{ event.location }}</p>
-        <div class="flex gap-x-6 justify-center my-4">
-            <GoogleCalendar :event />
-            <AppleCalendar :event />
-        </div>
         <Map :cordinates="event.cordinates" />
 
 

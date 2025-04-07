@@ -49,7 +49,5 @@ defineProps({
                 </NavLink>
             </div>
         </div>
-
-
     </GuestLayout>
 </template>
