@@ -6,11 +6,11 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Laravel\Socialite\Facades\Socialite;
-
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class GoogleAuthController extends Controller
 {
-    public function redirectToGoogle()
+    public function redirectToGoogle(): RedirectResponse|\Illuminate\Http\RedirectResponse
     {
         return Socialite::driver('google')->redirect();
     }
@@ -19,7 +19,7 @@ class GoogleAuthController extends Controller
     {
         try {
             $googleUser = Socialite::driver('google')->user();
-            $user = User::query()->updateOrCreate(
+            $user = User::query()->firstOrCreate(
                 ['email' => $googleUser->getEmail()],
                 [
                     'name' => $googleUser->getName(),

@@ -25,7 +25,7 @@ const submit = () => {
 <template>
     <AuthLayouth title="Register">
         <GoogleLogin />
-        <form @submit.prevent="submit">
+        <form @submit.prevent="submit" class="mt-5">
             <div>
                 <InputLabel for="name" value="Name" />
 
