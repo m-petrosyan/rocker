@@ -24,6 +24,7 @@ const form = useForm({
 });
 
 const submit = () => {
+    alert();
     form.post(route('login'), {
         onFinish: () => form.reset('password'),
     });
@@ -37,9 +38,9 @@ const googleAuthUrl = computed(() => route('auth.google'));
         <div v-if="status" class="text-green-600 mb-4 text-sm font-medium">
             {{ status }}
         </div>
+        <h1 class="text-center">Login</h1>
         <div>
-            <h1>Вход</h1>
-            <a :href="googleAuthUrl" class="google-btn">Войти через Google</a>
+            <a :href="googleAuthUrl" class="google-btn">Login with Google</a>
         </div>
         <form @submit.prevent="submit">
             <div>
