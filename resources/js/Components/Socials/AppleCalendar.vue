@@ -9,39 +9,25 @@ const props = defineProps({
     }
 });
 
-// Генерация времени начала и окончания события
+// Генерация временных меток начала и окончания события
 const date = toIso8601WithEnd('10.04.25', '15:00');
 
-const generateIcsContent = () => {
-    const icsContent = [
-        'BEGIN:VCALENDAR',
-        'VERSION:2.0',
-        'PRODID:-//armcamp.com//EN',
-        'CALSCALE:GREGORIAN',
-        'BEGIN:VEVENT',
-        `DTSTART:${date.start}`,
-        `DTEND:${date.end}`,
-        `SUMMARY:${props.event.title}`,
-        `DESCRIPTION:${props.event.content}`,
-        `LOCATION:${props.event.location}`,
-        'END:VEVENT',
-        'END:VCALENDAR'
-    ].join('\r\n');
+const addToGoogleCalendar = () => {
+    // Формирование URL для создания события в Google Calendar
+    const googleCalendarUrl =
+        `https://www.google.com/calendar/render?action=TEMPLATE` +
+        `&text=${encodeURIComponent(props.event.title)}` +
+        `&dates=${date.start}/${date.end}` +
+        `&details=${encodeURIComponent(props.event.content)}` +
+        `&location=${encodeURIComponent(props.event.location)}`;
 
-    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'event.ics';
-    link.click();
-
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    // Открытие URL в новой вкладке
+    window.open(googleCalendarUrl, '_blank');
 };
 </script>
 
 <template>
-    <button @click="generateIcsContent">
+    <button @click="addToGoogleCalendar">
         <Icalcon />
     </button>
 </template>
