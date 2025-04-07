@@ -3,6 +3,7 @@ import GuestLayout from '@/Layouts/GuestLayout.vue';
 import moment from 'moment-timezone';
 import Map from '@/Components/Map.vue';
 import GoogleCalendar from '@/Components/Socials/GoogleCalendar.vue';
+import AppleCalendar from '@/Components/Socials/AppleCalendar.vue';
 
 const props = defineProps({
     event: {
@@ -35,7 +36,10 @@ const props = defineProps({
         <h3 class="text-2xl text-center mt-2">{{ event.title }} </h3>
         <pre class="text-pretty text-center mt-8">{{ event.content }}</pre>
         <p class="text-center text-orange">{{ event.location }}</p>
-        <GoogleCalendar :event class="mx-auto mt-4" />
+        <div class="flex gap-x-6 justify-center my-4">
+            <GoogleCalendar :event />
+            <AppleCalendar :event />
+        </div>
         <Map :cordinates="event.cordinates" />
 
 
