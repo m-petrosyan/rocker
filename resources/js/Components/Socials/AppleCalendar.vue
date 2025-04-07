@@ -28,12 +28,15 @@ const generateIcsContent = () => {
         'END:VCALENDAR'
     ].join('\r\n');
 
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
 
-    fetch('/save-event', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ icsContent })
-    });
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'event.ics';
+    link.click();
+
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
 };
 </script>
 
