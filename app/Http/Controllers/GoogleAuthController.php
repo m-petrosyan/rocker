@@ -36,7 +36,7 @@ class GoogleAuthController extends Controller
                 'username' => $user->username,
             ]);
         } catch (\Exception $e) {
-            return redirect('/login')->with('error', 'Ошибка входа через Google.');
+            return redirect('/login')->with('error', 'Google login error.');
         }
     }
 
