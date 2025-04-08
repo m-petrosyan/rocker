@@ -9,23 +9,23 @@ const menu = [
     {
         name: 'Add event',
         route: route('profile.events.create'),
-        icon: EventIcon
+        icon: EventIcon,
     },
     {
         name: 'Add blog',
         route: route('profile.edit'),
-        icon: BlogIcon
+        icon: BlogIcon,
     },
     {
         name: 'Add gallery',
         route: route('profile.edit'),
-        icon: GalleryIcon
+        icon: GalleryIcon,
     },
     {
         name: 'Add band',
         route: route('profile.edit'),
-        icon: BandIcon
-    }
+        icon: BandIcon,
+    },
 ];
 </script>
 
@@ -38,7 +38,7 @@ const menu = [
             class="flex items-center gap-2 p-4"
         >
             <div
-                class="mx-auto flex w-32 flex-col items-center gap-y-4 rounded-lg bg-black p-4 hover:bg-orange"
+                class="mx-auto flex w-32 flex-col items-center gap-y-4 rounded-lg bg-black p-4 transition-all duration-300 hover:bg-orange"
             >
                 <component :is="item.icon" />
                 <h3>{{ item.name }}</h3>

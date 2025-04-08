@@ -1,8 +1,7 @@
 <script setup>
-import ProfileLayout from '@/Layouts/ProfileLayout.vue';
-import { Head } from '@inertiajs/vue3';
 import ProfileActions from '@/Components/Profile/ProfileActions.vue';
 import QrGenerate from '@/Components/Profile/QrGenerate.vue';
+import GuestLayout from '@/Layouts/GuestLayout.vue';
 
 defineProps({
     user: {
@@ -21,9 +20,7 @@ defineProps({
 </script>
 
 <template>
-    <Head title="Profile" />
-
-    <ProfileLayout>
+    <GuestLayout>
         <!--        <template #header>-->
         <!--            <h2-->
         <!--                class="text-xl font-semibold leading-tight text-gray-800"-->
@@ -34,7 +31,7 @@ defineProps({
 
         <div>
             <div
-                class="relative mx-auto mt-36 bg-graydark py-2 sm:px-6 lg:px-8"
+                class="relative mx-auto mt-28 bg-graydark py-2 sm:px-6 lg:px-8"
             >
                 <div
                     class="absolute left-1/2 top-[-100px] w-fit -translate-x-1/2 text-center"
@@ -51,8 +48,8 @@ defineProps({
                         {{ user.name }}
                     </div>
                 </div>
-                <div class="mt-32 text-center">
-                    <small class="mx-auto block w-2/6 text-sm text-gray">
+                <div class="mx-auto mt-32 w-2/6 text-center">
+                    <small class="block text-sm text-gray">
                         "Creative professional based in Kyiv, passionate about
                         building meaningful projects and bringing ideas to life.
                         Focused on quality, collaboration, and continuous
@@ -69,5 +66,5 @@ defineProps({
                 <ProfileActions v-if="owner" class="mx-auto w-1/2" />
             </div>
         </div>
-    </ProfileLayout>
+    </GuestLayout>
 </template>
