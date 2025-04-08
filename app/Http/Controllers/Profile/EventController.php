@@ -26,7 +26,7 @@ class EventController
             $payload = [
                 'rocker' => [
                     'username' => auth()->user()->username,
-                    'admin' => 1,
+                    'role' => 'admin',
                 ],
                 'title' => $validated['title'],
                 'content' => $validated['content'],
