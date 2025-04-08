@@ -4,7 +4,7 @@
         ref="mapRef"
         api-key="AIzaSyCovr1rcKSduU9SLpe_IX-EzuF-_sVVAlY"
         :center="mapCenter"
-        :zoom="14"
+        :zoom="18"
         :styles="darkTheme"
         class="h-[500px] w-full"
         @mounted="onMapMounted"
@@ -19,15 +19,16 @@
             }"
             @click="openInfoWindow(index)"
         />
-        <!-- Всплывающие окна -->
+        <!-- Всплывающее окно -->
         <InfoWindow
-            v-for="(marker, index) in displayedMarkers"
-            :key="`info-${index}`"
+            class="bg-grayDark2 text-white"
+            v-if="openedInfoWindow !== null"
             :options="{
-                position: marker.position,
-                content: marker.info,
+                position: displayedMarkers[openedInfoWindow].position,
+                content: displayedMarkers[openedInfoWindow].info,
             }"
-            :opened="openedInfoWindow === index"
+            :opened="true"
+            @close="openedInfoWindow = null"
         />
     </GoogleMap>
 </template>
@@ -46,7 +47,7 @@ const props = defineProps({
 
 const mapRef = ref(null);
 const mapInstance = ref(null);
-const openedInfoWindow = ref(null);
+const openedInfoWindow = ref(null); // Начальное значение null, чтобы окна не открывались при старте
 
 // Форматируем метки для карты
 const displayedMarkers = computed(() => {
@@ -69,7 +70,7 @@ const mapCenter = computed(() => {
 
 // Открытие всплывающего окна
 const openInfoWindow = (index) => {
-    openedInfoWindow.value = index;
+    openedInfoWindow.value = index; // Устанавливаем индекс выбранной метки
 };
 
 // Инициализация карты
