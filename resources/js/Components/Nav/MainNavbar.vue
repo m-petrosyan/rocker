@@ -6,7 +6,7 @@ const menu = [
     { name: 'Blog', url: route('events.index') },
     { name: '', href: route('events.index'), img: '/images/logo.png' },
     { name: 'Gallery', url: route('gallery') },
-    { name: 'Bands', url: route('events.index') },
+    { name: 'Bands', url: route('events.index') }
 ];
 </script>
 
@@ -30,13 +30,10 @@ const menu = [
                 <span v-if="item.name">{{ item.name }}</span>
             </Link>
         </div>
-        <div class="absolute right-0">
+        <div class="absolute right-2 flex gap-x-4 uppercase">
             <template v-if="$page.props.auth.user">
                 <Link
-                    :href="
-                        route('profile.index', $page.props.auth.user.username)
-                    "
-                    class="px-3 py-2 text-white"
+                    :href="route('profile.index', $page.props.auth.user.username) "
                 >
                     Profile
                 </Link>
@@ -44,16 +41,16 @@ const menu = [
                     :href="route('logout')"
                     method="post"
                     as="button"
-                    class="px-3 py-2 text-white"
-                    >Log Out
+                    class="uppercase"
+                >Log Out
                 </Link>
             </template>
             <template v-else>
-                <Link :href="route('login')" class="px-3 py-2 text-white"
-                    >Log In
+                <Link :href="route('login')"
+                >Log In
                 </Link>
-                <Link :href="route('register')" class="px-3 py-2 text-white"
-                    >Register
+                <Link :href="route('register')"
+                >Register
                 </Link>
             </template>
         </div>

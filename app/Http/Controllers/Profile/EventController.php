@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Profile;
 use App\Http\Requests\Event\EventCreateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -21,50 +22,63 @@ class EventController
         $response = null;
 
         try {
-            $response = Http::timeout(10)
-                ->retry(3, 1000)
-                ->attach(
-                    'poster_file',
-                    file_get_contents($request->file('poster_file')->getRealPath()),
-                    $request->file('poster_file')->getClientOriginalName()
-                )
-                ->post('https://bot.rocker.am/api/event', [
-                    'rocker' => [
-                        'username' => auth()->user()->username,
-                        'admin' => 1,
-                    ],
-                    'title' => $request->title,
-                    'content' => $request->content,
-                    'type' => $request->type,
-                    'country' => $request->country,
-                    'location' => $request->location,
-                    'genre' => $request->genre,
-                    'price' => $request->price,
-                    'start_date' => $request->start_date,
-                    'start_time' => $request->start_time,
-                    'cordinates[latitude]' => $request->cordinates['latitude'],
-                    'cordinates[longitude]' => $request->cordinates['longitude'],
-                ]);
+            $validated = $request->validated();
+            $payload = [
+                'rocker' => [
+                    'username' => auth()->user()->username,
+                    'admin' => 1,
+                ],
+                'title' => $validated['title'],
+                'content' => $validated['content'],
+                'type' => $validated['type'],
+                'country' => $validated['country'],
+                'location' => $validated['location'],
+                'genre' => $validated['genre'],
+                'price' => $validated['price'] ?? null,
+                'start_date' => $validated['start_date'],
+                'start_time' => $validated['start_time'],
+                'cordinates[latitude]' => $validated['cordinates']['latitude'] ?? null,
+                'cordinates[longitude]' => $validated['cordinates']['longitude'] ?? null,
+                'link' => $validated['link'] ?? null,
+                'ticket' => $validated['ticket'] ?? null,
+            ];
 
-            if (!$response->successful()) {
-                throw new \Exception('API request failed', $response->status());
+            $http = Http::timeout(10)
+                ->retry(3, 1000)
+                ->withHeaders(['Accept' => 'application/json']);
+
+            if ($request->hasFile('poster_file') && $request->file('poster_file')->isValid()) {
+                $file = $request->file('poster_file');
+                $http->attach(
+                    'poster_file',
+                    file_get_contents($file->getRealPath()),
+                    $file->getClientOriginalName()
+                );
             }
 
-            // Успешный случай - редирект с сообщением
+            $response = $http->post('https://bot.rocker.am/api/event', $payload);
+
+            if (!$response->successful()) {
+                throw new \Exception(
+                    'API request failed: '.($response->json('message') ?? 'Unknown error'),
+                    $response->status()
+                );
+            }
+
             return redirect()
                 ->back()
                 ->with('success', 'Event created successfully');
         } catch (\Exception $e) {
-            \Log::error('Event creation failed: '.$e->getMessage(), [
+            Log::error('Event creation failed: '.$e->getMessage(), [
                 'status' => $response?->status(),
                 'body' => $response?->body(),
                 'request' => $request->validated(),
             ]);
 
-            // Ошибка - редирект с сообщением об ошибке
             return redirect()
                 ->back()
-                ->with('error', 'Failed to create event: '.$e->getMessage());
+                ->with('error', 'Failed to create event: '.$e->getMessage())
+                ->withInput();
         }
     }
 
