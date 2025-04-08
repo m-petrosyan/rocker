@@ -4,7 +4,7 @@
         ref="mapRef"
         api-key="AIzaSyCovr1rcKSduU9SLpe_IX-EzuF-_sVVAlY"
         :center="mapCenter"
-        :zoom="18"
+        :zoom="14"
         :styles="darkTheme"
         class="h-[500px] w-full"
         @mounted="onMapMounted"
@@ -73,14 +73,11 @@ const mapCenter = computed(() => {
 const getInfoWindowContent = (info) => {
     return `
         <div style="
-            background-color: #212121; /* Тёмный фон для всего окна */
-            color: #ffffff; /* Белый текст */
+            color: #212121;
             padding: 10px;
             border-radius: 5px;
             font-family: Arial, sans-serif;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-            min-width: 150px; /* Минимальная ширина */
-            margin: 0; /* Убираем отступы */
         ">
             ${info}
         </div>
