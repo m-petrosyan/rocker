@@ -62,7 +62,16 @@ class EventService
                 );
             }
 
-            return $http->post('http://bot.rocker.loc/api/event', $payload);
+            $response = $http->post('http://bot.rocker.loc/api/event', $payload);
+
+            $data = json_decode($response->body(), true);
+
+            auth()->user()->events()->create([
+                'event_id' => $data['event_id'],
+                'notify_count' => $data['notify_count'],
+            ]);
+
+            return $response;
         } catch (\Exception $e) {
             Log::error(
                 $e->getMessage().' Не удалось создать событие: '.$e->getTraceAsString(),
