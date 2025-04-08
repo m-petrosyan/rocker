@@ -4,24 +4,35 @@
         ref="mapRef"
         api-key="AIzaSyCovr1rcKSduU9SLpe_IX-EzuF-_sVVAlY"
         :center="mapCenter"
-        :zoom="18"
-        :styles="darkTheme"
+        :zoom="14"
         class="h-[500px] w-full"
         @mounted="onMapMounted"
     >
+        <!-- Метки на карте -->
         <Marker
             v-for="(marker, index) in displayedMarkers"
             :key="index"
             :options="{
-                position: marker,
+                position: marker.position,
                 icon: '/images/logo.png',
             }"
+            @click="openInfoWindow(index)"
+        />
+        <!-- Всплывающие окна -->
+        <InfoWindow
+            v-for="(marker, index) in displayedMarkers"
+            :key="`info-${index}`"
+            :options="{
+                position: marker.position,
+                content: marker.info,
+            }"
+            :opened="openedInfoWindow === index"
         />
     </GoogleMap>
 </template>
 
 <script setup>
-import { GoogleMap, Marker } from 'vue3-google-map';
+import { GoogleMap, InfoWindow, Marker } from 'vue3-google-map';
 import { computed, nextTick, ref, watch } from 'vue';
 
 const props = defineProps({
@@ -34,41 +45,55 @@ const props = defineProps({
 
 const mapRef = ref(null);
 const mapInstance = ref(null);
+const openedInfoWindow = ref(null);
 
-// Преобразуем координаты меток в правильный формат
+// Форматируем метки для карты
 const displayedMarkers = computed(() => {
     return props.markers.map((marker) => ({
-        lat: parseFloat(marker.latitude),
-        lng: parseFloat(marker.longitude),
+        position: {
+            lat: parseFloat(marker.latitude),
+            lng: parseFloat(marker.longitude),
+        },
+        info: marker.info || 'Информация отсутствует',
     }));
 });
 
-// Устанавливаем центр карты на первую метку
+// Центр карты — первая метка
 const mapCenter = computed(() => {
     if (displayedMarkers.value.length > 0) {
-        return displayedMarkers.value[0];
+        return displayedMarkers.value[0].position;
     }
     return { lat: 0, lng: 0 };
 });
 
-// Функция инициализации карты
+// Открытие всплывающего окна
+const openInfoWindow = (index) => {
+    openedInfoWindow.value = index;
+};
+
+// Инициализация карты
 const onMapMounted = (map) => {
     mapInstance.value = map;
     fitMapToMarkers();
 };
 
-// Функция для подстройки масштаба карты под метки
+// Подстройка масштаба под все метки
 const fitMapToMarkers = () => {
     if (mapInstance.value && displayedMarkers.value.length > 0) {
         const bounds = new google.maps.LatLngBounds();
         displayedMarkers.value.forEach((marker) => {
-            bounds.extend(new google.maps.LatLng(marker.lat, marker.lng));
+            bounds.extend(
+                new google.maps.LatLng(
+                    marker.position.lat,
+                    marker.position.lng,
+                ),
+            );
         });
         mapInstance.value.fitBounds(bounds);
     }
 };
 
-// Отслеживаем изменения меток и обновляем масштаб
+// Обновление масштаба при изменении меток
 watch(
     () => props.markers,
     () => {
@@ -78,32 +103,4 @@ watch(
     },
     { deep: true },
 );
-
-// Тёмная тема
-const darkTheme = [
-    { elementType: 'geometry', stylers: [{ color: '#212121' }] },
-    { elementType: 'labels.icon', stylers: [{ visibility: 'off' }] },
-    { elementType: 'labels.text.fill', stylers: [{ color: '#757575' }] },
-    { elementType: 'labels.text.stroke', stylers: [{ color: '#212121' }] },
-    {
-        featureType: 'administrative',
-        elementType: 'geometry',
-        stylers: [{ color: '#757575' }],
-    },
-    {
-        featureType: 'road',
-        elementType: 'geometry.fill',
-        stylers: [{ color: '#2c2c2c' }],
-    },
-    {
-        featureType: 'water',
-        elementType: 'geometry',
-        stylers: [{ color: '#000000' }],
-    },
-    {
-        featureType: 'poi',
-        elementType: 'geometry',
-        stylers: [{ color: '#1a1a1a' }],
-    },
-];
 </script>
