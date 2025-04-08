@@ -4,7 +4,7 @@
         ref="mapRef"
         api-key="AIzaSyCovr1rcKSduU9SLpe_IX-EzuF-_sVVAlY"
         :center="mapCenter"
-        :zoom="18"
+        :zoom="14"
         :styles="darkTheme"
         class="h-[500px] w-full"
         @mounted="onMapMounted"
@@ -21,11 +21,12 @@
         />
         <!-- Всплывающее окно -->
         <InfoWindow
-            class="bg-grayDark2 text-white"
             v-if="openedInfoWindow !== null"
             :options="{
                 position: displayedMarkers[openedInfoWindow].position,
-                content: displayedMarkers[openedInfoWindow].info,
+                content: getInfoWindowContent(
+                    displayedMarkers[openedInfoWindow].info,
+                ),
             }"
             :opened="true"
             @close="openedInfoWindow = null"
@@ -47,7 +48,7 @@ const props = defineProps({
 
 const mapRef = ref(null);
 const mapInstance = ref(null);
-const openedInfoWindow = ref(null); // Начальное значение null, чтобы окна не открывались при старте
+const openedInfoWindow = ref(null);
 
 // Форматируем метки для карты
 const displayedMarkers = computed(() => {
@@ -68,9 +69,25 @@ const mapCenter = computed(() => {
     return { lat: 0, lng: 0 };
 });
 
+// Генерация HTML-контента для тёмного всплывающего окна
+const getInfoWindowContent = (info) => {
+    return `
+        <div style="
+            background-color: #212121;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        ">
+            ${info}
+        </div>
+    `;
+};
+
 // Открытие всплывающего окна
 const openInfoWindow = (index) => {
-    openedInfoWindow.value = index; // Устанавливаем индекс выбранной метки
+    openedInfoWindow.value = index;
 };
 
 // Инициализация карты
@@ -106,7 +123,7 @@ watch(
     { deep: true },
 );
 
-// Тёмная тема
+// Тёмная тема для карты
 const darkTheme = [
     { elementType: 'geometry', stylers: [{ color: '#212121' }] },
     { elementType: 'labels.icon', stylers: [{ visibility: 'off' }] },
