@@ -27,21 +27,21 @@ class EventCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'poster_file' => ['nullable', 'image', 'mimes:jpeg,jpg,webp,png', 'max:4000'], // Необязательный файл
+            'poster_file' => ['nullable', 'image', 'mimes:jpeg,jpg,webp,png', 'max:4000'],
             'title' => ['required', 'string', 'min:3', 'max:55'],
             'content' => ['required', 'string', 'min:10', 'max:730'],
             'type' => ['required', Rule::in([1, 2, 3])],
-            'country' => ['required', Rule::in(['am'])], // Только Армения?
+            'country' => ['required', Rule::in(['am'])],
             'location' => ['required', 'string', 'min:5', 'max:255'],
             'cordinates' => ['nullable', 'array'],
             'cordinates.latitude' => ['required_with:cordinates', 'numeric'],
             'cordinates.longitude' => ['required_with:cordinates', 'numeric'],
             'genre' => ['required', Rule::in(['rock', 'metal', 'all'])],
-            'price' => ['nullable', 'numeric', 'min:0'], // Цена как число
+            'price' => ['nullable', 'numeric', 'min:0'],
             'link' => ['nullable', 'url', 'max:255'],
             'ticket' => ['nullable', 'url', 'max:255'],
             'start_date' => ['required', 'date', 'after_or_equal:today'],
-            'start_time' => ['required', 'date_format:H:i'], // Формат HH:MM
+            'start_time' => ['required', 'date_format:H:i'],
         ];
     }
 

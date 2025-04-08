@@ -23,61 +23,55 @@ class EventController
 
         try {
             $validated = $request->validated();
+            $http = Http::timeout(10)
+                ->throw()
+                ->retry(3, 1000)
+                ->withHeaders(['Accept' => 'application/json']);
+
             $payload = [
-                'rocker' => [
-                    'username' => auth()->user()->username,
-                    'role' => 'admin',
-                ],
+                'rocker[username]' => auth()->user()->username,
+                'rocker[role]' => 'admin',
                 'title' => $validated['title'],
                 'content' => $validated['content'],
                 'type' => $validated['type'],
                 'country' => $validated['country'],
                 'location' => $validated['location'],
+                'coordinates[latitude]' => $validated['cordinates']['latitude'] ?? null,
+                'coordinates[longitude]' => $validated['cordinates']['longitude'] ?? null,
                 'genre' => $validated['genre'],
                 'price' => $validated['price'] ?? null,
                 'start_date' => $validated['start_date'],
                 'start_time' => $validated['start_time'],
-                'cordinates[latitude]' => $validated['cordinates']['latitude'] ?? null,
-                'cordinates[longitude]' => $validated['cordinates']['longitude'] ?? null,
                 'link' => $validated['link'] ?? null,
                 'ticket' => $validated['ticket'] ?? null,
             ];
-
-            $http = Http::timeout(10)
-                ->retry(3, 1000)
-                ->withHeaders(['Accept' => 'application/json']);
 
             if ($request->hasFile('poster_file') && $request->file('poster_file')->isValid()) {
                 $file = $request->file('poster_file');
                 $http->attach(
                     'poster_file',
-                    file_get_contents($file->getRealPath()),
+                    file_get_contents($file->path()),
                     $file->getClientOriginalName()
                 );
             }
 
-            $response = $http->post('https://bot.rocker.am/api/event', $payload);
-
-            if (!$response->successful()) {
-                throw new \Exception(
-                    'API request failed: '.($response->json('message') ?? 'Unknown error'),
-                    $response->status()
-                );
-            }
+            $response = $http->post('http://bot.rocker.loc/api/event', $payload);
 
             return redirect()
                 ->back()
-                ->with('success', 'Event created successfully');
+                ->with('success', 'Событие успешно создано');
         } catch (\Exception $e) {
-            Log::error('Event creation failed: '.$e->getMessage(), [
-                'status' => $response?->status(),
-                'body' => $response?->body(),
-                'request' => $request->validated(),
-            ]);
+            Log::error(
+                $e->getMessage().' Не удалось создать событие: '.$e->getTraceAsString(),
+                [
+                    'status' => $response?->status(),
+                    'body' => $response?->body(),
+                ]
+            );
 
             return redirect()
                 ->back()
-                ->with('error', 'Failed to create event: '.$e->getMessage())
+                ->with('error', 'Ошибка при создании события: '.$e->getMessage())
                 ->withInput();
         }
     }
