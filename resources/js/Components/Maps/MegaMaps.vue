@@ -22,7 +22,7 @@
 
 <script setup>
 import { GoogleMap, Marker } from 'vue3-google-map';
-import { computed, ref, watch } from 'vue';
+import { computed, nextTick, ref, watch } from 'vue';
 
 const props = defineProps({
     markers: {
@@ -35,13 +35,15 @@ const props = defineProps({
 const mapRef = ref(null);
 const mapInstance = ref(null);
 
+// Преобразуем координаты меток в правильный формат
 const displayedMarkers = computed(() => {
-    return props.markers.slice(-10).map((marker) => ({
-        lat: +marker.latitude,
-        lng: +marker.longitude,
+    return props.markers.map((marker) => ({
+        lat: parseFloat(marker.latitude),
+        lng: parseFloat(marker.longitude),
     }));
 });
 
+// Устанавливаем центр карты на первую метку
 const mapCenter = computed(() => {
     if (displayedMarkers.value.length > 0) {
         return displayedMarkers.value[0];
@@ -49,11 +51,13 @@ const mapCenter = computed(() => {
     return { lat: 0, lng: 0 };
 });
 
+// Функция инициализации карты
 const onMapMounted = (map) => {
     mapInstance.value = map;
     fitMapToMarkers();
 };
 
+// Функция для подстройки масштаба карты под метки
 const fitMapToMarkers = () => {
     if (mapInstance.value && displayedMarkers.value.length > 0) {
         const bounds = new google.maps.LatLngBounds();
@@ -64,10 +68,13 @@ const fitMapToMarkers = () => {
     }
 };
 
+// Отслеживаем изменения меток и обновляем масштаб
 watch(
     () => props.markers,
     () => {
-        fitMapToMarkers();
+        nextTick(() => {
+            fitMapToMarkers();
+        });
     },
     { deep: true },
 );
