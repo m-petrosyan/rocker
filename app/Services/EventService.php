@@ -62,7 +62,7 @@ class EventService
                 );
             }
 
-            $response = $http->post('http://bot.rocker.loc/api/event', $payload);
+            $response = $http->post('https://bot.rocker.am/api/event', $payload);
 
             $data = json_decode($response->body(), true);
 
