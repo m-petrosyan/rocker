@@ -61,8 +61,12 @@ class EventService
                     $file->getClientOriginalName()
                 );
             }
-
-            $response = $http->post('https://bot.rocker.am/api/event', $payload);
+         
+            $url = config(
+                'app.env'
+            ) === 'production' ? 'https://bot.rocker.am/api/event' : 'http://bot.rocker.loc/api/event';
+            dd($url);
+            $response = $http->post($url, $payload);
 
             $data = json_decode($response->body(), true);
 

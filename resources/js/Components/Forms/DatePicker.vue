@@ -35,7 +35,7 @@ const format = (date) => {
 </script>
 
 <template>
-    <div>
+    <div class="max-h-[340px]">
         <VueDatePicker :format="format" :flow="def.flow" dark inline />
     </div>
 </template>
