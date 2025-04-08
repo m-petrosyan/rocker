@@ -3,7 +3,10 @@
     color: white;
     padding: 10px 13px;
 
+
     .p-inputtext {
+        width: 100%;
+
         &::placeholder {
             color: theme('colors.gray');
         }

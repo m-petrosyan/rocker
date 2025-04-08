@@ -5,8 +5,8 @@
 <template>
     <footer>
         <div class="flex justify-center md:justify-end pr-3 pb-1">
-            <div class="flex items-center flex-col md:flex-row justify-between w-full pl-2">
-                <p class="text-graydarker"> © {{ new Date().getFullYear() }} rocker.am. Some rights reserved. |
+            <div class="flex items-center flex-col md:flex-row justify-between w-full pl-2 text-graydarker">
+                <p> © {{ new Date().getFullYear() }} rocker.am. Some rights reserved. |
                     <a href="mailto:info@rocker.am">info@rocker.am</a></p>
                 <a href="https://t.me/mpetrosyan1" target="_blank">
                     <small>Developed by Miqayel Petrosyan</small>
