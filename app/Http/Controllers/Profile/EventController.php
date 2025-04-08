@@ -25,7 +25,6 @@ class EventController
         $response = $this->eventService->store($request);
 
         dd($response->body());
-        dd($response?->status());
 
         return redirect()
             ->back()
