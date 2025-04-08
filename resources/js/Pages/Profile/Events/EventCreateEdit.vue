@@ -5,7 +5,7 @@ import ErrorMessages from '@/Components/Messages/ErrorMessages.vue';
 import { useForm } from '@inertiajs/vue3';
 import DatePicker from '@/Components/Forms/DatePicker.vue';
 import Preview from '@/Components/Forms/Preview.vue';
-import GoogleAutocomplate from '@/Components/Map/GoogleAutocomplate.vue';
+import GoogleAutocomplate from '@/Components/Maps/GoogleAutocomplate.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 
