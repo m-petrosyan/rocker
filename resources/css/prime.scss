@@ -1,3 +1,4 @@
+// autocomplate
 .p-autocomplete {
     background-color: theme('colors.graydark2');
     color: white;
@@ -36,4 +37,22 @@
             }
         }
     }
+}
+
+
+// progressbar
+.p-progressbar {
+    height: 20px !important;
+    border-radius: 5px !important;
+
+    .p-progressbar-value {
+        background-color: theme('colors.red') !important;
+    }
+
+    &:not(.warning) {
+        .p-progressbar-value {
+            background-color: theme('colors.green') !important;
+        }
+    }
+
 }

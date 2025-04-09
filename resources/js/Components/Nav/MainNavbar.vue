@@ -32,9 +32,7 @@ const menu = [
         </div>
         <div class="absolute right-2 flex gap-x-4 uppercase">
             <template v-if="$page.props.auth.user">
-                <Link
-                    :href="route('profile.show', {'username': $page.props.auth.user.username})"
-                > >
+                <Link :href="route('profile.show', {'username': $page.props.auth.user.username})">
                     Profile
                 </Link>
                 <Link
