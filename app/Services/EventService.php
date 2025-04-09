@@ -34,7 +34,7 @@ class EventService
             $http = Http::timeout(10)
                 ->throw()
                 ->withHeaders(['Accept' => 'application/json']);
-            
+
             $payload = [
                 'rocker[username]' => auth()->user()->username,
                 'rocker[role]' => 'admin',
@@ -43,8 +43,8 @@ class EventService
                 'type' => $validated['type'],
                 'country' => $validated['country'],
                 'location' => $validated['location'],
-                'coordinates[latitude]' => $validated['cordinates']['latitude'] ?? null,
-                'coordinates[longitude]' => $validated['cordinates']['longitude'] ?? null,
+                'cordinates[latitude]' => $validated['cordinates']['latitude'] ?? null,
+                'cordinates[longitude]' => $validated['cordinates']['longitude'] ?? null,
                 'genre' => $validated['genre'],
                 'price' => $validated['price'] ?? null,
                 'start_date' => $validated['start_date'],

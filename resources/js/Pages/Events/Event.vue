@@ -8,8 +8,8 @@ import AppleCalendar from '@/Components/Socials/AppleCalendar.vue';
 const props = defineProps({
     event: {
         type: Array,
-        default: () => [],
-    },
+        default: () => []
+    }
 });
 </script>
 
@@ -59,7 +59,7 @@ const props = defineProps({
         <h3 class="mt-2 text-center text-2xl">{{ event.title }}</h3>
         <pre class="mt-8 text-pretty text-center">{{ event.content }}</pre>
         <p class="text-center text-orange">{{ event.location }}</p>
-        <GoogleMap :cordinates="event.cordinates" />
+        <GoogleMap v-if="event.cordinates" :cordinates="event.cordinates" />
 
         <!--        <div-->
         <!--            class="absolute inset-0 bg-orange text-xl w-28 h-28 z-20 flex flex-col justify-center items-center">-->
