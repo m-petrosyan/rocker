@@ -5,21 +5,30 @@ import MainNavbar from '@/Components/Nav/MainNavbar.vue';
 import Footer from '@/Components/Footer/Footer.vue';
 import PwaNavbar from '@/Components/Nav/PwaNavbar.vue';
 import FleshNotification from '@/Components/Messages/FleshNotification.vue';
-
+import defaultImg from '/public/screenshots/desktop-screenshot.png';
 
 defineProps({
     meta: {
         type: Object,
-        required: false,
-        default: 'rocker'
+        required: false
     }
 });
 
+const defaultDescription = 'The Heart of Armenian Rock';
+const defaultTitle = 'Rocker.am';
 const page = usePage();
 </script>
 
 <template>
-    <Head :title="meta.title" />
+    <Head :title="meta?.title ?? defaultTitle">
+        <meta name="description" :content="meta?.description ??  defaultDescription" />
+        <meta name="og:description" :content="meta?.description ?? defaultDescription" />
+        <meta name="og:title" :content="meta?.title ?? defaultTitle" />
+        <meta name="keywords" :content="meta?.keywords ?? 'Armenian, Rock, Music'" />
+        <meta name="og:image" :content="meta?.image ?? defaultImg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" :content="meta?.image ?? defaultImg" />
+    </Head>
     <FleshNotification />
     <section class="min-h-screen bg-black text-white pt-6 sm:pt-0">
         <MainNavbar v-if="page.url !== '/' && !$isPWA" />

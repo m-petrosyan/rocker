@@ -2,44 +2,43 @@
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import moment from 'moment-timezone';
 import NavLink from '@/Components/NavLink.vue';
-import MegaMaps from '@/Components/Maps/MegaMaps.vue';
 
 defineProps({
     events: {
         type: Array,
-        default: () => [],
-    },
+        default: () => []
+    }
 });
 </script>
 
 <template>
     <GuestLayout :meta="{ title: 'Events' }">
         <template #header> Events</template>
-        <MegaMaps
-            :markers="[
-                { latitude: 40.188067, longitude: 44.5139577, info: 'Tonlab' },
-                {
-                    latitude: 40.1800023,
-                    longitude: 44.5160956,
-                    info: 'The venue',
-                },
-                {
-                    latitude: 40.1895131,
-                    longitude: 44.521072,
-                    info: 'Stop club',
-                },
-                {
-                    latitude: 40.1800023,
-                    longitude: 44.5160956,
-                    info: 'Tonlab2',
-                },
-                {
-                    latitude: 40.1737167,
-                    longitude: 44.516279399999995,
-                    info: 'Hardrock',
-                },
-            ]"
-        />
+        <!--        <MegaMaps-->
+        <!--            :markers="[-->
+        <!--                { latitude: 40.188067, longitude: 44.5139577, info: 'Tonlab' },-->
+        <!--                {-->
+        <!--                    latitude: 40.1800023,-->
+        <!--                    longitude: 44.5160956,-->
+        <!--                    info: 'The venue',-->
+        <!--                },-->
+        <!--                {-->
+        <!--                    latitude: 40.1895131,-->
+        <!--                    longitude: 44.521072,-->
+        <!--                    info: 'Stop club',-->
+        <!--                },-->
+        <!--                {-->
+        <!--                    latitude: 40.1800023,-->
+        <!--                    longitude: 44.5160956,-->
+        <!--                    info: 'Tonlab2',-->
+        <!--                },-->
+        <!--                {-->
+        <!--                    latitude: 40.1737167,-->
+        <!--                    longitude: 44.516279399999995,-->
+        <!--                    info: 'Hardrock',-->
+        <!--                },-->
+        <!--            ]"-->
+        <!--        />-->
         <!--        <MultiSelect class="w-48" />-->
         <div class="mx-auto flex flex-col">
             <div
