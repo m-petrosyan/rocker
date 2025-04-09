@@ -63,7 +63,6 @@ const form = useForm(
 
 const createEvent = () => {
     // data.disable = true;
-    optionsSet();
     form.post(
         route(
             props.event?.id ? 'profile.events.update' : 'profile.events.store',
@@ -82,15 +81,6 @@ const createEvent = () => {
             preserveScroll: true
         }
     );
-};
-
-const optionsSet = () => {
-    if (!data.options.price) {
-        form.price = form.ticket = null;
-    }
-    if (!data.options.link) {
-        form.link = null;
-    }
 };
 </script>
 
