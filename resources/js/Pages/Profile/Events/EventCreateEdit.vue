@@ -12,51 +12,53 @@ import GuestLayout from '@/Layouts/GuestLayout.vue';
 const props = defineProps({
     event: {
         type: Object,
-        required: false,
+        required: false
     },
     role: {
         type: String,
-        required: true,
-    },
+        required: true
+    }
 });
 
 const types = [
     { name: 'CONCERT', key: 2 },
-    { name: 'EVENT', key: 3 },
+    { name: 'EVENT', key: 3 }
 ];
 
 const genres = [
     { name: 'ROCK', key: 'rock' },
     { name: 'METAL', key: 'metal' },
-    { name: 'MIX', key: 'all' },
+    { name: 'MIX', key: 'all' }
 ];
 
 const data = reactive({
     options: {
         price: +!!props.event?.price || +!!props.event?.ticket,
-        link: +!!props.event?.link,
+        link: +!!props.event?.link
     },
     preview: null,
     created: false,
-    disable: false,
+    disable: false
 });
 
 const form = useForm(
     props.event
         ? { ...props.event }
         : {
-              title: '',
-              content: '',
-              country: 'am',
-              genre: null,
-              type: null,
-              location: null,
-              price: null,
-              cordinates: null,
-              start_date: null,
-              start_time: null,
-              poster_file: null,
-          },
+            title: '',
+            content: '',
+            country: 'am',
+            genre: null,
+            type: null,
+            location: null,
+            cordinates: null,
+            start_date: null,
+            start_time: null,
+            poster_file: null,
+            link: null,
+            ticket: null,
+            price: null
+        }
 );
 
 const createEvent = () => {
@@ -65,7 +67,7 @@ const createEvent = () => {
     form.post(
         route(
             props.event?.id ? 'profile.events.update' : 'profile.events.store',
-            props.event?.id,
+            props.event?.id
         ),
         {
             onSuccess: () => {
@@ -74,11 +76,11 @@ const createEvent = () => {
             onError: () => {
                 window.scrollTo({
                     top: 0,
-                    behavior: 'smooth',
+                    behavior: 'smooth'
                 });
             },
-            preserveScroll: true,
-        },
+            preserveScroll: true
+        }
     );
 };
 
