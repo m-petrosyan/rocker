@@ -70,6 +70,8 @@ class EventService
 
             $data = json_decode($response->body(), true);
 
+
+            dd($data);
             auth()->user()->events()->create([
                 'event_id' => $data['event_id'],
                 'notify_count' => $data['notify_count'],
