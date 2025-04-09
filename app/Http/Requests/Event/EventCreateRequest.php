@@ -37,7 +37,7 @@ class EventCreateRequest extends FormRequest
             'cordinates.latitude' => ['required_with:cordinates', 'numeric'],
             'cordinates.longitude' => ['required_with:cordinates', 'numeric'],
             'genre' => ['required', Rule::in(['rock', 'metal', 'all'])],
-            'price' => ['nullable', 'numeric', 'min:0'],
+            'price' => ['nullable', 'string', 'min:0'],
             'link' => ['nullable', 'url', 'max:10000'],
             'ticket' => ['nullable', 'url', 'max:10000'],
             'start_date' => ['required', 'date', 'after_or_equal:today'],
