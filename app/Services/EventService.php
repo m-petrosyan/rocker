@@ -34,7 +34,7 @@ class EventService
             $http = Http::timeout(10)
                 ->throw()
                 ->withHeaders(['Accept' => 'application/json']);
-
+            
             $payload = [
                 'rocker[username]' => auth()->user()->username,
                 'rocker[role]' => 'admin',
@@ -65,7 +65,7 @@ class EventService
             $url = config(
                 'app.env'
             ) === 'production' ? 'https://bot.rocker.am/api/event' : 'http://bot.rocker.loc/api/event';
-         
+
             $response = $http->post($url, $payload);
 
             $data = json_decode($response->body(), true);
