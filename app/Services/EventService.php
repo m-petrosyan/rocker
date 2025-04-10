@@ -70,8 +70,17 @@ class EventService
 
             $data = json_decode($response->body(), true);
 
+//            dd($data);
+//data is
+//            array:4 [▼ // app/Services/EventService.php:74
+//  "status" => 200
+//  "message" => "Event created successfully"
+//  "event_id" => 682
+//  "notify_count" => null
+//]
+//
 
-            dd($data);
+
             auth()->user()->events()->create([
                 'event_id' => $data['event_id'],
                 'notify_count' => $data['notify_count'],

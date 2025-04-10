@@ -7,7 +7,7 @@ import DatePicker from '@/Components/Forms/DatePicker.vue';
 import Preview from '@/Components/Forms/Preview.vue';
 import GoogleAutocomplate from '@/Components/Maps/GoogleAutocomplate.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
+import AuthLayouth from '@/Layouts/AuthLayouth.vue';
 
 const props = defineProps({
     event: {
@@ -85,11 +85,9 @@ const createEvent = () => {
 </script>
 
 <template>
-    <GuestLayout title="Event create" :role="role">
-        <div
-            v-if="!data.created"
-            class="mx-auto bg-graydark py-2 sm:px-6 lg:px-8"
-        >
+    <AuthLayouth :meta="{title: 'Event create'}" :role="role">
+        <div v-if="!data.created"
+             class="">
             <ErrorMessages :messages="$page.props.errors" class="mb-5" />
             <form @submit.prevent="createEvent" class="flex flex-col gap-y-2">
                 <div class="flex gap-x-4">
@@ -197,5 +195,5 @@ const createEvent = () => {
             </h2>
             <!--            <YellowButton text="Events list" navigate="events.index" />-->
         </div>
-    </GuestLayout>
+    </AuthLayouth>
 </template>

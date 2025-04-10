@@ -1,7 +1,6 @@
 <script setup>
 import NavLink from '@/Components/NavLink.vue';
 import EventIcon from '@/Components/Icons/EventIcon.vue';
-import BlogIcon from '@/Components/Icons/BlogIcon.vue';
 import BandIcon from '@/Components/Icons/BandIcon.vue';
 import GalleryIcon from '@/Components/Icons/GalleryIcon.vue';
 
@@ -9,23 +8,23 @@ const menu = [
     {
         name: 'Add event',
         route: route('profile.events.create'),
-        icon: EventIcon,
+        icon: EventIcon
     },
-    {
-        name: 'Add blog',
-        route: route('profile.edit'),
-        icon: BlogIcon,
-    },
+    // {
+    //     name: 'Add blog',
+    //     route: route('profile.edit'),
+    //     icon: BlogIcon
+    // },
     {
         name: 'Add gallery',
-        route: route('profile.edit'),
-        icon: GalleryIcon,
+        route: route('profile.gallery.create'),
+        icon: GalleryIcon
     },
     {
         name: 'Add band',
         route: route('profile.edit'),
-        icon: BandIcon,
-    },
+        icon: BandIcon
+    }
 ];
 </script>
 

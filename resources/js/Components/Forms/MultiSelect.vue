@@ -2,6 +2,17 @@
 import Multiselect from 'vue-multiselect';
 import { ref } from 'vue';
 
+defineProps({
+    text: {
+        type: String,
+        default: 'Select'
+    },
+    multiple: {
+        type: Boolean,
+        default: false
+    }
+});
+
 const value = ref([]);
 const options = [
     { name: 'Ildaruni', code: '54' },
@@ -10,41 +21,43 @@ const options = [
 ];
 
 const removeItem = (item) => {
-    value.value = value.value.filter(v => v.name !== item.name);
+    if (Array.isArray(value.value)) {
+        value.value = value.value.filter((v) => v.name !== item.name);
+    } else {
+        value.value = null;
+    }
 };
 </script>
 
 <template>
     <div>
-        <label class="typo__label">Bands</label>
         <multiselect
             id="option-tags"
             v-model="value"
             :options="options"
-            :multiple="true"
-            placeholder="Type to search"
+            :multiple="multiple"
+            :placeholder="text"
             track-by="name"
             label="name"
         >
-            <!-- Слот для кастомизации тегов -->
             <template v-slot:tag="{ option }">
-                <span class="multiselect__tag">
-                    <span>{{ option.name }}</span>
-                    <button
-                        @click="removeItem(option)"
-                        class="multiselect__tag-icon"
-                        type="button"
-                        aria-label="Remove"
-                    >
-                        ×
-                    </button>
-                </span>
+        <span class="multiselect__tag">
+          <span>{{ option.name }}</span>
+          <button
+              @click="removeItem(option)"
+              class="multiselect__tag-icon"
+              type="button"
+              aria-label="Remove"
+          >
+            ×
+          </button>
+        </span>
             </template>
             <template v-slot:noResult>
                 Oops! No elements found. Consider changing the search query.
             </template>
         </multiselect>
-        <pre class="language-json"><code>{{ value }}</code></pre>
+        <!-- <pre class="language-json"><code>{{ value }}</code></pre> -->
     </div>
 </template>
 
@@ -53,9 +66,14 @@ const removeItem = (item) => {
     color: black;
 
     & .multiselect__tags {
-        padding: 6px 4px;
-        background-color: white;
+        padding: 10px 10px;
+        background-color: theme('colors.graydark2');
+        color: theme('colors.gray');
         border-radius: 5px;
+
+        .multiselect__tags-wrap .multiselect__input {
+            background-color: theme('colors.green');
+        }
 
         & .multiselect__tag {
             color: white;
@@ -72,7 +90,6 @@ const removeItem = (item) => {
                 margin-left: 5px;
                 cursor: pointer;
                 font-size: 16px;
-                color: #666;
                 padding: 0;
                 line-height: 1;
 
@@ -84,7 +101,8 @@ const removeItem = (item) => {
     }
 
     & .multiselect__content-wrapper {
-        background-color: white;
+        background-color: theme('colors.graydark2');
+        color: white;
 
         .multiselect__content {
             width: 100%;

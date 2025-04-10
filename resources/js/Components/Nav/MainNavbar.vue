@@ -3,24 +3,22 @@ import { Link } from '@inertiajs/vue3';
 
 const menu = [
     { name: 'Events', url: route('events.index') },
-    { name: 'Blog', url: route('events.index') },
-    { name: '', href: route('events.index'), img: '/images/logo.png' },
     { name: 'Gallery', url: route('gallery') },
+    { name: '', href: route('events.index'), img: '/images/logo.png' },
+    // { name: 'Blog', url: route('events.index') },
     { name: 'Bands', url: route('events.index') }
 ];
 </script>
 
 <template>
     <nav
-        class="mx-auto flex items-center gap-x-2 pt-5 text-sm uppercase tracking-widest text-gray"
-    >
+        class="mx-auto flex items-center gap-x-2 pt-5 text-sm uppercase tracking-widest text-gray">
         <div class="mx-auto flex w-fit items-center gap-x-2">
             <Link
                 v-for="item in menu"
                 :key="item.name"
                 class="transition hover:opacity-70"
-                :href="item.url"
-            >
+                :href="item.url">
                 <img
                     v-if="item.img"
                     :src="item.img"
@@ -39,16 +37,16 @@ const menu = [
                     :href="route('logout')"
                     method="post"
                     as="button"
-                    class="uppercase"
-                >Log Out
+                    class="uppercase">
+                    Log Out
                 </Link>
             </template>
             <template v-else>
-                <Link :href="route('login')"
-                >Log In
+                <Link :href="route('login')">
+                    Log In
                 </Link>
-                <Link :href="route('register')"
-                >Register
+                <Link :href="route('register')">
+                    Register
                 </Link>
             </template>
         </div>

@@ -23,7 +23,14 @@
           </mappings>
         </serverdata>
       </paths>
-      <paths name="Contabo">
+      <paths name="Contabo root">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="Contabo www">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
@@ -31,13 +38,6 @@
         </serverdata>
       </paths>
       <paths name="Hostinger">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
-      <paths name="Metal bot">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />

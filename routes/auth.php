@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Profile\EventController;
+use App\Http\Controllers\Profile\GalleryController;
 use App\Http\Controllers\Profile\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,7 @@ Route::middleware(['auth', 'verified'])->as('profile.')->prefix('profile')->grou
 
 
     Route::resource('events', EventController::class)->except('show');
+    Route::resource('gallery', GalleryController::class)->except('show');
 });
 
 Route::middleware('auth')->group(function () {
