@@ -46,14 +46,25 @@ const useTime = computed(() => {
 </script>
 
 <template>
-    <div class="max-h-[340px] picker" :class="{ useTime }">
+    <div class="h-[346px] max-h-[360px] picker" :class="{ useTime }">
         <VueDatePicker :format="format" :flow="flow" dark inline />
     </div>
 </template>
 <style scoped lang="scss">
 .picker {
     :deep(.dp__main) {
+        position: relative;
         display: block !important;
+
+
+        .dp__menu {
+            max-height: 360px !important;
+            height: 346px !important;
+
+            .dp__instance_calendar {
+                position: unset !important;
+            }
+        }
 
         .dp__cell_inner {
             &:hover {
@@ -70,7 +81,15 @@ const useTime = computed(() => {
         }
 
         .dp--tp-wrap {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
             display: none;
+
+            .dp__overlay {
+                z-index: 100 !important;
+            }
         }
     }
 

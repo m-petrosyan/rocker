@@ -30,11 +30,13 @@ const key = import.meta.env.VITE_SERPER_AUTOCOMPLATE_KEYS;
 
 const getPlacesQuery = () => {
     setTimeout(() => {
-        if (!props.form.cordinates && data.places.length) {
-            setTimeout(() => {
+
+        setTimeout(() => {
+            if (!props.form.cordinates) {
                 warningText.value = 'To ensure the event reaches the widest audience, please choose a location from the list, ideally providing the name of the venue.';
-            }, 10000);
-        }
+            }
+        }, 10000);
+
     }, 4000);
 
     const myHeaders = new Headers();

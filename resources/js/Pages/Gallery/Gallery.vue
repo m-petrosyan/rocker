@@ -9,7 +9,7 @@ defineProps({
 </script>
 
 <template>
-    <GuestLayout :meta="{title: 'Events'}">
-        Gallery
+    <GuestLayout :meta="{title: 'Galleries'}">
+        Soon
     </GuestLayout>
 </template>

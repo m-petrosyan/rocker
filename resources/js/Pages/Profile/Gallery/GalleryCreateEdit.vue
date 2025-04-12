@@ -5,7 +5,8 @@ import SelectImages from '@/Components/Forms/SelectImages.vue';
 import { useForm } from '@inertiajs/vue3';
 import Multiselect from '@/Components/Forms/MultiSelect.vue';
 import DatePicker from '@/Components/Forms/DatePicker.vue';
-import AuthLayouth from '@/Layouts/AuthLayouth.vue';
+import ProfileLayout from '@/Layouts/ProfileLayout.vue';
+import GoogleAutocomplate from '@/Components/Maps/GoogleAutocomplate.vue';
 
 defineProps({
     galleries: {
@@ -20,7 +21,7 @@ const form = useForm({
     preview: []
 });
 
-const limit = 150;
+const limit = 200;
 
 const percent = computed(() => {
     return (form.preview?.length / limit) * 100;
@@ -52,13 +53,7 @@ const removeImageQuery = (id) => {
 </script>
 
 <template>
-    <AuthLayouth :meta="{title: 'Events'}">
-        <ProgressBar class="w-full bg-green"
-                     :class="percent > 70 ? 'warning' : '' "
-                     :value="percent < 10 ? 5 : percent">
-            {{ form.preview?.length }}/{{ limit }}
-        </ProgressBar>
-
+    <ProfileLayout :meta="{title: 'Events'}">
         <div>
             <div v-for="(gallery, index) in form.galleries" :key="index">
                 <h2 class="text-center">{{ gallery.title }}</h2>
@@ -113,11 +108,18 @@ const removeImageQuery = (id) => {
                             enterkeyhint="next"
                         />
                         <Multiselect text="Bands" multiple />
-                        <Multiselect text="Location" />
+                        <GoogleAutocomplate :form="form" />
                     </div>
                 </div>
+
+                <ProgressBar v-show="form.preview?.length" class="w-full bg-green mt-10"
+                             :class="percent > 70 ? 'warning' : '' "
+                             :value="percent < 10 ? 5 : percent">
+                    {{ form.preview?.length }}/{{ limit }}
+                </ProgressBar>
+
+
                 <SelectImages
-                    classes="mt-10"
                     v-model:previews="form.preview"
                     v-model:files="form.images" />
                 <button v-if="form.images.length" @click="submitGallery"
@@ -126,5 +128,5 @@ const removeImageQuery = (id) => {
                 </button>
             </div>
         </div>
-    </AuthLayouth>
+    </ProfileLayout>
 </template>

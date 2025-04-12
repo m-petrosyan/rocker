@@ -40,7 +40,7 @@ onMounted(() => {
         leave-to-class="transform translate-x-full opacity-0">
         <div
             v-if="showFlash"
-            class="fixed z-20 text-white top-4 right-2 flex items-center bg-orange text-sm font-bold px-4 py-3 rounded shadow-lg"
+            class="fixed z-[1000] text-white top-4 right-2 flex items-center bg-orange text-sm font-bold px-4 py-3 rounded shadow-lg"
             role="alert">
             <svg
                 class="fill-current w-4 h-4 mr-2"

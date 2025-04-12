@@ -3,10 +3,10 @@ import { Link } from '@inertiajs/vue3';
 
 const menu = [
     { name: 'Events', url: route('events.index') },
-    { name: 'Gallery', url: route('gallery') },
     { name: '', href: route('events.index'), img: '/images/logo.png' },
+    { name: 'Galleries', url: route('gallery') }
     // { name: 'Blog', url: route('events.index') },
-    { name: 'Bands', url: route('events.index') }
+    // { name: 'Bands', url: route('events.index') }
 ];
 </script>
 
@@ -44,9 +44,6 @@ const menu = [
             <template v-else>
                 <Link :href="route('login')">
                     Log In
-                </Link>
-                <Link :href="route('register')">
-                    Register
                 </Link>
             </template>
         </div>

@@ -12,12 +12,12 @@ const form = useForm({
     username: '',
     email: '',
     password: '',
-    password_confirmation: '',
+    password_confirmation: ''
 });
 
 const submit = () => {
     form.post(route('register'), {
-        onFinish: () => form.reset('password', 'password_confirmation'),
+        onFinish: () => form.reset('password', 'password_confirmation')
     });
 };
 </script>
@@ -110,13 +110,6 @@ const submit = () => {
             </div>
 
             <div class="mt-4 flex items-center justify-end">
-                <Link
-                    :href="route('login')"
-                    class="text-gray-600 hover:text-gray-900 rounded-md text-sm underline focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                    Already registered?
-                </Link>
-
                 <PrimaryButton
                     class="ms-4"
                     :class="{ 'opacity-25': form.processing }"
@@ -126,5 +119,13 @@ const submit = () => {
                 </PrimaryButton>
             </div>
         </form>
+        <template #underslot>
+            <div class="flex justify-center gap-x-2 mt-10">
+                <p> Already have an account? </p>
+                <Link class="font-bold text-orange" :href="route('login')">
+                    Login
+                </Link>
+            </div>
+        </template>
     </AuthLayouth>
 </template>

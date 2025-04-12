@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Soon');
+    return redirect()->route('events.index');
 })->name('home');
 
 Route::resource('/events', EventController::class)->only('index', 'show');

@@ -39,6 +39,26 @@
     }
 }
 
+.p-autocomplete-overlay {
+    margin-left: -12px !important;
+    padding: 12px 0;
+    background-color: theme('colors.graydark2') !important;
+
+    .p-autocomplete-list-container {
+        padding: 5px 0px;
+
+        .p-autocomplete-option {
+            padding: 10px 10px;
+
+            &:hover {
+                color: white;
+                background-color: theme('colors.green') !important;
+            }
+        }
+
+    }
+}
+
 
 // progressbar
 .p-progressbar {

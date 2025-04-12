@@ -29,7 +29,7 @@ const menu = [
 </script>
 
 <template>
-    <div class="mt-6 grid grid-cols-4">
+    <div class="mt-6 grid grid-cols-2 md:grid-cols-3 w-full md:w-4/6">
         <NavLink
             v-for="item in menu"
             :key="item.name"

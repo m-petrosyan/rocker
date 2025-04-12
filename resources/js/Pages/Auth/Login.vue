@@ -10,22 +10,22 @@ import GoogleLogin from '@/Components/Forms/GoogleLogin.vue';
 
 defineProps({
     canResetPassword: {
-        type: Boolean,
+        type: Boolean
     },
     status: {
-        type: String,
-    },
+        type: String
+    }
 });
 
 const form = useForm({
     email: '',
     password: '',
-    remember: false,
+    remember: false
 });
 
 const submit = () => {
     form.post(route('login'), {
-        onFinish: () => form.reset('password'),
+        onFinish: () => form.reset('password')
     });
 };
 </script>
@@ -93,5 +93,14 @@ const submit = () => {
                 </PrimaryButton>
             </div>
         </form>
+
+        <template #underslot>
+            <div class="flex justify-center gap-x-2 mt-10">
+                <p> Don't Have an Account?</p>
+                <Link class="font-bold text-orange" :href="route('register')">
+                    Register
+                </Link>
+            </div>
+        </template>
     </AuthLayouth>
 </template>

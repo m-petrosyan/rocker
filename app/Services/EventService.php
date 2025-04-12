@@ -4,7 +4,6 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 
 class EventService
 {
@@ -27,8 +26,6 @@ class EventService
 
     public function store($request)
     {
-        $response = null;
-
         try {
             $validated = $request->validated();
             $http = Http::timeout(10)
@@ -70,36 +67,15 @@ class EventService
 
             $data = json_decode($response->body(), true);
 
-//            dd($data);
-//data is
-//            array:4 [▼ // app/Services/EventService.php:74
-//  "status" => 200
-//  "message" => "Event created successfully"
-//  "event_id" => 682
-//  "notify_count" => null
-//]
-//
-
 
             auth()->user()->events()->create([
                 'event_id' => $data['event_id'],
                 'notify_count' => $data['notify_count'],
             ]);
 
-            return $response;
+            return $data;
         } catch (\Exception $e) {
-            Log::error(
-                $e->getMessage().' Не удалось создать событие: '.$e->getTraceAsString(),
-                [
-                    'status' => $response?->status(),
-                    'body' => $response?->body(),
-                ]
-            );
-
-            return redirect()
-                ->back()
-                ->with('error', 'Ошибка при создании события: '.$e->getMessage())
-                ->withInput();
+            throw new \Exception('Unable to create event: '.$e->getMessage());
         }
     }
 }

@@ -1,13 +1,12 @@
 <script setup>
 import { reactive } from 'vue';
 import RadioSwichButton from '@/Components/Forms/RadioSwichButton.vue';
-import ErrorMessages from '@/Components/Messages/ErrorMessages.vue';
 import { useForm } from '@inertiajs/vue3';
 import DatePicker from '@/Components/Forms/DatePicker.vue';
 import Preview from '@/Components/Forms/Preview.vue';
 import GoogleAutocomplate from '@/Components/Maps/GoogleAutocomplate.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import AuthLayouth from '@/Layouts/AuthLayouth.vue';
+import ProfileLayout from '@/Layouts/ProfileLayout.vue';
 
 const props = defineProps({
     event: {
@@ -85,22 +84,21 @@ const createEvent = () => {
 </script>
 
 <template>
-    <AuthLayouth :meta="{title: 'Event create'}" :role="role">
-        <div v-if="!data.created"
-             class="">
-            <ErrorMessages :messages="$page.props.errors" class="mb-5" />
+    <ProfileLayout :meta="{title: 'Event create'}" :role="role">
+        <div class="px-4 md:px-0">
+            <!--            <ErrorMessages :messages="$page.props.errors" class="mb-5" />-->
             <form @submit.prevent="createEvent" class="flex flex-col gap-y-2">
-                <div class="flex gap-x-4">
-                    <div class="w-1/2">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <div class="w-full md:w-1/2">
                         <Preview
-                            class="h-full"
+                            class="h-full min-h-96"
                             label="h-full"
                             :image="form.poster"
                             v-model:preview="form.poster_file"
                             v-model:file="data.preview"
                         />
                     </div>
-                    <div class="flex w-1/2 flex-col gap-y-2">
+                    <div class="flex w-full md:w-1/2 flex-col gap-y-2">
                         <div>
                             <input
                                 class="w-full bg-graydark2"
@@ -142,15 +140,13 @@ const createEvent = () => {
                         :class="
                             form.content?.length >= 730
                                 ? 'bg-red text-white'
-                                : 'text-gray'
-                        "
-                    >
+                                : 'text-gray'">
                         {{ form.content?.length }}
                     </span>
                 </div>
 
-                <div class="flex gap-x-2">
-                    <div class="w-1/2">
+                <div class="flex flex-col md:flex-row gap-2">
+                    <div class="w-full md:w-1/2">
                         <input
                             class="w-full bg-graydark2"
                             type="text"
@@ -164,7 +160,7 @@ const createEvent = () => {
                             placeholder="ticket link"
                         />
                     </div>
-                    <div class="w-1/2">
+                    <div class="w-full md:w-1/2">
                         <input
                             id="event"
                             class="w-full bg-graydark2"
@@ -186,14 +182,5 @@ const createEvent = () => {
                 </PrimaryButton>
             </form>
         </div>
-        <div v-else class="flex h-dvh flex-col items-center justify-center">
-            <h2 class="text-balance">
-                Thank you, the event has been created.
-                <span v-if="role === 'USER'">
-                    The event will be added to the list after moderation</span
-                >
-            </h2>
-            <!--            <YellowButton text="Events list" navigate="events.index" />-->
-        </div>
-    </AuthLayouth>
+    </ProfileLayout>
 </template>
