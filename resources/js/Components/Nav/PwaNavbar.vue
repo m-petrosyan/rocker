@@ -5,12 +5,6 @@ import ProfileIcon from '@/Components/Icons/ProfileIcon.vue';
 </script>
 <!--bg-pwaNavbg-->
 <template>
-    <div class="z-50 absolute top-2 right-2">
-        <Link
-            :href="route('login')">
-            <ProfileIcon />
-        </Link>
-    </div>
     <div
         class="z-50 sticky bottom-0 w-full bg-pwaNavbg">
         <div class="flex items-center gap-x-2 mx-auto w-fit pt-2 text-gray text-sm tracking-widest uppercase">
@@ -29,9 +23,8 @@ import ProfileIcon from '@/Components/Icons/ProfileIcon.vue';
             </Link>
 
             <Link
-                v-if="$page.props.auth.user"
-                :href="route('profile.index')"
-                class="rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                :href="$page.props.auth.user ? route('profile.index') : route('login')"
+                class="p-2 absolute top-2 right-2"
             >
                 <ProfileIcon />
             </Link>

@@ -28,6 +28,6 @@ defineProps({
             <ErrorMessages :messages="$page.props.errors" />
             <slot />
         </main>
-        <PwaNavbar v-if="$isPWA" />
     </section>
+    <PwaNavbar v-if="$isPWA" />
 </template>

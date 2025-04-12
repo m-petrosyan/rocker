@@ -23,5 +23,5 @@ const page = usePage();
         <slot />
     </main>
     <slot name="underslot" />
-    <PwaNavbar v-if="page.url !== '/' && $isPWA" />
+    <PwaNavbar v-if="$isPWA" />
 </template>
