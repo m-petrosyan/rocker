@@ -5,7 +5,7 @@ import GalleryIcon from '@/Components/Icons/GalleryIcon.vue';
 
 export default [
     { name: 'Events', url: route('events.index'), icon: EventIcon },
-    { name: '', href: route('events.index'), img: '/images/logo.png' },
+    { name: 'Home', href: route('events.index'), img: '/images/logo.png' },
     { name: 'Galleries', url: route('gallery'), icon: GalleryIcon }
     // { name: 'Blog', url: route('events.index') , icon: BlogIcon},
     // { name: 'Bands', url: route('events.index'),icon:  BandIcon}
