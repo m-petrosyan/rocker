@@ -1,13 +1,6 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
-
-const menu = [
-    { name: 'Events', url: route('events.index') },
-    { name: '', href: route('events.index'), img: '/images/logo.png' },
-    { name: 'Galleries', url: route('gallery') }
-    // { name: 'Blog', url: route('events.index') },
-    // { name: 'Bands', url: route('events.index') }
-];
+import menu from '@/Constants/menu.js';
 </script>
 
 <template>
