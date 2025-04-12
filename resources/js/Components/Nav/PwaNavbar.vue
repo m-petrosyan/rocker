@@ -5,6 +5,12 @@ import ProfileIcon from '@/Components/Icons/ProfileIcon.vue';
 </script>
 <!--bg-pwaNavbg-->
 <template>
+    <div class="z-50 absolute top-2 right-2">
+        <Link
+            :href="route('login')">
+            <ProfileIcon />
+        </Link>
+    </div>
     <div
         class="z-50 sticky bottom-0 w-full bg-pwaNavbg">
         <div class="flex items-center gap-x-2 mx-auto w-fit pt-2 text-gray text-sm tracking-widest uppercase">
