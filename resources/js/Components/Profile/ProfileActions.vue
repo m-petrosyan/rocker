@@ -22,7 +22,7 @@ const menu = [
     },
     {
         name: 'Add band',
-        route: route('profile.edit'),
+        route: route('profile.index'),
         icon: BandIcon
     }
 ];

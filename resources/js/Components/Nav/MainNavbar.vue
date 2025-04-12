@@ -26,13 +26,13 @@ import menu from '@/Constants/menu.js';
                 <Link :href="route('profile.show', {'username': $page.props.auth.user.username})">
                     Profile
                 </Link>
-                <Link
-                    :href="route('logout')"
-                    method="post"
-                    as="button"
-                    class="uppercase">
-                    Log Out
-                </Link>
+                <!--                <Link-->
+                <!--                    :href="route('logout')"-->
+                <!--                    method="post"-->
+                <!--                    as="button"-->
+                <!--                    class="uppercase">-->
+                <!--                    Log Out-->
+                <!--                </Link>-->
             </template>
             <template v-else>
                 <Link :href="route('login')">

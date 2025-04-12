@@ -3,6 +3,8 @@ import ProfileActions from '@/Components/Profile/ProfileActions.vue';
 import QrGenerate from '@/Components/Profile/QrGenerate.vue';
 import ProfileLayout from '@/Layouts/ProfileLayout.vue';
 import SuccessMessages from '@/Components/Messages/SuccessMessages.vue';
+import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
+import LogoutIcon from '@/Components/Icons/LogoutIcon.vue';
 
 defineProps({
     user: {
@@ -31,9 +33,8 @@ defineProps({
         <!--        </template>-->
 
 
-        <div
-            class="relative">
-            <div class="absolute left-1/2 top-[-220px] w-fit -translate-x-1/2 text-center">
+        <div>
+            <div class="absolute left-1/2 top-[-80px] w-fit -translate-x-1/2 text-center">
                 <div class="relative mx-auto w-fit">
                     <img
                         src="/images/user.avif"
@@ -45,6 +46,15 @@ defineProps({
                 <div class="text-gray-900 p-6 font-bold">
                     {{ user.name }}
                 </div>
+            </div>
+            <div class="absolute right-0 top-0">
+                <ResponsiveNavLink
+                    :href="route('logout')"
+                    method="post"
+                    as="button"
+                >
+                    <LogoutIcon />
+                </ResponsiveNavLink>
             </div>
             <SuccessMessages class="w-1/3 mx-auto" :message="$page.props.flash.success" timeout="10000" />
             <div class="mx-auto mt-32 p-2 w-full md:w-2/6 text-center">
