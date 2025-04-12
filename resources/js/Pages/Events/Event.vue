@@ -9,6 +9,12 @@ const props = defineProps({
     event: {
         type: Array,
         default: () => []
+    },
+    views: {
+        type: Number
+    },
+    notify_count: {
+        type: Number
     }
 });
 </script>
@@ -16,7 +22,7 @@ const props = defineProps({
 <template>
     <GuestLayout :meta="{ title: 'Events' }">
         <!--        {{ event }}-->
-
+        <!--        {{ views }} {{notify_count}}-->
         <div
             class="relative h-96 w-full"
             :style="{ backgroundImage: `url(${event.poster})` }"

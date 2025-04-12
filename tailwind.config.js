@@ -20,12 +20,14 @@ export default {
                 graydarker: '#666666',
                 graydark: '#141414',
                 graydark2: '#262626',
+                grayblue: '#607D8B',
                 orange: '#FF5722',
                 orangeTransparet: '#ff57224d',
                 red: '#f44336',
                 pwaNavbg: 'rgba(50,62,74,0.58)',
                 green: '#4caf50',
                 blackTransparent: 'rgba(0,0,0,0.86)'
+
             },
             fontSize: {
                 'sm': '13px'

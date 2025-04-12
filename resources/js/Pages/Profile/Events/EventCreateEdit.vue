@@ -7,6 +7,7 @@ import Preview from '@/Components/Forms/Preview.vue';
 import GoogleAutocomplate from '@/Components/Maps/GoogleAutocomplate.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import ProfileLayout from '@/Layouts/ProfileLayout.vue';
+import SuccessMessages from '@/Components/Messages/SuccessMessages.vue';
 
 const props = defineProps({
     event: {
@@ -85,8 +86,15 @@ const createEvent = () => {
 
 <template>
     <ProfileLayout :meta="{title: 'Event create'}" :role="role">
-        <div class="">
-            <!--            <ErrorMessages :messages="$page.props.errors" class="mb-5" />-->
+        <div>
+            <SuccessMessages
+                info
+                class="mb-5">
+                <div class="flex">
+                    <p>The event will also be published in the Telegram bot </p>
+                    <a href="https://t.me/RockMetalEventsbot" target="_blank">@RockMetalEventsbot</a>
+                </div>
+            </SuccessMessages>
             <form @submit.prevent="createEvent" class="flex flex-col gap-y-2">
                 <div class="flex flex-col md:flex-row gap-4">
                     <div class="w-full md:w-1/2">

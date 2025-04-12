@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use App\Services\EventService;
 use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
@@ -33,8 +34,16 @@ class EventController extends Controller
     {
         $response = Http::get('https://bot.rocker.am/api/event/'.$eventId);
 
+        $event = Event::query()->where('event_id', $eventId)->first();
+
+        if ($event) {
+            views($event)->record();
+        }
+
         return Inertia::render('Events/Event', [
             'event' => $response->json()['data'],
+            'notify_count' => $event?->notify_count ?? 0,
+            'views' => $event?->viewsCount() ?? 0,
         ]);
     }
 }

@@ -1,9 +1,20 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 const props = defineProps({
     message: String,
-    timeout: Number
+    timeout: Number,
+    success: Boolean,
+    error: Boolean,
+    info: Boolean,
+    warning: Boolean
+});
+
+const styles = computed(() => {
+    if (props.success) return 'bg-green';
+    if (props.error) return 'bg-red';
+    if (props.info) return 'bg-grayblue';
+    if (props.warning) return 'bg-yellow';
 });
 
 const show = ref(true);
@@ -16,9 +27,10 @@ onMounted(() => {
 </script>
 
 <template>
-    <div v-if="message" v-show="show">
-        <div class="error p-4 mb-4 text-sm  rounded-lg bg-green text-white text-wrap" role="alert">
-            <p>{{ message }}</p>
+    <div v-show="show">
+        <div class="error p-4 mb-4 text-sm rounded-lg  text-white text-wrap" :class="styles" role="alert">
+            <p v-if="message">{{ message }}</p>
+            <slot />
         </div>
     </div>
 </template>
