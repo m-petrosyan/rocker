@@ -20,7 +20,7 @@ import ProfileIcon from '@/Components/Icons/ProfileIcon.vue';
                     alt="logo"
                     class="logo w-10"
                 />
-                <component v-if="item.component" :is="item.component" />
+                <component v-if="item.icon" :is="item.icon" />
             </Link>
 
             <Link
