@@ -7,9 +7,7 @@ use App\Http\Controllers\Profile\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return redirect()->route('events.index');
-})->name('home');
+Route::get('/', [EventController::class, 'index'])->name('home');
 
 Route::resource('/events', EventController::class)->only('index', 'show');
 
