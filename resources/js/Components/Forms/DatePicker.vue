@@ -81,23 +81,28 @@ const useTime = computed(() => {
         }
 
         .dp--tp-wrap {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            display: none;
+            .dp__btn {
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                display: none;
 
-            .dp__overlay {
-                z-index: 100 !important;
+                .dp__overlay {
+                    z-index: 100 !important;
+                }
             }
+
         }
     }
 
     &.useTime {
         :deep(.dp__main) {
-            .dp--tp-wrap {
+            .dp--tp-wrap .dp__btn {
                 display: block;
                 margin: auto;
+                width: 40px;
+                background-color: rgb(38 38 38 / var(--tw-bg-opacity, 1)) !important;
             }
         }
     }
