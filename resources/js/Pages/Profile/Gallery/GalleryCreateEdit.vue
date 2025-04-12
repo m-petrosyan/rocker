@@ -53,7 +53,7 @@ const removeImageQuery = (id) => {
 </script>
 
 <template>
-    <ProfileLayout :meta="{title: 'Events'}">
+    <ProfileLayout :meta="{title: 'Gallery create'}">
         <div>
             <div v-for="(gallery, index) in form.galleries" :key="index">
                 <h2 class="text-center">{{ gallery.title }}</h2>

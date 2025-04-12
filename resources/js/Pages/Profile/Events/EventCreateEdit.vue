@@ -85,7 +85,7 @@ const createEvent = () => {
 
 <template>
     <ProfileLayout :meta="{title: 'Event create'}" :role="role">
-        <div class="px-4 md:px-0">
+        <div class="">
             <!--            <ErrorMessages :messages="$page.props.errors" class="mb-5" />-->
             <form @submit.prevent="createEvent" class="flex flex-col gap-y-2">
                 <div class="flex flex-col md:flex-row gap-4">
