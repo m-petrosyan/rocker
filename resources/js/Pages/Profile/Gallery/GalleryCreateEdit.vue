@@ -81,16 +81,16 @@ const removeImageQuery = (id) => {
             </div>
 
 
-            <div class="my-10">
-                <div class="flex gap-x-4">
-                    <div class="w-1/2">
+            <div class="px-4 md:px-0">
+                <div class="flex flex-col-reverse md:flex-row flex-rverse gap-4">
+                    <div class="w-full md:w-1/2">
                         <DatePicker
                             :flow="['calendar']"
                             v-model:start_date="form.start_date"
                             v-model:start_time="form.start_time"
                         />
                     </div>
-                    <div class="w-1/2 flex flex-col gap-y-2">
+                    <div class="w-full md:w-1/2 flex flex-col gap-y-2">
                         <input
                             class="bg-graydark2 w-full mx-auto block"
                             type="text"
