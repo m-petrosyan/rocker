@@ -7,7 +7,7 @@ import ImageIcon from '@/Components/Icons/ImageIcon.vue';
 
 const props = defineProps({
     previews: { type: Array, required: true },
-    files: { type: Object, required: true }, // FileList
+    files: { type: Object, required: true },
     classes: { type: String, default: '' }
 });
 
@@ -16,7 +16,6 @@ const form = useForm({});
 const dropZoneRef = ref(null);
 const isLoading = ref(false);
 
-// Удаление изображения
 const removeImage = (index) => {
     const newPreviews = [...props.previews];
     newPreviews.splice(index, 1);
@@ -32,20 +31,20 @@ const removeImage = (index) => {
     emit('update:files', dataTransfer.files);
 };
 
-// Загрузка файлов через input
 const uploadImages = (event) => {
     const files = event.target.files;
     if (files) processFiles(files);
 };
 
-// Асинхронная обработка файлов
 const processFiles = async (files) => {
     isLoading.value = true;
     const fileList = Array.from(files);
     const chunkSize = 10;
     const newPreviews = [...props.previews];
 
-    emit('update:files', files); // Сразу обновляем files
+    const dataTransfer = new DataTransfer();
+    fileList.forEach(file => dataTransfer.items.add(file));
+    emit('update:files', dataTransfer.files);
 
     for (let i = 0; i < fileList.length; i += chunkSize) {
         const chunk = fileList.slice(i, i + chunkSize);
@@ -56,38 +55,38 @@ const processFiles = async (files) => {
                 reader.onload = (e) => resolve(e.target.result);
                 reader.readAsDataURL(file);
             });
-            newPreviews.push(url); // Добавляем только URL
-            emit('update:previews', [...newPreviews]); // Обновляем previews для каждого файла
+            newPreviews.push(url);
+            emit('update:previews', [...newPreviews]);
         }
 
-        await new Promise((resolve) => setTimeout(resolve, 50)); // Задержка
+        await new Promise((resolve) => setTimeout(resolve, 50));
     }
 
     isLoading.value = false;
 };
 
-// Обработка drop-события
 const onDrop = (files) => {
-    if (files) processFiles(files);
+    if (files) {
+        const validFiles = Array.from(files).filter(file => file.type.startsWith('image/'));
+        if (validFiles.length) processFiles(validFiles);
+    }
 };
 
 const { isOverDropZone } = useDropZone(dropZoneRef, {
     onDrop,
-    dataTypes: ['image/jpeg'],
-    multiple: true,
-    preventDefault: true
+    dataTypes: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'],
+    multiple: true
 });
 
 const dropZoneClass = computed(() =>
     isOverDropZone.value
-        ? 'border-orange-500 bg-gray-800'
-        : 'border-gray-500'
+        ? 'border-orange bg-graydark2'
+        : 'border-gray'
 );
 </script>
 
 <template>
     <div :class="classes">
-        <!-- Индикатор загрузки -->
         <div v-if="isLoading" class="flex items-center justify-center h-64">
             <span class="text-2xl text-gray-500">Loading...</span>
         </div>
@@ -110,7 +109,6 @@ const dropZoneClass = computed(() =>
                 </div>
             </div>
 
-            <!-- Зона загрузки -->
             <div class="relative mt-10">
                 <input
                     type="file"
@@ -124,9 +122,9 @@ const dropZoneClass = computed(() =>
                     ref="dropZoneRef"
                     for="files"
                     :class="[
-            'w-full h-96 border-2 border-dashed flex items-center justify-center transition-all duration-200 cursor-pointer',
-            dropZoneClass,
-          ]"
+                        'w-full h-96 border-2 border-dashed flex items-center justify-center transition-all duration-200 cursor-pointer',
+                        dropZoneClass,
+                    ]"
                 >
                     Click or drag files here
                 </label>

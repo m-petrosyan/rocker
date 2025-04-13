@@ -24,15 +24,10 @@ const props = defineProps({
 
 <template>
     <GuestLayout :meta="{ title: 'Events' }">
-        <!--        {{ event }}-->
-        <!--        {{ views }} {{notify_count}}-->
         <div
             class="relative h-96 w-full"
-            :style="{ backgroundImage: `url(${event.poster})` }"
-        >
-            <div
-                class="absolute inset-0 z-0 brightness-50 backdrop-blur-md"
-            ></div>
+            :style="{ backgroundImage: `url(${event.poster})`}">
+            <div class="absolute inset-0 z-0 brightness-50 backdrop-blur-md"></div>
             <img
                 :src="event.poster"
                 :alt="event.title"
@@ -84,14 +79,6 @@ const props = defineProps({
         <h3 class="mt-2 text-center text-2xl">{{ event.title }}</h3>
         <pre class="mt-8 text-pretty text-center">{{ event.content }}</pre>
         <p class="text-center text-orange">{{ event.location }}</p>
-        <GoogleMap v-if="event.cordinates" :cordinates="event.cordinates" />
-
-        <!--        <div-->
-        <!--            class="absolute inset-0 bg-orange text-xl w-28 h-28 z-20 flex flex-col justify-center items-center">-->
-        <!--            <p class="text-4xl font-bold">-->
-        <!--                {{ moment(event.start_date, 'DD.MM.YY').format('D').toUpperCase() }}</p>-->
-        <!--            <p>{{ moment(event.start_date, 'DD.MM.YY').format('MMMM').toUpperCase() }}</p>-->
-        <!--            <small>{{ event.start_time }}</small>-->
-        <!--        </div>-->
+        <GoogleMap class="mt-5" v-if="event.cordinates" :cordinates="event.cordinates" />
     </GuestLayout>
 </template>

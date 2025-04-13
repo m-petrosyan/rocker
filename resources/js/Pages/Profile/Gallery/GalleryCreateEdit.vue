@@ -1,12 +1,13 @@
 <script setup>
 import ProgressBar from 'primevue/progressbar';
-import { computed } from 'vue';
+import { computed, reactive } from 'vue';
 import SelectImages from '@/Components/Forms/SelectImages.vue';
 import { useForm } from '@inertiajs/vue3';
 import Multiselect from '@/Components/Forms/MultiSelect.vue';
 import DatePicker from '@/Components/Forms/DatePicker.vue';
 import ProfileLayout from '@/Layouts/ProfileLayout.vue';
 import GoogleAutocomplate from '@/Components/Maps/GoogleAutocomplate.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 
 defineProps({
     galleries: {
@@ -17,25 +18,29 @@ defineProps({
 const form = useForm({
     title: '',
     description: '',
+    date: null,
     images: [],
+    bands: []
+});
+
+const data = reactive({
     preview: []
 });
 
 const limit = 200;
 
 const percent = computed(() => {
-    return (form.preview?.length / limit) * 100;
+    return (data.preview?.length / limit) * 100;
 });
 
 const submitGallery = () => {
-    form.post(route('db.gallery.store', form?.value.id), {
-        preserveState: false,
-        preserveScroll: true
+    form.post(route('profile.gallery.store', form?.id), {
+        preserveScroll: false
     });
 };
 
 const removeGallery = (id) => {
-    form.delete(route('db.gallery.destroy', id), {
+    form.delete(route('profile.gallery.destroy', id), {
         preserveState: false,
         preserveScroll: true,
         onSuccess: () => {
@@ -45,7 +50,7 @@ const removeGallery = (id) => {
 };
 
 const removeImageQuery = (id) => {
-    form.delete(route('db.media.destroy', id), {
+    form.delete(route('profile.media.destroy', id), {
         preserveState: false,
         preserveScroll: true
     });
@@ -81,13 +86,12 @@ const removeImageQuery = (id) => {
             </div>
 
 
-            <div class="px-4 md:px-0">
+            <form @submit.prevent="submitGallery" class="px-4 md:px-0">
                 <div class="flex flex-col-reverse md:flex-row flex-rverse gap-4">
                     <div class="w-full md:w-1/2">
                         <DatePicker
                             :flow="['calendar']"
-                            v-model:start_date="form.start_date"
-                            v-model:start_time="form.start_time"
+                            v-model:start_date="form.date"
                         />
                     </div>
                     <div class="w-full md:w-1/2 flex flex-col gap-y-2">
@@ -107,12 +111,12 @@ const removeImageQuery = (id) => {
                             tabindex="1"
                             enterkeyhint="next"
                         />
-                        <Multiselect text="Bands" multiple />
+                        <Multiselect v-model="form.bands" text="Bands" multiple />
                         <GoogleAutocomplate :form="form" />
                     </div>
                 </div>
 
-                <ProgressBar v-show="form.preview?.length" class="w-full bg-green mt-10"
+                <ProgressBar v-show="data.preview?.length" class="w-full bg-green mt-10"
                              :class="percent > 70 ? 'warning' : '' "
                              :value="percent < 10 ? 5 : percent">
                     {{ form.preview?.length }}/{{ limit }}
@@ -120,13 +124,16 @@ const removeImageQuery = (id) => {
 
 
                 <SelectImages
-                    v-model:previews="form.preview"
+                    v-model:previews="data.preview"
                     v-model:files="form.images" />
-                <button v-if="form.images.length" @click="submitGallery"
-                        class="px-4 mt-10 py-2 bg-dark-orange mx-auto text-white rounded flex gap-x-2">
+                <PrimaryButton
+                    class="ms-4"
+                    :class="{ 'opacity-25': form.processing }"
+                    :disabled="form.processing"
+                >
                     Create gellery
-                </button>
-            </div>
+                </PrimaryButton>
+            </form>
         </div>
     </ProfileLayout>
 </template>

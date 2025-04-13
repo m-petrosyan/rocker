@@ -1,6 +1,6 @@
 <script setup>
 import Multiselect from 'vue-multiselect';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 defineProps({
     text: {
@@ -10,14 +10,21 @@ defineProps({
     multiple: {
         type: Boolean,
         default: false
+    },
+    defaultValue: {
+        type: Array,
+        default: () => []
     }
 });
 
+const emits = defineEmits(['update:modelValue']);
+
 const value = ref([]);
 const options = [
-    { name: 'Ildaruni', code: '54' },
-    { name: 'Bambir', code: '12' },
-    { name: 'Dogma', code: '04' }
+    { name: 'Ildaruni' },
+    { name: 'Bambir' },
+    { name: 'Dogma' }
+    // { name: 'Dogma', id: '04' }
 ];
 
 const removeItem = (item) => {
@@ -27,6 +34,10 @@ const removeItem = (item) => {
         value.value = null;
     }
 };
+
+watch(() => value.value, (newValue) => {
+    emits('update:modelValue', newValue);
+});
 </script>
 
 <template>
