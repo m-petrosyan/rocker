@@ -13,9 +13,7 @@ class UserRegisterService
     public function store(array $attributes): void
     {
         $user = User::query()
-            ->create($attributes);
-        //
-//        ->assignRole('user')
+            ->create($attributes)->assignRole('user');
 
         $user->createToken('auth_token')->plainTextToken;
     }

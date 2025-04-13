@@ -11,11 +11,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasRoles, HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -41,6 +42,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'remember_token',
     ];
 
+    public $appends = [
+        'role',
+    ];
+
     /**
      * Get the attributes that should be cast.
      *
@@ -53,6 +58,12 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
         ];
     }
+
+    public function getRoleAttribute(): ?string
+    {
+        return $this->roles?->pluck('name')->first();
+    }
+
 
     public function sendEmailVerificationNotification(): void
     {

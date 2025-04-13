@@ -15,4 +15,8 @@ class Event extends Model implements Viewable
         'event_id',
         'notify_count',
     ];
+
+    protected $appends = [
+        'views',
+    ];
 }

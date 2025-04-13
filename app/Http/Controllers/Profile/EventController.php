@@ -26,14 +26,13 @@ class EventController
             $response = $this->eventService->store($request);
 
             session()->flash('message', $response['message']);
-            
+
             return redirect()->route('profile.index')
                 ->with(
                     'success',
                     'Thank you, the event has been created.<br> The event will be added to the list after moderation'
                 );
         } catch (\Throwable $e) {
-//            dd($e->getMessage());
             session()->flash('message', $e->getMessage()['message'] ?? 'An error occurred while creating the event.');
 
             return redirect()->back()->withInput();

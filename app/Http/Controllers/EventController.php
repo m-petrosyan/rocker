@@ -42,8 +42,8 @@ class EventController extends Controller
 
         return Inertia::render('Events/Event', [
             'event' => $response->json()['data'],
-            'notify_count' => $event?->notify_count ?? 0,
-            'views' => $event?->viewsCount() ?? 0,
+            'notify_count' => $event?->notify_count,
+            'views' => $event?->views,
         ]);
     }
 }

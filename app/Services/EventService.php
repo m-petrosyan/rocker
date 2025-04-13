@@ -34,7 +34,7 @@ class EventService
 
             $payload = [
                 'rocker[username]' => auth()->user()->username,
-                'rocker[role]' => 'admin',
+                'rocker[role]' => auth()?->user()->role,
                 'title' => $validated['title'],
                 'content' => $validated['content'],
                 'type' => $validated['type'],

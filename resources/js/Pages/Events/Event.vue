@@ -4,6 +4,9 @@ import moment from 'moment-timezone';
 import GoogleMap from '@/Components/Maps/GoogleMap.vue';
 import GoogleCalendar from '@/Components/Socials/GoogleCalendar.vue';
 import AppleCalendar from '@/Components/Socials/AppleCalendar.vue';
+import MoneyIcon from '@/Components/Icons/MoneyIcon.vue';
+import TicketIcon from '@/Components/Icons/TicketIcon.vue';
+import UrlIcon from '@/Components/Icons/UrlIcon.vue';
 
 const props = defineProps({
     event: {
@@ -55,10 +58,26 @@ const props = defineProps({
                 <small>{{ event.start_time }}</small>
             </div>
             <div
-                class="h-54 absolute bottom-0 left-0 z-20 flex gap-x-6 rounded-r-xl bg-black bg-opacity-20 p-4"
+                class="absolute bottom-0 left-0 z-20 flex gap-x-6 rounded-r-xl bg-black bg-opacity-20 p-4"
             >
                 <GoogleCalendar :event />
                 <AppleCalendar :event />
+            </div>
+            <div
+                class="flex flex-col absolute bottom-0 right-0 z-20 flex gap-x-6 rounded-r-xl bg-black bg-opacity-20 p-4"
+            >
+                <div v-if="event.price" class="flex items-center gap-x-2">
+                    <MoneyIcon />
+                    {{ event.price }}
+                </div>
+                <a v-if="event.ticket" :href="event.ticket" class="flex items-center gap-x-2" target="_blank">
+                    <TicketIcon />
+                    Ticket
+                </a>
+                <a v-if="event.link" :href="event.link" class="flex items-center gap-x-2" target="_blank">
+                    <UrlIcon />
+                    Link
+                </a>
             </div>
         </div>
 

@@ -8,10 +8,15 @@ trait ViewsTrait
 {
     use InteractsWithViews;
 
+    public function getViewsAttribute(): int
+    {
+        return $this->viewsCount();
+    }
+
     public function viewsCount(): int
     {
         return views($this)
             ->unique()
-            ->count();
+            ->count() ?? 0;
     }
 }
