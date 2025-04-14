@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\gallery;
+use App\Models\Gallery;
 use App\Repositories\GalleryReoisitory;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -15,56 +14,15 @@ class GalleryController extends Controller
      */
     public function index(): Response
     {
-        return Inertia::render('Gallery/Gallery', [
+        return Inertia::render('Gallery/Galleries', [
             'galleries' => GalleryReoisitory::allGalleries(),
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function show(Gallery $gallery): Response
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(gallery $gallery)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(gallery $gallery)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, gallery $gallery)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(gallery $gallery)
-    {
-        //
+        return Inertia::render('Gallery/Gallery', [
+            'gallery' => $gallery->load(['user']),
+        ]);
     }
 }

@@ -19,7 +19,7 @@ Route::middleware(['auth', 'verified'])->as('profile.')->prefix('profile')->grou
 
 
     Route::resource('events', EventController::class)->except('show');
-    Route::resource('gallery', GalleryController::class)->except('show');
+    Route::resource('galleries', GalleryController::class)->except('show');
     Route::delete('media/{media}', MediaController::class)->name('media.destroy');
 });
 

@@ -17,7 +17,7 @@ const menu = [
     // },
     {
         name: 'Add gallery',
-        route: route('profile.gallery.create'),
+        route: route('profile.galleries.create'),
         icon: GalleryIcon
     },
     {

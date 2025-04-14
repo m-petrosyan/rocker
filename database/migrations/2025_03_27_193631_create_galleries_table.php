@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('title')->nullable();
             $table->string('description')->nullable();
             $table->date('date')->nullable();
+            $table->foreignId('venue_id')->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
             $table->timestamps();
         });
     }

@@ -11,8 +11,8 @@ return new class extends Migration {
     {
         Schema::create('band_gallery', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('band_id')->constrained()->onDelete('cascade');
-            $table->foreignId('gallery_id')->constrained()->onDelete('cascade');
+            $table->foreignId('band_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('gallery_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });
     }

@@ -17,6 +17,7 @@ class Gallery extends Model implements Viewable, HasMedia
 
     protected $fillable = [
         'user_id',
+        'venue_id',
         'description',
         'date',
         'title',
@@ -27,6 +28,7 @@ class Gallery extends Model implements Viewable, HasMedia
         'cover',
         'bands',
     ];
+
     protected $hidden = [
         'media',
     ];
@@ -75,7 +77,7 @@ class Gallery extends Model implements Viewable, HasMedia
     public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('thumb')
-            ->width(210);
+            ->width(300);
 
         $this->addMediaConversion('large')
             ->width(1920);

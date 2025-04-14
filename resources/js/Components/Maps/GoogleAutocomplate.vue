@@ -71,6 +71,7 @@ watch(() => data.selectedCountry, (value) => {
     if (value.latitude) {
         warningText.value = false;
         props.form.cordinates = { 'latitude': value.latitude, 'longitude': value.longitude };
+        props.form.cid = value.cid;
     } else {
         props.form.cordinates = null;
     }

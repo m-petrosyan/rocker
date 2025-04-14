@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [EventController::class, 'index'])->name('home');
 
-Route::resource('/events', EventController::class)->only('index', 'show');
+Route::resource('events', EventController::class)->only('index', 'show');
 
-Route::resource('gallery', GalleryController::class)->only('index', 'show');
+Route::resource('galleries', GalleryController::class)->only('index', 'show');
 
 Route::get('verification', EmailVerificationPromptController::class)
     ->name('verification.notice');

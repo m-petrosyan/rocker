@@ -25,7 +25,10 @@ const form = useForm(
             description: '',
             date: null,
             images: [],
-            bands: []
+            bands: [],
+            cid: null,
+            location: null,
+            cordinates: null
         });
 
 const data = reactive({
@@ -39,25 +42,8 @@ const percent = computed(() => {
 });
 
 const submitGallery = () => {
-    form.post(route(form.id ? 'profile.gallery.update' : 'profile.gallery.store', form.id), {
+    form.post(route(form.id ? 'profile.galleries.update' : 'profile.galleries.store', form.id), {
         preserveScroll: false
-    });
-};
-
-const removeGallery = (id) => {
-    form.delete(route('profile.gallery.destroy', id), {
-        preserveState: false,
-        preserveScroll: true,
-        onSuccess: () => {
-            router.reload();
-        }
-    });
-};
-
-const removeImageQuery = (id) => {
-    form.delete(route('profile.media.destroy', id), {
-        preserveState: false,
-        preserveScroll: true
     });
 };
 </script>
@@ -65,21 +51,6 @@ const removeImageQuery = (id) => {
 <template>
     <ProfileLayout :meta="{title: 'Gallery create'}">
         <div>
-
-            <!--            <div v-for="image in gallery.images" :key="image.id" class="w-24">-->
-            <!--                <img v-if="image.thumb && image.thumb.trim()"-->
-            <!--                     :src="image.thumb"-->
-            <!--                     class="object-cover"-->
-            <!--                     alt="Image"-->
-            <!--                     @error="$event.target.src = image.original" />-->
-            <!--                <img v-else-if="image.original"-->
-            <!--                     :src="image.original"-->
-            <!--                     class="object-cover"-->
-            <!--                     alt="Image" />-->
-            <!--                <button type="button" @click="removeImageQuery(image.id)">Remove</button>-->
-            <!--            </div>-->
-            <!--       -->
-
             <form @submit.prevent="submitGallery" class="px-4 md:px-0">
                 <div class="flex flex-col-reverse md:flex-row flex-rverse gap-4">
                     <div class="w-full md:w-1/2">

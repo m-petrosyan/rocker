@@ -1,17 +1,23 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
-import GalleryWrapper from '@/Components/Gallery/GalleryWrapper.vue';
+import ImageWrapper from '@/Components/Gallery/ImageWrapper.vue';
+import NavLink from '@/Components/NavLink.vue';
 
 defineProps({
-    galleries: {
+    gallery: {
         type: Object
     }
 });
 </script>
 
 <template>
-    <GuestLayout :meta="{title: 'Galleries'}">
-        <template #header> Galleries</template>
-        <GalleryWrapper :galleries="galleries.data" user />
+    <GuestLayout :meta="{title: gallery.title}">
+        <h1 class="text-center">{{ gallery.title }}</h1>
+        <p class="text-center text-gray-500">{{ gallery.description }}</p>
+        <p class="text-center">{{ gallery.date }}</p>
+        <NavLink :href="route('profile.show', gallery.user.username)" class="text-center">
+            by {{ gallery.user.name }}
+        </NavLink>
+        <ImageWrapper :images="gallery.images_url" />
     </GuestLayout>
 </template>

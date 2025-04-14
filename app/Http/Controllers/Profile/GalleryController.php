@@ -45,7 +45,16 @@ class GalleryController
     {
         $this->galleryService->update($gallery, $request->validated());
 
-        session()->flash('message', 'Thank you, the gallery has been updated.');
+        session()->flash('message', 'The gallery has been updated.');
+
+        return redirect()->route('profile.index');
+    }
+
+    public function destroy(Gallery $gallery): RedirectResponse
+    {
+        $this->galleryService->destroy($gallery);
+
+        session()->flash('message', 'The gallery has been deleted.');
 
         return redirect()->route('profile.index');
     }

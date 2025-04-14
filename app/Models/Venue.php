@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Location extends Model
+class Venue extends Model
 {
     protected $fillable = [
         'cid',
