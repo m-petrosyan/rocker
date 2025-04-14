@@ -11,25 +11,20 @@ const props = defineProps({
     }
 });
 
-// Reactive state for the modal
 const selectedImageIndex = ref(null);
 
-// Computed property for the current image
 const currentImage = computed(() => {
     return selectedImageIndex.value !== null ? props.images[selectedImageIndex.value] : null;
 });
 
-// Function to open the modal at a specific image index
 const openModal = (index) => {
     selectedImageIndex.value = index;
 };
 
-// Function to close the modal
 const closeModal = () => {
     selectedImageIndex.value = null;
 };
 
-// Function to go to the previous image
 const prevImage = () => {
     if (selectedImageIndex.value !== null) {
         selectedImageIndex.value =
@@ -37,14 +32,12 @@ const prevImage = () => {
     }
 };
 
-// Function to go to the next image
 const nextImage = () => {
     if (selectedImageIndex.value !== null) {
         selectedImageIndex.value = (selectedImageIndex.value + 1) % props.images.length;
     }
 };
 
-// Function to download the original image
 const downloadImage = () => {
     if (currentImage.value && currentImage.value.original) {
         const link = document.createElement('a');
@@ -56,7 +49,6 @@ const downloadImage = () => {
     }
 };
 
-// Function to download all images as a ZIP file
 const downloadAllImages = async () => {
     const zip = new JSZip();
     const folder = zip.folder('gallery');
@@ -80,7 +72,6 @@ const downloadAllImages = async () => {
     }
 };
 
-// Keyboard navigation
 const handleKeydown = (event) => {
     if (!currentImage.value) return;
     if (event.key === 'ArrowLeft') {
@@ -112,11 +103,16 @@ onUnmounted(() => {
                 class="aspect-square overflow-hidden relative cursor-pointer"
                 @click="openModal(index)"
             >
-                <img
-                    :src="image.thumb"
-                    class="w-full h-full object-cover object-center"
-                    alt="Image"
-                />
+                <img v-if="image.thumb && image.thumb.trim()"
+                     :src="image.thumb"
+                     class="w-full h-full object-cover object-center"
+                     alt="Image"
+                     @error="$event.target.src = image.original" />
+                <img v-else-if="image.original"
+                     :src="image.original"
+                     class="w-full h-full object-cover object-center"
+                     alt="Image" />
+
             </div>
         </div>
         <button

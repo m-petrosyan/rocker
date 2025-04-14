@@ -9,9 +9,9 @@ trait ComponentServiceTrait
 {
     public function addSyncBand(Model $model, array|null $bands): void
     {
-        if (isset($bands)) {
+        if (isset($bands['bands'])) {
             $bandIds = [];
-            foreach ($bands as $bandData) {
+            foreach ($bands['bands'] as $bandData) {
                 $band = Band::query()->firstOrCreate(
                     ['name' => $bandData['name']],
                     $bandData + ['user_id' => auth()->user()->id]

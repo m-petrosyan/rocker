@@ -12,10 +12,10 @@ class GalleryService
     public function store(array $attributes): void
     {
         $venueId = null;
-        if ($attributes['cid']) {
+        if (isset($attributes['cid'])) {
             $venue = Venue::firstOrCreate(
-                ['cid' => $attributes['cid']], // Search condition
-                [                             // Create attributes
+                ['cid' => $attributes['cid']],
+                [
                     'cid' => $attributes['cid'],
                     'location' => $attributes['location'],
                     'cordinates' => $attributes['cordinates'],
@@ -28,7 +28,7 @@ class GalleryService
 
         $this->addImages($gallery, $attributes['images']);
 
-        $this->addSyncBand($gallery, $attributes['bands']);
+        $this->addSyncBand($gallery, $attributes);
     }
 
     public function update($gallery, $attributes): void
@@ -38,7 +38,7 @@ class GalleryService
 
         $this->addImages($gallery, $attributes['images']);
 
-        $this->addSyncBand($gallery, $attributes['bands']);
+        $this->addSyncBand($gallery, $attributes);
     }
 
     public function destroy($gallery): void
