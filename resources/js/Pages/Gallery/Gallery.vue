@@ -10,6 +10,8 @@ defineProps({
 
 <template>
     <GuestLayout :meta="{title: 'Galleries'}">
+        <template #header> Galleries</template>
+
         Soon
     </GuestLayout>
 </template>

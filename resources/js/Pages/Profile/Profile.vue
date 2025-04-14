@@ -11,6 +11,10 @@ defineProps({
         type: Object,
         required: true
     },
+    galleries: {
+        type: Object,
+        required: false
+    },
     owner: {
         type: Boolean,
         required: true
@@ -26,7 +30,7 @@ defineProps({
     <ProfileLayout :meta="{title: 'Profile'}">
         <!--        <template #header>-->
         <!--            <h2-->
-        <!--                class="text-xl font-semibold leading-tight text-gray-800"-->
+        <!--                class=" font-semibold leading-tight text-gray-800"-->
         <!--            >-->
         <!--                Profile-->
         <!--            </h2>-->
@@ -43,9 +47,9 @@ defineProps({
                     />
                     <QrGenerate v-if="url" :url />
                 </div>
-                <div class="text-gray-900 p-6 font-bold">
+                <h3 class="text-gray-900 p-6">
                     {{ user.name }}
-                </div>
+                </h3>
             </div>
             <div class="absolute right-0 top-0">
                 <ResponsiveNavLink
@@ -56,7 +60,6 @@ defineProps({
                     <LogoutIcon />
                 </ResponsiveNavLink>
             </div>
-            <SuccessMessages class="w-1/3 mx-auto" :message="$page.props.flash.success" timeout="10000" />
             <div class="mx-auto mt-32 p-2 w-full md:w-2/6 text-center">
                 <small class="block text-sm text-gray">
                     "Creative professional based in Kyiv, passionate about
@@ -71,7 +74,26 @@ defineProps({
                     </a>
                 </div>
             </div>
+            <SuccessMessages success class="w-1/3 mx-auto" :message="$page.props.flash.success" timeout="10000" />
             <ProfileActions v-if="owner" class="mx-auto w-full" />
+            <div class="mt-10">
+                <h2 class="text-center">Galleries</h2>
+                <div class="flex">
+                    <div class="flex  w-full">
+                        <div
+                            v-for="gallery in galleries.data"
+                            :key="gallery.id"
+                            class="flex items-center justify-between p-4"
+                        >
+                            <div>
+                                <h3 class="text-lg font-semibold">{{ gallery.title }}</h3>
+                                <p class="text-sm text-gray-500">{{ gallery.description }}</p>
+                            </div>
+                            <!--                            <a :href="route('galleries.show', gallery.id)" class="text-blue-500">View</a>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </ProfileLayout>
 </template>

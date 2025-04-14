@@ -23,7 +23,8 @@ const menu = [
     {
         name: 'Add band',
         route: route('profile.index'),
-        icon: BandIcon
+        icon: BandIcon,
+        disabled: true
     }
 ];
 </script>
@@ -34,7 +35,9 @@ const menu = [
             v-for="item in menu"
             :key="item.name"
             :href="item.route"
+            :disabled="item.disabled"
             class="flex items-center gap-2 p-4"
+            :class="{ 'opacity-50 pointer-events-none': item.disabled }"
         >
             <div
                 class="mx-auto flex w-32 flex-col items-center gap-y-4 rounded-lg bg-black p-4 transition-all duration-300 hover:bg-orange"

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Profile;
 use App\Http\Requests\Gallery\GalleryCreateRequest;
 use App\Repositories\BandRepository;
 use App\Services\GalleryService;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -21,8 +22,12 @@ class GalleryController
         ]);
     }
 
-    public function store(GalleryCreateRequest $request)
+    public function store(GalleryCreateRequest $request): RedirectResponse
     {
         $this->galleryService->store($request->validated());
+
+        session()->flash('message', 'Thank you, the gallery has been created.');
+
+        return redirect()->route('profile.index');
     }
 }

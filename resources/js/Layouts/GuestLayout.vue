@@ -33,7 +33,7 @@ const page = usePage();
     <section class="min-h-screen bg-black text-white pt-6 sm:pt-0">
         <MainNavbar v-if="!$isPWA" />
         <header v-if="$slots.header" class="my-10 text-gray">
-            <h1 class="text-xl font-bold text-center mb-5">
+            <h1 class="text-center mb-5">
                 <slot name="header" />
             </h1>
         </header>

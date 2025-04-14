@@ -27,8 +27,8 @@ onMounted(() => {
 </script>
 
 <template>
-    <div v-show="show">
-        <div class="error p-4 mb-4 text-sm rounded-lg  text-white text-wrap" :class="styles" role="alert">
+    <div v-show="show && message || $slots.default">
+        <div class="p-4 mb-4 text-sm rounded-lg  text-white text-wrap" :class="styles" role="alert">
             <p v-if="message">{{ message }}</p>
             <slot />
         </div>

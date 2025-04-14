@@ -15,6 +15,8 @@ class Gallery extends Model implements Viewable, HasMedia
 
     protected $fillable = [
         'user_id',
+        'description',
+        'date',
         'title',
     ];
 

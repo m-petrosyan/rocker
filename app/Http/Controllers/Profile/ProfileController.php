@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Profile;
 
 use App\Models\User;
+use App\Repositories\GalleryReoisitory;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -30,6 +31,7 @@ class ProfileController
             'user' => $user,
             'owner' => $owner,
             'url' => $owner ? route('profile.show', ['username' => $user->username]) : null,
+            'galleries' => GalleryReoisitory::userGallery(),
         ]);
     }
 }
