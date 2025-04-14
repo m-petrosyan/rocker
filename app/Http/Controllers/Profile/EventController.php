@@ -26,7 +26,7 @@ class EventController
     public function store(EventCreateRequest $request): RedirectResponse
     {
         try {
-            $response = $this->eventService->store($request);
+            $response = $this->eventService->store($request->validated());
 
             session()->flash('message', $response['message']);
 

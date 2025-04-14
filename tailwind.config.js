@@ -26,8 +26,8 @@ export default {
                 red: '#f44336',
                 pwaNavbg: 'rgba(50,62,74,0.58)',
                 green: '#4caf50',
-                blackTransparent: 'rgba(0,0,0,0.86)'
-
+                blackTransparent: 'rgba(0,0,0,0.86)',
+                blackTransparent2: 'rgba(0,0,0,0.45)'
             },
             fontSize: {
                 'sm': '13px'

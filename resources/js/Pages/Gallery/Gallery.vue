@@ -1,9 +1,10 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
+import GalleryWrapper from '@/Components/Gallery/GalleryWrapper.vue';
 
 defineProps({
     galleries: {
-        type: String
+        type: Object
     }
 });
 </script>
@@ -11,7 +12,6 @@ defineProps({
 <template>
     <GuestLayout :meta="{title: 'Galleries'}">
         <template #header> Galleries</template>
-
-        Soon
+        <GalleryWrapper :galleries="galleries.data" user />
     </GuestLayout>
 </template>

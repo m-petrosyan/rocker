@@ -41,6 +41,9 @@ class EventCreateRequest extends FormRequest
             'ticket' => ['nullable', 'url', 'max:10000'],
             'start_date' => ['required', 'date', 'after_or_equal:today'],
             'start_time' => ['required', 'date_format:H:i'],
+            'bands' => ['array'],
+            'bands.*.name' => ['required', 'string', 'max:255'],
+            'bands.*.id' => ['nullable', 'integer', 'exists:bands,id'],
         ];
     }
 

@@ -3,16 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\gallery;
+use App\Repositories\GalleryReoisitory;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class GalleryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Response
     {
-        //
+        return Inertia::render('Gallery/Gallery', [
+            'galleries' => GalleryReoisitory::allGalleries(),
+        ]);
     }
 
     /**

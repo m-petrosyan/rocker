@@ -31,7 +31,7 @@ class ProfileController
             'user' => $user,
             'owner' => $owner,
             'url' => $owner ? route('profile.show', ['username' => $user->username]) : null,
-            'galleries' => GalleryReoisitory::userGallery(),
+            'galleries' => GalleryReoisitory::userGallery($user),
         ]);
     }
 }

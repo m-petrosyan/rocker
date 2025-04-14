@@ -25,10 +25,9 @@ class EventService
         return $data;
     }
 
-    public function store($request)
+    public function store($attributes)
     {
         try {
-            $validated = $request->validated();
             $http = Http::timeout(10)
                 ->throw()
                 ->withHeaders(['Accept' => 'application/json']);
@@ -36,21 +35,22 @@ class EventService
             $payload = [
                 'rocker[username]' => auth()->user()->username,
                 'rocker[role]' => auth()?->user()->role,
-                'title' => $validated['title'],
-                'content' => $validated['content'],
-                'type' => $validated['type'],
-                'country' => $validated['country'],
-                'location' => $validated['location'],
-                'cordinates[latitude]' => $validated['cordinates']['latitude'] ?? null,
-                'cordinates[longitude]' => $validated['cordinates']['longitude'] ?? null,
-                'genre' => $validated['genre'],
-                'price' => $validated['price'] ?? null,
-                'start_date' => $validated['start_date'],
-                'start_time' => $validated['start_time'],
-                'link' => $validated['link'] ?? null,
-                'ticket' => $validated['ticket'] ?? null,
+                'title' => $attributes['title'],
+                'content' => $attributes['content'],
+                'type' => $attributes['type'],
+                'country' => $attributes['country'],
+                'location' => $attributes['location'],
+                'cordinates[latitude]' => $attributes['cordinates']['latitude'] ?? null,
+                'cordinates[longitude]' => $attributes['cordinates']['longitude'] ?? null,
+                'genre' => $attributes['genre'],
+                'price' => $attributes['price'] ?? null,
+                'start_date' => $attributes['start_date'],
+                'start_time' => $attributes['start_time'],
+                'link' => $attributes['link'] ?? null,
+                'ticket' => $attributes['ticket'] ?? null,
             ];
-
+   
+            $request = request();
             if ($request->hasFile('poster_file') && $request->file('poster_file')->isValid()) {
                 $file = $request->file('poster_file');
                 $http->attach(

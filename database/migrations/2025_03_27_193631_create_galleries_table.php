@@ -13,9 +13,9 @@ return new class extends Migration {
         Schema::create('galleries', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
+            $table->string('title')->nullable();
             $table->string('description')->nullable();
             $table->date('date')->nullable();
-            $table->string('title')->nullable();
             $table->timestamps();
         });
     }

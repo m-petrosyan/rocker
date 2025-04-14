@@ -1,10 +1,11 @@
 <script setup>
 import ProfileActions from '@/Components/Profile/ProfileActions.vue';
-import QrGenerate from '@/Components/Profile/QrGenerate.vue';
 import ProfileLayout from '@/Layouts/ProfileLayout.vue';
 import SuccessMessages from '@/Components/Messages/SuccessMessages.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import LogoutIcon from '@/Components/Icons/LogoutIcon.vue';
+import GalleryWrapper from '@/Components/Gallery/GalleryWrapper.vue';
+import UserInfo from '@/Components/Profile/UserInfo.vue';
 
 defineProps({
     user: {
@@ -28,29 +29,8 @@ defineProps({
 
 <template>
     <ProfileLayout :meta="{title: 'Profile'}">
-        <!--        <template #header>-->
-        <!--            <h2-->
-        <!--                class=" font-semibold leading-tight text-gray-800"-->
-        <!--            >-->
-        <!--                Profile-->
-        <!--            </h2>-->
-        <!--        </template>-->
-
-
         <div>
-            <div class="absolute left-1/2 top-[-80px] w-fit -translate-x-1/2 text-center">
-                <div class="relative mx-auto w-fit">
-                    <img
-                        src="/images/user.jpg"
-                        alt="Profile Picture"
-                        class="mx-auto mt-6 h-32 w-32 rounded-full border-4 border-white object-cover"
-                    />
-                    <QrGenerate v-if="url" :url />
-                </div>
-                <h3 class="text-gray-900 p-6">
-                    {{ user.name }}
-                </h3>
-            </div>
+            <UserInfo :url="url" :name="user.name" />
             <div class="absolute right-0 top-0">
                 <ResponsiveNavLink
                     :href="route('logout')"
@@ -60,39 +40,24 @@ defineProps({
                     <LogoutIcon />
                 </ResponsiveNavLink>
             </div>
-            <div class="mx-auto mt-32 p-2 w-full md:w-2/6 text-center">
-                <small class="block text-sm text-gray">
-                    "Creative professional based in Kyiv, passionate about
-                    building meaningful projects and bringing ideas to life.
-                    Focused on quality, collaboration, and continuous
-                    growth."
-                </small>
-                <div class="mt-5 flex flex-col">
-                    <a href="mailto:example@gmail.com">example@gmail.com</a>
-                    <a href="https://www.facebook.com/groups/286409629705239/">
-                        facebook.com/groups/286409629705239/
-                    </a>
-                </div>
-            </div>
-            <SuccessMessages success class="w-1/3 mx-auto" :message="$page.props.flash.success" timeout="10000" />
-            <ProfileActions v-if="owner" class="mx-auto w-full" />
-            <div class="mt-10">
-                <h2 class="text-center">Galleries</h2>
-                <div class="flex">
-                    <div class="flex  w-full">
-                        <div
-                            v-for="gallery in galleries.data"
-                            :key="gallery.id"
-                            class="flex items-center justify-between p-4"
-                        >
-                            <div>
-                                <h3 class="text-lg font-semibold">{{ gallery.title }}</h3>
-                                <p class="text-sm text-gray-500">{{ gallery.description }}</p>
-                            </div>
-                            <!--                            <a :href="route('galleries.show', gallery.id)" class="text-blue-500">View</a>-->
-                        </div>
-                    </div>
-                </div>
+            <!--            <div class="mx-auto mt-32 p-2 w-full md:w-2/6 text-center">-->
+            <!--                <small class="block text-sm text-gray">-->
+            <!--                    "Creative professional based in Kyiv, passionate about-->
+            <!--                    building meaningful projects and bringing ideas to life.-->
+            <!--                    Focused on quality, collaboration, and continuous-->
+            <!--                    growth."-->
+            <!--                </small>-->
+            <!--                <div class="mt-5 flex flex-col">-->
+            <!--                    <a href="mailto:example@gmail.com">example@gmail.com</a>-->
+            <!--                    <a href="https://www.facebook.com/groups/286409629705239/">-->
+            <!--                        facebook.com/groups/286409629705239/-->
+            <!--                    </a>-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <div class="mt-48">
+                <SuccessMessages success class="w-1/3 mx-auto" :message="$page.props.flash.success" timeout="10000" />
+                <ProfileActions v-if="owner" class="mx-auto w-full" />
+                <GalleryWrapper :galleries="galleries.data" title="User galleries" />
             </div>
         </div>
     </ProfileLayout>
