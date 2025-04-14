@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Profile;
 
 use App\Http\Requests\Event\EventCreateRequest;
+use App\Repositories\BandRepository;
 use App\Services\EventService;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
@@ -17,8 +18,8 @@ class EventController
     public function create(): Response
     {
         return Inertia::render('Profile/Events/EventCreateEdit', [
-                'bandsList' => BandRepository::bandList(),
-            ]);
+            'bandsList' => BandRepository::bandList(),
+        ]);
     }
 
 
