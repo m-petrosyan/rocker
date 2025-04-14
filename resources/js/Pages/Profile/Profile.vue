@@ -57,7 +57,7 @@ defineProps({
             <div class="mt-48">
                 <SuccessMessages success class="w-1/3 mx-auto" :message="$page.props.flash.success" timeout="10000" />
                 <ProfileActions v-if="owner" class="mx-auto w-full" />
-                <GalleryWrapper :galleries="galleries.data" title="User galleries" />
+                <GalleryWrapper :galleries="galleries.data" :editable="owner" title="User galleries" />
             </div>
         </div>
     </ProfileLayout>

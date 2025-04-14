@@ -2,23 +2,28 @@
 
 namespace App\Services;
 
-use App\Models\Band;
+use App\Traits\ComponentServiceTrait;
 
 class GalleryService
 {
+    use ComponentServiceTrait;
+
     public function store(array $attributes): void
     {
         $gallery = auth()->user()->galleries()->create($attributes);
 
-        foreach ($attributes['images'] as $image) {
-            $gallery->addMedia($image)
-                ->toMediaCollection('images');
-        }
+        $this->addImages($gallery, $attributes['images']);
 
-        if (isset($attributes['bands'])) {
-            foreach ($attributes['bands'] as $band) {
-                Band::query()->firstOrCreate(['name' => $band['name']], $band);
-            }
-        }
+        $this->addSyncBand($gallery, $attributes['bands']);
+    }
+
+    public function update($gallery, $attributes): void
+    {
+//        phpinfo();
+        $gallery->update($attributes);
+
+        $this->addImages($gallery, $attributes['images']);
+
+        $this->addSyncBand($gallery, $attributes['bands']);
     }
 }

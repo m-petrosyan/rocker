@@ -11,24 +11,32 @@ const props = defineProps({
     classes: { type: String, default: '' }
 });
 
-const emit = defineEmits(['update:previews', 'update:files']);
 const form = useForm({});
+
+const emit = defineEmits(['update:previews', 'update:files']);
 const dropZoneRef = ref(null);
 const isLoading = ref(false);
 
-const removeImage = (index) => {
-    const newPreviews = [...props.previews];
-    newPreviews.splice(index, 1);
-    emit('update:previews', newPreviews);
+const removeImage = (index, id) => {
+    if (id) {
+        form.delete(route('profile.media.destroy', id), {
+            preserveState: false,
+            preserveScroll: true
+        });
+    } else {
+        const newPreviews = [...props.previews];
+        newPreviews.splice(index, 1);
+        emit('update:previews', newPreviews);
 
-    const dataTransfer = new DataTransfer();
-    const filesArray = Array.from(props.files);
-    filesArray.forEach((file, i) => {
-        if (i !== index) {
-            dataTransfer.items.add(file);
-        }
-    });
-    emit('update:files', dataTransfer.files);
+        const dataTransfer = new DataTransfer();
+        const filesArray = Array.from(props.files);
+        filesArray.forEach((file, i) => {
+            if (i !== index) {
+                dataTransfer.items.add(file);
+            }
+        });
+        emit('update:files', dataTransfer.files);
+    }
 };
 
 const uploadImages = (event) => {
@@ -99,13 +107,18 @@ const dropZoneClass = computed(() =>
                     :key="index"
                     class="aspect-square overflow-hidden relative"
                 >
-                    <img :src="preview" class="w-full h-full object-cover object-center" alt="Image" />
-                    <button type="button" class="absolute top-0 left-0 z-10 p-2" @click="removeImage(index)">
-                        <ImageIcon class="opacity-50 hover:opacity-100" />
-                    </button>
-                    <button type="button" class="absolute bottom-0 right-0 z-10 p-2" @click="removeImage(index)">
-                        <DeleteIcon class="opacity-50 hover:opacity-100" />
-                    </button>
+                    <img :src="preview.thumb ?? preview" class="w-full h-full object-cover object-center" alt="Image" />
+                    <div
+                        class="absolute left-0 top-0 opacity-0 hover:opacity-100  flex flex-col justify-between w-full h-full z-10 p-2 bg-blackTransparent2">
+                        <button type="button" class="w-fit" @click="removeImage(index)">
+                            <ImageIcon />
+                        </button>
+                        <div class="flex justify-end">
+                            <button type="button" class="w-fit" @click="removeImage(index, preview.id)">
+                                <DeleteIcon />
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 

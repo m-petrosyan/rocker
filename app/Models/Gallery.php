@@ -6,6 +6,7 @@ use App\Traits\ViewsTrait;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -22,8 +23,9 @@ class Gallery extends Model implements Viewable, HasMedia
     ];
 
     protected $appends = [
-        'images',
+        'images_url',
         'cover',
+        'bands',
     ];
     protected $hidden = [
         'media',
@@ -35,12 +37,23 @@ class Gallery extends Model implements Viewable, HasMedia
         return $this->belongsTo(User::class);
     }
 
-    public function getCoverAttribute()
+
+    public function bands(): BelongsToMany
     {
-        return $this->getImagesAttribute()[0] ?? null;
+        return $this->belongsToMany(Band::class);
     }
 
-    public function getImagesAttribute(): array
+    public function getBandsAttribute()
+    {
+        return $this->bands()->get();
+    }
+
+    public function getCoverAttribute()
+    {
+        return $this->getImagesUrlAttribute()[0] ?? null;
+    }
+
+    public function getImagesUrlAttribute(): array
     {
         $mediaItems = $this->getMedia('images');
 

@@ -23,7 +23,7 @@ const props = defineProps({
 
 const emits = defineEmits(['update:modelValue']);
 
-const selected = ref([]);
+const selected = ref(props.modelValue);
 
 const removeItem = (item) => {
     if (Array.isArray(selected.value)) {
