@@ -40,8 +40,8 @@ const deleteGallery = (id) => {
     <div class="mt-10">
         <h2 v-if="title" class="text-center">{{ title }}</h2>
         <div class="mt-10 grid gap-y-10 md:grid-cols-2 lg:grid-cols-4">
-            <NavLink :href="route('galleries.show', gallery.id)"
-                     v-for="gallery in galleries"
+            <NavLink v-for="gallery in galleries.data"
+                     :href="route('galleries.show', gallery.id)"
                      :key="gallery.id"
                      class="flex flex-col items-center p-4">
                 <div class="relative h-64 w-full bg-cover bg-center rounded-lg"

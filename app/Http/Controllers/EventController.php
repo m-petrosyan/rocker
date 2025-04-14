@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Repositories\EventReoisutiry;
 use App\Services\EventService;
 use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
@@ -16,17 +17,8 @@ class EventController extends Controller
 
     public function index(): Response
     {
-//        $gallery = Gallery::query()->find(1);
-//        views($gallery)->record();
-//
-//        dd($gallery->viewsCount());
-
-//        Cache::delete('events');
-
-        $data = $this->eventService->index();
-
         return Inertia::render('Events/Events', [
-            'events' => $data,
+            'events' => EventReoisutiry::eventsList(),
         ]);
     }
 

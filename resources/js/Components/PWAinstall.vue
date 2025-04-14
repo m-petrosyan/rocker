@@ -1,3 +1,47 @@
+<script setup>
+import { onMounted, ref } from 'vue';
+import { router } from '@inertiajs/vue3';
+
+const showPrompt = ref(false);
+let deferredEvent = null;
+
+const isInstalled = () => {
+    return window.matchMedia('(display-mode: standalone)').matches ||
+        window.navigator.standalone;
+};
+
+onMounted(() => {
+    if (isInstalled() || localStorage.getItem('pwaDismissed')) return;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredEvent = e;
+        setTimeout(() => showPrompt.value = true, 10000);
+    });
+});
+
+const install = async () => {
+    if (!deferredEvent) return;
+    deferredEvent.prompt();
+    const { outcome } = await deferredEvent.userChoice;
+    if (outcome === 'accepted') {
+        router.post(route('pwa.install'));
+        localStorage.setItem('pwaInstalled', 'true');
+        // router.visit('/events'); // Перенаправляем сразу после установки
+    }
+    close();
+};
+
+const dismiss = () => {
+    localStorage.setItem('pwaDismissed', 'true');
+    close();
+};
+
+const close = () => {
+    showPrompt.value = false;
+    deferredEvent = null;
+};
+</script>
 <template>
     <div
         v-if="showPrompt"
@@ -72,46 +116,3 @@
         </div>
     </div>
 </template>
-
-<script setup>
-import { onMounted, ref } from 'vue';
-
-const showPrompt = ref(false);
-let deferredEvent = null;
-
-const isInstalled = () => {
-    return window.matchMedia('(display-mode: standalone)').matches ||
-        window.navigator.standalone;
-};
-
-onMounted(() => {
-    if (isInstalled() || localStorage.getItem('pwaDismissed')) return;
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredEvent = e;
-        setTimeout(() => showPrompt.value = true, 10000);
-    });
-});
-
-const install = async () => {
-    if (!deferredEvent) return;
-    deferredEvent.prompt();
-    const { outcome } = await deferredEvent.userChoice;
-    if (outcome === 'accepted') {
-        localStorage.setItem('pwaInstalled', 'true');
-        // router.visit('/events'); // Перенаправляем сразу после установки
-    }
-    close();
-};
-
-const dismiss = () => {
-    localStorage.setItem('pwaDismissed', 'true');
-    close();
-};
-
-const close = () => {
-    showPrompt.value = false;
-    deferredEvent = null;
-};
-</script>

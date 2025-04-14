@@ -4,14 +4,15 @@ use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\GoogleAuthController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Profile\ProfileController;
+use App\Http\Controllers\PwaInstallController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [EventController::class, 'index'])->name('home');
-
+Route::get('/', HomeController::class)->name('home');
 Route::resource('events', EventController::class)->only('index', 'show');
-
 Route::resource('galleries', GalleryController::class)->only('index', 'show');
+Route::post('pwa-install', PwaInstallController::class)->name('pwa.install');
 
 Route::get('verification', EmailVerificationPromptController::class)
     ->name('verification.notice');
@@ -19,8 +20,10 @@ Route::get('profile/{username}', [ProfileController::class, 'index'])->name(
     'profile.show'
 );
 
-Route::get('/auth/google', [GoogleAuthController::class, 'redirectToGoogle'])->name('auth.google');
-Route::get('/auth/google/callback', [GoogleAuthController::class, 'handleGoogleCallback']);
+Route::prefix('auth')->group(function () {
+    Route::get('/google', [GoogleAuthController::class, 'redirectToGoogle'])->name('auth.google');
+    Route::get('/google/callback', [GoogleAuthController::class, 'handleGoogleCallback']);
+});
 
 require_once __DIR__.'/guest.php';
 require_once __DIR__.'/auth.php';

@@ -1,6 +1,6 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
-import ImageWrapper from '@/Components/Gallery/ImageWrapper.vue';
+import ImageWrapper from '@/Components/Wrappers/ImageWrapper.vue';
 import NavLink from '@/Components/NavLink.vue';
 
 defineProps({
