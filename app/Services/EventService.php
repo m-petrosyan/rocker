@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Band;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
@@ -67,6 +68,12 @@ class EventService
 
             $data = json_decode($response->body(), true);
 
+
+            if (isset($attributes['bands'])) {
+                foreach ($attributes['bands'] as $band) {
+                    Band::query()->firstOrCreate(['name' => $band['name']], $band);
+                }
+            }
 
             auth()->user()->events()->create([
                 'event_id' => $data['event_id'],

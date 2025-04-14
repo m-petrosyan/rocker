@@ -16,7 +16,9 @@ class EventController
 
     public function create(): Response
     {
-        return Inertia::render('Profile/Events/EventCreateEdit');
+        return Inertia::render('Profile/Events/EventCreateEdit', [
+                'bandsList' => BandRepository::bandList(),
+            ]);
     }
 
 

@@ -18,6 +18,10 @@ const props = defineProps({
     role: {
         type: String,
         required: true
+    },
+    bandsList: {
+        type: Array,
+        required: false
     }
 });
 
