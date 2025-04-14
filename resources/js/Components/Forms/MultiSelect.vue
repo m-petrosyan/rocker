@@ -2,7 +2,7 @@
 import Multiselect from 'vue-multiselect';
 import { ref, watch } from 'vue';
 
-defineProps({
+const props = defineProps({
     text: {
         type: String,
         default: 'Select'
@@ -11,7 +11,11 @@ defineProps({
         type: Boolean,
         default: false
     },
-    defaultValue: {
+    modelValue: {
+        type: Array,
+        default: () => []
+    },
+    options: {
         type: Array,
         default: () => []
     }
@@ -19,23 +23,25 @@ defineProps({
 
 const emits = defineEmits(['update:modelValue']);
 
-const value = ref([]);
-const options = [
-    { name: 'Ildaruni' },
-    { name: 'Bambir' },
-    { name: 'Dogma' }
-    // { name: 'Dogma', id: '04' }
-];
+const selected = ref([]);
 
 const removeItem = (item) => {
-    if (Array.isArray(value.value)) {
-        value.value = value.value.filter((v) => v.name !== item.name);
+    if (Array.isArray(selected.value)) {
+        selected.value = selected.value.filter((v) => v.name !== item.name);
     } else {
-        value.value = null;
+        selected.value = null;
     }
 };
 
-watch(() => value.value, (newValue) => {
+const addTag = (name) => {
+    const tag = {
+        name: name
+    };
+    props.options.push(tag);
+    selected.value.push(tag);
+};
+
+watch(() => selected.value, (newValue) => {
     emits('update:modelValue', newValue);
 });
 </script>
@@ -44,8 +50,10 @@ watch(() => value.value, (newValue) => {
     <div>
         <multiselect
             id="option-tags"
-            v-model="value"
+            v-model="selected"
             :options="options"
+            :taggable="true"
+            @tag="addTag"
             :multiple="multiple"
             :placeholder="text"
             track-by="name"
@@ -58,17 +66,12 @@ watch(() => value.value, (newValue) => {
               @click="removeItem(option)"
               class="multiselect__tag-icon"
               type="button"
-              aria-label="Remove"
-          >
+              aria-label="Remove">
             ×
           </button>
         </span>
             </template>
-            <template v-slot:noResult>
-                Oops! No elements found. Consider changing the search query.
-            </template>
         </multiselect>
-        <!-- <pre class="language-json"><code>{{ value }}</code></pre> -->
     </div>
 </template>
 

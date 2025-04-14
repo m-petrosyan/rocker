@@ -85,5 +85,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Event::class);
     }
 
+    public function galleries(): HasMany
+    {
+        return $this->hasMany(Gallery::class);
+    }
 
 }

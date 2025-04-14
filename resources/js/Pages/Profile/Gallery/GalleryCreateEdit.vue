@@ -12,7 +12,8 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 defineProps({
     galleries: {
         type: String
-    }
+    },
+    bandsList: []
 });
 
 const form = useForm({
@@ -111,7 +112,7 @@ const removeImageQuery = (id) => {
                             tabindex="1"
                             enterkeyhint="next"
                         />
-                        <Multiselect v-model="form.bands" text="Bands" multiple />
+                        <Multiselect v-model="form.bands" :options="bandsList" text="Bands" multiple />
                         <GoogleAutocomplate :form="form" />
                     </div>
                 </div>
@@ -119,7 +120,7 @@ const removeImageQuery = (id) => {
                 <ProgressBar v-show="data.preview?.length" class="w-full bg-green mt-10"
                              :class="percent > 70 ? 'warning' : '' "
                              :value="percent < 10 ? 5 : percent">
-                    {{ form.preview?.length }}/{{ limit }}
+                    {{ data.preview?.length }}/{{ limit }}
                 </ProgressBar>
 
 

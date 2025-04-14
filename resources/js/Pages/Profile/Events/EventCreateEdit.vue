@@ -8,6 +8,7 @@ import GoogleAutocomplate from '@/Components/Maps/GoogleAutocomplate.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import ProfileLayout from '@/Layouts/ProfileLayout.vue';
 import SuccessMessages from '@/Components/Messages/SuccessMessages.vue';
+import Multiselect from '@/Components/Forms/MultiSelect.vue';
 
 const props = defineProps({
     event: {
@@ -126,6 +127,7 @@ const createEvent = () => {
                             :options="genres"
                         />
                         <GoogleAutocomplate :form="form" />
+                        <Multiselect v-model="form.bands" text="Bands" multiple />
                         <DatePicker
                             v-model:start_date="form.start_date"
                             v-model:start_time="form.start_time"
