@@ -45,10 +45,16 @@ class Gallery extends Model implements Viewable, HasMedia
         return $this->belongsToMany(Band::class);
     }
 
+    public function venue(): BelongsTo
+    {
+        return $this->belongsTo(Venue::class);
+    }
+
     public function getBandsAttribute()
     {
         return $this->bands()->get();
     }
+
 
     public function getCoverAttribute()
     {

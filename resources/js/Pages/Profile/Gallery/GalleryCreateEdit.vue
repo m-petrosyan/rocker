@@ -1,6 +1,6 @@
 <script setup>
 import ProgressBar from 'primevue/progressbar';
-import { computed, reactive } from 'vue';
+import { computed, onBeforeMount, reactive } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import SelectImages from '@/Components/Forms/SelectImages.vue';
 import Multiselect from '@/Components/Forms/MultiSelect.vue';
@@ -30,6 +30,12 @@ const form = useForm(
             location: null,
             cordinates: null
         });
+
+onBeforeMount(() => {
+    if (props.gallery?.venue) {
+        Object.assign(form, props.gallery.venue);
+    }
+});
 
 const data = reactive({
     preview: props.gallery?.images_url ? [...props.gallery.images_url] : []

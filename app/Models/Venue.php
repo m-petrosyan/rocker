@@ -10,6 +10,7 @@ class Venue extends Model
         'cid',
         'title',
         'address',
+        'location',
         'cordinates',
     ];
 

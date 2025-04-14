@@ -36,7 +36,7 @@ class GalleryController
     public function edit(Gallery $gallery): Response
     {
         return Inertia::render('Profile/Gallery/GalleryCreateEdit', [
-            'gallery' => $gallery,
+            'gallery' => $gallery->load('venue'),
             'bandsList' => BandRepository::bandList(),
         ]);
     }

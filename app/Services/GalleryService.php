@@ -11,16 +11,20 @@ class GalleryService
 
     public function store(array $attributes): void
     {
+        $venueId = null;
         if ($attributes['cid']) {
-            Venue::query()->create([
-                'cid' => $attributes['cid'],
-                'title' => $attributes['location'],
-                'address' => $attributes['location'],
-                'cordinates' => $attributes['cordinates'],
-            ]);
+            $venue = Venue::firstOrCreate(
+                ['cid' => $attributes['cid']], // Search condition
+                [                             // Create attributes
+                    'cid' => $attributes['cid'],
+                    'location' => $attributes['location'],
+                    'cordinates' => $attributes['cordinates'],
+                ]
+            );
+            $venueId = $venue->id;
         }
 
-        $gallery = auth()->user()->galleries()->create($attributes);
+        $gallery = auth()->user()->galleries()->create(array_merge($attributes, ['venue_id' => $venueId]));
 
         $this->addImages($gallery, $attributes['images']);
 
