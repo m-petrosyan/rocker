@@ -23,7 +23,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <GuestLayout :meta="{ title: 'Events' }">
+    <GuestLayout :meta="{ title: event.title }">
         <div
             class="relative h-96 w-full"
             :style="{ backgroundImage: `url(${event.poster})`}">
