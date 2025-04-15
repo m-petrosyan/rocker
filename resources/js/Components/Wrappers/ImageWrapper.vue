@@ -131,7 +131,7 @@ onUnmounted(() => {
                 <img
                     :src="currentImage.large"
                     class="max-w-[100vw] max-h-[100vh] object-contain"
-                    alt="Large Image"
+                    alt="Uploading"
                 />
 
                 <button
