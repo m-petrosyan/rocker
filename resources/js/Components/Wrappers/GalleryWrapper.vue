@@ -44,13 +44,13 @@ const deleteGallery = (id) => {
                 :key="gallery.id"
                 class="flex flex-col items-center p-4">
                 <div class="relative h-64 w-full bg-cover bg-center rounded-lg overflow-hidden">
-                    <img v-if="gallery.cover.thumb && gallery.cover.thumb.trim()"
-                         :src="gallery.cover.thumb"
+                    <img v-if="gallery.cover_img.thumb && gallery.cover_img.thumb.trim()"
+                         :src="gallery.cover_img.thumb"
                          class="object-cover w-full h-full"
                          alt="Image"
-                         @error="$event.target.src = gallery.cover.original" />
-                    <img v-else-if="gallery.cover.original"
-                         :src="gallery.cover.original"
+                         @error="$event.target.src = gallery.cover_img.original" />
+                    <img v-else-if="gallery.cover_img.original"
+                         :src="gallery.cover_img.original"
                          class="object-cover w-full h-full"
                          alt="Image" />
 

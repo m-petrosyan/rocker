@@ -21,11 +21,12 @@ class Gallery extends Model implements Viewable, HasMedia
         'description',
         'date',
         'title',
+        'cover',
     ];
 
     protected $appends = [
         'images_url',
-        'cover',
+        'cover_img',
         'bands',
         'views',
     ];
@@ -57,9 +58,9 @@ class Gallery extends Model implements Viewable, HasMedia
     }
 
 
-    public function getCoverAttribute()
+    public function getCoverImgAttribute()
     {
-        return $this->getImagesUrlAttribute()[0] ?? null;
+        return $this->getImagesUrlAttribute()[$this->cover ?? 0] ?? null;
     }
 
     public function getImagesUrlAttribute(): array

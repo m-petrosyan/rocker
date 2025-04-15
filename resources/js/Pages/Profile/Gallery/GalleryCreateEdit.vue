@@ -24,6 +24,7 @@ const form = useForm(
             cid: null,
             location: null,
             cordinates: null,
+            cover: null,
             _method: 'PUT'
         }
         : {
@@ -34,7 +35,8 @@ const form = useForm(
             bands: [],
             cid: null,
             location: null,
-            cordinates: null
+            cordinates: null,
+            cover: null
         });
 
 onBeforeMount(() => {
@@ -102,6 +104,7 @@ const submitGallery = () => {
 
 
                 <SelectImages
+                    v-model:cover="form.cover"
                     v-model:previews="data.preview"
                     v-model:files="form.images" />
                 <PrimaryButton
@@ -109,7 +112,7 @@ const submitGallery = () => {
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
-                    Create gellery
+                    {{ form.id ? 'Update' : 'Create' }}
                 </PrimaryButton>
             </form>
         </div>

@@ -6,6 +6,7 @@ import DeleteIcon from '@/Components/Icons/DeleteIcon.vue';
 import ImageIcon from '@/Components/Icons/ImageIcon.vue';
 
 const props = defineProps({
+    cover: { type: Number, default: false },
     previews: { type: Array, required: true },
     files: { type: Object, required: true },
     classes: { type: String, default: '' }
@@ -13,7 +14,7 @@ const props = defineProps({
 
 const form = useForm({});
 
-const emit = defineEmits(['update:previews', 'update:files']);
+const emit = defineEmits(['update:previews', 'update:files', 'update:cover']);
 const dropZoneRef = ref(null);
 const isLoading = ref(false);
 
@@ -86,6 +87,10 @@ const { isOverDropZone } = useDropZone(dropZoneRef, {
     multiple: true
 });
 
+const setCover = (index) => {
+    emit('update:cover', index);
+};
+
 const dropZoneClass = computed(() =>
     isOverDropZone.value
         ? 'border-orange bg-graydark2'
@@ -107,10 +112,11 @@ const dropZoneClass = computed(() =>
                     :key="index"
                     class="aspect-square overflow-hidden relative"
                 >
-                    <img :src="preview.thumb ?? preview" class="w-full h-full object-cover object-center" alt="Image" />
+                    <img :src="preview.thumb ?? preview" :class="{'border border-2 border-orange':cover === index}"
+                         class="w-full h-full object-cover object-center" alt="Image" />
                     <div
                         class="absolute left-0 top-0 opacity-0 hover:opacity-100  flex flex-col justify-between w-full h-full z-10 p-2 bg-blackTransparent2">
-                        <button type="button" class="w-fit" @click="removeImage(index)">
+                        <button type="button" class="w-fit" @click="setCover(index)">
                             <ImageIcon />
                         </button>
                         <div class="flex justify-end">
