@@ -31,7 +31,7 @@ defineProps({
     <ProfileLayout :meta="{title: 'Profile'}">
         <div>
             <UserInfo :url="url" :user="user" :owner />
-            <div class="absolute right-0 top-0">
+            <div v-if="owner" class="absolute right-0 top-0">
                 <ResponsiveNavLink
                     :href="route('logout')"
                     method="post"
