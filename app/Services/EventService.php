@@ -54,7 +54,7 @@ class EventService
 
             if (isset($attributes['bands'])) {
                 foreach ($attributes['bands'] as $band) {
-                    Band::query()->firstOrCreate(['name' => $band['name']], $band);
+                    Band::query()->firstOrCreate(['name' => $band['name'], 'user_id' => auth()->id()], $band);
                 }
             }
 
