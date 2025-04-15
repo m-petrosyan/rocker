@@ -19,7 +19,13 @@ const props = defineProps({
 
 const form = useForm(
     props.gallery?.id
-        ? { ...props.gallery, images: null, _method: 'PUT' }
+        ? {
+            ...props.gallery, images: null,
+            cid: null,
+            location: null,
+            cordinates: null,
+            _method: 'PUT'
+        }
         : {
             title: '',
             description: '',
@@ -33,7 +39,8 @@ const form = useForm(
 
 onBeforeMount(() => {
     if (props.gallery?.venue) {
-        Object.assign(form, props.gallery.venue);
+        const { id, ...rest } = props.gallery.venue;
+        Object.assign(form, rest);
     }
 });
 

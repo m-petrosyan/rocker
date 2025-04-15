@@ -27,6 +27,7 @@ class Gallery extends Model implements Viewable, HasMedia
         'images_url',
         'cover',
         'bands',
+        'views',
     ];
 
     protected $hidden = [

@@ -21,6 +21,8 @@ class GalleryController extends Controller
 
     public function show(Gallery $gallery): Response
     {
+        views($gallery)->record();
+
         return Inertia::render('Gallery/Gallery', [
             'gallery' => $gallery->load(['user']),
         ]);

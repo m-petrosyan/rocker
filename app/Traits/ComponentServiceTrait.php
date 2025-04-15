@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Models\Band;
+use App\Models\Venue;
 use Illuminate\Database\Eloquent\Model;
 
 trait ComponentServiceTrait
@@ -30,5 +31,23 @@ trait ComponentServiceTrait
                     ->toMediaCollection('images');
             }
         }
+    }
+
+    public function addLocation(array $attributes): ?int
+    {
+        $venueId = null;
+        if (isset($attributes['cid'])) {
+            $venue = Venue::firstOrCreate(
+                ['cid' => $attributes['cid']],
+                [
+                    'cid' => $attributes['cid'],
+                    'location' => $attributes['location'],
+                    'cordinates' => $attributes['cordinates'],
+                ]
+            );
+            $venueId = $venue->id;
+        }
+
+        return $venueId;
     }
 }

@@ -93,8 +93,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div class="relative pt-10">
-        <!-- Image Grid -->
+    <div class="relative pt-10 mt-5">
         <div class="grid grid-cols-3 md:grid-cols-6 gap-2 mt-5">
             <div
                 v-if="props.images.length"
@@ -105,12 +104,12 @@ onUnmounted(() => {
             >
                 <img v-if="image.thumb && image.thumb.trim()"
                      :src="image.thumb"
-                     class="w-full h-full object-cover object-center"
+                     class="w-full h-full object-cover object-center rounded-md"
                      alt="Image"
                      @error="$event.target.src = image.original" />
                 <img v-else-if="image.original"
                      :src="image.original"
-                     class="w-full h-full object-cover object-center"
+                     class="w-full h-full object-cover object-center rounded-md"
                      alt="Image" />
 
             </div>
@@ -123,7 +122,6 @@ onUnmounted(() => {
             Download
             <DownloadIcon />
         </button>
-        <!-- Modal -->
         <div
             v-if="currentImage"
             class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
@@ -136,7 +134,6 @@ onUnmounted(() => {
                     alt="Large Image"
                 />
 
-                <!-- Close Button -->
                 <button
                     class="absolute top-2 right-2 text-white bg-black bg-opacity-50 rounded-full p-2"
                     @click="closeModal"
@@ -157,7 +154,6 @@ onUnmounted(() => {
                     </svg>
                 </button>
 
-                <!-- Previous Button -->
                 <button
                     v-if="props.images.length > 1"
                     class="absolute left-2 top-1/2 transform -translate-y-1/2 text-white bg-black bg-opacity-50 rounded-full p-2"
@@ -179,7 +175,6 @@ onUnmounted(() => {
                     </svg>
                 </button>
 
-                <!-- Next Button -->
                 <button
                     v-if="props.images.length > 1"
                     class="absolute right-2 top-1/2 transform -translate-y-1/2 text-white bg-black bg-opacity-50 rounded-full p-2"
@@ -201,7 +196,6 @@ onUnmounted(() => {
                     </svg>
                 </button>
 
-                <!-- Download Single Image Button -->
                 <button
                     class="absolute top-2 right-10 text-white bg-opacity-75 rounded-full p-2"
                     @click="downloadImage"

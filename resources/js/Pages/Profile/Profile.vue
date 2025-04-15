@@ -30,7 +30,7 @@ defineProps({
 <template>
     <ProfileLayout :meta="{title: 'Profile'}">
         <div>
-            <UserInfo :url="url" :name="user.name" />
+            <UserInfo :url="url" :user="user" :owner />
             <div class="absolute right-0 top-0">
                 <ResponsiveNavLink
                     :href="route('logout')"
@@ -57,7 +57,7 @@ defineProps({
             <div class="mt-48">
                 <SuccessMessages success class="w-1/3 mx-auto" :message="$page.props.flash.success" timeout="10000" />
                 <ProfileActions v-if="owner" class="mx-auto w-full" />
-                <GalleryWrapper :galleries="galleries" :editable="owner" title="User galleries" />
+                <GalleryWrapper :galleries="galleries" :owner title="User galleries" />
             </div>
         </div>
     </ProfileLayout>

@@ -11,12 +11,16 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, HasMedia
 {
+
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasRoles, HasApiTokens, HasFactory, Notifiable;
+    use HasRoles, HasApiTokens, HasFactory, Notifiable, InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -44,6 +48,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public $appends = [
         'role',
+        'image',
     ];
 
     /**
@@ -90,4 +95,24 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Gallery::class);
     }
 
+    public function getImageAttribute(): ?array
+    {
+        $media = $this->getMedia('images')->first();
+
+        if (!$media) {
+            return null;
+        }
+
+        return [
+            'id' => $media->id,
+            'thumb' => $media->getUrl('thumb'),
+        ];
+    }
+
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')
+            ->width(300)
+            ->nonQueued();
+    }
 }

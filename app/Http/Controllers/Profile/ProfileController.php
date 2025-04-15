@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Profile;
 
+use App\Http\Requests\Profile\ProfileImageUpdateRequest;
 use App\Models\User;
 use App\Repositories\GalleryReoisitory;
 use Inertia\Inertia;
@@ -33,5 +34,15 @@ class ProfileController
             'url' => $owner ? route('profile.show', ['username' => $user->username]) : null,
             'galleries' => GalleryReoisitory::userGallery($user),
         ]);
+    }
+
+    public function updateImage(ProfileImageUpdateRequest $request)
+    {
+        auth()->user()->clearMediaCollection('images');
+
+        auth()->user()->addMedia($request['image'])
+            ->toMediaCollection('images');
+
+        session()->flash('message', 'The image has been updated.');
     }
 }

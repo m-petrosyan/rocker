@@ -13,11 +13,27 @@ defineProps({
 <template>
     <GuestLayout :meta="{title: gallery.title}">
         <h1 class="text-center">{{ gallery.title }}</h1>
-        <p class="text-center text-gray-500">{{ gallery.description }}</p>
-        <p class="text-center">{{ gallery.date }}</p>
-        <NavLink :href="route('profile.show', gallery.user.username)" class="text-center">
-            by {{ gallery.user.name }}
-        </NavLink>
+        <div class="flex mt-5">
+            <div class="w-1/3">
+                <NavLink :href="route('profile.show', gallery.user.username)"
+                         class="text-center flex flex-col items-center gap-y-4 p-2">
+                    <div class="h-16 w-16 rounded-full overflow-hidden">
+                        <img :src="gallery.user?.image?.thumb ?? '/images/user.jpg'" class="object-contain h-full"
+                             alt="">
+                    </div>
+                    <p>{{ gallery.user.name }}</p>
+                </NavLink>
+            </div>
+            <div class="w-2/3 flex flex-col gap-y-4 bg-graydark p-4 rounded-lg text-pretty">
+                <p>{{ gallery.description }}</p>
+                <p class="bg-graydark2 w-fit px-2 rounded-sm">{{ gallery.date }}</p>
+                <div class="flex gap-x-2">
+                    <div v-for="band of gallery.bands" class="bg-red px-1 rounded-sm">
+                        <div class="bg-red ">{{ band.name }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <ImageWrapper :images="gallery.images_url" />
     </GuestLayout>
 </template>
