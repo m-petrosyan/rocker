@@ -19,7 +19,7 @@ class GalleryReoisitory
     {
         return Gallery::query()
             ->with(['user.roles'])
-            ->orderByRaw('ISNULL(date), date ASC')
+            ->orderByRaw('ISNULL(date), date DESC')
             ->paginate(20);
     }
 }
