@@ -105,12 +105,12 @@ onUnmounted(() => {
                 <img v-if="image.thumb && image.thumb.trim()"
                      :src="image.thumb"
                      class="w-full h-full object-cover object-center rounded-md"
-                     alt="Image"
+                     alt="Loading image"
                      @error="$event.target.src = image.original" />
                 <img v-else-if="image.original"
                      :src="image.original"
                      class="w-full h-full object-cover object-center rounded-md"
-                     alt="Image" />
+                     alt="Loading image" />
 
             </div>
         </div>

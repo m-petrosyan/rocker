@@ -24,7 +24,7 @@ class GalleryController extends Controller
         views($gallery)->record();
 
         return Inertia::render('Gallery/Gallery', [
-            'gallery' => $gallery->load(['user']),
+            'gallery' => $gallery->load(['user', 'venue']),
         ]);
     }
 }

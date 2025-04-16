@@ -2,11 +2,18 @@
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import ImageWrapper from '@/Components/Wrappers/ImageWrapper.vue';
 import NavLink from '@/Components/NavLink.vue';
+import { computed } from 'vue';
+import LocationIcon from '@/Components/Icons/LocationIcon.vue';
+import CalendarIcon from '@/Components/Icons/CalendarIcon.vue';
 
-defineProps({
+const props = defineProps({
     gallery: {
         type: Object
     }
+});
+
+const venueName = computed(() => {
+    return props.gallery.venue?.location ?? props.gallery.venue?.name;
 });
 </script>
 
@@ -26,7 +33,14 @@ defineProps({
             </div>
             <div class="md:w-2/3 flex flex-col gap-y-4 bg-graydark p-4 rounded-lg text-pretty">
                 <p>{{ gallery.description }}</p>
-                <p class="bg-graydark2 w-fit px-2 rounded-sm">{{ gallery.date }}</p>
+                <div v-if="venueName" class="flex gap-x-1 text-sm">
+                    <LocationIcon />
+                    <p>{{ venueName }}</p>
+                </div>
+                <p class="flex gap-x-1 bg-graydark2 w-fit px-1 rounded-sm">
+                    <CalendarIcon />
+                    <p>{{ gallery.date }}</p>
+                </p>
                 <div class="flex  flex-wrap gap-x-2">
                     <div v-for="band of gallery.bands" class="bg-red px-1 rounded-sm">
                         <div class="bg-red ">{{ band.name }}</div>

@@ -29,6 +29,7 @@ class Gallery extends Model implements Viewable, HasMedia
         'images_url',
         'cover_img',
         'bands',
+        'venue',
         'views',
     ];
 
@@ -46,6 +47,11 @@ class Gallery extends Model implements Viewable, HasMedia
     public function bands(): BelongsToMany
     {
         return $this->belongsToMany(Band::class);
+    }
+
+    public function getVenueAttribute(): BelongsTo
+    {
+        return $this->venue();
     }
 
     public function venue(): BelongsTo
