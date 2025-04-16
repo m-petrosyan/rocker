@@ -20,10 +20,12 @@ const isLoading = ref(false);
 
 const removeImage = (index, id) => {
     if (id) {
-        form.delete(route('profile.media.destroy', id), {
-            preserveState: false,
-            preserveScroll: true
-        });
+        if (confirm('Are you sure you want to delete this image?')) {
+            form.delete(route('profile.media.destroy', id), {
+                preserveState: false,
+                preserveScroll: true
+            });
+        }
     } else {
         const newPreviews = [...props.previews];
         newPreviews.splice(index, 1);
