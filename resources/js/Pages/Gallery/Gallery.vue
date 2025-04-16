@@ -13,7 +13,7 @@ defineProps({
 <template>
     <GuestLayout :meta="{title: gallery.title}">
         <h1 class="text-center">{{ gallery.title }}</h1>
-        <div class="flex flex-col md:flex-row mt-5 gap-y-6">
+        <div class="flex flex-col-reverse md:flex-row mt-5 gap-y-6">
             <div class="md:w-1/3">
                 <NavLink :href="route('profile.show', gallery.user.username)"
                          class="text-center flex flex-col items-center gap-y-4 p-2">
