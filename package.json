@@ -37,6 +37,7 @@
         "@vueuse/core": "^13.0.0",
         "@vueuse/integrations": "^13.0.0",
         "async-validator": "^4.2.5",
+        "compressorjs": "^1.2.1",
         "file-saver": "^2.0.5",
         "jszip": "^3.10.1",
         "moment-timezone": "^0.5.48",

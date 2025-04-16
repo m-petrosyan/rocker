@@ -2,6 +2,7 @@
 import { useForm } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 import { useDropZone } from '@vueuse/core';
+import Compressor from 'compressorjs';
 import DeleteIcon from '@/Components/Icons/DeleteIcon.vue';
 import ImageIcon from '@/Components/Icons/ImageIcon.vue';
 
@@ -13,7 +14,6 @@ const props = defineProps({
 });
 
 const form = useForm({});
-
 const emit = defineEmits(['update:previews', 'update:files', 'update:cover']);
 const dropZoneRef = ref(null);
 const isLoading = ref(false);
@@ -47,10 +47,23 @@ const uploadImages = (event) => {
     if (files) processFiles(files);
 };
 
+const compressForPreview = (file) => {
+    return new Promise((resolve) => {
+        new Compressor(file, {
+            quality: 1,
+            maxWidth: 210,
+            maxHeight: 210,
+            mimeType: 'image/jpeg',
+            success: (compressedFile) => resolve(compressedFile),
+            error: () => resolve(file)
+        });
+    });
+};
+
 const processFiles = async (files) => {
     isLoading.value = true;
     const fileList = Array.from(files);
-    const chunkSize = 10;
+    const chunkSize = 5;
     const newPreviews = [...props.previews];
 
     const dataTransfer = new DataTransfer();
@@ -61,10 +74,11 @@ const processFiles = async (files) => {
         const chunk = fileList.slice(i, i + chunkSize);
 
         for (const file of chunk) {
+            const compressedFile = await compressForPreview(file);
             const url = await new Promise((resolve) => {
                 const reader = new FileReader();
                 reader.onload = (e) => resolve(e.target.result);
-                reader.readAsDataURL(file);
+                reader.readAsDataURL(compressedFile);
             });
             newPreviews.push(url);
             emit('update:previews', [...newPreviews]);
@@ -114,10 +128,10 @@ const dropZoneClass = computed(() =>
                     :key="index"
                     class="aspect-square overflow-hidden relative"
                 >
-                    <img :src="preview.thumb ?? preview" :class="{'border border-2 border-orange':cover === index}"
+                    <img :src="preview.thumb ?? preview" :class="{'border border-2 border-orange': cover === index}"
                          class="w-full h-full object-cover object-center" alt="Image" />
                     <div
-                        class="absolute left-0 top-0 opacity-0 hover:opacity-100  flex flex-col justify-between w-full h-full z-10 p-2 bg-blackTransparent2">
+                        class="absolute left-0 top-0 opacity-0 hover:opacity-100 flex flex-col justify-between w-full h-full z-10 p-2 bg-blackTransparent2">
                         <button type="button" class="w-fit" @click="setCover(index)">
                             <ImageIcon />
                         </button>
