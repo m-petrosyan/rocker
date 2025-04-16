@@ -15,8 +15,10 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
         ]);
-
         //
+    })
+    ->withSchedule(function (Schedule $schedule) {
+        $schedule->command('backup:run')->daily()->at('20:00');
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
