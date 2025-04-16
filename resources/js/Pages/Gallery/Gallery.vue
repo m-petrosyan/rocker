@@ -18,7 +18,7 @@ defineProps({
                 <NavLink :href="route('profile.show', gallery.user.username)"
                          class="text-center flex flex-col items-center gap-y-4 p-2">
                     <div class="h-16 w-16 rounded-full overflow-hidden">
-                        <img :src="gallery.user?.image?.thumb ?? '/images/user.jpg'" class="object-contain h-full"
+                        <img :src="gallery.user?.image?.thumb ?? '/images/user.jpg'" class="object-contain"
                              alt="">
                     </div>
                     <p>{{ gallery.user.name }}</p>
