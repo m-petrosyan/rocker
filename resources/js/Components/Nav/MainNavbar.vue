@@ -28,7 +28,7 @@ watch(showBurger, (val) => {
                 v-for="item in menu"
                 :key="item.name"
                 class="transition hover:opacity-70"
-                :href="item.url">
+                :href="route(item.url)">
                 <img
                     v-if="item.img"
                     :src="item.img"
