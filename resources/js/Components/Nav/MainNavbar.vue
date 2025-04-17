@@ -77,7 +77,7 @@ onBeforeUnmount(() => {
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                               d="M1 1h15M1 7h15M1 13h15" />
                     </svg>
-                    <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 -960 960 960"
+                    <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" viewBox="0 -960 960 960"
                          fill="#e3e3e3">
                         <path
                             d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
