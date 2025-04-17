@@ -7,7 +7,7 @@ import GalleryIcon from '@/Components/Icons/GalleryIcon.vue';
 const menu = [
     {
         name: 'Add event',
-        route: route('profile.events.create'),
+        route: 'profile.events.create',
         icon: EventIcon
     },
     // {
@@ -17,12 +17,12 @@ const menu = [
     // },
     {
         name: 'Add gallery',
-        route: route('profile.galleries.create'),
+        route: 'profile.galleries.create',
         icon: GalleryIcon
     },
     {
         name: 'Add band',
-        route: route('profile.index'),
+        route: 'profile.index',
         icon: BandIcon,
         disabled: true
     }
@@ -34,14 +34,12 @@ const menu = [
         <NavLink
             v-for="item in menu"
             :key="item.name"
-            :href="item.route"
+            :href="route(item.route)"
             :disabled="item.disabled"
             class="flex items-center gap-2 p-4"
-            :class="{ 'opacity-50 pointer-events-none': item.disabled }"
-        >
+            :class="{ 'opacity-50 pointer-events-none': item.disabled }">
             <div
-                class="mx-auto flex w-32 flex-col items-center gap-y-4 rounded-lg bg-black p-4 transition-all duration-300 hover:bg-orange"
-            >
+                class="mx-auto flex w-32 flex-col items-center gap-y-4 rounded-lg bg-black p-4 transition-all duration-300 hover:bg-orange">
                 <component :is="item.icon" />
                 <h3 class="text-nowrap">{{ item.name }}</h3>
             </div>

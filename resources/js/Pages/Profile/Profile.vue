@@ -1,11 +1,11 @@
 <script setup>
-import ProfileActions from '@/Components/Profile/ProfileActions.vue';
 import ProfileLayout from '@/Layouts/ProfileLayout.vue';
-import SuccessMessages from '@/Components/Messages/SuccessMessages.vue';
+import UserInfo from '@/Components/Profile/UserInfo.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import LogoutIcon from '@/Components/Icons/LogoutIcon.vue';
+import SuccessMessages from '@/Components/Messages/SuccessMessages.vue';
 import GalleryWrapper from '@/Components/Wrappers/GalleryWrapper.vue';
-import UserInfo from '@/Components/Profile/UserInfo.vue';
+import ProfileActions from '@/Components/Profile/ProfileActions.vue';
 
 defineProps({
     user: {

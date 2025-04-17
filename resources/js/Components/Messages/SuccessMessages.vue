@@ -3,7 +3,7 @@ import { computed, onMounted, ref } from 'vue';
 
 const props = defineProps({
     message: String,
-    timeout: Number,
+    timeout: [Number, String],
     success: Boolean,
     error: Boolean,
     info: Boolean,
