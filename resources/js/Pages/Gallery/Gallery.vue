@@ -41,7 +41,7 @@ const venueName = computed(() => {
                     <CalendarIcon />
                     <p>{{ gallery.date }}</p>
                 </p>
-                <div class="flex  flex-wrap gap-x-2">
+                <div class="flex flex-wrap gap-x-2 gap-y-2">
                     <div v-for="band of gallery.bands" class="bg-red px-1 rounded-sm">
                         <div class="bg-red ">{{ band.name }}</div>
                     </div>
