@@ -6,7 +6,6 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createApp, h } from 'vue';
 import { route as ziggyRoute, ZiggyVue } from '../../vendor/tightenco/ziggy';
-import { Ziggy } from '/resources/js/ziggy.js';
 import VueGtag from 'vue-gtag-next';
 import PrimeVue from 'primevue/config';
 

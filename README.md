@@ -15,3 +15,9 @@ sudo -u www-data php /var/www/rocker/artisan queue:work --tries=3 --verbose
 ```bash
 npm run ssr
 ```
+
+> Diploy
+
+```bash
+ git pull && npm run build && pm2 restart rocker
+```
