@@ -131,7 +131,7 @@ const dropZoneClass = computed(() =>
                     <img :src="preview.thumb ?? preview" :class="{'border border-2 border-orange': cover === index}"
                          class="w-full h-full object-cover object-center" alt="Image" />
                     <div
-                        class="absolute left-0 top-0 opacity-0 hover:opacity-100 flex flex-col justify-between w-full h-full z-10 p-2 bg-blackTransparent2">
+                        class="absolute left-0 top-0 md:opacity-0 hover:opacity-100 flex flex-col justify-between w-full h-full z-10 p-2 bg-blackTransparent2">
                         <button type="button" class="w-fit" @click="setCover(index)">
                             <ImageIcon />
                         </button>
