@@ -28,7 +28,7 @@ defineProps({
 </script>
 
 <template>
-    <ProfileLayout :meta="{title: 'Profile'}">
+    <ProfileLayout :meta="{title: user.name+' rocker.am', image: user?.image?.thumb}">
         <div>
             <UserInfo :url="url" :user="user" :owner />
             <div v-if="owner" class="absolute right-0 top-0">
