@@ -77,7 +77,7 @@ watch(showBurger, (val) => {
                     <li v-for="item in bugerMenu" :key="item.name">
                         <Link
                             class="transition hover:opacity-70"
-                            :href="item.url">
+                            :href="route(item.url)">
                             <span v-if="item.name">{{ item.name }}</span>
                         </Link>
                     </li>
