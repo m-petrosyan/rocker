@@ -78,7 +78,7 @@ onBeforeUnmount(() => {
                     </svg>
                 </button>
             </div>
-            <div v-if="showBurger" class="h-full">
+            <div v-if="showBurger" class="h-full mt-[-40px]">
                 <ul class="w-full h-full flex flex-col justify-center items-center gap-y-4 text-gray text-sm uppercase tracking-widest">
                     <li v-for="item in bugerMenu" :key="item.name">
                         <Link
