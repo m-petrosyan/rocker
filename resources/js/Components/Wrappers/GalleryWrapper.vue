@@ -53,7 +53,9 @@ const deleteGallery = (id) => {
                          :src="gallery.cover_img.original"
                          class="object-cover w-full h-full"
                          alt="Image" />
-
+                    <div class="absolute right-0 bottom-8 px-1 bg-orange">
+                        {{ gallery.date }}
+                    </div>
                     <NavLink :href="route('profile.show', gallery.user.username)" v-if="gallery.user"
                              class="absolute bottom-0 left-0 w-full p-1 bg-blackTransparent2">
                         by {{ gallery.user.name }}
