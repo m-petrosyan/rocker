@@ -88,23 +88,21 @@ onBeforeUnmount(() => {
                         </Link>
                     </li>
                     <li>
-                        <template v-if="$page.props.auth.user">
-                            <Link :href="route('profile.show', {'username': $page.props.auth.user.username})">
-                                <h2>Profile</h2>
-                            </Link>
-                            <Link
-                                :href="route('logout')"
-                                method="post"
-                                as="button"
-                                class="uppercase">
-                                <h2> Log Out</h2>
-                            </Link>
-                        </template>
-                        <template v-else>
-                            <Link :href="route('login')">
-                                <h2> Log In</h2>
-                            </Link>
-                        </template>
+                        <Link v-if="$page.props.auth.user"
+                              :href="route('profile.show', {'username': $page.props.auth.user.username})">
+                            <h2>Profile</h2>
+                        </Link>
+                        <Link
+                            v-if="$page.props.auth.user"
+                            :href="route('logout')"
+                            method="post"
+                            as="button"
+                            class="uppercase">
+                            <h2> Log Out</h2>
+                        </Link>
+                        <Link v-else :href="route('login')">
+                            <h2> Log In</h2>
+                        </Link>
                     </li>
                 </ul>
             </div>
