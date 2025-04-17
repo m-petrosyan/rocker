@@ -1,7 +1,7 @@
 <script setup>
 import ProgressBar from 'primevue/progressbar';
 import { computed, onBeforeMount, onBeforeUnmount, reactive, watch } from 'vue';
-import { useForm } from '@inertiajs/vue3';
+import { router, useForm } from '@inertiajs/vue3';
 import SelectImages from '@/Components/Forms/SelectImages.vue';
 import Multiselect from '@/Components/Forms/MultiSelect.vue';
 import DatePicker from '@/Components/Forms/DatePicker.vue';
@@ -58,16 +58,30 @@ const percent = computed(() => {
     return (data.preview?.length / limit) * 100;
 });
 
-// Функция для обработки события beforeunload
+// Функция для обработки события beforeunload (для закрытия вкладки)
 const handleBeforeUnload = (event) => {
     if (form.processing) {
         event.preventDefault();
-        event.returnValue = ''; // Показывает стандартное предупреждение браузера
+        event.returnValue = ''; // Стандартное предупреждение браузера
     }
 };
 
+// Функция для обработки навигации Inertia (для смены страницы)
+const handleInertiaBefore = (event) => {
+    if (form.processing) {
+        console.log('Navigation attempted while form is processing'); // Отладка
+        if (!confirm('Форма в процессе загрузки. Вы уверены, что хотите покинуть страницу?')) {
+            event.preventDefault(); // Отменяем навигацию
+        }
+    }
+};
+
+// Регистрируем обработчик навигации Inertia
+router.on('before', handleInertiaBefore);
+
 // Следим за form.processing
 watch(() => form.processing, (isProcessing) => {
+    console.log('form.processing changed:', isProcessing); // Отладка
     if (isProcessing) {
         window.addEventListener('beforeunload', handleBeforeUnload);
     } else {
@@ -75,26 +89,18 @@ watch(() => form.processing, (isProcessing) => {
     }
 });
 
-// Очищаем обработчик при уничтожении компонента
+// Очищаем обработчики при уничтожении компонента
 onBeforeUnmount(() => {
-    if (form.processing) {
-        window.addEventListener('beforeunload', handleBeforeUnload);
-    } else {
-        window.removeEventListener('beforeunload', handleBeforeUnload);
-    }
+    window.removeEventListener('beforeunload', handleBeforeUnload);
+    router.off('before', handleInertiaBefore);
 });
 
 const submitGallery = () => {
+    console.log('Submitting form'); // Отладка
     form.post(route(form.id ? 'profile.galleries.update' : 'profile.galleries.store', form.id), {
-        preserveScroll: false
-    }, {
-        onFinish: () => {
-            form.processing = false;
-            form.reset();
-        },
-        onError: () => {
-            form.processing = false;
-        }
+        preserveScroll: false,
+        onStart: () => console.log('Form processing started'), // Отладка
+        onFinish: () => console.log('Form processing finished') // Отладка
     });
 };
 </script>
@@ -153,6 +159,10 @@ const submitGallery = () => {
                 >
                     {{ form.id ? 'Update' : 'Create' }}
                 </PrimaryButton>
+                <!-- Отладка состояния формы -->
+                <div v-if="form.processing" class="mt-2 text-red-500">
+                    Форма в процессе загрузки...
+                </div>
             </form>
         </div>
     </ProfileLayout>
