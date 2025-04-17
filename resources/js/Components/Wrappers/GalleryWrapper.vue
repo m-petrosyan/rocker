@@ -54,7 +54,7 @@ const deleteGallery = (id) => {
                          class="object-cover w-full h-full"
                          alt="Image" />
 
-                    <NavLink :href="route('profile.show', gallery.user.username)" v-if="user"
+                    <NavLink :href="route('profile.show', gallery.user.username)" v-if="gallery.user"
                              class="absolute bottom-0 left-0 w-full p-1 bg-blackTransparent2">
                         by {{ gallery.user.name }}
                     </NavLink>
