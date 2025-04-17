@@ -71,10 +71,16 @@ onBeforeUnmount(() => {
                 <button @click="showBurger = !showBurger" data-collapse-toggle="navbar-hamburger" type="button"
                         class="inline-flex items-center justify-center p-2 w-14 h-14 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                         aria-controls="navbar-hamburger" aria-expanded="false">
-                    <svg class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    <svg v-if="!showBurger" class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                         fill="none"
                          viewBox="0 0 17 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                               d="M1 1h15M1 7h15M1 13h15" />
+                    </svg>
+                    <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 -960 960 960"
+                         fill="#e3e3e3">
+                        <path
+                            d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
                     </svg>
                 </button>
             </div>
