@@ -1,7 +1,7 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
 import menu from '@/Constants/menu.js';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 const showBurger = ref(false);
 
@@ -9,6 +9,14 @@ const bugerMenu = [...menu].sort((a, b) => {
     if (a.img && !b.img) return -1;
     if (!a.img && b.img) return 1;
     return 0;
+});
+
+watch(showBurger, (val) => {
+    if (val) {
+        document.body.classList.add('overflow-hidden');
+    } else {
+        document.body.classList.remove('overflow-hidden');
+    }
 });
 </script>
 
@@ -50,29 +58,51 @@ const bugerMenu = [...menu].sort((a, b) => {
             </template>
         </div>
     </nav>
-    <nav class=" justify-end md:hidden"
-         :class="{'w-full h-full fixed top-0 left-0 bg-blackTransparent z-50' : showBurger}"
-    >
-        <button @click="showBurger = !showBurger" data-collapse-toggle="navbar-hamburger" type="button"
-                class="inline-flex items-center justify-center p-2 w-10 h-10 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                aria-controls="navbar-hamburger" aria-expanded="false">
-            <span class="sr-only">Open main menu</span>
-            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M1 1h15M1 7h15M1 13h15" />
-            </svg>
-        </button>
-        <div v-if="showBurger">
-            <ul class="w-full h-full flex flex-col justify-center items-center gap-y-4 text-gray text-sm uppercase tracking-widest">
-                <li v-for="item in bugerMenu" :key="item.name">
-                    <Link
-                        class="transition hover:opacity-70"
-                        :href="item.url">
-                        <span v-if="item.name">{{ item.name }}</span>
-                    </Link>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <Teleport to="body">
+        <nav class="absolute md:hidden w-full h-lvh top-0 left-0 "
+             :class="{'bg-blackTransparent z-50' : showBurger}">
+            <div class=" flex justify-end">
+                <button @click="showBurger = !showBurger" data-collapse-toggle="navbar-hamburger" type="button"
+                        class="inline-flex items-center justify-center p-2 w-10 h-10 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                        aria-controls="navbar-hamburger" aria-expanded="false">
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                         viewBox="0 0 17 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M1 1h15M1 7h15M1 13h15" />
+                    </svg>
+                </button>
+            </div>
+            <div v-if="showBurger" class="h-full">
+                <ul class="w-full h-full flex flex-col justify-center items-center gap-y-4 text-gray text-sm uppercase tracking-widest">
+                    <li v-for="item in bugerMenu" :key="item.name">
+                        <Link
+                            class="transition hover:opacity-70"
+                            :href="item.url">
+                            <span v-if="item.name">{{ item.name }}</span>
+                        </Link>
+                    </li>
+                    <li>
+                        <template v-if="$page.props.auth.user">
+                            <Link :href="route('profile.show', {'username': $page.props.auth.user.username})">
+                                Profile
+                            </Link>
+                            <Link
+                                :href="route('logout')"
+                                method="post"
+                                as="button"
+                                class="uppercase">
+                                Log Out
+                            </Link>
+                        </template>
+                        <template v-else>
+                            <Link :href="route('login')">
+                                Log In
+                            </Link>
+                        </template>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </Teleport>
 </template>
 <style></style>

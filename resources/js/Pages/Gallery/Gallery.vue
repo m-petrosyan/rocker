@@ -37,10 +37,10 @@ const venueName = computed(() => {
                     <LocationIcon />
                     <p>{{ venueName }}</p>
                 </div>
-                <p class="flex gap-x-1 bg-graydark2 w-fit px-1 rounded-sm">
+                <div class="flex gap-x-1 bg-graydark2 w-fit px-1 rounded-sm">
                     <CalendarIcon />
                     <p>{{ gallery.date }}</p>
-                </p>
+                </div>
                 <div class="flex flex-wrap gap-x-2 gap-y-2">
                     <div v-for="band of gallery.bands" class="bg-red px-1 rounded-sm">
                         <div class="bg-red ">{{ band.name }}</div>
