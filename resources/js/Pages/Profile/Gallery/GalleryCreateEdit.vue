@@ -2,6 +2,7 @@
 import ProgressBar from 'primevue/progressbar';
 import { computed, onBeforeMount, onBeforeUnmount, reactive, watch } from 'vue';
 import { useForm } from '@inertiajs/vue3';
+import { Inertia } from '@inertiajs/inertia';
 import SelectImages from '@/Components/Forms/SelectImages.vue';
 import Multiselect from '@/Components/Forms/MultiSelect.vue';
 import DatePicker from '@/Components/Forms/DatePicker.vue';
@@ -62,22 +63,35 @@ const percent = computed(() => {
 const handleBeforeUnload = (event) => {
     if (form.processing) {
         event.preventDefault();
-        event.returnValue = ''; // Показывает стандартное предупреждение браузера
+        event.returnValue = ''; // Стандартное предупреждение браузера
     }
 };
 
-// Следим за изменением form.processing
+// Обработка навигации Inertia.js
+const handleInertiaBefore = (event) => {
+    if (form.processing) {
+        // Показываем кастомное подтверждение
+        if (!confirm('Форма в процессе загрузки. Вы уверены, что хотите покинуть страницу?')) {
+            event.preventDefault(); // Отменяем навигацию
+        }
+    }
+};
+
+// Следим за form.processing
 watch(() => form.processing, (isProcessing) => {
     if (isProcessing) {
         window.addEventListener('beforeunload', handleBeforeUnload);
+        Inertia.on('before', handleInertiaBefore);
     } else {
         window.removeEventListener('beforeunload', handleBeforeUnload);
+        Inertia.off('before', handleInertiaBefore);
     }
 });
 
-// Очищаем обработчик при уничтожении компонента
+// Очищаем обработчики при уничтожении компонента
 onBeforeUnmount(() => {
     window.removeEventListener('beforeunload', handleBeforeUnload);
+    Inertia.off('before', handleInertiaBefore);
 });
 
 const submitGallery = () => {
