@@ -1,6 +1,6 @@
 <script setup>
 import ProgressBar from 'primevue/progressbar';
-import { computed, onBeforeMount, reactive } from 'vue';
+import { computed, onBeforeMount, onBeforeUnmount, reactive } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import SelectImages from '@/Components/Forms/SelectImages.vue';
 import Multiselect from '@/Components/Forms/MultiSelect.vue';
@@ -56,6 +56,30 @@ const percent = computed(() => {
     return (data.preview?.length / limit) * 100;
 });
 
+// Функция для обработки события beforeunload
+const handleBeforeUnload = (event) => {
+    if (form.processing) {
+        // Показываем предупреждение
+        event.preventDefault();
+        event.returnValue = ''; // Для большинства браузеров это вызывает стандартное предупреждение
+    }
+};
+
+// Устанавливаем обработчик события, когда форма начинает обработку
+form.onStart(() => {
+    window.addEventListener('beforeunload', handleBeforeUnload);
+});
+
+// Удаляем обработчик, когда обработка формы завершена
+form.onFinish(() => {
+    window.removeEventListener('beforeunload', handleBeforeUnload);
+});
+
+// Очищаем обработчик при уничтожении компонента
+onBeforeUnmount(() => {
+    window.removeEventListener('beforeunload', handleBeforeUnload);
+});
+
 const submitGallery = () => {
     form.post(route(form.id ? 'profile.galleries.update' : 'profile.galleries.store', form.id), {
         preserveScroll: false
@@ -101,7 +125,6 @@ const submitGallery = () => {
                              :value="percent < 10 ? 5 : percent">
                     {{ data.preview?.length }}/{{ limit }}
                 </ProgressBar>
-
 
                 <SelectImages
                     v-model:cover="form.cover"
