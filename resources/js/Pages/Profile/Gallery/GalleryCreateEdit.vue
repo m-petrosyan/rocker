@@ -58,20 +58,17 @@ const percent = computed(() => {
     return (data.preview?.length / limit) * 100;
 });
 
-// Функция для обработки события beforeunload (для закрытия вкладки)
 const handleBeforeUnload = (event) => {
     if (form.processing) {
         event.preventDefault();
-        event.returnValue = ''; // Стандартное предупреждение браузера
+        event.returnValue = '';
     }
 };
 
-// Функция для обработки навигации Inertia (для смены страницы)
 const handleInertiaBefore = (event) => {
     if (form.processing) {
-        console.log('Navigation attempted while form is processing'); // Отладка
-        if (!confirm('Форма в процессе загрузки. Вы уверены, что хотите покинуть страницу?')) {
-            event.preventDefault(); // Отменяем навигацию
+        if (!confirm('The form is loading. Are you sure you want to leave this page?')) {
+            event.preventDefault();
         }
     }
 };
@@ -89,18 +86,15 @@ watch(() => form.processing, (isProcessing) => {
     }
 });
 
-// Очищаем обработчики при уничтожении компонента
 onBeforeUnmount(() => {
     window.removeEventListener('beforeunload', handleBeforeUnload);
     router.off('before', handleInertiaBefore);
 });
 
 const submitGallery = () => {
-    console.log('Submitting form'); // Отладка
+    console.log('Submitting form');
     form.post(route(form.id ? 'profile.galleries.update' : 'profile.galleries.store', form.id), {
-        preserveScroll: false,
-        onStart: () => console.log('Form processing started'), // Отладка
-        onFinish: () => console.log('Form processing finished') // Отладка
+        preserveScroll: false
     });
 };
 </script>
@@ -159,9 +153,8 @@ const submitGallery = () => {
                 >
                     {{ form.id ? 'Update' : 'Create' }}
                 </PrimaryButton>
-                <!-- Отладка состояния формы -->
                 <div v-if="form.processing" class="mt-2 text-red-500">
-                    Форма в процессе загрузки...
+                    Uploading...
                 </div>
             </form>
         </div>
