@@ -4,7 +4,7 @@
     "scripts": {
         "build": "vite build && vite build --ssr",
         "dev": "vite",
-        "test ssr": "npm run build && php artisan inertia:start-ssr",
+        "ssr": "npm run build && php artisan ziggy:generate && php artisan inertia:start-ssr",
         "lint": "eslint resources/js --ext .js,.vue --ignore-path .gitignore --fix"
     },
     "devDependencies": {

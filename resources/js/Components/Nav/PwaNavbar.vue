@@ -12,7 +12,7 @@ import ProfileIcon from '@/Components/Icons/ProfileIcon.vue';
                 v-for="item in menu"
                 :key="item.name"
                 class="p-2 rounded-full"
-                :href="item.url">
+                :href="route(item.url)">
                 <img
                     v-if="item.img"
                     :src="item.img"

@@ -1,9 +1,7 @@
 <script setup>
 import { Head, usePage } from '@inertiajs/vue3';
 import PWAinstall from '@/Components/PWAinstall.vue';
-import MainNavbar from '@/Components/Nav/MainNavbar.vue';
 import Footer from '@/Components/Footer/Footer.vue';
-import PwaNavbar from '@/Components/Nav/PwaNavbar.vue';
 import FleshNotification from '@/Components/Messages/FleshNotification.vue';
 import defaultImg from '/public/screenshots/desktop-screenshot.png';
 
@@ -23,15 +21,16 @@ const page = usePage();
     <Head :title="meta?.title ?? defaultTitle">
         <meta name="description" :content="meta?.description ??  defaultDescription" />
         <meta name="og:description" :content="meta?.description ?? defaultDescription" />
-        <meta name="og:title" :content="meta?.title ?? defaultTitle" />
+        <meta name="og:title" :content="meta?.title+' rocker.am' ?? defaultTitle" />
         <meta name="keywords" :content="meta?.keywords ?? 'Armenian, Rock, Music'" />
         <meta name="og:image" :content="meta?.image ?? defaultImg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" :content="meta?.image ?? defaultImg" />
+        <meta name="author" :content="meta?.author ?? 'rocker.am'" />
     </Head>
     <FleshNotification />
     <section class="min-h-screen bg-black text-white pt-6 sm:pt-0">
-        <MainNavbar v-if="!$isPWA" />
+        <!--        <MainNavbar v-if="!$isPWA" />-->
         <header v-if="$slots.header" class="my-10 text-gray">
             <h1 class="text-center mb-5">
                 <slot name="header" />
@@ -43,5 +42,5 @@ const page = usePage();
         <PWAinstall />
     </section>
     <Footer />
-    <PwaNavbar v-if="$isPWA" />
+    <!--    <PwaNavbar v-if="$isPWA" />-->
 </template>

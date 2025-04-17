@@ -10,8 +10,7 @@ import UrlIcon from '@/Components/Icons/UrlIcon.vue';
 
 const props = defineProps({
     event: {
-        type: Array,
-        default: () => []
+        type: Object
     },
     views: {
         type: Number
@@ -23,7 +22,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <GuestLayout :meta="{ title: event.title }">
+    <GuestLayout :meta="{ title: event.title, image: event.poster, description: event.content }">
         <div
             class="relative h-96 w-full"
             :style="{ backgroundImage: `url(${event.poster})`}">
