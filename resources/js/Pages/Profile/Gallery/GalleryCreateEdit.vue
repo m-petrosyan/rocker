@@ -1,6 +1,6 @@
 <script setup>
 import ProgressBar from 'primevue/progressbar';
-import { computed, onBeforeMount, onBeforeUnmount, reactive } from 'vue';
+import { computed, onBeforeMount, onBeforeUnmount, reactive, watch } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import SelectImages from '@/Components/Forms/SelectImages.vue';
 import Multiselect from '@/Components/Forms/MultiSelect.vue';
@@ -20,7 +20,8 @@ const props = defineProps({
 const form = useForm(
     props.gallery?.id
         ? {
-            ...props.gallery, images: null,
+            ...props.gallery,
+            images: null,
             cid: null,
             location: null,
             cordinates: null,
@@ -37,7 +38,8 @@ const form = useForm(
             location: null,
             cordinates: null,
             cover: null
-        });
+        }
+);
 
 onBeforeMount(() => {
     if (props.gallery?.venue) {
@@ -59,20 +61,18 @@ const percent = computed(() => {
 // Функция для обработки события beforeunload
 const handleBeforeUnload = (event) => {
     if (form.processing) {
-        // Показываем предупреждение
         event.preventDefault();
-        event.returnValue = ''; // Для большинства браузеров это вызывает стандартное предупреждение
+        event.returnValue = ''; // Показывает стандартное предупреждение браузера
     }
 };
 
-// Устанавливаем обработчик события, когда форма начинает обработку
-form.onStart(() => {
-    window.addEventListener('beforeunload', handleBeforeUnload);
-});
-
-// Удаляем обработчик, когда обработка формы завершена
-form.onFinish(() => {
-    window.removeEventListener('beforeunload', handleBeforeUnload);
+// Следим за изменением form.processing
+watch(() => form.processing, (isProcessing) => {
+    if (isProcessing) {
+        window.addEventListener('beforeunload', handleBeforeUnload);
+    } else {
+        window.removeEventListener('beforeunload', handleBeforeUnload);
+    }
 });
 
 // Очищаем обработчик при уничтожении компонента
@@ -91,7 +91,7 @@ const submitGallery = () => {
     <ProfileLayout :meta="{title: 'Gallery create'}">
         <div>
             <form @submit.prevent="submitGallery" class="px-4 md:px-0">
-                <div class="flex flex-col-reverse md:flex-row flex-rverse gap-4">
+                <div class="flex flex-col-reverse md:flex-row gap-4">
                     <div class="w-full md:w-1/2">
                         <DatePicker
                             :flow="['calendar']"
@@ -120,16 +120,20 @@ const submitGallery = () => {
                     </div>
                 </div>
 
-                <ProgressBar v-show="data.preview?.length" class="w-full bg-green mt-10"
-                             :class="percent > 70 ? 'warning' : '' "
-                             :value="percent < 10 ? 5 : percent">
+                <ProgressBar
+                    v-show="data.preview?.length"
+                    class="w-full bg-green mt-10"
+                    :class="percent > 70 ? 'warning' : ''"
+                    :value="percent < 10 ? 5 : percent"
+                >
                     {{ data.preview?.length }}/{{ limit }}
                 </ProgressBar>
 
                 <SelectImages
                     v-model:cover="form.cover"
                     v-model:previews="data.preview"
-                    v-model:files="form.images" />
+                    v-model:files="form.images"
+                />
                 <PrimaryButton
                     class="ms-4"
                     :class="{ 'opacity-25': form.processing }"
