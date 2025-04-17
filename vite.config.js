@@ -1,7 +1,7 @@
-import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
 import { VitePWA } from 'vite-plugin-pwa';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
     plugins: [
@@ -20,7 +20,12 @@ export default defineConfig({
         }),
         VitePWA({
             registerType: 'autoUpdate',
-            includeAssets: ['icon-192.png', 'icon-512.png'],
+            includeAssets: [
+                'icon-192.png',
+                'icon-512.png',
+                'fonts/Helvetica.ttf',
+                'fonts/Helvetica-Bold.ttf'
+            ],
             manifest: {
                 name: 'Rocker.am',
                 short_name: 'Rocker events',
@@ -42,8 +47,23 @@ export default defineConfig({
                 ]
             },
             workbox: {
-                globPatterns: ['**/*.{js,css,html,ico,png,svg}']
+                globPatterns: ['**/*.{js,css,html,ico,png,svg,ttf}'],
+                runtimeCaching: [
+                    {
+                        urlPattern: ({ url }) => url.pathname.includes('ziggy.js'),
+                        handler: 'NetworkOnly' // Bypass ziggy.js
+                    }
+                ]
             }
         })
-    ]
+    ],
+    resolve: {
+        alias: {
+            '@': '/resources/js',
+            'ziggy-js': '/resources/js/ziggy.js'
+        }
+    },
+    ssr: {
+        noExternal: ['@splidejs/vue-splide']
+    }
 });

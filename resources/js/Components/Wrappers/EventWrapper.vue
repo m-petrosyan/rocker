@@ -2,6 +2,7 @@
 import moment from 'moment-timezone';
 import NavLink from '@/Components/NavLink.vue';
 
+
 defineProps({
     events: {
         type: Object,

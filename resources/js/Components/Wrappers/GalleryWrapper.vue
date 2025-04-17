@@ -7,7 +7,7 @@ import EyesIcon from '@/Components/Icons/EyesIcon.vue';
 
 defineProps({
     galleries: {
-        type: Array,
+        type: Object,
         required: true
     },
     title: {

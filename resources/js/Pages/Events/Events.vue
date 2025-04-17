@@ -4,8 +4,7 @@ import EventWrapper from '@/Components/Wrappers/EventWrapper.vue';
 
 defineProps({
     events: {
-        type: Array,
-        default: () => []
+        type: Object
     }
 });
 </script>
