@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/vue3';
 import menu from '@/Constants/menu.js';
 import ProfileIcon from '@/Components/Icons/ProfileIcon.vue';
 </script>
-<!--bg-pwaNavbg-->
+
 <template>
     <div
         class="z-50 sticky bottom-0 w-full bg-pwaNavbg">

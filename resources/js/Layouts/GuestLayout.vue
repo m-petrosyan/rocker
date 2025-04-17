@@ -4,6 +4,9 @@ import PWAinstall from '@/Components/PWAinstall.vue';
 import Footer from '@/Components/Footer/Footer.vue';
 import FleshNotification from '@/Components/Messages/FleshNotification.vue';
 import defaultImg from '/public/screenshots/desktop-screenshot.png';
+import { onMounted, ref } from 'vue';
+import MainNavbar from '@/Components/Nav/MainNavbar.vue';
+import PwaNavbar from '@/Components/Nav/PwaNavbar.vue';
 
 defineProps({
     meta: {
@@ -15,6 +18,14 @@ defineProps({
 const defaultDescription = 'The Heart of Armenian Rock';
 const defaultTitle = 'Rocker.am';
 const page = usePage();
+
+const isPWA = ref(false);
+
+onMounted(() => {
+    // Detect PWA mode
+    isPWA.value = window.matchMedia('(display-mode: standalone)').matches ||
+        window.navigator.standalone === true;
+});
 </script>
 
 <template>
@@ -30,7 +41,7 @@ const page = usePage();
     </Head>
     <FleshNotification />
     <section class="min-h-screen bg-black text-white pt-6 sm:pt-0">
-        <!--        <MainNavbar v-if="!$isPWA" />-->
+        <MainNavbar v-if="!isPWA" />
         <header v-if="$slots.header" class="my-10 text-gray">
             <h1 class="text-center mb-5">
                 <slot name="header" />
@@ -42,5 +53,5 @@ const page = usePage();
         <PWAinstall />
     </section>
     <Footer />
-    <!--    <PwaNavbar v-if="$isPWA" />-->
+    <PwaNavbar v-if="isPWA" />
 </template>
