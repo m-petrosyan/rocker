@@ -1,7 +1,7 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
 import menu from '@/Constants/menu.js';
-import { ref, watch } from 'vue';
+import { onBeforeUnmount, ref, watch } from 'vue';
 
 const showBurger = ref(false);
 
@@ -15,6 +15,12 @@ watch(showBurger, (val) => {
     if (val) {
         document.body.classList.add('overflow-hidden');
     } else {
+        document.body.classList.remove('overflow-hidden');
+    }
+});
+
+onBeforeUnmount(() => {
+    if (document.body.classList.contains('overflow-hidden')) {
         document.body.classList.remove('overflow-hidden');
     }
 });
