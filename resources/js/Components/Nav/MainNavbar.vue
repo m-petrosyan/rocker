@@ -84,25 +84,25 @@ onBeforeUnmount(() => {
                         <Link
                             class="transition hover:opacity-70"
                             :href="route(item.url)">
-                            <span v-if="item.name">{{ item.name }}</span>
+                            <h2 v-if="item.name">{{ item.name }}</h2>
                         </Link>
                     </li>
                     <li>
                         <template v-if="$page.props.auth.user">
                             <Link :href="route('profile.show', {'username': $page.props.auth.user.username})">
-                                Profile
+                                <h2>Profile</h2>
                             </Link>
                             <Link
                                 :href="route('logout')"
                                 method="post"
                                 as="button"
                                 class="uppercase">
-                                Log Out
+                                <h2> Log Out</h2>
                             </Link>
                         </template>
                         <template v-else>
                             <Link :href="route('login')">
-                                Log In
+                                <h2> Log In</h2>
                             </Link>
                         </template>
                     </li>
