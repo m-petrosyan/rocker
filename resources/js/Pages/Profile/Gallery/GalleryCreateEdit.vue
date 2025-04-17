@@ -1,7 +1,7 @@
 <script setup>
 import ProgressBar from 'primevue/progressbar';
 import { computed, onBeforeMount, onBeforeUnmount, reactive, watch } from 'vue';
-import { useForm, router } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
 import SelectImages from '@/Components/Forms/SelectImages.vue';
 import Multiselect from '@/Components/Forms/MultiSelect.vue';
 import DatePicker from '@/Components/Forms/DatePicker.vue';
@@ -58,19 +58,11 @@ const percent = computed(() => {
     return (data.preview?.length / limit) * 100;
 });
 
-// Функция для обработки события beforeunload (для закрытия  const handleBeforeUnload = (event) => {
-if (form.processing) {
-    event.preventDefault();
-    event.returnValue = ''; // Показывает стандартное предупреждение браузера
-}
-};
-
-// Функция для обработки навигации Inertia
-const handleInertiaBefore = (event) => {
+// Функция для обработки события beforeunload
+const handleBeforeUnload = (event) => {
     if (form.processing) {
-        if (!confirm('Форма в процессе загрузки. Вы уверены, что хотите покинуть страницу?')) {
-            event.preventDefault(); // Отменяем навигацию
-        }
+        event.preventDefault();
+        event.returnValue = ''; // Показывает стандартное предупреждение браузера
     }
 };
 
@@ -78,22 +70,28 @@ const handleInertiaBefore = (event) => {
 watch(() => form.processing, (isProcessing) => {
     if (isProcessing) {
         window.addEventListener('beforeunload', handleBeforeUnload);
-        router.on('before', handleInertiaBefore);
     } else {
         window.removeEventListener('beforeunload', handleBeforeUnload);
-        router.off('before', handleInertiaBefore);
     }
 });
 
-// Очищаем обработчики при уничтожении компонента
+// Очищаем обработчик при уничтожении компонента
 onBeforeUnmount(() => {
+    alert();
     window.removeEventListener('beforeunload', handleBeforeUnload);
-    router.off('before', handleInertiaBefore);
 });
 
 const submitGallery = () => {
     form.post(route(form.id ? 'profile.galleries.update' : 'profile.galleries.store', form.id), {
         preserveScroll: false
+    }, {
+        onFinish: () => {
+            form.processing = false;
+            form.reset();
+        },
+        onError: () => {
+            form.processing = false;
+        }
     });
 };
 </script>
@@ -111,7 +109,7 @@ const submitGallery = () => {
                     </div>
                     <div class="w-full md:w-1/2 flex flex-col gap-y-2">
                         <input
-                            class="bg-graydark2 w-full mx U-auto block"
+                            class="bg-graydark2 w-full mx-auto block"
                             type="text"
                             v-model="form.title"
                             placeholder="Title"
@@ -132,7 +130,7 @@ const submitGallery = () => {
                 </div>
 
                 <ProgressBar
-                    v-show="data preview?.length"
+                    v-show="data.preview?.length"
                     class="w-full bg-green mt-10"
                     :class="percent > 70 ? 'warning' : ''"
                     :value="percent < 10 ? 5 : percent"
