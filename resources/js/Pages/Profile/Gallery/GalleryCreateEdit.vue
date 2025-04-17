@@ -77,8 +77,11 @@ watch(() => form.processing, (isProcessing) => {
 
 // Очищаем обработчик при уничтожении компонента
 onBeforeUnmount(() => {
-    alert();
-    window.removeEventListener('beforeunload', handleBeforeUnload);
+    if (form.processing) {
+        window.addEventListener('beforeunload', handleBeforeUnload);
+    } else {
+        window.removeEventListener('beforeunload', handleBeforeUnload);
+    }
 });
 
 const submitGallery = () => {
