@@ -12,7 +12,8 @@ class GalleryService
     {
         $venueId = $this->addLocation($attributes);
 
-        $gallery = auth()->user()->galleries()->create(array_merge(array_filter($attributes), ['venue_id' => $venueId])
+        $gallery = auth()->user()->galleries()->create(
+            array_merge($attributes, ['venue_id' => $venueId, 'description' => $attributes['description']])
         );
 
         $this->addImages($gallery, $attributes['images']);
@@ -24,7 +25,8 @@ class GalleryService
     {
         $venueId = $this->addLocation($attributes);
 
-        $gallery->update(array_merge(array_filter($attributes), ['venue_id' => $venueId]));
+        $gallery->update(array_merge($attributes, ['venue_id' => $venueId, 'description' => $attributes['description']])
+        );
 
         $this->addImages($gallery, $attributes['images']);
 
