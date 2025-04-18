@@ -6,8 +6,7 @@ const props = defineProps({
         type: String
     },
     title: {
-        type: String,
-        default: document.title
+        type: String
     }
 });
 
