@@ -1,7 +1,7 @@
 <script setup>
 import ProgressBar from 'primevue/progressbar';
-import { computed, onBeforeMount, reactive } from 'vue';
-import { useForm } from '@inertiajs/vue3';
+import { computed, onBeforeMount, onBeforeUnmount, reactive, watch } from 'vue';
+import { router, useForm } from '@inertiajs/vue3';
 import SelectImages from '@/Components/Forms/SelectImages.vue';
 import Multiselect from '@/Components/Forms/MultiSelect.vue';
 import DatePicker from '@/Components/Forms/DatePicker.vue';
@@ -20,7 +20,8 @@ const props = defineProps({
 const form = useForm(
     props.gallery?.id
         ? {
-            ...props.gallery, images: null,
+            ...props.gallery,
+            images: null,
             cid: null,
             location: null,
             cordinates: null,
@@ -37,7 +38,8 @@ const form = useForm(
             location: null,
             cordinates: null,
             cover: null
-        });
+        }
+);
 
 onBeforeMount(() => {
     if (props.gallery?.venue) {
@@ -56,7 +58,41 @@ const percent = computed(() => {
     return (data.preview?.length / limit) * 100;
 });
 
+const handleBeforeUnload = (event) => {
+    if (form.processing) {
+        event.preventDefault();
+        event.returnValue = '';
+    }
+};
+
+const handleInertiaBefore = (event) => {
+    if (form.processing) {
+        if (!confirm('The form is loading. Are you sure you want to leave this page?')) {
+            event.preventDefault();
+        }
+    }
+};
+
+// Регистрируем обработчик навигации Inertia
+router.on('before', handleInertiaBefore);
+
+// Следим за form.processing
+watch(() => form.processing, (isProcessing) => {
+    console.log('form.processing changed:', isProcessing); // Отладка
+    if (isProcessing) {
+        window.addEventListener('beforeunload', handleBeforeUnload);
+    } else {
+        window.removeEventListener('beforeunload', handleBeforeUnload);
+    }
+});
+
+onBeforeUnmount(() => {
+    window.removeEventListener('beforeunload', handleBeforeUnload);
+    router.off('before', handleInertiaBefore);
+});
+
 const submitGallery = () => {
+    console.log('Submitting form');
     form.post(route(form.id ? 'profile.galleries.update' : 'profile.galleries.store', form.id), {
         preserveScroll: false
     });
@@ -67,7 +103,7 @@ const submitGallery = () => {
     <ProfileLayout :meta="{title: 'Gallery create'}">
         <div>
             <form @submit.prevent="submitGallery" class="px-4 md:px-0">
-                <div class="flex flex-col-reverse md:flex-row flex-rverse gap-4">
+                <div class="flex flex-col-reverse md:flex-row gap-4">
                     <div class="w-full md:w-1/2">
                         <DatePicker
                             :flow="['calendar']"
@@ -96,17 +132,20 @@ const submitGallery = () => {
                     </div>
                 </div>
 
-                <ProgressBar v-show="data.preview?.length" class="w-full bg-green mt-10"
-                             :class="percent > 70 ? 'warning' : '' "
-                             :value="percent < 10 ? 5 : percent">
+                <ProgressBar
+                    v-show="data.preview?.length"
+                    class="w-full bg-green mt-10"
+                    :class="percent > 70 ? 'warning' : ''"
+                    :value="percent < 10 ? 5 : percent"
+                >
                     {{ data.preview?.length }}/{{ limit }}
                 </ProgressBar>
-
 
                 <SelectImages
                     v-model:cover="form.cover"
                     v-model:previews="data.preview"
-                    v-model:files="form.images" />
+                    v-model:files="form.images"
+                />
                 <PrimaryButton
                     class="ms-4"
                     :class="{ 'opacity-25': form.processing }"
@@ -114,6 +153,9 @@ const submitGallery = () => {
                 >
                     {{ form.id ? 'Update' : 'Create' }}
                 </PrimaryButton>
+                <div v-if="form.processing" class="mt-2 text-red-500">
+                    Uploading...
+                </div>
             </form>
         </div>
     </ProfileLayout>
