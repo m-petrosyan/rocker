@@ -14,10 +14,12 @@ class GalleryService
         $venueId = $this->addLocation($attributes);
 
         $gallery = auth()->user()->galleries()->create(
-            array_merge($attributes, ['venue_id' => $venueId], Arr::only($attributes, ['cover']))
+            array_merge(Arr::except($attributes, 'cover'), ['venue_id' => $venueId])
         );
 
         $this->addImages($gallery, $attributes['images']);
+
+        $this->setCover($gallery, $attributes['cover']);
 
         $this->addSyncBand($gallery, $attributes);
     }
@@ -26,10 +28,11 @@ class GalleryService
     {
         $venueId = $this->addLocation($attributes);
 
-
-        $gallery->update(array_merge($attributes, ['venue_id' => $venueId], Arr::only($attributes, ['cover'])));
+        $gallery->update(array_merge(Arr::except($attributes, 'cover'), ['venue_id' => $venueId]));
 
         $this->addImages($gallery, $attributes['images']);
+      
+        $this->setCover($gallery, $attributes['cover']);
 
         $this->addSyncBand($gallery, $attributes);
     }

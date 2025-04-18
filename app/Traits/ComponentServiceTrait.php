@@ -51,4 +51,11 @@ trait ComponentServiceTrait
 
         return $venueId;
     }
+
+    public function setCover(Model $model, int|null $cover): void
+    {
+        if (isset($cover)) {
+            $model->update(['cover' => $model->images_url[$cover]['id']]);
+        }
+    }
 }

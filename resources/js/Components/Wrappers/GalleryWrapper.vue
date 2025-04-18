@@ -44,8 +44,8 @@ const deleteGallery = (id) => {
                 :key="gallery.id"
                 class="flex flex-col items-center p-4">
                 <div class="relative h-64 w-full bg-cover bg-center rounded-lg overflow-hidden">
-                    <img v-if="gallery.cover_img.thumb && gallery.cover_img.thumb.trim()"
-                         :src="gallery.cover_img.thumb"
+                    <img v-if="gallery.cover_img && gallery.cover_img.trim()"
+                         :src="gallery.cover_img"
                          class="object-cover w-full h-full"
                          alt="Image"
                          @error="$event.target.src = gallery.cover_img.original" />
