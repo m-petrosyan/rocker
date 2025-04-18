@@ -22,7 +22,7 @@ const venueName = computed(() => {
 
 <template>
     <GuestLayout
-        :meta="{title: gallery.title ,image:gallery.cover_img , description: 'by '+gallery.user.name, author:gallery.user.name,keywords: gallery.bands.map(band => band.name).join(',')}">
+        :meta="{title: gallery.title ,image:gallery.cover_img.large , description: 'by '+gallery.user.name, author:gallery.user.name,keywords: gallery.bands.map(band => band.name).join(',')}">
         <h1 class="text-center">{{ gallery.title }}</h1>
         <div class="flex flex-col-reverse md:flex-row mt-5 gap-y-6">
             <div class="md:w-1/3">
