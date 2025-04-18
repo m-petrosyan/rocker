@@ -1,6 +1,7 @@
 <script setup>
 import moment from 'moment-timezone';
 import NavLink from '@/Components/NavLink.vue';
+import NotifyIcon from '@/Components/Icons/NotifyIcon.vue';
 
 
 defineProps({
@@ -15,12 +16,21 @@ defineProps({
     more: {
         type: Boolean,
         default: false
+    },
+    title: {
+        type: String,
+        default: ''
+    },
+    owner: {
+        type: Boolean,
+        default: false
     }
 });
 </script>
 <template>
     <div class="relative">
-        <div class="grid gap-y-10 md:grid-cols-2 md:gap-4 lg:grid-cols-4 auto-rows-[600px] md:auto-rows-[400px]">
+        <h2 v-if="title" class="text-center">{{ title }}</h2>
+        <div class="mt-10 grid gap-y-10 md:grid-cols-2 md:gap-4 lg:grid-cols-4 auto-rows-[600px] md:auto-rows-[400px]">
             <div
                 v-for="event in events.data"
                 :key="event.id"
@@ -38,15 +48,26 @@ defineProps({
                         class="absolute z-10 h-full w-full object-contain object-center"
                     />
                     <div
-                        class="absolute left-0 z-20 flex h-28 w-28 flex-col items-center justify-center bg-orange text-xl"
-                    >
-                        <p class="text-4xl font-bold">
-                            {{ moment(event.start_date, 'DD.MM.YY').format('D').toUpperCase() }}
-                        </p>
-                        <p>
-                            {{ moment(event.start_date, 'DD.MM.YY').format('MMMM').toUpperCase() }}
-                        </p>
-                        <small>{{ event.start_time }}</small>
+                        class="absolute left-0 z-20 flex h-28 w-full flex justify-between ">
+                        <div class="w-28 h-full flex flex-col items-center justify-center bg-orange text-xl">
+                            <p class="text-4xl font-bold">
+                                {{ moment(event.start_date, 'DD.MM.YY').format('D').toUpperCase() }}
+                            </p>
+                            <p>
+                                {{ moment(event.start_date, 'DD.MM.YY').format('MMMM').toUpperCase() }}
+                            </p>
+                            <small>{{ event.start_time }}</small>
+                        </div>
+                        <div class="flex flex-col items-center justify-center">
+                            <!--                            <div class="flex items-center gap-2">-->
+                            <!--                                <EyesIcon />-->
+                            <!--                                {{ event.notify_count }}-->
+                            <!--                            </div>-->
+                            <div class="flex items-center gap-2">
+                                <NotifyIcon />
+                                {{ event.notify_count }}
+                            </div>
+                        </div>
                     </div>
                     <div
                         class="absolute bottom-0 z-20 h-48 w-full bg-gradient-to-t from-black to-transparent md:h-52"

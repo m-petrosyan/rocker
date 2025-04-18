@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Profile;
 
 use App\Http\Requests\Profile\ProfileImageUpdateRequest;
 use App\Models\User;
+use App\Repositories\EventReoisutiry;
 use App\Repositories\GalleryReoisitory;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -33,6 +34,7 @@ class ProfileController
             'owner' => $owner,
             'url' => $owner ? route('profile.show', ['username' => $user->username]) : null,
             'galleries' => GalleryReoisitory::userGallery($user),
+            'events' => EventReoisutiry::eventsList(0, $user->events->load('views')),
         ]);
     }
 
