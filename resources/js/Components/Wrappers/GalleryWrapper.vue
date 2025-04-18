@@ -21,6 +21,10 @@ defineProps({
     owner: {
         type: Boolean,
         default: false
+    },
+    add: {
+        type: Boolean,
+        default: false
     }
 });
 
@@ -82,6 +86,16 @@ const deleteGallery = (id) => {
                 </div>
                 <div class="p-2">
                     <h3 class="text-lg font-semibold text-pretty">{{ gallery.title }}</h3>
+                </div>
+            </NavLink>
+            <NavLink
+                v-if="add"
+                :href="route('profile.galleries.create')"
+                class="flex min-h-64 items-center gap-2 border-2 border-dashed border-graydark2 p-4 hover:border-orange hover:bg-graydark2"
+            >
+                <div class="mx-auto flex w-32 flex-col items-center gap-y-4 rounded-lg p-4">
+                    <h2 class="text-3xl">+</h2>
+                    <h3>Add gallery</h3>
                 </div>
             </NavLink>
         </div>

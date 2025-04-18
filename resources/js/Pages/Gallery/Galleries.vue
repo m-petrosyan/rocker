@@ -12,6 +12,6 @@ defineProps({
 <template>
     <GuestLayout :meta="{title: 'Galleries'}">
         <template #header> Galleries</template>
-        <GalleryWrapper :galleries user />
+        <GalleryWrapper :galleries user add />
     </GuestLayout>
 </template>
