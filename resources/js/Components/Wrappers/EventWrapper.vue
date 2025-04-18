@@ -58,7 +58,7 @@ defineProps({
                             </p>
                             <small>{{ event.start_time }}</small>
                         </div>
-                        <div class="flex flex-col items-center justify-center">
+                        <div v-if="owner" class="flex flex-col items-center justify-center">
                             <!--                            <div class="flex items-center gap-2">-->
                             <!--                                <EyesIcon />-->
                             <!--                                {{ event.notify_count }}-->
