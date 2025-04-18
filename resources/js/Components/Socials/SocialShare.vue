@@ -3,8 +3,7 @@ import { computed } from 'vue';
 
 const props = defineProps({
     url: {
-        type: String,
-        default: window.location.href
+        type: String
     },
     title: {
         type: String,
