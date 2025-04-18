@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Traits\ComponentServiceTrait;
+use Illuminate\Support\Arr;
 
 class GalleryService
 {
@@ -13,7 +14,7 @@ class GalleryService
         $venueId = $this->addLocation($attributes);
 
         $gallery = auth()->user()->galleries()->create(
-            array_merge($attributes, ['venue_id' => $venueId, 'description' => $attributes['description']])
+            array_merge($attributes, ['venue_id' => $venueId], Arr::only($attributes, ['cover']))
         );
 
         $this->addImages($gallery, $attributes['images']);
@@ -25,8 +26,8 @@ class GalleryService
     {
         $venueId = $this->addLocation($attributes);
 
-        $gallery->update(array_merge($attributes, ['venue_id' => $venueId, 'description' => $attributes['description']])
-        );
+
+        $gallery->update(array_merge($attributes, ['venue_id' => $venueId], Arr::only($attributes, ['cover'])));
 
         $this->addImages($gallery, $attributes['images']);
 

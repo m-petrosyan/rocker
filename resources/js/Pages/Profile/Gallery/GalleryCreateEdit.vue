@@ -73,8 +73,8 @@ const handleInertiaBefore = (event) => {
     }
 };
 
-// Регистрируем обработчик навигации Inertia
-router.on('before', handleInertiaBefore);
+// Регистрируем обработчик навигации Inertia и сохраняем функцию отмены
+const unsubscribe = router.on('before', handleInertiaBefore);
 
 // Следим за form.processing
 watch(() => form.processing, (isProcessing) => {
@@ -88,7 +88,7 @@ watch(() => form.processing, (isProcessing) => {
 
 onBeforeUnmount(() => {
     window.removeEventListener('beforeunload', handleBeforeUnload);
-    router.off('before', handleInertiaBefore);
+    unsubscribe(); // Отменяем подписку на событие
 });
 
 const submitGallery = () => {
