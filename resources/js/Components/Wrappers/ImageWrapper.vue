@@ -109,7 +109,7 @@ onUnmounted(() => {
                 @click="downloadAllImages"
                 title="Download all images as ZIP"
             >
-                Download
+                Download all {{ images.length }}
                 <DownloadIcon />
             </button>
         </div>
