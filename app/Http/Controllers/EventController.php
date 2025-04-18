@@ -28,6 +28,8 @@ class EventController extends Controller
 
         $event = Event::query()->where('event_id', $eventId)->first();
 
+        $url = url()->current();
+
         if ($event) {
             views($event)->record();
         }
@@ -36,6 +38,7 @@ class EventController extends Controller
             'event' => $response->json()['data'],
             'notify_count' => $event?->notify_count,
             'views' => $event?->views,
+            'url' => $url,
         ]);
     }
 }

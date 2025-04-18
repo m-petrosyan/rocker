@@ -18,6 +18,9 @@ const props = defineProps({
     },
     notify_count: {
         type: Number
+    },
+    url: {
+        type: String
     }
 });
 </script>
@@ -54,7 +57,7 @@ const props = defineProps({
             </div>
             <div
                 class="absolute top-0 right-0 z-20 flex bg-black bg-opacity-20">
-                <SocialShare :title="event.title" />
+                <SocialShare :title="event.title" :url />
             </div>
             <div
                 class="absolute bottom-0 left-0 z-20 flex gap-x-6 rounded-r-xl bg-black bg-opacity-20 p-4"
