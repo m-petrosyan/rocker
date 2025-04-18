@@ -93,7 +93,7 @@ const deleteGallery = (id) => {
                 :href="route('profile.galleries.create')"
                 class="flex min-h-64 items-center gap-2 border-2 border-dashed border-graydark2 p-4 hover:border-orange hover:bg-graydark2"
             >
-                <div class="mx-auto flex w-32 flex-col items-center gap-y-4 rounded-lg p-4">
+                <div class="mx-auto flex w-32 flex-col items-center gap-y-4 rounded-lg">
                     <h2 class="text-3xl">+</h2>
                     <h3>Add gallery</h3>
                 </div>

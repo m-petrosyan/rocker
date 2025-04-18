@@ -82,7 +82,7 @@ defineProps({
                 :href="route('profile.events.create')"
                 class="flex h-[600px] items-center gap-2 border-2 border-dashed border-graydark2 p-4 hover:border-orange hover:bg-graydark2 md:h-[400px]"
             >
-                <div class="mx-auto flex w-32 flex-col items-center gap-y-4 rounded-lg p-4">
+                <div class="mx-auto flex w-32 flex-col items-center gap-y-4 rounded-lg">
                     <h2 class="text-3xl">+</h2>
                     <h3>Add event</h3>
                 </div>
