@@ -6,9 +6,12 @@ import DownloadIcon from '@/Components/Icons/DownloadIcon.vue';
 import SocialShare from '@/Components/Socials/SocialShare.vue';
 
 const props = defineProps({
-    titie: {
+    title: {
+        type: String
+    },
+    url: {
         type: String,
-        default: 'Gallery'
+        default: ''
     },
     images: {
         type: Array,
@@ -100,7 +103,7 @@ onUnmounted(() => {
 <template>
     <div class="relative pt-10 mt-5">
         <div class="flex justify-between items-center">
-            <SocialShare :title />
+            <SocialShare :title :url />
             <button
                 class="flex gap-x-2 items-center font-bol top-0 right-0 text-white rounded-lg p-2"
                 @click="downloadAllImages"

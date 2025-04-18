@@ -9,6 +9,9 @@ import CalendarIcon from '@/Components/Icons/CalendarIcon.vue';
 const props = defineProps({
     gallery: {
         type: Object
+    },
+    url: {
+        type: String
     }
 });
 
@@ -49,6 +52,6 @@ const venueName = computed(() => {
                 </div>
             </div>
         </div>
-        <ImageWrapper :images="gallery.images_url" :title="gallery.title" />
+        <ImageWrapper :images="gallery.images_url" :title="gallery.title" :url />
     </GuestLayout>
 </template>
