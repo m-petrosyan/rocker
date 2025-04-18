@@ -7,6 +7,7 @@ import AppleCalendar from '@/Components/Socials/AppleCalendar.vue';
 import MoneyIcon from '@/Components/Icons/MoneyIcon.vue';
 import TicketIcon from '@/Components/Icons/TicketIcon.vue';
 import UrlIcon from '@/Components/Icons/UrlIcon.vue';
+import SocialShare from '@/Components/Socials/SocialShare.vue';
 
 const props = defineProps({
     event: {
@@ -50,6 +51,10 @@ const props = defineProps({
                     }}
                 </p>
                 <small>{{ event.start_time }}</small>
+            </div>
+            <div
+                class="absolute top-0 right-0 z-20 flex bg-black bg-opacity-20">
+                <SocialShare :title="event.title" />
             </div>
             <div
                 class="absolute bottom-0 left-0 z-20 flex gap-x-6 rounded-r-xl bg-black bg-opacity-20 p-4"

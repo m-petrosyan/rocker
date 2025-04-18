@@ -3,8 +3,13 @@ import { computed, onMounted, onUnmounted, ref } from 'vue';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import DownloadIcon from '@/Components/Icons/DownloadIcon.vue';
+import SocialShare from '@/Components/Socials/SocialShare.vue';
 
 const props = defineProps({
+    titie: {
+        type: String,
+        default: 'Gallery'
+    },
     images: {
         type: Array,
         required: true
@@ -94,6 +99,17 @@ onUnmounted(() => {
 
 <template>
     <div class="relative pt-10 mt-5">
+        <div class="flex justify-between items-center">
+            <SocialShare :title />
+            <button
+                class="flex gap-x-2 items-center font-bol top-0 right-0 text-white rounded-lg p-2"
+                @click="downloadAllImages"
+                title="Download all images as ZIP"
+            >
+                Download
+                <DownloadIcon />
+            </button>
+        </div>
         <div class="grid grid-cols-3 md:grid-cols-6 gap-2 mt-5">
             <div
                 v-if="props.images.length"
@@ -114,14 +130,7 @@ onUnmounted(() => {
 
             </div>
         </div>
-        <button
-            class="flex gap-x-2 items-center font-bold absolute top-0 right-0 text-white rounded-lg p-2"
-            @click="downloadAllImages"
-            title="Download all images as ZIP"
-        >
-            Download
-            <DownloadIcon />
-        </button>
+
         <div
             v-if="currentImage"
             class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"

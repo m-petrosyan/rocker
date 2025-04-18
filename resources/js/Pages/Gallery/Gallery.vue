@@ -49,6 +49,6 @@ const venueName = computed(() => {
                 </div>
             </div>
         </div>
-        <ImageWrapper :images="gallery.images_url" />
+        <ImageWrapper :images="gallery.images_url" :title="gallery.title" />
     </GuestLayout>
 </template>
