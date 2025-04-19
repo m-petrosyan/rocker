@@ -90,7 +90,7 @@ defineProps({
         </div>
         <div v-if="more"
              class="col-span-full text-center py-4">
-            <NavLink :href="route('events.index', { page: events.current_page + 1 })"
+            <NavLink :href="route('events.index')"
                      class="text-orange font-bold">
                 See more
             </NavLink>

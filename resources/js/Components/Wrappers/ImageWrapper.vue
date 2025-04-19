@@ -7,9 +7,17 @@ import SocialShare from '@/Components/Socials/SocialShare.vue';
 import Preloader from '@/Components/Preloader/Preloader.vue';
 
 const props = defineProps({
-    title: { type: String },
-    url: { type: String, default: '' },
-    images: { type: Array, required: true }
+    title: {
+        type: String
+    },
+    url: {
+        type: String,
+        default: ''
+    },
+    images: {
+        type: Array,
+        required: true
+    }
 });
 
 const selectedImageIndex = ref(null);
@@ -108,13 +116,10 @@ onUnmounted(() => {
                 :disabled="isLoading"
             >
                 <span v-if="isLoading">Downloading...</span>
-                <span v-else>Download</span>
+                <span v-else>Download {{mages.length}}</span>
                 <DownloadIcon />
             </button>
         </div>
-
-        <Preloader v-if="isLoading" />
-
         <div class="grid grid-cols-3 md:grid-cols-6 gap-2 mt-5">
             <div
                 v-if="props.images.length"
@@ -223,18 +228,3 @@ onUnmounted(() => {
         </div>
     </div>
 </template>
-
-<style>
-.animate-spin {
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-</style>
