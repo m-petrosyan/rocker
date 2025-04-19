@@ -52,7 +52,7 @@ const data = reactive({
     preview: props.gallery?.images_url ? [...props.gallery.images_url] : []
 });
 
-const limit = 200;
+const limit = 150;
 
 const percent = computed(() => {
     return (data.preview?.length / limit) * 100;
