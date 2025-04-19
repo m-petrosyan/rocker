@@ -122,6 +122,7 @@ const submitGallery = () => {
                         <textarea
                             class="bg-graydark2 w-full mx-auto block"
                             type="text"
+                            rows="7"
                             v-model="form.description"
                             placeholder="Description"
                             tabindex="1"
