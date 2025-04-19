@@ -15,11 +15,11 @@ class GalleryReoisitory
     }
 
 
-    public static function allGalleries(): LengthAwarePaginator
+    public static function allGalleries($limit = 0): LengthAwarePaginator
     {
         return Gallery::query()
             ->with(['user.roles'])
             ->orderByRaw('ISNULL(date), date DESC, created_at DESC')
-            ->paginate(20);
+            ->paginate($limit);
     }
 }

@@ -13,7 +13,7 @@ class HomeController
     {
         return Inertia::render('Home', [
             'events' => EventReoisutiry::eventsList(12),
-            'galleries' => GalleryReoisitory::allGalleries(),
+            'galleries' => GalleryReoisitory::allGalleries(12),
         ]);
     }
 }
