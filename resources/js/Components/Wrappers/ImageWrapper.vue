@@ -67,13 +67,13 @@ const downloadAllImages = async () => {
             }
         }
         folder.generateAsync({ type: 'blob' }).then((content) => {
-            saveAs(content, 'gallery-images.zip');
-            isLoading.value = false; // Выключаем прелоадер
+            saveAs(content, 'rocker-images.zip');
+            isLoading.value = false;
         });
     } catch (error) {
         console.error('Error creating ZIP:', error);
         alert('Failed to create ZIP file. Check the console for details.');
-        isLoading.value = false; // Выключаем прелоадер при ошибке
+        isLoading.value = false;
     }
 };
 
