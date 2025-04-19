@@ -25,6 +25,6 @@ defineProps({
         <h2 class="text-center my-5">
             Galleries
         </h2>
-        <GalleryWrapper :galleries />
+        <GalleryWrapper :galleries more />
     </GuestLayout>
 </template>

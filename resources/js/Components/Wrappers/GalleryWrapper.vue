@@ -25,6 +25,10 @@ defineProps({
     add: {
         type: Boolean,
         default: false
+    },
+    more: {
+        type: Boolean,
+        default: false
     }
 });
 
@@ -97,6 +101,13 @@ const deleteGallery = (id) => {
                     <h2 class="text-3xl">+</h2>
                     <h3>Add gallery</h3>
                 </div>
+            </NavLink>
+        </div>
+        <div v-if="more"
+             class="col-span-full text-center py-4">
+            <NavLink :href="route('galleries.index')"
+                     class="text-orange font-bold">
+                See more
             </NavLink>
         </div>
     </div>
