@@ -51,12 +51,12 @@ const deleteGallery = (id) => {
                     <img v-if="gallery.cover_img.thumb && gallery.cover_img.thumb.trim()"
                          :src="gallery.cover_img.thumb"
                          class="object-cover w-full h-full"
-                         alt="Image"
+                         alt="Loading"
                          @error="$event.target.src = gallery.cover_img.original" />
                     <img v-else-if="gallery.cover_img.original"
                          :src="gallery.cover_img.original"
                          class="object-cover w-full h-full"
-                         alt="Image" />
+                         alt="Loading" />
                     <div class="absolute right-0 bottom-8 px-1 bg-red">
                         {{ gallery.date }}
                     </div>
