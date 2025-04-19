@@ -12,7 +12,7 @@ class HomeController
     public function __invoke(): Response
     {
         return Inertia::render('Home', [
-            'events' => EventReoisutiry::eventsList(8),
+            'events' => EventReoisutiry::eventsList(12),
             'galleries' => GalleryReoisitory::allGalleries(),
         ]);
     }
