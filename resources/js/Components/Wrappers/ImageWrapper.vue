@@ -7,17 +7,9 @@ import SocialShare from '@/Components/Socials/SocialShare.vue';
 import Preloader from '@/Components/Preloader/Preloader.vue';
 
 const props = defineProps({
-    title: {
-        type: String
-    },
-    url: {
-        type: String,
-        default: ''
-    },
-    images: {
-        type: Array,
-        required: true
-    }
+    title: { type: String },
+    url: { type: String, default: '' },
+    images: { type: Array, required: true }
 });
 
 const selectedImageIndex = ref(null);
@@ -116,14 +108,17 @@ onUnmounted(() => {
                 :disabled="isLoading"
             >
                 <span v-if="isLoading">Downloading...</span>
-                <span v-else>Download {{mages.length}}</span>
+                <span v-else>Download {{ images.length }}</span>
                 <DownloadIcon />
             </button>
         </div>
+
+        <Preloader v-if="isLoading" />
+
         <div class="grid grid-cols-3 md:grid-cols-6 gap-2 mt-5">
             <div
-                v-if="props.images.length"
-                v-for="(image, index) in props.images"
+                v-if="images.length"
+                v-for="(image, index) in images"
                 :key="index"
                 class="aspect-square overflow-hidden relative cursor-pointer"
                 @click="openModal(index)"
