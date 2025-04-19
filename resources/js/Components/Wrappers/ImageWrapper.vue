@@ -4,22 +4,16 @@ import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import DownloadIcon from '@/Components/Icons/DownloadIcon.vue';
 import SocialShare from '@/Components/Socials/SocialShare.vue';
+import Preloader from '@/Components/Preloader/Preloader.vue';
 
 const props = defineProps({
-    title: {
-        type: String
-    },
-    url: {
-        type: String,
-        default: ''
-    },
-    images: {
-        type: Array,
-        required: true
-    }
+    title: { type: String },
+    url: { type: String, default: '' },
+    images: { type: Array, required: true }
 });
 
 const selectedImageIndex = ref(null);
+const isLoading = ref(false); // Новое состояние для прелоадера
 
 const currentImage = computed(() => {
     return selectedImageIndex.value !== null ? props.images[selectedImageIndex.value] : null;
@@ -58,6 +52,7 @@ const downloadImage = () => {
 };
 
 const downloadAllImages = async () => {
+    isLoading.value = true; // Включаем прелоадер
     const zip = new JSZip();
     const folder = zip.folder('gallery');
 
@@ -73,10 +68,12 @@ const downloadAllImages = async () => {
         }
         folder.generateAsync({ type: 'blob' }).then((content) => {
             saveAs(content, 'gallery-images.zip');
+            isLoading.value = false; // Выключаем прелоадер
         });
     } catch (error) {
         console.error('Error creating ZIP:', error);
         alert('Failed to create ZIP file. Check the console for details.');
+        isLoading.value = false; // Выключаем прелоадер при ошибке
     }
 };
 
@@ -105,14 +102,19 @@ onUnmounted(() => {
         <div class="flex justify-between items-center">
             <SocialShare :title :url />
             <button
-                class="flex gap-x-2 items-center font-bol top-0 right-0 text-white rounded-lg p-2"
+                class="flex gap-x-2 items-center font-bold top-0 right-0 text-white rounded-lg p-2"
                 @click="downloadAllImages"
                 title="Download all images as ZIP"
+                :disabled="isLoading"
             >
-                Download
+                <span v-if="isLoading">Downloading...</span>
+                <span v-else>Download</span>
                 <DownloadIcon />
             </button>
         </div>
+
+        <Preloader v-if="isLoading" />
+
         <div class="grid grid-cols-3 md:grid-cols-6 gap-2 mt-5">
             <div
                 v-if="props.images.length"
@@ -121,16 +123,19 @@ onUnmounted(() => {
                 class="aspect-square overflow-hidden relative cursor-pointer"
                 @click="openModal(index)"
             >
-                <img v-if="image.thumb && image.thumb.trim()"
-                     :src="image.thumb"
-                     class="w-full h-full object-cover object-center rounded-md"
-                     alt="Loading image"
-                     @error="$event.target.src = image.original" />
-                <img v-else-if="image.original"
-                     :src="image.original"
-                     class="w-full h-full object-cover object-center rounded-md"
-                     alt="Loading image" />
-
+                <img
+                    v-if="image.thumb && image.thumb.trim()"
+                    :src="image.thumb"
+                    class="w-full h-full object-cover object-center rounded-md"
+                    alt="Loading image"
+                    @error="$event.target.src = image.original"
+                />
+                <img
+                    v-else-if="image.original"
+                    :src="image.original"
+                    class="w-full h-full object-cover object-center rounded-md"
+                    alt="Loading image"
+                />
             </div>
         </div>
 
@@ -218,3 +223,18 @@ onUnmounted(() => {
         </div>
     </div>
 </template>
+
+<style>
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+</style>
