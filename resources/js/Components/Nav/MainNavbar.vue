@@ -30,11 +30,17 @@ onBeforeUnmount(() => {
     <nav
         class="hidden md:block ml-8 mx-auto flex items-center gap-x-2 pt-5 text-sm uppercase tracking-widest text-gray">
         <div class="mx-auto flex w-fit items-center gap-x-2">
-            <Link
+            <component
                 v-for="item in menu"
                 :key="item.name"
+                :is="item.external ? 'a' : Link"
+                :href="item.external ? item.url : route(item.url)"
+                :target="item.external ? '_blank' : null"
+                :rel="item.external ? 'noopener noreferrer' : null"
+                :method="!item.external ? 'get' : undefined"
+                :preserve-scroll="!item.external"
                 class="transition hover:opacity-70"
-                :href="route(item.url)">
+            >
                 <img
                     v-if="item.img"
                     :src="item.img"
@@ -42,7 +48,7 @@ onBeforeUnmount(() => {
                     class="logo w-10"
                 />
                 <span v-if="!item.img && item.name">{{ item.name }}</span>
-            </Link>
+            </component>
         </div>
         <div class="absolute top-0 right-2 flex gap-x-4 p-5 uppercase">
             <template v-if="$page.props.auth.user">
@@ -87,11 +93,16 @@ onBeforeUnmount(() => {
             <div v-if="showBurger" class="h-full mt-[-40px]">
                 <ul class="w-full h-full flex flex-col justify-center items-center gap-y-4 text-gray text-sm uppercase tracking-widest">
                     <li v-for="item in bugerMenu" :key="item.name">
-                        <Link
-                            class="transition hover:opacity-70"
-                            :href="route(item.url)">
+                        <component
+                            :is="item.external ? 'a' : Link"
+                            :href="item.external ? item.url : route(item.url)"
+                            :target="item.external ? '_blank' : null"
+                            :rel="item.external ? 'noopener noreferrer' : null"
+                            :method="!item.external ? 'get' : undefined"
+                            :preserve-scroll="!item.external"
+                            class="transition hover:opacity-70">
                             <h2 v-if="item.name">{{ item.name }}</h2>
-                        </Link>
+                        </component>
                     </li>
                     <li v-if="$page.props.auth.user">
                         <Link

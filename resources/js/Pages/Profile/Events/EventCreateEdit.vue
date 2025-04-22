@@ -96,9 +96,11 @@ const createEvent = () => {
             <SuccessMessages
                 info
                 class="mb-5">
-                <div class="flex">
+                <div class="flex items-center gap-x-2">
                     <p>The event will also be published in the Telegram bot </p>
-                    <a href="https://t.me/RockMetalEventsbot" target="_blank">@RockMetalEventsbot</a>
+                    <a href="https://t.me/RockMetalEventsbot" target="_blank">@RockMetalEventsbot</a> |
+                    <a href="https://t.me/yerevanmetal" target="_blank">Rock Metal Yerevan</a> |
+                    <a href="https://t.me/gyumrimetal" target="_blank">Rock Metal Gyumri</a>
                 </div>
             </SuccessMessages>
             <form @submit.prevent="createEvent" class="flex flex-col gap-y-2">
