@@ -22,9 +22,8 @@ const menu = [
     },
     {
         name: 'Add band',
-        route: 'profile.index',
-        icon: BandIcon,
-        disabled: true
+        route: 'profile.bands.create',
+        icon: BandIcon
     }
 ];
 </script>

@@ -6,6 +6,7 @@ import ErrorMessages from '@/Components/Messages/ErrorMessages.vue';
 import PwaNavbar from '@/Components/Nav/PwaNavbar.vue';
 import defaultImg from '../../../public/screenshots/desktop-screenshot.png';
 import { onMounted, ref } from 'vue';
+import Footer from '@/Components/Footer/Footer.vue';
 
 defineProps({
     meta: {
@@ -52,5 +53,6 @@ onMounted(() => {
             <slot />
         </main>
     </section>
+    <Footer />
     <PwaNavbar v-if="isPWA" />
 </template>

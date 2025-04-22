@@ -1,12 +1,11 @@
 <script setup>
 import { reactive } from 'vue';
 import { useForm } from '@inertiajs/vue3';
-import DatePicker from '@/Components/Forms/DatePicker.vue';
 import Preview from '@/Components/Forms/Preview.vue';
-import GoogleAutocomplate from '@/Components/Maps/GoogleAutocomplate.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import ProfileLayout from '@/Layouts/ProfileLayout.vue';
 import Multiselect from '@/Components/Forms/MultiSelect.vue';
+import TextEditor from '@/Components/Forms/TextEditor.vue';
 
 const props = defineProps({
     band: {
@@ -63,25 +62,29 @@ const createBand = () => {
     <ProfileLayout :meta="{title: 'Band create'}">
         <div>
             <form @submit.prevent="createBand" class="flex flex-col gap-y-2">
-                <div class="flex flex-col md:flex-row gap-4">
-                    <div class="w-full md:w-1/2">
+                <div class="flex flex-col   gap-4">
+                    <div class="w-full">
                         <Preview
-                            class="h-full min-h-96"
-                            label="h-full"
+                            label="cover"
+                            class="min-h-96"
+                            classes="bg-contain"
+                            labelClass="h-full"
                             :image="form.cover"
                             v-model:preview="form.cover_file"
                             v-model:file="data.cover"
                         />
+                    </div>
+                    <div class="flex w-full  gap-2">
                         <Preview
-                            class="h-full min-h-96"
-                            label="h-full"
+                            label="logo"
+                            classes="bg-contain"
+                            class="min-h-96 w-1/2"
+                            labelClass="h-full"
                             :image="form.logo"
                             v-model:preview="form.logo_file"
                             v-model:file="data.logo"
                         />
-                    </div>
-                    <div class="flex w-full md:w-1/2 flex-col gap-y-2">
-                        <div>
+                        <div class="flex flex-col gap-2 w-1/2">
                             <input
                                 class="w-full bg-graydark2"
                                 type="text"
@@ -90,36 +93,17 @@ const createBand = () => {
                                 tabindex="1"
                                 enterkeyhint="next"
                             />
+                            <Multiselect v-model="form.genres" :options="bandsList" text="Genres" multiple />
                         </div>
-                        <div>
-                            <input
-                                class="w-full bg-graydark2"
-                                type="text"
-                                v-model="form.genre"
-                                placeholder="Genres"
-                                tabindex="1"
-                                enterkeyhint="next"
-                            />
-                        </div>
-                        <GoogleAutocomplate :form="form" />
-                        <Multiselect v-model="form.bands" :options="bandsList" text="Bands" multiple />
-                        <DatePicker
-                            v-model:start_date="form.start_date"
-                            v-model:start_time="form.start_time"
-                        />
                     </div>
                 </div>
                 <div class="relative mt-2">
-                    <textarea
-                        class="w-full bg-graydark2"
-                        type="text"
-                        rows="10"
-                        v-model="form.info"
-                        placeholder="Description"
-                        tabindex="2"
-                        enterkeyhint="next"
-                    >
-                    </textarea>
+                    <TextEditor
+                        v-model:content="form.info"
+                        class="h-64"
+                        collection="event-image"
+                        :error="form.errors.info"
+                    />
                 </div>
 
                 <br />

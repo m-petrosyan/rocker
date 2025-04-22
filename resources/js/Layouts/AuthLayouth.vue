@@ -4,6 +4,7 @@ import PwaNavbar from '@/Components/Nav/PwaNavbar.vue';
 import { Head, usePage } from '@inertiajs/vue3';
 import ErrorMessages from '@/Components/Messages/ErrorMessages.vue';
 import { onMounted, ref } from 'vue';
+import Footer from '@/Components/Footer/Footer.vue';
 
 defineProps({
     title: {
@@ -30,6 +31,7 @@ onMounted(() => {
         <ErrorMessages :messages="$page.props.errors" />
         <slot />
     </main>
+    <Footer />
     <slot name="underslot" />
     <PwaNavbar v-if="isPWA" />
 </template>

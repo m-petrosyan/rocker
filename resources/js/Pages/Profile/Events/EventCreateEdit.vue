@@ -105,9 +105,11 @@ const createEvent = () => {
                 <div class="flex flex-col md:flex-row gap-4">
                     <div class="w-full md:w-1/2">
                         <Preview
+                            label="preview"
                             class="h-full min-h-96"
-                            label="h-full"
+                            labelClass="h-full"
                             :image="form.poster"
+                            blur
                             v-model:preview="form.poster_file"
                             v-model:file="data.preview"
                         />
