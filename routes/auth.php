@@ -14,17 +14,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified'])->as('profile.')->prefix('profile')->group(function () {
     Route::get('/', [\App\Http\Controllers\Profile\ProfileController::class, 'index'])->name('index');
-    Route::post('/image', [ProfileController::class, 'updateImage'])->name('image.update');
 
     Route::get('/settings', [ProfileController::class, 'edit'])->name('edit');
     Route::patch('/settings', [ProfileController::class, 'update'])->name('update');
     Route::delete('/settings', [ProfileController::class, 'destroy'])->name('destroy');
 
-
     Route::resource('events', EventController::class)->except('show');
     Route::resource('galleries', GalleryController::class)->except('show');
     Route::resource('bands', BandController::class)->except('show');
-    Route::delete('media/{media}', MediaController::class)->name('media.destroy');
+    Route::post('image', [ProfileController::class, 'updateImage'])->name('media.update');
+    Route::post('media', [MediaController::class, 'store'])->name('media.store');
+    Route::delete('media/{media}', [MediaController::class, 'destroy'])->name('media.destroy');
 });
 
 Route::middleware('auth')->group(function () {

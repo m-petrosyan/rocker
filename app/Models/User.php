@@ -114,5 +114,9 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         $this->addMediaConversion('thumb')
             ->width(300)
             ->nonQueued();
+
+        $this->addMediaConversion('large')
+            ->width(1920)
+            ->quality(90);
     }
 }

@@ -23,7 +23,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('profile.image.update'), {
+    form.post(route('profile.media.update'), {
         preserveScroll: false
     });
 };

@@ -1,17 +1,17 @@
 <script setup>
 import ImageUploader from 'quill-image-uploader';
-import {QuillEditor} from '@vueup/vue-quill'
+import { QuillEditor } from '@vueup/vue-quill';
 
 const props = defineProps({
     collection: {
         type: String,
-        required: true,
+        required: true
     }
-})
+});
 
-axios.defaults.withCredentials = true
-const token = document.head.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
-axios.defaults.headers.common['X-CSRF-TOKEN'] = token
+axios.defaults.withCredentials = true;
+const token = document.head.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+axios.defaults.headers.common['X-CSRF-TOKEN'] = token;
 
 const modules = {
     name: 'imageUploader',
@@ -23,15 +23,15 @@ const modules = {
                 formData.append('collection', props.collection);
                 formData.append('image', file);
 
-                axios.post('/api/upload-image', formData)
+                axios.post('/profile/media', formData)
                     .then(res => resolve(res.data.url))
                     .catch(error => {
-                        reject("Upload failed");
-                    })
-            })
+                        reject('Upload failed');
+                    });
+            });
         }
-    },
-}
+    }
+};
 
 </script>
 
@@ -45,13 +45,21 @@ const modules = {
 </template>
 
 <style>
-.ql-editor {
-    color: #fff;
-    min-height: 300px;
+
+.ql-container.ql-snow {
+    border: none;
+}
+
+.ql-toolbar.ql-snow {
+    border: 1px dotted theme('colors.graydark2');
 }
 
 .quill-with-upload {
     .ql-editor {
+        color: white;
+        background-color: theme('colors.graydark2');
+        min-height: 300px;
+
         .ql-align-center img {
             margin: 0 auto !important;
         }
