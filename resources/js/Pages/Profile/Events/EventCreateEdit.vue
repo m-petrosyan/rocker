@@ -75,9 +75,7 @@ const createEvent = () => {
             props.event?.id
         ),
         {
-            onSuccess: () => {
-                // data.created = true;
-            },
+
             onError: () => {
                 window.scrollTo({
                     top: 0,
@@ -91,7 +89,7 @@ const createEvent = () => {
 </script>
 
 <template>
-    <ProfileLayout :meta="{title: 'Event create'}" :role="role">
+    <ProfileLayout :meta="{title: 'Event create'}">
         <div>
             <SuccessMessages
                 info
