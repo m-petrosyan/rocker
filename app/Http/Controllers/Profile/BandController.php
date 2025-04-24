@@ -3,14 +3,20 @@
 namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Band\BandCreateRequest;
 use App\Models\Band;
 use App\Repositories\BandRepository;
+use App\Services\BandService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class BandController extends Controller
 {
+    public function __construct(protected BandService $bandService)
+    {
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -32,9 +38,10 @@ class BandController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(BandCreateRequest $request)
     {
-        //
+        $this->bandService->store($request->validated());
+//        dd($request->validated());
     }
 
     /**
@@ -66,6 +73,6 @@ class BandController extends Controller
      */
     public function destroy(Band $band)
     {
-        //
+        // չենք ջնջում այլ մաքրումն ենք սաղ ինֆոն + նկարները բացի անունից
     }
 }

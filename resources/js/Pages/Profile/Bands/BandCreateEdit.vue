@@ -20,12 +20,8 @@ const props = defineProps({
 
 
 const data = reactive({
-    options: {
-        price: +!!props.event?.price || +!!props.event?.ticket,
-        link: +!!props.event?.link
-    },
-    preview: null,
-    created: false,
+    cover: null,
+    logo: null,
     disable: false
 });
 
@@ -33,8 +29,10 @@ const form = useForm(
     props.event
         ? { ...props.band }
         : {
+            cover_file: null,
+            logo_file: null,
             name: '',
-            genre: '',
+            genres: '',
             info: ''
         }
 );
@@ -85,14 +83,7 @@ const createBand = () => {
                             v-model:file="data.logo"
                         />
                         <div class="flex flex-col gap-2 w-1/2">
-                            <input
-                                class="w-full bg-graydark2"
-                                type="text"
-                                v-model="form.name"
-                                placeholder="Name"
-                                tabindex="1"
-                                enterkeyhint="next"
-                            />
+                            <Multiselect v-model="form.name" :options="bandsList" text="Name" />
                             <Multiselect v-model="form.genres" :options="bandsList" text="Genres" multiple />
                         </div>
                     </div>

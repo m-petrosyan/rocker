@@ -20,9 +20,11 @@
 
 body {
     background-color: black;
-    min-height: 100vh;
 
     #app {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         min-height: 100vh;
     }
 }

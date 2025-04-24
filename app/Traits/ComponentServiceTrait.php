@@ -24,12 +24,19 @@ trait ComponentServiceTrait
     }
 
 
-    public function addImages(Model $model, array|null $images): void
+    public function addImage(Model $model, object $image, string $name): void
+    {
+        if ($image) {
+            $model->addMedia($image)
+                ->toMediaCollection($name);
+        }
+    }
+
+    public function addImages(Model $model, array|null $images, $name = 'images'): void
     {
         if (isset($images)) {
             foreach ($images as $image) {
-                $model->addMedia($image)
-                    ->toMediaCollection('images');
+                $this->addImage($model, $image, $name);
             }
         }
     }
@@ -58,4 +65,6 @@ trait ComponentServiceTrait
             $model->update(['cover' => $model->images_url[$cover]['id']]);
         }
     }
+
+
 }
