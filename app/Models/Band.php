@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\MediaTrait;
 use App\Traits\ViewsTrait;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use Illuminate\Database\Eloquent\Model;
@@ -14,14 +15,23 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Band extends Model implements Viewable, HasMedia
 {
-    use  InteractsWithMedia, ViewsTrait;
+    use  InteractsWithMedia, ViewsTrait, MediaTrait;
 
     protected $fillable = [
         'name',
         'slug',
-        'genre',
         'info',
         'user_id',
+    ];
+
+    protected $appends = [
+        'logo',
+        'cover',
+        'views',
+    ];
+
+    protected $hidden = [
+        'media',
     ];
 
     public function galleries(): BelongsToMany
@@ -36,7 +46,18 @@ class Band extends Model implements Viewable, HasMedia
 
     public function setNameAttribute($value): void
     {
+        $this->attributes['name'] = $value;
         $this->attributes['slug'] = Str::slug($value);
+    }
+
+    public function getCoverAttribute(): array
+    {
+        return $this->getImage('cover');
+    }
+
+    public function getLogoAttribute(): array
+    {
+        return $this->getImage('logo');
     }
 
     public function registerMediaConversions(?Media $media = null): void

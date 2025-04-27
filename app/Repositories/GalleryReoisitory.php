@@ -11,7 +11,7 @@ class GalleryReoisitory
     {
         return $user->galleries()
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->paginate(30);
     }
 
 

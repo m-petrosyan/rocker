@@ -7,6 +7,7 @@ use App\Http\Requests\Band\BandCreateRequest;
 use App\Models\Band;
 use App\Repositories\BandRepository;
 use App\Services\BandService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -38,10 +39,13 @@ class BandController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(BandCreateRequest $request)
+    public function store(BandCreateRequest $request): RedirectResponse
     {
         $this->bandService->store($request->validated());
-//        dd($request->validated());
+
+        session()->flash('message', 'Thank you, the band has been created.');
+
+        return redirect()->route('profile.index');
     }
 
     /**
@@ -65,6 +69,7 @@ class BandController extends Controller
      */
     public function update(Request $request, Band $band)
     {
+//        $this->authorize('update', $gallery);
         //
     }
 
@@ -73,6 +78,8 @@ class BandController extends Controller
      */
     public function destroy(Band $band)
     {
+//        $this->authorize('update', $gallery);
+        dd($band);
         // չենք ջնջում այլ մաքրումն ենք սաղ ինֆոն + նկարները բացի անունից
     }
 }

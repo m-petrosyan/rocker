@@ -4,28 +4,32 @@ namespace App\Services;
 
 use App\Models\Band;
 use App\Traits\ComponentServiceTrait;
+use Illuminate\Support\Arr;
 
 class BandService
 {
     use ComponentServiceTrait;
 
-    public function store(array $attrobites)
+    public function store(array $attributes)
     {
-        if (isset($attrobites['name']['id'])) {
-            $band = Band::query()->find($attrobites['name']['id']);
+        if (isset($attributes['name']['id'])) {
+            $band = Band::query()->find($attributes['name']['id']);
             if (!$band->user_id) {
+//                dd($attributes['name']['name']);
                 $band->update(
-                    ['name' => $attrobites['name']['name']] +
-                    $attrobites
+                    ['name' => $attributes['name']['name']] +
+                    $attributes
                 );
             } else {
                 abort('403', 'You are not allowed to edit this band');
             }
         } else {
-            $band = Band::query()->create($attrobites);
+            $band = auth()->user()->bands()->create(
+                array_merge(['name' => $attributes['name']['name']], Arr::only($attributes, ['info']))
+            );
         }
 
-        $this->addImage($band, $attrobites['cover_file'], 'cover');
-        $this->addImage($band, $attrobites['logo_file'], 'logo');
+        $this->addImage($band, $attributes['cover_file'], 'cover');
+        $this->addImage($band, $attributes['logo_file'], 'logo');
     }
 }

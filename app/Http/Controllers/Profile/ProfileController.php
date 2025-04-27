@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Profile;
 
 use App\Http\Requests\Profile\ProfileImageUpdateRequest;
 use App\Models\User;
+use App\Repositories\BandRepository;
 use App\Repositories\EventReoisutiry;
 use App\Repositories\GalleryReoisitory;
 use Inertia\Inertia;
@@ -35,10 +36,11 @@ class ProfileController
             'url' => $owner ? route('profile.show', ['username' => $user->username]) : null,
             'galleries' => GalleryReoisitory::userGallery($user),
             'events' => EventReoisutiry::eventsList(0, $user->events->load('views')),
+            'bands' => BandRepository::userBands($user),
         ]);
     }
 
-    public function updateImage(ProfileImageUpdateRequest $request)
+    public function updateImage(ProfileImageUpdateRequest $request): void
     {
         auth()->user()->clearMediaCollection('images');
 

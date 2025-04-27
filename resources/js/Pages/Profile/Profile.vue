@@ -7,6 +7,7 @@ import SuccessMessages from '@/Components/Messages/SuccessMessages.vue';
 import GalleryWrapper from '@/Components/Wrappers/GalleryWrapper.vue';
 import ProfileActions from '@/Components/Profile/ProfileActions.vue';
 import EventWrapper from '@/Components/Wrappers/EventWrapper.vue';
+import BandWrapper from '@/Components/Wrappers/BandWrapper.vue';
 
 defineProps({
     user: {
@@ -18,6 +19,10 @@ defineProps({
         required: false
     },
     events: {
+        type: Object,
+        required: false
+    },
+    bands: {
         type: Object,
         required: false
     },
@@ -63,7 +68,8 @@ defineProps({
                 <SuccessMessages success class="w-1/3 mx-auto" :message="$page.props.flash.success" timeout="10000" />
                 <ProfileActions v-if="owner" class="mx-auto w-full" />
                 <GalleryWrapper :galleries="galleries" :owner title="User galleries" />
-                <EventWrapper :events="events" :owner title="User events" />
+                <EventWrapper :events :owner title="User events" />
+                <BandWrapper :bands :owner title="User bands" />
             </div>
         </div>
     </ProfileLayout>

@@ -3,7 +3,6 @@ import moment from 'moment-timezone';
 import NavLink from '@/Components/NavLink.vue';
 import NotifyIcon from '@/Components/Icons/NotifyIcon.vue';
 
-
 defineProps({
     events: {
         type: Object,

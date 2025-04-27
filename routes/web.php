@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
+use App\Http\Controllers\BandController;
 use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GalleryController;
@@ -12,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
 Route::resource('events', EventController::class)->only('index', 'show');
+Route::resource('bands', BandController::class)->only('index');
+Route::get('bands/{band:slug}', [BandController::class, 'show'])
+    ->name('bands.show');
 Route::resource('galleries', GalleryController::class)->only('index', 'show');
 Route::resource('community', CommunityController::class)->only('index', 'show');
 Route::post('pwa-install', PwaInstallController::class)->name('pwa.install');
