@@ -2,7 +2,7 @@
 
 defineProps({
     genres: {
-        type: Object,
+        type: Array,
         required: true
     }
 });

@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/vue3';
 
 defineProps({
     bands: {
-        type: Object,
+        type: Array,
         required: true
     }
 });
