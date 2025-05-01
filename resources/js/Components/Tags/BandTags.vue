@@ -14,7 +14,7 @@ defineProps({
         <component
             v-for="band in bands"
             :key="band.name"
-            :is="band.info ?  Link : 'div'"
+            :is="band.info ? Link : 'div'"
             :href="route('bands.show',band.slug)"
             class="bg-red px-1 rounded-sm">
             <div class="bg-red ">{{ band.name }}</div>
