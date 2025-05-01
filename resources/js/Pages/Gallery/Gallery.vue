@@ -5,7 +5,7 @@ import NavLink from '@/Components/NavLink.vue';
 import { computed } from 'vue';
 import LocationIcon from '@/Components/Icons/LocationIcon.vue';
 import CalendarIcon from '@/Components/Icons/CalendarIcon.vue';
-import Tags from '@/Components/Elements/Tags.vue';
+import BandTags from '@/Components/Tags/BandTags.vue';
 
 const props = defineProps({
     gallery: {
@@ -46,7 +46,7 @@ const venueName = computed(() => {
                     <CalendarIcon />
                     <p>{{ gallery.date }}</p>
                 </div>
-                <Tags :items="gallery.bands" />
+                <BandTags :bands="gallery.bands" />
             </div>
         </div>
         <ImageWrapper :images="gallery.images_url" :title="gallery.title" :url />

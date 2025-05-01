@@ -1,7 +1,7 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import SocialShare from '@/Components/Socials/SocialShare.vue';
-import Tags from '@/Components/Elements/Tags.vue';
+import BandTags from '@/Components/Tags/BandTags.vue';
 
 defineProps({
     band: {
@@ -30,7 +30,7 @@ defineProps({
             <h3 class="text-center mt-5">
                 Genres
             </h3>
-            <Tags class="mx-auto w-fit" :items="band.genres" />
+            <BandTags class="mx-auto w-fit" :items="band.genres" />
         </div>
         <div class="md:w-5/6 mx-auto mt-8" v-html="band.info" />
     </GuestLayout>
