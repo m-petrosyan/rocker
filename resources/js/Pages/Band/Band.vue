@@ -35,3 +35,10 @@ defineProps({
         <div class="md:w-5/6 mx-auto mt-8" v-html="band.info" />
     </GuestLayout>
 </template>
+
+<style>
+.ql-video {
+    width: 100%;
+    height: 550px;
+}
+</style>

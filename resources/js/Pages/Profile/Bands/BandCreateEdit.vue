@@ -31,7 +31,12 @@ const data = reactive({
 
 const form = useForm(
     props.band
-        ? { ...props.band }
+        ? {
+            ...props.band,
+            cover_file: null,
+            logo_file: null,
+            _method: 'PUT'
+        }
         : {
             cover_file: null,
             logo_file: null,
@@ -44,8 +49,8 @@ const form = useForm(
 const createBand = () => {
     form.post(
         route(
-            props.band?.id ? 'profile.bands.update' : 'profile.bands.store',
-            props.band?.id
+            form.id ? 'profile.bands.update' : 'profile.bands.store',
+            form.id
         ),
         {
             onError: () => {
@@ -107,7 +112,7 @@ const createBand = () => {
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
-                    Create
+                    {{ form.id ? 'Update' : 'Create' }}
                 </PrimaryButton>
             </form>
         </div>

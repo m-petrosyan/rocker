@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Band\BandCreateRequest;
+use App\Http\Requests\Band\BandUpdateRequest;
 use App\Models\Band;
 use App\Models\Genre;
 use App\Repositories\BandRepository;
 use App\Services\BandService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -20,14 +20,6 @@ class BandController extends Controller
 
     public function __construct(protected BandService $bandService)
     {
-    }
-
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
     }
 
     /**
@@ -54,14 +46,6 @@ class BandController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Band $band)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Band $band): Response
@@ -77,10 +61,15 @@ class BandController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Band $band)
+    public function update(Band $band, BandUpdateRequest $request): RedirectResponse
     {
-//        $this->authorize('update', $gallery);
-        //
+        $this->authorize('update', $band);
+
+        $this->bandService->update($band, $request->validated());
+
+        session()->flash('message', 'The band has been updated.');
+
+        return redirect()->route('profile.index');
     }
 
     /**

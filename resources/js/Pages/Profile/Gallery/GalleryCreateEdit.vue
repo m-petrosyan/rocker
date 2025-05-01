@@ -73,10 +73,8 @@ const handleInertiaBefore = (event) => {
     }
 };
 
-// Регистрируем обработчик навигации Inertia и сохраняем функцию отмены
 const unsubscribe = router.on('before', handleInertiaBefore);
 
-// Следим за form.processing
 watch(() => form.processing, (isProcessing) => {
     console.log('form.processing changed:', isProcessing); // Отладка
     if (isProcessing) {

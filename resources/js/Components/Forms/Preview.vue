@@ -20,7 +20,7 @@ const changePreview = (file) => {
 };
 
 const previewStyle = computed(() => {
-    const imageUrl = previewFile.value ?? props.image?.thumb ?? null;
+    const imageUrl = previewFile.value ?? props.image?.large ?? null;
 
     return imageUrl
         ? { backgroundImage: `url(${imageUrl})` }

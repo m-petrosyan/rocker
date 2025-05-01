@@ -11,7 +11,7 @@ class BandService
 {
     use ComponentServiceTrait;
 
-    public function store(array $attributes)
+    public function store(array $attributes): void
     {
         if (isset($attributes['name']['id'])) {
             $band = Band::query()->find($attributes['name']['id']);
@@ -45,6 +45,33 @@ class BandService
         $this->addImage($band, $attributes['cover_file'], 'cover');
         if (isset($attributes['logo_file'])) {
             $this->addImage($band, $attributes['logo_file'], 'logo');
+        }
+    }
+
+    public function update(Band $band, array $attributes): void
+    {
+        $band->update($attributes);
+
+        if (isset($attributes['cover_file'])) {
+            $band->clearMediaCollection('cover');
+            $this->addImage($band, $attributes['cover_file'], 'cover');
+        }
+        if (isset($attributes['logo_file'])) {
+            $band->clearMediaCollection('logo');
+            $this->addImage($band, $attributes['logo_file'], 'logo');
+        }
+
+        if (isset($attributes['genres'])) {
+            $genreIds = collect($attributes['genres'] ?? [])
+                ->map(function ($genreData) {
+                    $genre = Genre::query()->firstOrCreate(
+                        ['name' => $genreData['name']]
+                    );
+
+                    return $genre->id;
+                });
+
+            $band->genres()->sync($genreIds);
         }
     }
 

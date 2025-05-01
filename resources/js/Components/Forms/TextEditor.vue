@@ -60,6 +60,11 @@ const modules = {
         background-color: theme('colors.graydark2');
         min-height: 300px;
 
+        .ql-video {
+            width: 100%;
+            height: 500px;
+        }
+        
         .ql-align-center img {
             margin: 0 auto !important;
         }
