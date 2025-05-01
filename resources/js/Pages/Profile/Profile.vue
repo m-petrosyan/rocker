@@ -69,7 +69,7 @@ defineProps({
                 <ProfileActions v-if="owner" class="mx-auto w-full" />
                 <GalleryWrapper :galleries="galleries" :owner title="User galleries" />
                 <EventWrapper :events :owner title="User events" />
-                <BandWrapper :bands :owner title="User bands" />
+                <BandWrapper v-if="owner" :bands :owner title="User bands" />
             </div>
         </div>
     </ProfileLayout>

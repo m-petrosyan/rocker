@@ -20,7 +20,7 @@ defineProps({
         :meta="{title: band.name ,image:band.logo?.large , description: band.info, keywords: band.name}">
         <div class="h-96 relative">
             <img :src="band.cover?.large" class="w-full h-full object-cover" :alt="band.name">
-            <img :src="band.logo?.thumb" class="w-24 h-24 absolute left-0 bottom-0" :alt="band.name">
+            <img :src="band.logo?.thumb" class="w-48 absolute left-0 bottom-0" :alt="band.name">
             <div class="absolute h-1/6 left-1/2 w-fit -translate-x-1/2 text-center bottom-0 bg-graydark p-5">
                 <h1>{{ band.name }}</h1>
             </div>
