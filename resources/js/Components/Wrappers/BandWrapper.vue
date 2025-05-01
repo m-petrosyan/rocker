@@ -21,6 +21,10 @@ defineProps({
         type: Boolean,
         default: false
     },
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
     add: {
         type: Boolean,
         default: false
@@ -60,7 +64,7 @@ const deleteBand = (id) => {
                          :src="band.logo.original"
                          class="object-cover w-full h-full"
                          alt="Loading" />
-                    <div v-if="owner"
+                    <div v-if="owner || isAdmin"
                          class="absolute bottom-0 w-full h-full flex flex-col justify-end  p-1 bg-blackTransparent2">
                         <div class="flex justify-between">
                             <NavLink :href="route('profile.bands.edit', band.id)">

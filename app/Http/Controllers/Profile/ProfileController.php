@@ -31,7 +31,6 @@ class ProfileController
         }
 
         return Inertia::render('Profile/Profile', [
-            'user' => $user,
             'owner' => $owner,
             'url' => $owner ? route('profile.show', ['username' => $user->username]) : null,
             'galleries' => GalleryReoisitory::userGallery($user),

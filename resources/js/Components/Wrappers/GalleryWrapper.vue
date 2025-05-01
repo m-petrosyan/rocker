@@ -22,6 +22,10 @@ defineProps({
         type: Boolean,
         default: false
     },
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
     add: {
         type: Boolean,
         default: false
@@ -68,7 +72,7 @@ const deleteGallery = (id) => {
                              class="text-center absolute bottom-0 left-0 w-full p-1 bg-blackTransparent2">
                         by {{ gallery.user.name }}
                     </NavLink>
-                    <div v-if="owner"
+                    <div v-if="owner || isAdmin"
                          class="absolute bottom-0 w-full h-full flex flex-col justify-between  p-1 bg-blackTransparent2">
                         <div class="flex justify-end">
                             <div class="flex gap-x-2 items-center">

@@ -10,10 +10,6 @@ import EventWrapper from '@/Components/Wrappers/EventWrapper.vue';
 import BandWrapper from '@/Components/Wrappers/BandWrapper.vue';
 
 defineProps({
-    user: {
-        type: Object,
-        required: true
-    },
     galleries: {
         type: Object,
         required: false
@@ -30,6 +26,9 @@ defineProps({
         type: Boolean,
         required: true
     },
+    auth: {
+        object: true
+    },
     url: {
         type: String,
         required: true
@@ -38,9 +37,9 @@ defineProps({
 </script>
 
 <template>
-    <ProfileLayout :meta="{title: user.name, image: user?.image?.thumb}">
+    <ProfileLayout :meta="{title: auth.user.name, image: auth.user?.image?.thumb}">
         <div>
-            <UserInfo :url="url" :user="user" :owner />
+            <UserInfo :url="url" :user="auth.user" :owner />
             <div v-if="owner" class="absolute right-0 top-0">
                 <ResponsiveNavLink
                     :href="route('logout')"
@@ -67,9 +66,9 @@ defineProps({
             <div class="mt-48">
                 <SuccessMessages success class="w-1/3 mx-auto" :message="$page.props.flash.success" timeout="10000" />
                 <ProfileActions v-if="owner" class="mx-auto w-full" />
-                <GalleryWrapper :galleries="galleries" :owner title="User galleries" />
-                <EventWrapper :events :owner title="User events" />
-                <BandWrapper v-if="owner" :bands :owner title="User bands" />
+                <GalleryWrapper :galleries="galleries" :owner :isAdmin="auth.isAdmin" title="User galleries" />
+                <EventWrapper :events :owner :isAdmin="auth.isAdmin" title="User events" />
+                <BandWrapper v-if="owner" :bands :owner :isAdmin="auth.isAdmin" title="User bands" />
             </div>
         </div>
     </ProfileLayout>

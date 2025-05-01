@@ -36,7 +36,7 @@ class OwnerPolicy
      */
     public function update(User $user, Model $model): bool
     {
-        return $user->id === $model->user_id;
+        return $user->id === $model->user_id || $user->isAdmin();
     }
 
     /**
@@ -44,7 +44,7 @@ class OwnerPolicy
      */
     public function delete(User $user, Model $model): bool
     {
-        return $user->id === $model->user_id;
+        return $user->id === $model->user_id || $user->isAdmin();
     }
 
     /**
