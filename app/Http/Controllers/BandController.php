@@ -12,7 +12,7 @@ class BandController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Response
     {
         return Inertia::render('Band/Bands', [
             'bands' => BandRepository::bandList(),
@@ -26,7 +26,7 @@ class BandController extends Controller
     public function show(Band $band): Response
     {
         return Inertia::render('Band/Band', [
-            'band' => $band->load('genres'),
+            'band' => $band->load('genres', 'galleries'),
             'url' => url()->current(),
         ]);
     }

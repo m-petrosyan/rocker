@@ -1,7 +1,8 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import SocialShare from '@/Components/Socials/SocialShare.vue';
-import BandTags from '@/Components/Tags/BandTags.vue';
+import GalleryWrapper from '@/Components/Wrappers/GalleryWrapper.vue';
+import GenresTags from '@/Components/Tags/GenresTags.vue';
 
 defineProps({
     band: {
@@ -11,6 +12,10 @@ defineProps({
     url: {
         type: String,
         required: true
+    },
+    galleries: {
+        type: Object,
+        required: false
     }
 });
 </script>
@@ -30,9 +35,11 @@ defineProps({
             <h3 class="text-center mt-5">
                 Genres
             </h3>
-            <BandTags class="mx-auto w-fit" :items="band.genres" />
+            <GenresTags class="mx-auto w-fit" :genres="band.genres" />
         </div>
         <div class="md:w-5/6 mx-auto mt-8" v-html="band.info" />
+        <h4>Galleries</h4>
+        <GalleryWrapper :galleries="band.galleries" />
     </GuestLayout>
 </template>
 

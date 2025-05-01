@@ -70,7 +70,7 @@ defineProps({
             <div class="mt-48">
                 <SuccessMessages success class="w-1/3 mx-auto" :message="$page.props.flash.success" timeout="10000" />
                 <ProfileActions v-if="owner" class="mx-auto w-full" />
-                <GalleryWrapper :galleries="galleries" :owner :isAdmin="auth.isAdmin" title="User galleries" />
+                <GalleryWrapper :galleries="galleries.data" :owner :isAdmin="auth.isAdmin" title="User galleries" />
                 <EventWrapper :events :owner :isAdmin="auth.isAdmin" title="User events" />
                 <BandWrapper v-if="owner" :bands :owner :isAdmin="auth.isAdmin" title="User bands" />
             </div>

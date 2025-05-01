@@ -11,7 +11,6 @@ defineProps({
 
 <template>
     <div class="flex flex-wrap gap-x-2 gap-y-2">
-
         <component
             v-for="band in bands"
             :key="band.name"
