@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Band;
-use Illuminate\Http\Request;
+use App\Repositories\BandRepository;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class BandController extends Controller
 {
@@ -12,54 +14,20 @@ class BandController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Band/Bands', [
+            'bands' => BandRepository::bandList(),
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
      */
-    public function show(Band $band)
+    public function show(Band $band): Response
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Band $band)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Band $band)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Band $band)
-    {
-        //
+        return Inertia::render('Band/Band', [
+            'band' => $band->load('genres'),
+            'url' => url()->current(),
+        ]);
     }
 }

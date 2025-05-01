@@ -12,6 +12,10 @@ const props = defineProps({
         type: Object,
         required: false
     },
+    genres: {
+        type: Array,
+        required: false
+    },
     bandsList: {
         type: Array,
         required: false
@@ -26,7 +30,7 @@ const data = reactive({
 });
 
 const form = useForm(
-    props.event
+    props.band
         ? { ...props.band }
         : {
             cover_file: null,
@@ -65,7 +69,7 @@ const createBand = () => {
                         <Preview
                             label="cover"
                             class="min-h-96"
-                            classes="bg-contain"
+                            classes="bg-cover"
                             labelClass="h-full"
                             :image="form.cover"
                             v-model:preview="form.cover_file"
@@ -83,8 +87,8 @@ const createBand = () => {
                             v-model:file="data.logo"
                         />
                         <div class="flex flex-col gap-2 w-1/2">
-                            <Multiselect v-model="form.name" :options="bandsList" text="Name" />
-                            <Multiselect v-model="form.genres" :options="bandsList" text="Genres" multiple />
+                            <Multiselect v-model="form.name" :options="bandsList" text="Name" :disabled="band" />
+                            <Multiselect v-model="form.genres" :options="genres" text="Genres" multiple />
                         </div>
                     </div>
                 </div>

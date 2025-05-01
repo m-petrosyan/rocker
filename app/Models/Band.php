@@ -8,7 +8,6 @@ use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Str;
-use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -64,8 +63,6 @@ class Band extends Model implements Viewable, HasMedia
     {
         $this->addMediaConversion('thumb')
             ->width(300)
-            ->height(300)
-            ->fit(Fit::Crop, 300, 300)
             ->quality(100)
             ->sharpen(7)
             ->optimize();

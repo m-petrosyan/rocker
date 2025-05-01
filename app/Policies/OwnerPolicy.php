@@ -2,10 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\Gallery;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 
-class GalleryPolicy
+class OwnerPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -18,7 +18,7 @@ class GalleryPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Gallery $gallery): bool
+    public function view(User $user, Model $model): bool
     {
         return false;
     }
@@ -34,23 +34,23 @@ class GalleryPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Gallery $gallery): bool
+    public function update(User $user, Model $model): bool
     {
-        return $user->id === $gallery->user_id;
+        return $user->id === $model->user_id;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Gallery $gallery): bool
+    public function delete(User $user, Model $model): bool
     {
-        return $user->id === $gallery->user_id;
+        return $user->id === $model->user_id;
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Gallery $gallery): bool
+    public function restore(User $user, Model $model): bool
     {
         return false;
     }
@@ -58,7 +58,7 @@ class GalleryPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Gallery $gallery): bool
+    public function forceDelete(User $user, Model $model): bool
     {
         return false;
     }

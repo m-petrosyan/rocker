@@ -5,6 +5,7 @@ namespace App\Traits;
 use App\Models\Band;
 use App\Models\Venue;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\UploadedFile;
 
 trait ComponentServiceTrait
 {
@@ -26,7 +27,7 @@ trait ComponentServiceTrait
 
     public function addImage(Model $model, object $image, string $name): void
     {
-        if ($image) {
+        if ($image instanceof UploadedFile && $image->isValid()) {
             $model->addMedia($image)
                 ->toMediaCollection($name);
         }

@@ -23,7 +23,7 @@ class GalleryController
     public function create(): Response
     {
         return Inertia::render('Profile/Gallery/GalleryCreateEdit', [
-            'bandsList' => BandRepository::bandList(),
+            'bandsList' => BandRepository::bandNamesList(),
         ]);
     }
 
@@ -42,7 +42,7 @@ class GalleryController
 
         return Inertia::render('Profile/Gallery/GalleryCreateEdit', [
             'gallery' => $gallery->load('venue'),
-            'bandsList' => BandRepository::bandList(),
+            'bandsList' => BandRepository::bandNamesList(),
         ]);
     }
 

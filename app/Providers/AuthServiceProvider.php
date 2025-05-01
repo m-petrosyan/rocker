@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Band;
 use App\Models\Gallery;
-use App\Policies\GalleryPolicy;
+use App\Policies\OwnerPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,6 +23,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::policy(Gallery::class, GalleryPolicy::class);
+        Gate::policy(Gallery::class, OwnerPolicy::class);
+        Gate::policy(Band::class, OwnerPolicy::class);
     }
 }

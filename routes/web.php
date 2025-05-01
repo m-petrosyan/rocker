@@ -18,6 +18,7 @@ Route::get('bands/{band:slug}', [BandController::class, 'show'])
     ->name('bands.show');
 Route::resource('galleries', GalleryController::class)->only('index', 'show');
 Route::resource('community', CommunityController::class)->only('index', 'show');
+
 Route::post('pwa-install', PwaInstallController::class)->name('pwa.install');
 
 Route::get('verification', EmailVerificationPromptController::class)

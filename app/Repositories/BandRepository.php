@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Band;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class BandRepository
 {
@@ -14,8 +15,21 @@ class BandRepository
     }
 
 
-    public static function bandList(): array
+    public static function bandList(): LengthAwarePaginator
+    {
+        return Band::query()
+            ->whereNotNull('user_id')
+            ->whereNotNull('info')
+            ->paginate(20, ['id', 'name', 'slug']);
+    }
+
+    public static function bandNamesList(): array
     {
         return Band::query()->get(['id', 'name'])->toArray();
+    }
+
+    public static function withoutPage(): array
+    {
+        return Band::query()->whereNull('user_id')->get(['id', 'name'])->toArray();
     }
 }

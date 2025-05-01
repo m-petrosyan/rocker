@@ -32,7 +32,7 @@ onMounted(() => {
     <Head :title="meta?.title ?? defaultTitle">
         <meta name="description" :content="meta?.description ??  defaultDescription" />
         <meta name="og:description" :content="meta?.description ?? defaultDescription" />
-        <meta name="og:title" :content="meta?.title+' rocker.am' ?? defaultTitle" />
+        <meta name="og:title" :content="meta?.title ?? defaultTitle" />
         <meta name="keywords" :content="meta?.keywords ?? 'Armenian, Rock, Music'" />
         <meta name="og:image" :content="meta?.image ?? defaultImg" />
         <meta name="twitter:card" content="summary_large_image" />
@@ -40,7 +40,7 @@ onMounted(() => {
         <meta name="author" :content="meta?.author ?? 'rocker.am'" />
     </Head>
     <FleshNotification />
-    <section class="min-h-screen bg-black text-white pt-6 sm:pt-0">
+    <section class="min-h-screen text-white pt-6 sm:pt-0">
         <MainNavbar v-if="!isPWA" />
         <header v-if="$slots.header" class="my-10 text-gray">
             <h1 class="text-center mb-5">

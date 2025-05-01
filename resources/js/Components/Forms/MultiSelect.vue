@@ -12,22 +12,31 @@ const props = defineProps({
         default: false
     },
     modelValue: {
-        type: Array,
+        type: Array || String,
         default: () => []
     },
     options: {
         type: Array,
         default: () => []
+    },
+    disabled: {
+        type: Boolean,
+        default: false
     }
 });
 
 const emits = defineEmits(['update:modelValue']);
 
 const selected = ref(props.modelValue);
+if (selected.value) {
+    selected.value = typeof props.modelValue === 'string' ? { name: props.modelValue } : props.modelValue;
+
+}
 
 const removeItem = (item) => {
     if (Array.isArray(selected.value)) {
         selected.value = selected.value.filter((v) => v.name !== item.name);
+
     } else {
         selected.value = null;
     }
@@ -49,6 +58,7 @@ watch(() => selected.value, (newValue) => {
 <template>
     <div>
         <multiselect
+            :disabled
             id="option-tags"
             v-model="selected"
             :options="options"

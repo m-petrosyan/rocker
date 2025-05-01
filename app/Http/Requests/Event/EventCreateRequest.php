@@ -27,7 +27,7 @@ class EventCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'poster_file' => ['nullable', 'image', 'mimes:jpeg,jpg,webp,png', 'max:4000'],
+            'poster_file' => ['required', 'image', 'mimetypes:image/jpeg,image/jpg,image/webp,image/png', 'max:4000'],
             'title' => ['required', 'string', 'min:3', 'max:55'],
             'content' => ['required', 'string', 'min:10', 'max:730'],
             'type' => ['required', Rule::in([1, 2, 3])],
@@ -47,37 +47,10 @@ class EventCreateRequest extends FormRequest
         ];
     }
 
-//    public function messages(): array
-//    {
-//        return [
-//            'poster_file.image' => 'The poster must be an image.',
-//            'poster_file.mimes' => 'The poster must be a file of type: jpeg, jpg, webp, png.',
-//            'poster_file.max' => 'The poster may not be greater than 4MB.',
-//            'title.required' => 'The title is required.',
-//            'title.min' => 'The title must be at least 3 characters.',
-//            'title.max' => 'The title may not be greater than 55 characters.',
-//            'content.required' => 'The content is required.',
-//            'content.min' => 'The content must be at least 10 characters.',
-//            'content.max' => 'The content may not be greater than 730 characters.',
-//            'type.required' => 'The event type is required.',
-//            'type.in' => 'The selected event type is invalid.',
-//            'country.required' => 'The country is required.',
-//            'country.in' => 'The selected country is invalid.',
-//            'location.required' => 'The location is required.',
-//            'location.min' => 'The location must be at least 5 characters.',
-//            'location.max' => 'The location may not be greater than 255 characters.',
-//            'cordinates.latitude.required_with' => 'The latitude is required when coordinates are provided.',
-//            'cordinates.longitude.required_with' => 'The longitude is required when coordinates are provided.',
-//            'genre.required' => 'The genre is required.',
-//            'genre.in' => 'The selected genre is invalid.',
-//            'price.numeric' => 'The price must be a number.',
-//            'price.min' => 'The price cannot be negative.',
-//            'link.url' => 'The link must be a valid URL.',
-//            'ticket.url' => 'The ticket link must be a valid URL.',
-//            'start_date.required' => 'The start date is required.',
-//            'start_date.after_or_equal' => 'The start date must be today or later.',
-//            'start_time.required' => 'The start time is required.',
-//            'start_time.date_format' => 'The start time must be in HH:MM format (e.g., 13:45).',
-//        ];
-//    }
+    public function messages(): array
+    {
+        return [
+            'poster_file.mimetypes' => 'Файл должен быть в формате JPEG, JPG, WEBP или PNG. GIF не поддерживается.',
+        ];
+    }
 }

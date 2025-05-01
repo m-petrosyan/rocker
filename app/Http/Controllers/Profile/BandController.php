@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Profile;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Band\BandCreateRequest;
 use App\Models\Band;
+use App\Models\Genre;
 use App\Repositories\BandRepository;
 use App\Services\BandService;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -14,6 +16,8 @@ use Inertia\Response;
 
 class BandController extends Controller
 {
+    use AuthorizesRequests;
+
     public function __construct(protected BandService $bandService)
     {
     }
@@ -32,7 +36,8 @@ class BandController extends Controller
     public function create(): Response
     {
         return Inertia::render('Profile/Bands/BandCreateEdit', [
-            'bandsList' => BandRepository::bandList(),
+            'bandsList' => BandRepository::withoutPage(),
+            'genres' => Genre::query()->get(),
         ]);
     }
 
@@ -59,9 +64,14 @@ class BandController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Band $band)
+    public function edit(Band $band): Response
     {
-        //
+        $this->authorize('update', $band);
+
+        return Inertia::render('Profile/Bands/BandCreateEdit', [
+            'band' => $band->load('genres'),
+            'genres' => Genre::query()->get(),
+        ]);
     }
 
     /**
@@ -76,10 +86,13 @@ class BandController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Band $band)
+    public function destroy(Band $band): RedirectResponse
     {
-//        $this->authorize('update', $gallery);
-        dd($band);
+        $this->bandService->destroy($band);
+
+        session()->flash('message', 'The band has been deleted.');
+
+        return redirect()->route('profile.index');
         // չենք ջնջում այլ մաքրումն ենք սաղ ինֆոն + նկարները բացի անունից
     }
 }

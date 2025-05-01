@@ -18,7 +18,7 @@ export default {
             colors: {
                 gray: 'var(--gray)',
                 graydarker: '#666666',
-                graydark: '#141414',
+                graydark: '#101010',
                 graydark2: '#262626',
                 grayblue: '#607D8B',
                 orange: '#FF5722',

@@ -5,6 +5,7 @@ import NavLink from '@/Components/NavLink.vue';
 import { computed } from 'vue';
 import LocationIcon from '@/Components/Icons/LocationIcon.vue';
 import CalendarIcon from '@/Components/Icons/CalendarIcon.vue';
+import Tags from '@/Components/Elements/Tags.vue';
 
 const props = defineProps({
     gallery: {
@@ -35,7 +36,7 @@ const venueName = computed(() => {
                     <p>{{ gallery.user.name }}</p>
                 </NavLink>
             </div>
-            <div class="md:w-2/3 flex flex-col gap-y-4 bg-graydark p-4 rounded-lg text-pretty">
+            <div class="md:w-2/3 flex flex-col gap-y-4 bg-graydark2 p-4 rounded-lg text-pretty">
                 <p>{{ gallery.description }}</p>
                 <div v-if="venueName" class="flex gap-x-1 text-sm">
                     <LocationIcon />
@@ -45,11 +46,7 @@ const venueName = computed(() => {
                     <CalendarIcon />
                     <p>{{ gallery.date }}</p>
                 </div>
-                <div class="flex flex-wrap gap-x-2 gap-y-2">
-                    <div v-for="band of gallery.bands" class="bg-red px-1 rounded-sm">
-                        <div class="bg-red ">{{ band.name }}</div>
-                    </div>
-                </div>
+                <Tags :items="gallery.bands" />
             </div>
         </div>
         <ImageWrapper :images="gallery.images_url" :title="gallery.title" :url />
