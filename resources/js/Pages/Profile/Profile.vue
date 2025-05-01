@@ -10,6 +10,10 @@ import EventWrapper from '@/Components/Wrappers/EventWrapper.vue';
 import BandWrapper from '@/Components/Wrappers/BandWrapper.vue';
 
 defineProps({
+    user: {
+        type: Object,
+        required: true
+    },
     galleries: {
         type: Object,
         required: false
@@ -37,9 +41,9 @@ defineProps({
 </script>
 
 <template>
-    <ProfileLayout :meta="{title: auth.user.name, image: auth.user?.image?.thumb}">
+    <ProfileLayout :meta="{title: user.name, image: user?.image?.thumb}">
         <div>
-            <UserInfo :url="url" :user="auth.user" :owner />
+            <UserInfo :url="url" :user :owner />
             <div v-if="owner" class="absolute right-0 top-0">
                 <ResponsiveNavLink
                     :href="route('logout')"
