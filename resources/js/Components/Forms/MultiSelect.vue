@@ -87,6 +87,7 @@ watch(() => selected.value, (newValue) => {
 
 <style scoped lang="scss">
 :deep(.multiselect) {
+    position: relative;
     color: black;
 
     & .multiselect__tags {
@@ -125,8 +126,12 @@ watch(() => selected.value, (newValue) => {
     }
 
     & .multiselect__content-wrapper {
+        position: absolute;
+        width: 100%;
+        overflow-y: auto;
         background-color: theme('colors.graydark2');
         color: white;
+        z-index: 11;
 
         .multiselect__content {
             width: 100%;
