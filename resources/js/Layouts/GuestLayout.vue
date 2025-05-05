@@ -31,7 +31,7 @@ onMounted(() => {
 <template>
     <Head :title="meta?.title ?? defaultTitle">
         <meta name="description" :content="meta?.description ??  defaultDescription" />
-        <meta name="og:description" :content="meta?.description ?? defaultDescription" />
+        <meta name="og:description" :content="meta?.description?.replace(/<[^>]*>/g, '') ?? defaultDescription" />
         <meta name="og:title" :content="meta?.title ?? defaultTitle" />
         <meta name="keywords" :content="meta?.keywords ?? defaultKeywords" />
         <meta name="og:image" :content="meta?.image ?? defaultImg" />
