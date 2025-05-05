@@ -28,7 +28,7 @@ const getHostname = (url) => {
     <GuestLayout
         :meta="{title: band.name ,image:band.logo?.large , description: band.info, keywords: band.name}">
         <div class="h-96 relative">
-            <div v-if="band.links.length" class="absolute right-0 w-fit top-0  bg-opacity-20  bg-graydark p-3">
+            <div v-if="band.links.length" class="absolute right-0 w-fit top-0 bg-opacity-20 bg-graydark p-3">
                 <a v-for="link in band.links" :key="link.id" :href="link.url"
                    target="_blank">{{ getHostname(link.url)
                     }}</a>
@@ -38,7 +38,7 @@ const getHostname = (url) => {
             <div class="absolute h-1/6 left-1/2 w-fit -translate-x-1/2 text-center bottom-0 bg-graydark p-5">
                 <h1>{{ band.name }}</h1>
             </div>
-            <SocialShare class="absolute right-0 bottom-0" :title="band.name" :url />
+            <SocialShare class="absolute right-0 bottom-0 bg-opacity-20 bg-graydark" :title="band.name" :url />
         </div>
         <div class="flex flex-col gap-y-4 mt-5">
             <h3 class="text-center mt-5">
