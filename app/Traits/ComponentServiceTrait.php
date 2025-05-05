@@ -67,5 +67,15 @@ trait ComponentServiceTrait
         }
     }
 
-
+    public function updateLinks(Model $model, $links = []): void
+    {
+        if (isset($links)) {
+            $model->links()->delete();
+            foreach ($links as $link) {
+                $model->links()->create(
+                    ['url' => $link['url']],
+                );
+            }
+        }
+    }
 }

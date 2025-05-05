@@ -42,6 +42,8 @@ class BandService
             $band->genres()->sync($genreIds);
         }
 
+        $this->updateLinks($band, $attributes['links']);
+
         $this->addImage($band, $attributes['cover_file'], 'cover');
         if (isset($attributes['logo_file'])) {
             $this->addImage($band, $attributes['logo_file'], 'logo');
@@ -73,6 +75,8 @@ class BandService
 
             $band->genres()->sync($genreIds);
         }
+
+        $this->updateLinks($band, $attributes['links']);
     }
 
     public function destroy(Band $band): void

@@ -7,6 +7,7 @@ use App\Traits\ViewsTrait;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -32,6 +33,12 @@ class Band extends Model implements Viewable, HasMedia
     protected $hidden = [
         'media',
     ];
+
+
+    public function links(): MorphMany
+    {
+        return $this->morphMany(Links::class, 'model');
+    }
 
     public function galleries(): BelongsToMany
     {

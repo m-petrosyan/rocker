@@ -26,7 +26,7 @@ class BandController extends Controller
     public function show(Band $band): Response
     {
         return Inertia::render('Band/Band', [
-            'band' => $band->load('genres', 'galleries'),
+            'band' => $band->load('genres', 'galleries', 'links'),
             'url' => url()->current(),
         ]);
     }

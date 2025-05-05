@@ -12,6 +12,7 @@ trait MediaTrait
             'id' => $mediaData?->id,
             'large' => $mediaData?->getUrl('large'),
             'thumb' => $mediaData?->getUrl('thumb'),
+            'original' => $mediaData?->getUrl(),
         ];
     }
 }

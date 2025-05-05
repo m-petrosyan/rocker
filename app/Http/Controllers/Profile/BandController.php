@@ -53,7 +53,7 @@ class BandController extends Controller
         $this->authorize('update', $band);
 
         return Inertia::render('Profile/Bands/BandCreateEdit', [
-            'band' => $band->load('genres'),
+            'band' => $band->load('genres', 'links'),
             'genres' => Genre::query()->get(),
         ]);
     }

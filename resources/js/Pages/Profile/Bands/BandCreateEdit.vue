@@ -42,7 +42,8 @@ const form = useForm(
             logo_file: null,
             name: '',
             genres: '',
-            info: ''
+            info: '',
+            links: []
         }
 );
 
@@ -62,6 +63,16 @@ const createBand = () => {
             preserveScroll: true
         }
     );
+};
+
+const addLinks = () => {
+    form.links.push({
+        url: ''
+    });
+};
+
+const delLink = (index) => {
+    form.links.splice(index, 1);
 };
 </script>
 
@@ -94,6 +105,22 @@ const createBand = () => {
                         <div class="flex flex-col gap-2 w-1/2">
                             <Multiselect v-model="form.name" :options="bandsList" text="Name" :disabled="band" />
                             <Multiselect v-model="form.genres" :options="genres" text="Genres" multiple />
+                            <div v-if="form.links.length" class="flex flex-col gap-y-2">
+                                <div v-for="(url, index) in form.links" class="flex">
+                                    <input
+                                        class="w-full bg-graydark2"
+                                        type="text"
+                                        v-model="form.links[index].url"
+                                        placeholder="Url"
+                                    />
+                                    <button type="button" class="bg-red px-4 bg-opacity-40 hover:bg-opacity-100"
+                                            @click="delLink(index)">x
+                                    </button>
+                                </div>
+                            </div>
+                            <button :disabled="form.links.length > 4" type="button" @click="addLinks"
+                                    class="bg-grayblue w-fit p-2">Add url
+                            </button>
                         </div>
                     </div>
                 </div>

@@ -57,3 +57,7 @@ input, textarea {
     //color: black;
     //background-color: white;
 }
+
+button:disabled {
+    opacity: 0.5;
+}
