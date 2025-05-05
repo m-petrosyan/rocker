@@ -72,7 +72,7 @@ const createBand = () => {
                 <div class="flex flex-col   gap-4">
                     <div class="w-full">
                         <Preview
-                            label="cover"
+                            label="cover (1280px x 384px)"
                             class="min-h-96"
                             classes="bg-cover"
                             labelClass="h-full"
