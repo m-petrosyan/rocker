@@ -15,14 +15,14 @@ defineProps({
     }
 });
 
-const defaultDescription = 'The Heart of Armenian Rock';
 const defaultTitle = 'Rocker.am';
+const defaultDescription = 'Discover Armenian rock and metal bands, concerts, news, and the underground music scene in Armenia.';
+const defaultKeywords = 'Armenian, Rock, Music, Metal, Yerevan, Armenia, Heavy Metal, Punk, Alternative, Gothic, Progressive Rock, Doom Metal, Armenian Bands, Armenian Rock Bands, Armenian Metal Bands, Rock Concerts Armenia, Metal Concerts Armenia, Armenian Rock Scene, Underground Rock Armenia, Rock Festivals Armenia';
 const page = usePage();
 
 const isPWA = ref(false);
 
 onMounted(() => {
-    // Detect PWA mode
     isPWA.value = window.matchMedia('(display-mode: standalone)').matches ||
         window.navigator.standalone === true;
 });
@@ -33,7 +33,7 @@ onMounted(() => {
         <meta name="description" :content="meta?.description ??  defaultDescription" />
         <meta name="og:description" :content="meta?.description ?? defaultDescription" />
         <meta name="og:title" :content="meta?.title ?? defaultTitle" />
-        <meta name="keywords" :content="meta?.keywords ?? 'Armenian, Rock, Music'" />
+        <meta name="keywords" :content="meta?.keywords ?? defaultKeywords" />
         <meta name="og:image" :content="meta?.image ?? defaultImg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" :content="meta?.image ?? defaultImg" />
