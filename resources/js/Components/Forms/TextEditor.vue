@@ -33,14 +33,25 @@ const modules = {
     }
 };
 
+const customToolbar = [
+    ['bold', 'italic', 'underline', 'strike'],
+    ['blockquote'],
+    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+    [{ 'indent': '-1' }, { 'indent': '+1' }],
+    [{ 'direction': 'rtl' }],
+    [{ 'align': [] }],
+    ['link', 'image', 'video'],
+    ['clean']
+];
+
 </script>
 
 <template>
     <QuillEditor
         class="quill-with-upload"
-        :modules
+        :modules="modules"
         contentType="html"
-        toolbar="full"
+        :toolbar="customToolbar"
     />
 </template>
 
@@ -64,7 +75,7 @@ const modules = {
             width: 100%;
             height: 500px;
         }
-        
+
         .ql-align-center img {
             margin: 0 auto !important;
         }
