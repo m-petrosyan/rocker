@@ -12,10 +12,6 @@ defineProps({
     url: {
         type: String,
         required: true
-    },
-    galleries: {
-        type: Object,
-        required: false
     }
 });
 
