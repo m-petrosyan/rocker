@@ -80,7 +80,7 @@ const delLink = (index) => {
     <ProfileLayout :meta="{title: 'Band create'}">
         <div>
             <form @submit.prevent="createBand" class="flex flex-col gap-y-2">
-                <div class="flex flex-col   gap-4">
+                <div class="flex flex-col gap-4">
                     <div class="w-full">
                         <Preview
                             label="cover (1280px x 384px)"
@@ -92,17 +92,17 @@ const delLink = (index) => {
                             v-model:file="data.cover"
                         />
                     </div>
-                    <div class="flex w-full  gap-2">
+                    <div class="flex md:flex-row flex-col w-full gap-2">
                         <Preview
                             label="logo"
                             classes="bg-contain"
-                            class="min-h-96 w-1/2"
+                            class="min-h-96 md:w-1/2 w-full"
                             labelClass="h-full"
                             :image="form.logo"
                             v-model:preview="form.logo_file"
                             v-model:file="data.logo"
                         />
-                        <div class="flex flex-col gap-2 w-1/2">
+                        <div class="flex flex-col gap-2 md:w-1/2 w-full">
                             <Multiselect v-model="form.name" :options="bandsList" text="Name" :disabled="band" />
                             <Multiselect v-model="form.genres" :options="genres" text="Genres" multiple />
                             <div v-if="form.links.length" class="flex flex-col gap-y-2">
