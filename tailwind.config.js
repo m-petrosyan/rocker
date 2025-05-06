@@ -16,7 +16,7 @@ export default {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans]
             },
             colors: {
-                gray: 'var(--gray)',
+                gray: '#808080',
                 graydarker: '#666666',
                 graydark: '#101010',
                 graydark2: '#262626',

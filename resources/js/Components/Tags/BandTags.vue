@@ -16,8 +16,9 @@ defineProps({
             :key="band.name"
             :is="band.info ? Link : 'div'"
             :href="route('bands.show',band.slug)"
-            class="bg-red px-1 rounded-sm">
-            <div class="bg-red ">{{ band.name }}</div>
+            class="px-1 rounded-sm"
+            :class="band.info  ? 'bg-red' : 'bg-gray cursor-default' ">
+            <div>{{ band.name }}</div>
         </component>
     </div>
 </template>

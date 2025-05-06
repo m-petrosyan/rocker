@@ -17,7 +17,8 @@ defineProps({
 
 const getHostname = (url) => {
     try {
-        return new URL(url).hostname;
+        const hostname = new URL(url).hostname;
+        return hostname.startsWith('www.') ? hostname.slice(4) : hostname;
     } catch (e) {
         return url;
     }

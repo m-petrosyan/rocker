@@ -40,6 +40,15 @@ class ProfileController
         ]);
     }
 
+    public function edit(): Response
+    {
+        dd();
+
+        return Inertia::render('Profile/Settings/Settings', [
+            'user' => auth()->user(),
+        ]);
+    }
+
     public function updateImage(ProfileImageUpdateRequest $request): void
     {
         auth()->user()->clearMediaCollection('images');

@@ -13,11 +13,9 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware(['auth', 'verified'])->as('profile.')->prefix('profile')->group(function () {
-    Route::get('/', [\App\Http\Controllers\Profile\ProfileController::class, 'index'])->name('index');
-
-    Route::get('/settings', [ProfileController::class, 'edit'])->name('edit');
-    Route::patch('/settings', [ProfileController::class, 'update'])->name('update');
-    Route::delete('/settings', [ProfileController::class, 'destroy'])->name('destroy');
+    Route::get('/', [ProfileController::class, 'index'])->name('index');
+    Route::get('settings', [ProfileController::class, 'edit'])->name('edit');
+    Route::put('settings', [ProfileController::class, 'update'])->name('update');
 
     Route::resource('events', EventController::class)->except('show');
     Route::resource('galleries', GalleryController::class)->except('show');
