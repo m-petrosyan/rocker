@@ -83,7 +83,7 @@ const deleteBand = (id) => {
             </NavLink>
             <NavLink
                 v-if="add"
-                :href="route('profile.galleries.create')"
+                :href="route('profile.bands.create')"
                 class="flex min-h-64 items-center gap-2 border-2 border-dashed border-graydark2 p-4 hover:border-orange hover:bg-graydark2"
             >
                 <div class="mx-auto flex w-32 flex-col items-center gap-y-4 rounded-lg">
