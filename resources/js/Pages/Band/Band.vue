@@ -52,7 +52,7 @@ const getHostname = (url) => {
         </div>
         <div class="md:w-5/6 mx-auto mt-8 md:p-0 p-3" v-html="band.info" />
         <h3 class="text-center mt-10">Galleries</h3>
-        <GalleryWrapper :galleries="band.galleries" user />
+        <GalleryWrapper v-if="band.galleries" :galleries="band.galleries" user />
     </GuestLayout>
 </template>
 
