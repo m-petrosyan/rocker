@@ -54,15 +54,15 @@ const deleteBand = (id) => {
                 :href="route('bands.show', band.slug)"
                 :key="band.id"
                 class="flex flex-col items-center p-4">
-                <div class="relative h-64 w-full bg-cover bg-center rounded-lg overflow-hidden">
+                <div class="relative h-64 w-full rounded-lg overflow-hidden">
                     <img v-if="band.logo.thumb && band.logo.thumb.trim()"
                          :src="band.logo.thumb"
-                         class="object-cover w-full h-full"
+                         class="object-contain w-full h-full"
                          alt="Loading"
                          @error="$event.target.src = band.logo.original" />
                     <img v-else-if="band.logo.original"
                          :src="band.logo.original"
-                         class="object-cover w-full h-full"
+                         class="object-contain w-full h-full"
                          alt="Loading" />
                     <div v-if="owner || isAdmin"
                          class="absolute bottom-0 w-full h-full flex flex-col justify-end  p-1 bg-blackTransparent2">
