@@ -21,3 +21,9 @@ npm run ssr
 ```bash
  git pull && npm run build && pm2 restart rocker
 ```
+
+> restart queue
+
+```
+sudo supervisorctl restart laravel-worker-rocker-app:*
+```

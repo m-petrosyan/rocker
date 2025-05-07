@@ -72,10 +72,12 @@ class Band extends Model implements Viewable, HasMedia
             ->width(300)
             ->quality(100)
             ->sharpen(7)
-            ->optimize();
+            ->optimize()
+            ->format('webp');
 
         $this->addMediaConversion('large')
             ->width(1920)
-            ->quality(90);
+            ->quality(90)
+            ->format('webp');
     }
 }
