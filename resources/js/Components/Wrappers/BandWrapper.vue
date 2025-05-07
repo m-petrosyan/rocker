@@ -54,7 +54,7 @@ const deleteBand = (id) => {
                 :href="route('bands.show', band.slug)"
                 :key="band.id"
                 class="flex flex-col items-center p-4">
-                <div class="relative h-64 w-full rounded-lg overflow-hidden">
+                <div class="relative h-64 w-full rounded-lg overflow-hidden bg-black">
                     <img v-if="band.logo.thumb && band.logo.thumb.trim()"
                          :src="band.logo.thumb"
                          class="object-contain w-full h-full"
