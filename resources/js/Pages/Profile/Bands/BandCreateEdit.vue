@@ -94,7 +94,7 @@ const delLink = (index) => {
                     </div>
                     <div class="flex md:flex-row flex-col w-full gap-2">
                         <Preview
-                            label="logo"
+                            label="logo (300px x 300px Square)"
                             classes="bg-contain"
                             class="min-h-96 md:w-1/2 w-full"
                             labelClass="h-full"
