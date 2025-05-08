@@ -28,7 +28,7 @@ onBeforeUnmount(() => {
 
 <template>
     <nav
-        class="hidden md:block ml-8 mx-auto flex items-center gap-x-2 pt-5 text-sm uppercase tracking-widest text-gray">
+        class="hidden md:block mx-auto flex items-center gap-x-2 pt-5 text-sm uppercase tracking-widest text-gray">
         <div class="mx-auto flex w-fit items-center gap-x-2">
             <component
                 v-for="item in menu"
