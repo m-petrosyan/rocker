@@ -121,6 +121,15 @@ const delLink = (index) => {
                             <button :disabled="form.links.length > 2" type="button" @click="addLinks"
                                     class="bg-grayblue w-fit p-2">Add url
                             </button>
+
+                            <div class="text-red">
+                                <b>Note :</b>
+                                <p>If the group name is already in the list, please select from the list</p>
+                                <div class="flex">
+                                    <p>You can also add a video from youtube by clicking the button</p>
+                                    <img src="/images/video_instruction.png" alt="instruction">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
