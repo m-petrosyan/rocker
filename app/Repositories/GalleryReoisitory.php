@@ -15,7 +15,7 @@ class GalleryReoisitory
     }
 
 
-    public static function allGalleries($limit = 0): LengthAwarePaginator
+    public static function galleryList($limit = 0): LengthAwarePaginator
     {
         return Gallery::query()
             ->with(['user.roles'])

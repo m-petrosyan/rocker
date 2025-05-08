@@ -15,7 +15,7 @@ class GalleryController extends Controller
     public function index(): Response
     {
         return Inertia::render('Gallery/Galleries', [
-            'galleries' => GalleryReoisitory::allGalleries(),
+            'galleries' => GalleryReoisitory::galleryList(),
         ]);
     }
 

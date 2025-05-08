@@ -12,6 +12,6 @@ defineProps({
 <template>
     <GuestLayout :meta="{title: 'Bands'}">
         <template #header> Bands</template>
-        <BandWrapper :bands user add />
+        <BandWrapper :bands="bands.data" user add />
     </GuestLayout>
 </template>

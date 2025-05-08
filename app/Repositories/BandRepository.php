@@ -15,13 +15,13 @@ class BandRepository
     }
 
 
-    public static function bandList(): LengthAwarePaginator
+    public static function bandList($limit = 0): LengthAwarePaginator
     {
         return Band::query()
             ->whereNotNull('user_id')
             ->whereNotNull('info')
             ->inRandomOrder()
-            ->paginate(20, ['id', 'name', 'slug']);
+            ->paginate($limit, ['id', 'name', 'slug']);
     }
 
     public static function bandNamesList(): array

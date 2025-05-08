@@ -2,6 +2,7 @@
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import EventWrapper from '@/Components/Wrappers/EventWrapper.vue';
 import GalleryWrapper from '@/Components/Wrappers/GalleryWrapper.vue';
+import BandWrapper from '@/Components/Wrappers/BandWrapper.vue';
 
 defineProps({
     events: {
@@ -11,6 +12,10 @@ defineProps({
     galleries: {
         type: Object,
         required: true
+    },
+    bands: {
+        type: Object,
+        required: true
     }
 });
 
@@ -18,13 +23,8 @@ defineProps({
 
 <template>
     <GuestLayout :meta="{title: 'Home'}">
-        <h2 class="text-center mb-5">
-            Events
-        </h2>
-        <EventWrapper :events more />
-        <h2 class="text-center my-5">
-            Galleries
-        </h2>
-        <GalleryWrapper :galleries="galleries.data" more />
+        <EventWrapper :events more title="Events" />
+        <BandWrapper :bands="bands.data" more title="bands" />
+        <GalleryWrapper :galleries="galleries.data" more title="Galleries" />
     </GuestLayout>
 </template>

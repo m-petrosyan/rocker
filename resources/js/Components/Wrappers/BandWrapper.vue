@@ -50,7 +50,7 @@ const deleteBand = (id) => {
         <h2 v-if="title" class="text-center">{{ title }}</h2>
         <div class="mt-10 grid gap-y-10 md:grid-cols-2 lg:grid-cols-4">
             <NavLink
-                v-for="band in bands.data"
+                v-for="band in bands"
                 :href="route('bands.show', band.slug)"
                 :key="band.id"
                 class="flex flex-col items-center p-4">

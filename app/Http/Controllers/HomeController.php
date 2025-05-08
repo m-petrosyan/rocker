@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\BandRepository;
 use App\Repositories\EventReoisutiry;
 use App\Repositories\GalleryReoisitory;
 use Inertia\Inertia;
@@ -13,7 +14,8 @@ class HomeController
     {
         return Inertia::render('Home', [
             'events' => EventReoisutiry::eventsList(12),
-            'galleries' => GalleryReoisitory::allGalleries(12),
+            'bands' => BandRepository::bandList(4),
+            'galleries' => GalleryReoisitory::galleryList(12),
         ]);
     }
 }
