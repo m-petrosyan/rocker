@@ -20,7 +20,7 @@ class BandRepository
         return Band::query()
             ->whereNotNull('user_id')
             ->whereNotNull('info')
-            ->orderBy('updated_at', 'desc')
+            ->inRandomOrder()
             ->paginate(20, ['id', 'name', 'slug']);
     }
 
