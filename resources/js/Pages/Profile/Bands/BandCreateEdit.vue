@@ -118,7 +118,7 @@ const delLink = (index) => {
                                     </button>
                                 </div>
                             </div>
-                            <button :disabled="form.links.length > 4" type="button" @click="addLinks"
+                            <button :disabled="form.links.length > 2" type="button" @click="addLinks"
                                     class="bg-grayblue w-fit p-2">Add url
                             </button>
                         </div>
