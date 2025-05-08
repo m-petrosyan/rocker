@@ -41,13 +41,8 @@ onBeforeUnmount(() => {
                 :preserve-scroll="!item.external"
                 class="transition hover:opacity-70"
             >
-                <img
-                    v-if="item.img"
-                    :src="item.img"
-                    alt="logo"
-                    class="logo w-10"
-                />
-                <span v-if="!item.img && item.name">{{ item.name }}</span>
+                <component v-if="item.name === 'Home'" :is="item.icon" />
+                <span v-else>{{ item.name }}</span>
             </component>
         </div>
         <div class="absolute top-0 right-2 flex gap-x-4 p-5 uppercase">
