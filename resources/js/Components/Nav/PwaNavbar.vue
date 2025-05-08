@@ -8,7 +8,7 @@ import ProfileIcon from '@/Components/Icons/ProfileIcon.vue';
     <div
         class="z-50 sticky bottom-0 w-full bg-pwaNavbg">
         <div class="flex items-center gap-x-2 mx-auto w-fit pt-2 text-gray text-sm tracking-widest uppercase">
-      
+
             <component
                 v-for="item in menu"
                 :key="item.name"
@@ -39,9 +39,9 @@ import ProfileIcon from '@/Components/Icons/ProfileIcon.vue';
         </div>
     </div>
 </template>
-<style scoped class="scss">
+<style class="scss">
 a:hover {
-    svg {
+    svg, svg > g {
         fill: theme('colors.orange');
     }
 

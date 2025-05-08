@@ -47,7 +47,7 @@ onMounted(() => {
     </Head>
     <FleshNotification />
     <section class="min-h-screen text-white pt-6 sm:pt-0">
-        <MainNavbar v-if="!isPWA" />
+        <MainNavbar v-if="false" />
         <header v-if="$slots.header" class="my-10 text-gray">
             <h1 class="text-center mb-5">
                 <slot name="header" />
@@ -59,5 +59,5 @@ onMounted(() => {
         <PWAinstall />
     </section>
     <Footer />
-    <PwaNavbar v-if="isPWA" />
+    <PwaNavbar v-if="true" />
 </template>

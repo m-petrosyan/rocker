@@ -73,7 +73,7 @@ defineProps({
                 <GalleryWrapper :galleries="galleries.data" :owner :isAdmin="auth.isAdmin" title="User galleries" />
                 <!--                -->
                 <EventWrapper :events :owner :isAdmin="auth.isAdmin" title="User events" />
-                <BandWrapper v-if="owner" :bands :owner :isAdmin="auth.isAdmin" title="User bands" />
+                <BandWrapper v-if="owner" :bands="bands.data" :owner :isAdmin="auth.isAdmin" title="User bands" />
             </div>
         </div>
     </ProfileLayout>
