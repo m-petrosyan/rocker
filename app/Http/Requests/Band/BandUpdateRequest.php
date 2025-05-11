@@ -23,6 +23,8 @@ class BandUpdateRequest extends BandCreateRequest
             parent::rules(),
             [
                 'name' => ['nullable', 'string', 'max:255'],
+                'cover_file' => ['nullable', 'image', 'mimes:jpeg,jpg,webp,png', 'max:15000'],
+                'logo_file' => ['nullable', 'image', 'mimes:jpeg,jpg,webp,png,svg', 'max:4000'],
             ]
         );
     }
