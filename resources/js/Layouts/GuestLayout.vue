@@ -46,7 +46,7 @@ onMounted(() => {
         <meta name="twitter:image" :content="meta?.image ?? defaultImg" />
         <meta name="author" :content="meta?.author ?? 'rocker.am'" />
     </Head>
-    <PreloaderPwa />
+    <PreloaderPwa v-if="isPWA" />
     <FleshNotification />
     <section class="min-h-screen text-white pt-6 sm:pt-0">
         <MainNavbar v-if="!isPWA" />

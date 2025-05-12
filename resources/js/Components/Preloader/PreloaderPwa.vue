@@ -15,9 +15,7 @@ const page = usePage();
 // Show loader on Inertia navigation start, hide on finish
 onMounted(() => {
     page.events.listen('start', () => {
-        if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone) {
-            visible.value = true;
-        }
+        visible.value = true;
     });
     page.events.listen('finish', () => {
         visible.value = false;
