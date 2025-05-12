@@ -9,6 +9,7 @@ import { createApp, h } from 'vue';
 import { route as ziggyRoute, ZiggyVue } from '../../vendor/tightenco/ziggy';
 import VueGtag from 'vue-gtag-next';
 import PrimeVue from 'primevue/config';
+import PreloaderPwa from '@/Components/Preloader/PreloaderPwa.vue';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -42,7 +43,7 @@ createInertiaApp({
 
         // Provide route function globally
         app.config.globalProperties.$route = ziggyRoute;
-        app.component('PwaLoader', PwaLoader);
+        app.component('PwaLoader', PreloaderPwa);
 
         app.config.globalProperties.$isPWA =
             window.matchMedia('(display-mode: standalone)').matches ||
