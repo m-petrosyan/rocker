@@ -1,8 +1,8 @@
 <template>
     {{ visible }}
-    <div class="pwa-loader">
+    <div v-if="false" class="pwa-loader">
         <div class="spinner"></div>
-        <p>Загрузка...</p>
+        <p>Loading...</p>
     </div>
 </template>
 
@@ -31,7 +31,6 @@ onMounted(() => {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(255, 255, 255, 0.9);
     display: flex;
     flex-direction: column;
     align-items: center;
