@@ -27,7 +27,7 @@ onMounted(() => {
     <p class="text-white"> {{ visible }}</p>
     <div v-if="visible" class="pwa-loader">
         <div class="spinner"></div>
-        <p>Loading...</p>
+        <p class="text-white">Loading...</p>
     </div>
 </template>
 
@@ -40,6 +40,7 @@ onMounted(() => {
     width: 100vw;
     height: 100vh;
     display: flex;
+    background-color: rgba(24, 24, 24, 0.8);
     flex-direction: column;
     align-items: center;
     justify-content: center;
