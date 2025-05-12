@@ -1,11 +1,3 @@
-<template>
-    {{ visible }}
-    <div v-if="false" class="pwa-loader">
-        <div class="spinner"></div>
-        <p>Loading...</p>
-    </div>
-</template>
-
 <script setup>
 import { onMounted, ref } from 'vue';
 import { usePage } from '@inertiajs/vue3';
@@ -23,6 +15,15 @@ onMounted(() => {
     });
 });
 </script>
+
+<template>
+    <p class="text-white"> {{ visible }}</p>
+    <div v-if="false" class="pwa-loader">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+    </div>
+</template>
+
 
 <style scoped>
 .pwa-loader {
