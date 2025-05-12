@@ -24,7 +24,6 @@ onMounted(() => {
 </script>
 
 <template>
-    <p class="text-white"> {{ visible }}</p>
     <div v-if="visible" class="pwa-loader">
         <div class="spinner"></div>
         <p class="text-white">Loading...</p>
