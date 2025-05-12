@@ -26,7 +26,7 @@ onMounted(() => {
 <template>
     <div v-if="visible" class="pwa-loader">
         <div class="spinner"></div>
-        <p class="text-white">Loading...</p>
+        <p class="text-white text-2xl">Loading...</p>
     </div>
 </template>
 
