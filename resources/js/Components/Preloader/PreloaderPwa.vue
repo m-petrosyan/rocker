@@ -1,24 +1,31 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import { usePage } from '@inertiajs/vue3';
+import { router } from '@inertiajs/vue3';
 
 const visible = ref(false);
-const page = usePage();
 
-// Show loader on Inertia navigation start, hide on finish
+function isPwaMode() {
+    return window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+}
+
 onMounted(() => {
-    page.events.listen('start', () => {
-        visible.value = true;
+    router.on('start', () => {
+        if (isPwaMode()) {
+            visible.value = true;
+            console.log('[PWA] navigation started');
+        }
     });
-    page.events.listen('finish', () => {
+
+    router.on('finish', () => {
         visible.value = false;
+        console.log('[PWA] navigation finished');
     });
 });
 </script>
 
 <template>
     <p class="text-white"> {{ visible }}</p>
-    <div v-if="false" class="pwa-loader">
+    <div v-if="visible" class="pwa-loader">
         <div class="spinner"></div>
         <p>Loading...</p>
     </div>
