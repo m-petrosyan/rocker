@@ -26,14 +26,14 @@
       "sizes": "375x812",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "Главный экран Rocker.am"
+      "label": "Rocker.am main screen"
     },
     {
       "src": "/screenshots/desktop-screenshot.png",
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Версия для ПК"
+      "label": "Desktop version"
     }
   ]
 }
