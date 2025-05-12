@@ -72,8 +72,9 @@ defineProps({
                 <ProfileActions v-if="owner" class="mx-auto w-full" />
                 <GalleryWrapper :galleries="galleries.data" :owner :isAdmin="auth.isAdmin" title="User galleries" />
                 <!--                -->
-                <EventWrapper :events :owner :isAdmin="auth.isAdmin" title="User events" />
-                <BandWrapper v-if="owner" :bands="bands.data" :owner :isAdmin="auth.isAdmin" title="User bands" />
+                <EventWrapper v-if="owner || auth.isAdmin" :events :owner :isAdmin="auth.isAdmin" title="User events" />
+                <BandWrapper v-if="owner || auth.isAdmin" :bands="bands.data" :owner :isAdmin="auth.isAdmin"
+                             title="User bands" />
             </div>
         </div>
     </ProfileLayout>
