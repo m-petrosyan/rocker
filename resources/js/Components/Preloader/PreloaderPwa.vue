@@ -1,5 +1,6 @@
 <template>
-    <div v-if="visible" class="pwa-loader">
+    {{ visible }}
+    <div class="pwa-loader">
         <div class="spinner"></div>
         <p>Загрузка...</p>
     </div>
