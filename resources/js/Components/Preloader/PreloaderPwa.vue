@@ -17,8 +17,8 @@ onMounted(() => {
     });
 
     router.on('finish', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         visible.value = false;
-        console.log('[PWA] navigation finished');
     });
 });
 </script>
