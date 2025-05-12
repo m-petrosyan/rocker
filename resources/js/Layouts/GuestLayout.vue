@@ -17,7 +17,7 @@ const props = defineProps({
 
 const defaultTitle = 'Rocker.am';
 const defaultDescription = 'Discover Armenian rock and metal bands, concerts, news, and the underground music scene in Armenia.';
-const defaultKeywords = 'Armenian, Rock, Music, Metal, Yerevan, Armenia, Heavy Metal, Punk, Alternative, Gothic, Progressive Rock, Doom Metal, Armenian Bands, Armenian Rock Bands, Armenian Metal Bands, Rock Concerts Armenia, Metal Concerts Armenia, Armenian Rock Scene, Underground Rock Armenia, Rock Festivals Armenia';
+const defaultKeywords = 'Armenian, Rock,Rock Armenia, Music, Metal, Yerevan, Armenia, Heavy Metal, Punk, Alternative, Gothic, Progressive Rock, Doom Metal, Armenian Bands, Armenian Rock Bands, Armenian Metal Bands, Rock Concerts Armenia, Metal Concerts Armenia, Armenian Rock Scene, Underground Rock Armenia, Rock Festivals Armenia';
 const page = usePage();
 
 const cleanDescription = computed(() => {
