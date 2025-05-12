@@ -7,6 +7,7 @@ import defaultImg from '/public/screenshots/desktop-screenshot.png';
 import { computed, onMounted, ref } from 'vue';
 import MainNavbar from '@/Components/Nav/MainNavbar.vue';
 import PwaNavbar from '@/Components/Nav/PwaNavbar.vue';
+import PreloaderPwa from '@/Components/Preloader/PreloaderPwa.vue';
 
 const props = defineProps({
     meta: {
@@ -45,6 +46,7 @@ onMounted(() => {
         <meta name="twitter:image" :content="meta?.image ?? defaultImg" />
         <meta name="author" :content="meta?.author ?? 'rocker.am'" />
     </Head>
+    <PreloaderPwa />
     <FleshNotification />
     <section class="min-h-screen text-white pt-6 sm:pt-0">
         <MainNavbar v-if="!isPWA" />

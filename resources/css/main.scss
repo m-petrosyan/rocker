@@ -61,12 +61,3 @@ input, textarea {
 button:disabled {
     opacity: 0.5;
 }
-
-#nprogress .bar {
-    position: fixed !important;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    z-index: 99999 !important;
-}

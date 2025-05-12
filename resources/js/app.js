@@ -42,6 +42,7 @@ createInertiaApp({
 
         // Provide route function globally
         app.config.globalProperties.$route = ziggyRoute;
+        app.component('PwaLoader', PwaLoader);
 
         app.config.globalProperties.$isPWA =
             window.matchMedia('(display-mode: standalone)').matches ||
