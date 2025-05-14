@@ -10,7 +10,9 @@ const props = defineProps({
     cover: { type: Number, default: false },
     previews: { type: Array, required: true },
     files: { type: Object, required: true },
-    classes: { type: String, default: '' }
+    classes: { type: String, default: '' },
+    limit: { type: Number, default: 0 },
+    label: { type: String, default: 'Click or drag files here' }
 });
 
 const form = useForm({});
@@ -63,15 +65,28 @@ const compressForPreview = (file) => {
 const processFiles = async (files) => {
     isLoading.value = true;
     const fileList = Array.from(files);
-    const chunkSize = 5;
+
+    // Calculate remaining capacity based on the limit
+    const remainingCapacity = props.limit > 0 ? props.limit - props.previews.length : fileList.length;
+
+    // If no capacity remains, alert the user and return
+    if (props.limit > 0 && remainingCapacity <= 0) {
+        alert(`You have reached the maximum limit of ${props.limit} images.`);
+        isLoading.value = false;
+        return;
+    }
+
+    // Limit the number of files to process
+    const filesToProcess = fileList.slice(0, remainingCapacity);
     const newPreviews = [...props.previews];
 
     const dataTransfer = new DataTransfer();
-    fileList.forEach(file => dataTransfer.items.add(file));
+    filesToProcess.forEach(file => dataTransfer.items.add(file));
     emit('update:files', dataTransfer.files);
 
-    for (let i = 0; i < fileList.length; i += chunkSize) {
-        const chunk = fileList.slice(i, i + chunkSize);
+    const chunkSize = 5;
+    for (let i = 0; i < filesToProcess.length; i += chunkSize) {
+        const chunk = filesToProcess.slice(i, i + chunkSize);
 
         for (const file of chunk) {
             const compressedFile = await compressForPreview(file);
@@ -132,7 +147,7 @@ const dropZoneClass = computed(() =>
                          class="w-full h-full object-cover object-center" alt="Image" />
                     <div
                         class="absolute left-0 top-0 md:opacity-0 hover:opacity-100 flex flex-col justify-between w-full h-full z-10 p-2 bg-blackTransparent2">
-                        <button type="button" class="w-fit" @click="setCover(index)">
+                        <button v-if="cover" type="button" class="w-fit" @click="setCover(index)">
                             <ImageIcon />
                         </button>
                         <div class="flex justify-end">
@@ -161,7 +176,7 @@ const dropZoneClass = computed(() =>
                         dropZoneClass,
                     ]"
                 >
-                    Click or drag files here
+                    {{ label }}
                 </label>
             </div>
         </div>

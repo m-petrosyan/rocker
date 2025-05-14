@@ -52,6 +52,10 @@ class BandService
         if (isset($attributes['logo_file'])) {
             $this->addImage($band, $attributes['logo_file'], 'logo');
         }
+
+        if (isset($attributes['images'])) {
+            $this->addImages($band, $attributes['images']);
+        }
     }
 
     public function update(Band $band, array $attributes): void
@@ -84,6 +88,10 @@ class BandService
         if (isset($attributes['links'])) {
             $this->updateLinks($band, $attributes['links']);
         }
+
+        if (isset($attributes['images'])) {
+            $this->addImages($band, $attributes['images']);
+        }
     }
 
     public function destroy(Band $band): void
@@ -91,5 +99,6 @@ class BandService
         $band->update(['user_id' => null, 'info' => null]);
         $band->clearMediaCollection('cover');
         $band->clearMediaCollection('logo');
+        $band->clearMediaCollection('images');
     }
 }

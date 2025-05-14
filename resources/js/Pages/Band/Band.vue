@@ -3,6 +3,7 @@ import GuestLayout from '@/Layouts/GuestLayout.vue';
 import SocialShare from '@/Components/Socials/SocialShare.vue';
 import GalleryWrapper from '@/Components/Wrappers/GalleryWrapper.vue';
 import GenresTags from '@/Components/Tags/GenresTags.vue';
+import ImageWrapper from '@/Components/Wrappers/ImageWrapper.vue';
 
 defineProps({
     band: {
@@ -50,9 +51,9 @@ const getHostname = (url) => {
             </h3>
             <GenresTags class="mx-auto w-fit" :genres="band.genres" />
         </div>
+        <ImageWrapper classes="flex gap-4" :images="band.images_url" :title="band.title" :url />
         <div class="md:w-5/6 mx-auto mt-8 md:p-0 p-3" v-html="band.info" />
-        <h3 class="text-center mt-10">Galleries</h3>
-        <GalleryWrapper v-if="band.galleries.length" :galleries="band.galleries" user />
+        <GalleryWrapper v-if="band.galleries.length" :galleries="band.galleries" title="Galleries" user />
     </GuestLayout>
 </template>
 

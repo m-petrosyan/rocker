@@ -49,6 +49,6 @@ const venueName = computed(() => {
                 <BandTags :bands="gallery.bands" />
             </div>
         </div>
-        <ImageWrapper :images="gallery.images_url" :title="gallery.title" :url />
+        <ImageWrapper download :images="gallery.images_url" :title="gallery.title" :url />
     </GuestLayout>
 </template>

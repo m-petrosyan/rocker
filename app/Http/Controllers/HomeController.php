@@ -14,7 +14,7 @@ class HomeController
     {
         return Inertia::render('Home', [
             'events' => EventReoisutiry::eventsList(12),
-            'bands' => BandRepository::bandList(4),
+            'bands' => BandRepository::bandList(8),
             'galleries' => GalleryReoisitory::galleryList(12),
         ]);
     }

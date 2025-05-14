@@ -9,7 +9,9 @@ import Preloader from '@/Components/Preloader/Preloader.vue';
 const props = defineProps({
     title: { type: String },
     url: { type: String, default: '' },
-    images: { type: Array, required: true }
+    images: { type: Array, required: true },
+    download: { type: Boolean, default: false },
+    classes: { type: String, default: 'grid grid-cols-3 md:grid-cols-6 gap-2 mt-5' }
 });
 
 const selectedImageIndex = ref(null);
@@ -99,7 +101,7 @@ onUnmounted(() => {
 
 <template>
     <div class="relative pt-10 mt-5">
-        <div class="flex justify-between items-center">
+        <div v-if="download" class="flex justify-between items-center">
             <SocialShare :title :url />
             <button
                 class="flex gap-x-2 items-center font-bold top-0 right-0 text-white rounded-lg p-2"
@@ -115,7 +117,7 @@ onUnmounted(() => {
 
         <Preloader v-if="isLoading" />
 
-        <div class="grid grid-cols-3 md:grid-cols-6 gap-2 mt-5">
+        <div :class="classes">
             <div
                 v-if="images.length"
                 v-for="(image, index) in images"
@@ -213,9 +215,9 @@ onUnmounted(() => {
                     </svg>
                 </button>
 
-                <button
-                    class="absolute top-2 right-10 text-white bg-opacity-75 rounded-full p-2"
-                    @click="downloadImage"
+                <button v-if="download"
+                        class="absolute top-2 right-10 text-white bg-opacity-75 rounded-full p-2"
+                        @click="downloadImage"
                 >
                     <DownloadIcon />
                 </button>

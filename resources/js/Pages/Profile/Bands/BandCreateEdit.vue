@@ -6,6 +6,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import ProfileLayout from '@/Layouts/ProfileLayout.vue';
 import Multiselect from '@/Components/Forms/MultiSelect.vue';
 import TextEditor from '@/Components/Forms/TextEditor.vue';
+import SelectImages from '@/Components/Forms/SelectImages.vue';
 
 const props = defineProps({
     band: {
@@ -26,7 +27,8 @@ const props = defineProps({
 const data = reactive({
     cover: null,
     logo: null,
-    disable: false
+    disable: false,
+    preview: props.band?.images_url ? [...props.band.images_url] : []
 });
 
 const form = useForm(
@@ -35,11 +37,13 @@ const form = useForm(
             ...props.band,
             cover_file: null,
             logo_file: null,
-            _method: 'PUT'
+            _method: 'PUT',
+            images: []
         }
         : {
             cover_file: null,
             logo_file: null,
+            images: [],
             name: '',
             genres: '',
             info: '',
@@ -148,6 +152,12 @@ const delLink = (index) => {
                     />
                 </div>
 
+                <SelectImages
+                    limit="6"
+                    label="Click or drag files here (up to 6 images)"
+                    v-model:previews="data.preview"
+                    v-model:files="form.images"
+                />
                 <br />
                 <PrimaryButton
                     class="ms-4"

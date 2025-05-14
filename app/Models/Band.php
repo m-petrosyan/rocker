@@ -28,6 +28,7 @@ class Band extends Model implements Viewable, HasMedia
         'logo',
         'cover',
         'views',
+        'images_url',
     ];
 
     protected $hidden = [
@@ -64,6 +65,25 @@ class Band extends Model implements Viewable, HasMedia
     public function getLogoAttribute(): array
     {
         return $this->getImage('logo');
+    }
+
+
+    public function getImagesUrlAttribute(): array
+    {
+        $mediaItems = $this->getMedia('images');
+
+        if ($mediaItems->isEmpty()) {
+            return [];
+        }
+
+        return $mediaItems->map(function (Media $media) {
+            return [
+                'id' => $media->id,
+                'large' => $media->getUrl('large'),
+                'thumb' => $media->getUrl('thumb'),
+                'original' => $media->getUrl(),
+            ];
+        })->toArray();
     }
 
     public function registerMediaConversions(?Media $media = null): void
