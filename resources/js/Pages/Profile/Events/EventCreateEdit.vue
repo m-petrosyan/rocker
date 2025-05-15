@@ -68,7 +68,6 @@ const form = useForm(
 );
 
 const createEvent = () => {
-    // data.disable = true;
     form.post(
         route(
             props.event?.id ? 'profile.events.update' : 'profile.events.store',

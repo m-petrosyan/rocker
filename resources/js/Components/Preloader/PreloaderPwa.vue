@@ -17,7 +17,7 @@ onMounted(() => {
     });
 
     router.on('finish', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top: 0 });
         visible.value = false;
     });
 });

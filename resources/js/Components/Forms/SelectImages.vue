@@ -136,7 +136,7 @@ const dropZoneClass = computed(() =>
         </div>
 
         <div v-else>
-            <div class="grid grid-cols-3 md:grid-cols-6 gap-2 mt-5">
+            <div class="grid grid-cols-3 md:grid-cols-6 gap-2">
                 <div
                     v-if="previews.length"
                     v-for="(preview, index) in previews"

@@ -143,6 +143,12 @@ const delLink = (index) => {
                         </div>
                     </div>
                 </div>
+                <SelectImages
+                    limit="6"
+                    label="Click or drag files here (up to 6 images)"
+                    v-model:previews="data.preview"
+                    v-model:files="form.images"
+                />
                 <div class="relative mt-2">
                     <TextEditor
                         v-model:content="form.info"
@@ -152,12 +158,7 @@ const delLink = (index) => {
                     />
                 </div>
 
-                <SelectImages
-                    limit="6"
-                    label="Click or drag files here (up to 6 images)"
-                    v-model:previews="data.preview"
-                    v-model:files="form.images"
-                />
+
                 <br />
                 <PrimaryButton
                     class="ms-4"

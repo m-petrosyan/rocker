@@ -76,7 +76,6 @@ const handleInertiaBefore = (event) => {
 const unsubscribe = router.on('before', handleInertiaBefore);
 
 watch(() => form.processing, (isProcessing) => {
-    console.log('form.processing changed:', isProcessing); // Отладка
     if (isProcessing) {
         window.addEventListener('beforeunload', handleBeforeUnload);
     } else {
@@ -86,11 +85,10 @@ watch(() => form.processing, (isProcessing) => {
 
 onBeforeUnmount(() => {
     window.removeEventListener('beforeunload', handleBeforeUnload);
-    unsubscribe(); // Отменяем подписку на событие
+    unsubscribe();
 });
 
 const submitGallery = () => {
-    console.log('Submitting form');
     form.post(route(form.id ? 'profile.galleries.update' : 'profile.galleries.store', form.id), {
         preserveScroll: false
     });
@@ -133,7 +131,7 @@ const submitGallery = () => {
 
                 <ProgressBar
                     v-show="data.preview?.length"
-                    class="w-full bg-green mt-10"
+                    class="w-full bg-green mt-10 mb-5"
                     :class="percent > 70 ? 'warning' : ''"
                     :value="percent < 10 ? 5 : percent"
                 >

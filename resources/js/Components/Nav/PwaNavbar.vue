@@ -39,12 +39,12 @@ import ProfileIcon from '@/Components/Icons/ProfileIcon.vue';
         </div>
     </div>
 </template>
-<style class="scss">
-a:hover {
-    svg, svg > g {
-        fill: theme('colors.orange');
-    }
+<!--<style scoped class="scss">-->
+<!--a:hover {-->
+<!--    svg, svg > g {-->
+<!--        fill: theme('colors.orange');-->
+<!--    }-->
 
-    opacity: 1;
-}
-</style>
+<!--    opacity: 1;-->
+<!--}-->
+<!--</style>-->
