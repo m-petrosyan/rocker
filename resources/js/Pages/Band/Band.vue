@@ -36,7 +36,7 @@ const getHostname = (url) => {
                    target="_blank">{{ getHostname(link.url)
                     }}</a>
             </div>
-            <img :src="band.cover?.large" class="w-full h-full lg:object-cover object-contain" :alt="band.name">
+            <img :src="band.cover?.large" class="w-full h-full object-cover" :alt="band.name">
             <img :src="band.logo?.thumb"
                  class="z-10 lg:w-48 md:w-32 w-2/12 absolute lg:bottom-0 lg:-translate-x-0 lg:left-0 bottom-5 left-1/2  -translate-x-1/2"
                  :alt="band.name">
