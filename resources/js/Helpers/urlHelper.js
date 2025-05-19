@@ -5,7 +5,7 @@ export const getUrlQuery = (key) => {
     const queryString = page.url.split('?')[1] || '';
     const urlParams = new URLSearchParams(queryString);
     const query = Object.fromEntries(urlParams.entries());
-    return query[key] ?? '';
+    return query[key] ?? null;
 };
 
 
