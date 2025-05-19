@@ -3,6 +3,7 @@ import NavLink from '@/Components/NavLink.vue';
 import EventIcon from '@/Components/Icons/EventIcon.vue';
 import BandIcon from '@/Components/Icons/BandIcon.vue';
 import GalleryIcon from '@/Components/Icons/GalleryIcon.vue';
+import BlogIcon from '@/Components/Icons/BlogIcon.vue';
 
 const menu = [
     {
@@ -10,11 +11,11 @@ const menu = [
         route: 'profile.events.create',
         icon: EventIcon
     },
-    // {
-    //     name: 'Add blog',
-    //     route: route('profile.edit'),
-    //     icon: BlogIcon
-    // },
+    {
+        name: 'Add blog',
+        route: 'profile.blogs.create',
+        icon: BlogIcon
+    },
     {
         name: 'Add gallery',
         route: 'profile.galleries.create',

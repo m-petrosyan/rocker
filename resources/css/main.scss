@@ -52,10 +52,20 @@ a {
 
 }
 
-input, textarea {
-    border: none;
-    //color: black;
-    //background-color: white;
+.profile {
+    input, textarea {
+        border: none;
+        background-color: theme('colors.graydark2') !important;
+        overflow: clip;
+
+        &::placeholder {
+            color: gray
+        }
+
+        &:disabled {
+            color: theme('colors.graydarker');
+        }
+    }
 }
 
 button:disabled {

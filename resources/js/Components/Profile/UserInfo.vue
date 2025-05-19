@@ -10,7 +10,7 @@ const props = defineProps({
     },
     url: {
         type: String,
-        required: true
+        required: false
     },
     owner: {
         type: Boolean,

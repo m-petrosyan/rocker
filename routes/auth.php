@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Profile\BandController;
+use App\Http\Controllers\Profile\BlogController;
 use App\Http\Controllers\Profile\EventController;
 use App\Http\Controllers\Profile\GalleryController;
 use App\Http\Controllers\Profile\MediaController;
@@ -16,10 +17,10 @@ Route::middleware(['auth', 'verified'])->as('profile.')->prefix('profile')->grou
     Route::get('/', [ProfileController::class, 'index'])->name('index');
     Route::get('settings', [ProfileController::class, 'edit'])->name('edit');
     Route::put('settings', [ProfileController::class, 'update'])->name('update');
-
     Route::resource('events', EventController::class)->except('show');
     Route::resource('galleries', GalleryController::class)->except('show');
     Route::resource('bands', BandController::class)->except('show');
+    Route::resource('blogs', BlogController::class)->except('show');
     Route::post('image', [ProfileController::class, 'updateImage'])->name('media.update');
     Route::post('media', [MediaController::class, 'store'])->name('media.store');
     Route::delete('media/{media}', [MediaController::class, 'destroy'])->name('media.destroy');

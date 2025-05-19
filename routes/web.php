@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\BandController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\GalleryController;
@@ -11,11 +12,16 @@ use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\PwaInstallController;
 use Illuminate\Support\Facades\Route;
 
+require_once __DIR__.'/guest.php';
+require_once __DIR__.'/auth.php';
+
 Route::get('/', HomeController::class)->name('home');
 Route::resource('events', EventController::class)->only('index', 'show');
 Route::resource('bands', BandController::class)->only('index');
 Route::get('bands/{band:slug}', [BandController::class, 'show'])
     ->name('bands.show');
+Route::get('blogs/{blog:slug}', [BlogController::class, 'show'])
+    ->name('blogs.show');
 Route::resource('galleries', GalleryController::class)->only('index', 'show');
 Route::resource('community', CommunityController::class)->only('index', 'show');
 
@@ -32,5 +38,3 @@ Route::prefix('auth')->group(function () {
     Route::get('/google/callback', [GoogleAuthController::class, 'handleGoogleCallback']);
 });
 
-require_once __DIR__.'/guest.php';
-require_once __DIR__.'/auth.php';

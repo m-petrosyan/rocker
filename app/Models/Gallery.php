@@ -43,7 +43,6 @@ class Gallery extends Model implements Viewable, HasMedia
         return $this->belongsTo(User::class);
     }
 
-
     public function bands(): BelongsToMany
     {
         return $this->belongsToMany(Band::class);

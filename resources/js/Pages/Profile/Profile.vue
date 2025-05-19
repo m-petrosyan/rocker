@@ -1,13 +1,13 @@
 <script setup>
 import ProfileLayout from '@/Layouts/ProfileLayout.vue';
 import UserInfo from '@/Components/Profile/UserInfo.vue';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import LogoutIcon from '@/Components/Icons/LogoutIcon.vue';
 import SuccessMessages from '@/Components/Messages/SuccessMessages.vue';
 import GalleryWrapper from '@/Components/Wrappers/GalleryWrapper.vue';
 import ProfileActions from '@/Components/Profile/ProfileActions.vue';
 import EventWrapper from '@/Components/Wrappers/EventWrapper.vue';
 import BandWrapper from '@/Components/Wrappers/BandWrapper.vue';
+import Logout from '@/Components/Profile/Logout.vue';
+import BlogWrapper from '@/Components/Wrappers/BlogWrapper.vue';
 
 defineProps({
     user: {
@@ -23,6 +23,10 @@ defineProps({
         required: false
     },
     bands: {
+        type: Object,
+        required: false
+    },
+    blogs: {
         type: Object,
         required: false
     },
@@ -44,15 +48,8 @@ defineProps({
     <ProfileLayout :meta="{title: user.name, image: user?.image?.thumb}">
         <div>
             <UserInfo :url="url" :user :owner />
-            <div v-if="owner" class="absolute right-0 top-0">
-                <ResponsiveNavLink
-                    :href="route('logout')"
-                    method="post"
-                    as="button"
-                >
-                    <LogoutIcon />
-                </ResponsiveNavLink>
-            </div>
+            <Logout owner />
+
             <!--            <div class="mx-auto mt-32 p-2 w-full md:w-2/6 text-center">-->
             <!--                <small class="block text-sm text-gray">-->
             <!--                    "Creative professional based in Kyiv, passionate about-->
@@ -75,6 +72,8 @@ defineProps({
                 <EventWrapper v-if="owner || auth.isAdmin" :events :owner :isAdmin="auth.isAdmin" title="User events" />
                 <BandWrapper v-if="owner || auth.isAdmin" :bands="bands.data" :owner :isAdmin="auth.isAdmin"
                              title="User bands" />
+                <BlogWrapper v-if="owner || auth.isAdmin" :blogs="blogs.data" :owner :isAdmin="auth.isAdmin"
+                             title="User blogs" blogs="" />
             </div>
         </div>
     </ProfileLayout>

@@ -38,12 +38,12 @@ const verify = async () => {
 <template>
     <AuthLayouth title="Email Verification">
         <ErrorMessages :messages="$page.props.errors" />
-        <h3 class="text-md text-gray-600 mb-4">
+        <h4 class="text-md  mb-4">
             Thanks for signing up! Before getting started, could you verify
             your email address by clicking on the link we just emailed to
             you? If you didn't receive the email, we will gladly send you
             another.
-        </h3>
+        </h4>
         <SuccessMessages :message="status" />
         <form @submit.prevent="verify">
             <TextInput

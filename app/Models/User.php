@@ -105,6 +105,11 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         return $this->hasMany(Band::class);
     }
 
+    public function blogs(): HasMany
+    {
+        return $this->hasMany(Blog::class);
+    }
+
     public function getImageAttribute(): ?array
     {
         $media = $this->getMedia('images')->first();

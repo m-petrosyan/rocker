@@ -8,7 +8,6 @@ import GoogleAutocomplate from '@/Components/Maps/GoogleAutocomplate.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import ProfileLayout from '@/Layouts/ProfileLayout.vue';
 import SuccessMessages from '@/Components/Messages/SuccessMessages.vue';
-import Multiselect from '@/Components/Forms/MultiSelect.vue';
 
 const props = defineProps({
     event: {
@@ -116,7 +115,6 @@ const createEvent = () => {
                     <div class="flex w-full md:w-1/2 flex-col gap-y-2">
                         <div>
                             <input
-                                class="w-full bg-graydark2"
                                 type="text"
                                 v-model="form.title"
                                 placeholder="Title"
@@ -133,7 +131,7 @@ const createEvent = () => {
                             :options="genres"
                         />
                         <GoogleAutocomplate :form="form" />
-                        <Multiselect v-model="form.bands" :options="bandsList" text="Bands" multiple />
+                        <!--                        <Multiselect v-model="form.bands" :options="bandsList" text="Bands" multiple />-->
                         <DatePicker
                             v-model:start_date="form.start_date"
                             v-model:start_time="form.start_time"
@@ -142,7 +140,6 @@ const createEvent = () => {
                 </div>
                 <div class="relative mt-2">
                     <textarea
-                        class="w-full bg-graydark2"
                         type="text"
                         rows="10"
                         v-model="form.content"

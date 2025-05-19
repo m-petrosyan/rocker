@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Profile;
 use App\Http\Requests\Profile\ProfileImageUpdateRequest;
 use App\Models\User;
 use App\Repositories\BandRepository;
+use App\Repositories\BlogRepository;
 use App\Repositories\EventReoisutiry;
 use App\Repositories\GalleryReoisitory;
 use Inertia\Inertia;
@@ -37,15 +38,15 @@ class ProfileController
             'galleries' => GalleryReoisitory::userGallery($user),
             'events' => EventReoisutiry::eventsList(0, $user->events->load('views')),
             'bands' => BandRepository::userBands($user),
+            'blogs' => BlogRepository::userBlogs($user),
         ]);
     }
 
     public function edit(): Response
     {
-        dd();
-
         return Inertia::render('Profile/Settings/Settings', [
             'user' => auth()->user(),
+            'owner' => true,
         ]);
     }
 

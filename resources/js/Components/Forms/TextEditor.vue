@@ -5,7 +5,7 @@ import { QuillEditor } from '@vueup/vue-quill';
 const props = defineProps({
     collection: {
         type: String,
-        required: true
+        default: ''
     }
 });
 

@@ -108,21 +108,15 @@ const submitGallery = () => {
                     </div>
                     <div class="w-full md:w-1/2 flex flex-col gap-y-2">
                         <input
-                            class="bg-graydark2 w-full mx-auto block"
                             type="text"
                             v-model="form.title"
                             placeholder="Title"
-                            tabindex="1"
-                            enterkeyhint="next"
                         />
                         <textarea
-                            class="bg-graydark2 w-full mx-auto block"
                             type="text"
                             rows="7"
                             v-model="form.description"
                             placeholder="Description"
-                            tabindex="1"
-                            enterkeyhint="next"
                         />
                         <Multiselect v-model="form.bands" :options="bandsList" text="Bands" multiple />
                         <GoogleAutocomplate :form="form" />

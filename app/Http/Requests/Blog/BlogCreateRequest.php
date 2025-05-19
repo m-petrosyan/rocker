@@ -1,0 +1,125 @@
+<?php
+
+namespace App\Http\Requests\Blog;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Validator;
+
+class BlogCreateRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        return [
+            'title' => ['required', 'array'],
+            'title.en' => ['nullable', 'string', 'min:5'],
+            'title.am' => ['nullable', 'string', 'min:5'],
+            'description' => ['required', 'array'],
+            'description.en' => ['nullable', 'string', 'min:20'],
+            'description.am' => ['nullable', 'string', 'min:20'],
+            'content' => ['required', 'array'],
+            'content.en' => ['nullable', 'string'],
+            'content.am' => ['nullable', 'string'],
+            'cover_file' => ['required', 'image', 'mimes:jpeg,jpg,webp,png', 'max:15000'],
+            'bands.*.name' => ['required', 'string', 'max:255'],
+            'bands.*.id' => ['nullable', 'integer', 'exists:bands,id'],
+            'author' => ['nullable', 'string', 'max:255'],
+        ];
+    }
+
+    /**
+     * Add custom validation logic after the initial rules.
+     *
+     * @param  Validator  $validator
+     * @return void
+     */
+    public function withValidator(Validator $validator): void
+    {
+        $validator->after(function ($validator) {
+            $title = $this->input('title', []);
+            $description = $this->input('description', []);
+            $content = $this->input('content', []);
+
+            $isContentEmpty = function ($value) {
+                $cleaned = preg_replace('/\s+/u', '', strip_tags($value ?? ''));
+
+                return empty($cleaned);
+            };
+
+            // Validation for English fields
+            if (!empty($title['en']) || !empty($description['en']) || !$isContentEmpty($content['en'])) {
+                if (empty($title['en'])) {
+                    $validator->errors()->add(
+                        'title.en',
+                        'English title is required when any English field is provided.'
+                    );
+                }
+                if (empty($description['en'])) {
+                    $validator->errors()->add(
+                        'description.en',
+                        'English description is required when any English field is provided.'
+                    );
+                }
+                if ($isContentEmpty($content['en'])) {
+                    $validator->errors()->add(
+                        'content.en',
+                        'English content is required and cannot consist only of HTML tags (e.g., <p><br></p> or <p></p>) when any English field is provided.'
+                    );
+                } elseif (strlen(trim(strip_tags($content['en']))) < 50) {
+                    $validator->errors()->add(
+                        'content.en',
+                        'English content must contain at least 50 characters excluding HTML tags.'
+                    );
+                }
+            }
+
+            if (!empty($title['am']) || !empty($description['am']) || !$isContentEmpty($content['am'])) {
+                if (empty($title['am'])) {
+                    $validator->errors()->add(
+                        'title.am',
+                        'Armenian title is required when any Armenian field is provided.'
+                    );
+                }
+                if (empty($description['am'])) {
+                    $validator->errors()->add(
+                        'description.am',
+                        'Armenian description is required when any Armenian field is provided.'
+                    );
+                }
+                if ($isContentEmpty($content['am'])) {
+                    $validator->errors()->add(
+                        'content.am',
+                        'Armenian content is required and cannot consist only of HTML tags (e.g., <p><br></p> or <p></p>) when any Armenian field is provided.'
+                    );
+                } elseif (strlen(trim(strip_tags($content['am']))) < 50) {
+                    $validator->errors()->add(
+                        'content.am',
+                        'Armenian content must contain at least 50 characters excluding HTML tags.'
+                    );
+                }
+            }
+
+            if ((empty($title['en']) && empty($description['en']) && $isContentEmpty($content['en'])) &&
+                (empty($title['am']) && empty($description['am']) && $isContentEmpty($content['am']))) {
+                $validator->errors()->add(
+                    'title',
+                    'At least one language (English or Armenian) must have title, description, and content provided.'
+                );
+            }
+        });
+    }
+}
