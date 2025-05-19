@@ -21,6 +21,8 @@ class BlogController extends Controller
      */
     public function show(Blog $blog): Response
     {
+        views($blog)->record();
+
         return Inertia::render('Blog/Blog', [
             'blog' => $blog->load('user', 'bands'),
             'url' => url()->current(),
