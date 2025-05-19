@@ -4,6 +4,7 @@ import BandTags from '@/Components/Tags/BandTags.vue';
 import NavLink from '@/Components/NavLink.vue';
 import { ref } from 'vue';
 import { getUrlQuery } from '@/Helpers/urlHelper.js';
+import SocialShare from '@/Components/Socials/SocialShare.vue';
 
 const props = defineProps({
     blog: {
@@ -34,9 +35,14 @@ const setLang = (language) => {
                     :style="{ backgroundImage: `url(${blog.cover.large})` }"
                     class="relative h-96 bg-cover bg-center"
                 >
-                    <div class="flex gap-2 absolute bottom-0 right-0 bg-black bg-opacity-20 p-4">
-                        <button v-if="blog.title['en']" @click="setLang('en')">ENG</button>
-                        <button v-if="blog.title['am']" @click="setLang('am')">ARM</button>
+                    <div class="flex justify-between gap-2 absolute bottom-0 w-full bg-black bg-opacity-20 p-4">
+                        <div>
+                            <button v-if="blog.title['en']" @click="setLang('en')">ENG</button>
+                            <button v-if="blog.title['am']" @click="setLang('am')">ARM</button>
+                        </div>
+                        <SocialShare class="absolute right-0 bottom-0 bg-opacity-20 bg-graydark"
+                                     :title="blog.title['en'] ?? blog.title['am']"
+                                     :url />
                     </div>
                 </div>
             </div>
