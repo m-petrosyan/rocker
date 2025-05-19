@@ -14,6 +14,8 @@ class BandController extends Controller
      */
     public function index(): Response
     {
+        dd(BandRepository::bandList());
+
         return Inertia::render('Band/Bands', [
             'bands' => BandRepository::bandList(),
         ]);

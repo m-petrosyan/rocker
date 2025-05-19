@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Http;
 
 class EventReoisutiry
 {
-    public static function eventsList($limit = 0, $events = null)
+    public static function eventsList($limit = 50, $events = null)
     {
         $params = [
             'limit' => $limit,

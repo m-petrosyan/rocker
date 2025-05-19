@@ -15,7 +15,7 @@ class BandRepository
     }
 
 
-    public static function bandList($limit = 0): LengthAwarePaginator
+    public static function bandList($limit = 50): LengthAwarePaginator
     {
         return Band::query()
             ->whereNotNull('user_id')
