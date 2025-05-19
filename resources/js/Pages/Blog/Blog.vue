@@ -19,11 +19,14 @@ const lang = ref(getUrlQuery('lang') ?? 'en');
 
 const setLang = (language) => {
     lang.value = language;
-    props.url.searchParams.set('lang', language);
+
     if (typeof window !== 'undefined') {
-        window.history.pushState({}, '', props.url);
+        const url = new URL(window.location.href);
+        url.searchParams.set('lang', language);
+        window.history.pushState({}, '', url);
     }
 };
+
 </script>
 
 <template>
