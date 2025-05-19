@@ -140,14 +140,15 @@ const createEvent = () => {
                 </div>
                 <div class="relative mt-2">
                     <textarea
+                        class="w-full"
                         type="text"
                         rows="10"
                         v-model="form.content"
                         placeholder="Content"
                         tabindex="2"
                         enterkeyhint="next"
-                    >
-                    </textarea>
+                    />
+
                     <span
                         class="text-md absolute right-0 top-0 px-1"
                         :class="
