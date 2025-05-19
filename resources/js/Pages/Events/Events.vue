@@ -16,7 +16,7 @@ defineProps({
 <template>
     <GuestLayout :meta="{ title: 'Events' }">
         <template #header> Events</template>
-
+        {{ auth?.isAdmin }}
         <MegaMaps
             v-if="auth?.isAdmin"
             :markers="[
