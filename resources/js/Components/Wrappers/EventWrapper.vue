@@ -74,9 +74,9 @@ defineProps({
                         </div>
                     </div>
                     <div
-                        class="absolute bottom-0 z-20 h-48 w-full bg-gradient-to-t from-black to-transparent md:h-52"
+                        class="absolute bottom-10 z-20 w-full bg-gradient-to-t from-black to-transparent "
                     >
-                        <h3 class="pt-20 text-center text-2xl">{{ event.title }}</h3>
+                        <h3 class="text-center text-2xl">{{ event.title }}</h3>
                         <p class="text-gray-300 text-center">{{ removePostalCode(event.location, 30) }}</p>
                     </div>
                 </NavLink>
