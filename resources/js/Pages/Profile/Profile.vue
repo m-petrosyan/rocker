@@ -66,7 +66,7 @@ defineProps({
             <!--                    </a>-->
             <!--                </div>-->
             <!--            </div>-->
-            <div class="mt-48">
+            <div class="mt-40">
                 <div class="w-2/3 mx-auto">
                     <p class="text-center text-pretty">{{ user.info }}</p>
                     <div v-if="user.links.length"

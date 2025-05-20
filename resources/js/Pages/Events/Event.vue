@@ -85,7 +85,7 @@ const props = defineProps({
 
         <h3 class="mt-2 text-center text-2xl">{{ event.title }}</h3>
         <pre class="mt-8 text-pretty text-center">{{ event.content }}</pre>
-        <p class="text-center text-orange">{{ event.location }}</p>
+        <p class="text-center text-orange">{{ event.location.replace(/\d+.*$/, '') }}</p>
         <GoogleMap class="mt-5" v-if="event.cordinates" :cordinates="event.cordinates" />
     </GuestLayout>
 </template>
