@@ -56,7 +56,6 @@ a {
     input, textarea {
         border: none;
         background-color: theme('colors.graydark2') !important;
-        overflow: clip;
 
         &::placeholder {
             color: gray
