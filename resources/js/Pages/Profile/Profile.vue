@@ -49,7 +49,7 @@ defineProps({
     <ProfileLayout :meta="{title: user.name, image: user?.image?.thumb}">
         <div>
             <UserInfo :url="url" :user :owner />
-            <Logout owner />
+            <Logout :owner />
 
 
             <!--            <div class="mx-auto mt-32 p-2 w-full md:w-2/6 text-center">-->
