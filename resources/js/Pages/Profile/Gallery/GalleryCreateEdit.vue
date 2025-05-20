@@ -25,7 +25,6 @@ const form = useForm(
             cid: null,
             location: null,
             cordinates: null,
-            cover: null,
             _method: 'PUT'
         }
         : {
@@ -133,6 +132,7 @@ const submitGallery = () => {
                 </ProgressBar>
 
                 <SelectImages
+                    :setCover
                     v-model:cover="form.cover"
                     v-model:previews="data.preview"
                     v-model:files="form.images"

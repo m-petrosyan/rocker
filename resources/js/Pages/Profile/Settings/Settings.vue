@@ -19,17 +19,27 @@ const props = defineProps({
 const form = useForm(
     {
         ...props.user,
-        bio: '',
-        links: [
-            { url: '' },
-            { url: '' },
-            { url: '' }
-        ]
+        info: '',
+        links: [],
+        username: '',
+        password: '',
+        re_password: '',
+        _method: 'PUT'
     }
 );
 
+const addLinks = () => {
+    form.links.push({
+        url: ''
+    });
+};
+
+const delLink = (index) => {
+    form.links.splice(index, 1);
+};
+
 const submitSettings = () => {
-    form.put(route('profile.settings.store'), {
+    form.post(route('profile.update'), {
         forceFormData: true
     });
 };
@@ -43,48 +53,66 @@ const submitSettings = () => {
             <div class="mt-48">
                 <div class="flex flex-col-reverse md:flex-row gap-4">
                     <textarea
-                        class="w-3/6 mx-auto"
+                        class="w-4/6 mx-auto"
                         type="text"
                         rows="5"
                         v-model="form.info"
                         placeholder="info"
                     />
-                    <div class="flex w-3/6 flex-col gap-4">
+                    <div class="w-2/6 flex flex-col   gap-4">
                         <input
-                            v-for="(link,index) in form.links"
-                            class="w-full bg-graydark2"
                             type="text"
-                            v-model="link.url"
-                            placeholder="Url"
+                            disabled
+                            v-model="form.email"
+                            placeholder="Email"
                         />
+                        <input
+                            type="text"
+                            v-model="form.username"
+                            placeholder="Username"
+                        />
+                        <input
+                            type="text"
+                            v-model="form.name"
+                            placeholder="Name"
+                        />
+                        <input
+                            type="password"
+                            v-model="form.password"
+                            placeholder="new password"
+                        />
+                        <input
+                            type="password"
+                            v-model="form.re_password"
+                            placeholder="confirm password">
                     </div>
+
                 </div>
-                <div class="mt-4 flex flex-col-reverse md:flex-row gap-4">
-                    <input
-                        type="text"
-                        disabled
-                        v-model="form.email"
-                        placeholder="Email"
-                    />
-                    <input
-                        type="text"
-                        v-model="form.username"
-                        placeholder="Username"
-                    />
-                    <input
-                        type="text"
-                        v-model="form.name"
-                        placeholder="Name"
-                    />
-                    <input
-                        type="text"
-                        v-model="form.password"
-                        placeholder="new password"
-                    />
-                    <input
-                        type="text"
-                        v-model="form.password_confirmation"
-                        placeholder="confirm password">
+                <div class="mt-4 flex w-3/6 flex-col gap-4">
+                    <!--                    <input-->
+                    <!--                        v-for="(link,index) in form.links"-->
+                    <!--                        class="w-full bg-graydark2"-->
+                    <!--                        type="text"-->
+                    <!--                        v-model="link.url"-->
+                    <!--                        placeholder="Url"-->
+                    <!--                    />-->
+
+                    <div v-if="form.links.length" class="flex flex-col gap-y-2">
+                        <div v-for="(url, index) in form.links" class="flex">
+                            <input
+                                class="w-full bg-graydark2"
+                                type="text"
+                                v-model="form.links[index].url"
+                                placeholder="Url"
+                            />
+                            <button type="button" class="bg-red px-4 bg-opacity-40 hover:bg-opacity-100"
+                                    @click="delLink(index)">x
+                            </button>
+                        </div>
+                    </div>
+                    <button :disabled="form.links.length > 2" type="button" @click="addLinks"
+                            class="bg-grayblue w-fit p-2">Add url
+                    </button>
                 </div>
             </div>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Profile;
 
 use App\Http\Requests\Profile\ProfileImageUpdateRequest;
+use App\Http\Requests\User\UserUpdateRequest;
 use App\Models\User;
 use App\Repositories\BandRepository;
 use App\Repositories\BlogRepository;
@@ -48,6 +49,11 @@ class ProfileController
             'user' => auth()->user(),
             'owner' => true,
         ]);
+    }
+
+    public function update(UserUpdateRequest $request)
+    {
+        dd($request->validated());
     }
 
     public function updateImage(ProfileImageUpdateRequest $request): void

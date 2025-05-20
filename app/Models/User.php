@@ -8,6 +8,7 @@ use App\Notifications\CustomVerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -30,6 +31,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     protected $fillable = [
         'google_id',
         'name',
+        'info',
         'username',
         'email',
         'password',
@@ -74,6 +76,10 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         return $this->roles?->pluck('name')->first();
     }
 
+    public function links(): MorphMany
+    {
+        return $this->morphMany(Links::class, 'model');
+    }
 
     public function sendEmailVerificationNotification(): void
     {

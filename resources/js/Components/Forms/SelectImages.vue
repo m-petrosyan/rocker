@@ -7,6 +7,7 @@ import DeleteIcon from '@/Components/Icons/DeleteIcon.vue';
 import ImageIcon from '@/Components/Icons/ImageIcon.vue';
 
 const props = defineProps({
+    setCover: { type: Boolean, default: false },
     cover: { type: Number, default: false },
     previews: { type: Array, required: true },
     files: { type: Object, required: true },
@@ -143,11 +144,12 @@ const dropZoneClass = computed(() =>
                     :key="index"
                     class="aspect-square overflow-hidden relative"
                 >
-                    <img :src="preview.thumb ?? preview" :class="{'border border-2 border-orange': cover === index}"
+                    <img :src="preview.thumb ?? preview"
+                         :class="{'border border-2 border-orange': cover === preview.id || cover === index}"
                          class="w-full h-full object-cover object-center" alt="Image" />
                     <div
                         class="absolute left-0 top-0 md:opacity-0 hover:opacity-100 flex flex-col justify-between w-full h-full z-10 p-2 bg-blackTransparent2">
-                        <button v-if="cover" type="button" class="w-fit" @click="setCover(index)">
+                        <button v-if="setCover" type="button" class="w-fit" @click="setCover(index)">
                             <ImageIcon />
                         </button>
                         <div class="flex justify-end">
