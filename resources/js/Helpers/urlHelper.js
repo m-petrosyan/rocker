@@ -8,4 +8,11 @@ export const getUrlQuery = (key) => {
     return query[key] ?? null;
 };
 
-
+export const getHostname = (url) => {
+    try {
+        const hostname = new URL(url).hostname;
+        return hostname.startsWith('www.') ? hostname.slice(4) : hostname;
+    } catch (e) {
+        return url;
+    }
+};

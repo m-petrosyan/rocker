@@ -2,6 +2,8 @@
 import QrGenerate from '@/Components/Profile/QrGenerate.vue';
 import { computed, ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
+import NavLink from '@/Components/NavLink.vue';
+import EditIcon from '@/Components/Icons/EditIcon.vue';
 
 const props = defineProps({
     user: {
@@ -71,5 +73,11 @@ const previewStyle = computed(() => {
         <h3 class="text-gray-900 p-6">
             {{ user.name }}
         </h3>
+        <NavLink
+            v-if="owner && (route().current('profile.index') || route().current('profile.show'))"
+            :href="route('profile.edit')"
+            class="mx-auto w-fit">
+            <EditIcon />
+        </NavLink>
     </div>
 </template>

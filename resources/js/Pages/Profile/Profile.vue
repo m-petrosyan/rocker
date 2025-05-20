@@ -8,6 +8,7 @@ import EventWrapper from '@/Components/Wrappers/EventWrapper.vue';
 import BandWrapper from '@/Components/Wrappers/BandWrapper.vue';
 import Logout from '@/Components/Profile/Logout.vue';
 import BlogWrapper from '@/Components/Wrappers/BlogWrapper.vue';
+import { getHostname } from '@/Helpers/urlHelper.js';
 
 defineProps({
     user: {
@@ -50,6 +51,7 @@ defineProps({
             <UserInfo :url="url" :user :owner />
             <Logout owner />
 
+
             <!--            <div class="mx-auto mt-32 p-2 w-full md:w-2/6 text-center">-->
             <!--                <small class="block text-sm text-gray">-->
             <!--                    "Creative professional based in Kyiv, passionate about-->
@@ -65,6 +67,15 @@ defineProps({
             <!--                </div>-->
             <!--            </div>-->
             <div class="mt-48">
+                <div class="w-2/3 mx-auto">
+                    <p class="text-center text-pretty">{{ user.info }}</p>
+                    <div v-if="user.links.length"
+                         class="flex items-center md:flex-col gap-x-5 font-bold text-gray p-3">
+                        <a v-for="link in user.links" :key="link.id" :href="link.url"
+                           target="_blank">{{ getHostname(link.url)
+                            }}</a>
+                    </div>
+                </div>
                 <SuccessMessages success class="w-1/3 mx-auto" :message="$page.props.flash.success" timeout="10000" />
                 <ProfileActions v-if="owner" class="mx-auto w-full" />
                 <GalleryWrapper :galleries="galleries.data" :owner :isAdmin="auth.isAdmin" title="User galleries" />

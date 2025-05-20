@@ -9,11 +9,17 @@ use App\Repositories\BandRepository;
 use App\Repositories\BlogRepository;
 use App\Repositories\EventReoisutiry;
 use App\Repositories\GalleryReoisitory;
+use App\Services\UserService;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class ProfileController
 {
+    public function __construct(protected UserService $userService)
+    {
+    }
+
     public function index(): Response
     {
         if (!request()->route('username')) {
@@ -33,7 +39,7 @@ class ProfileController
         }
 
         return Inertia::render('Profile/Profile', [
-            'user' => $user,
+            'user' => $user->load('links'),
             'owner' => $owner,
             'url' => $owner ? route('profile.show', ['username' => $user->username]) : null,
             'galleries' => GalleryReoisitory::userGallery($user),
@@ -46,14 +52,18 @@ class ProfileController
     public function edit(): Response
     {
         return Inertia::render('Profile/Settings/Settings', [
-            'user' => auth()->user(),
+            'user' => auth()->user()->load('links'),
             'owner' => true,
         ]);
     }
 
-    public function update(UserUpdateRequest $request)
+    public function update(UserUpdateRequest $request): RedirectResponse
     {
-        dd($request->validated());
+        $this->userService->update($request->validated());
+
+        session()->flash('message', 'Data has been successfully updated.');
+
+        return redirect()->route('profile.index');
     }
 
     public function updateImage(ProfileImageUpdateRequest $request): void

@@ -19,9 +19,6 @@ const props = defineProps({
 const form = useForm(
     {
         ...props.user,
-        info: '',
-        links: [],
-        username: '',
         password: '',
         re_password: '',
         _method: 'PUT'
@@ -68,13 +65,13 @@ const submitSettings = () => {
                         />
                         <input
                             type="text"
-                            v-model="form.username"
-                            placeholder="Username"
+                            v-model="form.name"
+                            placeholder="Name"
                         />
                         <input
                             type="text"
-                            v-model="form.name"
-                            placeholder="Name"
+                            v-model="form.username"
+                            placeholder="Username"
                         />
                         <input
                             type="password"

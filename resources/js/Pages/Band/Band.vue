@@ -4,6 +4,7 @@ import SocialShare from '@/Components/Socials/SocialShare.vue';
 import GalleryWrapper from '@/Components/Wrappers/GalleryWrapper.vue';
 import GenresTags from '@/Components/Tags/GenresTags.vue';
 import ImageWrapper from '@/Components/Wrappers/ImageWrapper.vue';
+import { getHostname } from '@/Helpers/urlHelper.js';
 
 defineProps({
     band: {
@@ -15,15 +16,6 @@ defineProps({
         required: true
     }
 });
-
-const getHostname = (url) => {
-    try {
-        const hostname = new URL(url).hostname;
-        return hostname.startsWith('www.') ? hostname.slice(4) : hostname;
-    } catch (e) {
-        return url;
-    }
-};
 </script>
 
 <template>
