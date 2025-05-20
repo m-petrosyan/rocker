@@ -78,12 +78,15 @@ defineProps({
                 </div>
                 <SuccessMessages success class="w-1/3 mx-auto" :message="$page.props.flash.success" timeout="10000" />
                 <ProfileActions v-if="owner" class="mx-auto w-full" />
-                <GalleryWrapper :galleries="galleries.data" :owner :isAdmin="auth.isAdmin" title="User galleries" />
-                <!--                -->
-                <EventWrapper v-if="owner || auth.isAdmin" :events :owner :isAdmin="auth.isAdmin" title="User events" />
-                <BandWrapper v-if="owner || auth.isAdmin" :bands="bands.data" :owner :isAdmin="auth.isAdmin"
+                <GalleryWrapper v-if="galleries.data?.length" :galleries="galleries.data" :owner :isAdmin="auth.isAdmin"
+                                title="User galleries" />
+                <EventWrapper v-if="events.data?.length && (owner || auth.isAdmin)" :events :owner
+                              :isAdmin="auth.isAdmin" title="User events" />
+                <BandWrapper v-if="bands.data?.length && (owner || auth.isAdmin)" :bands="bands.data" :owner
+                             :isAdmin="auth.isAdmin"
                              title="User bands" />
-                <BlogWrapper v-if="owner || auth.isAdmin" :blogs="blogs.data" :owner :isAdmin="auth.isAdmin"
+                <BlogWrapper v-if="blogs.data?.length &&(owner || auth.isAdmin)" :blogs="blogs.data" :owner
+                             :isAdmin="auth.isAdmin"
                              title="User blogs" blogs="" />
             </div>
         </div>
