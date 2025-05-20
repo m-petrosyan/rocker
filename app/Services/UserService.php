@@ -11,7 +11,7 @@ class UserService
     public function update(array $attributes)
     {
         $user = auth()->user();
-        $user->update(array_filter($attributes));
+        $user->update(array_filter($attributes) + ['info' => $attributes['info']]);
 
 
         $this->updateLinks($user, $attributes['links'] ?? []);
