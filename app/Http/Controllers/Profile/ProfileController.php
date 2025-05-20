@@ -23,12 +23,14 @@ class ProfileController
     public function index(): Response
     {
         if (!request()->route('username')) {
+            dd(1);
             $user = auth()?->user();
             $owner = true;
             if (!$user) {
                 abort(404);
             }
         } else {
+//            dd(3);
             $user = User::query()->where('username', request()->route('username'))->first();
             $owner = false;
             if ($user) {
