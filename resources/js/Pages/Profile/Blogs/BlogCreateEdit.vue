@@ -133,6 +133,7 @@ const createBlog = () => {
             </div>
             <div class="relative mt-2">
                 <TextEditor
+                    :key="data.lang"
                     v-model:content="form.content[data.lang]"
                     class="h-64"
                     collection="event-image"
