@@ -113,15 +113,11 @@ const createEvent = () => {
                         />
                     </div>
                     <div class="flex w-full md:w-1/2 flex-col gap-y-2">
-                        <div>
-                            <input
-                                type="text"
-                                v-model="form.title"
-                                placeholder="Title"
-                                tabindex="1"
-                                enterkeyhint="next"
-                            />
-                        </div>
+                        <input
+                            type="text"
+                            v-model="form.title"
+                            placeholder="Title"
+                        />
                         <RadioSwichButton
                             v-model:selectedOption="form.type"
                             :options="types"
