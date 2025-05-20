@@ -2,6 +2,7 @@
 import moment from 'moment-timezone';
 import NavLink from '@/Components/NavLink.vue';
 import NotifyIcon from '@/Components/Icons/NotifyIcon.vue';
+import { removePostalCode } from '@/Helpers/adressFormatHelper.js';
 
 defineProps({
     events: {
@@ -76,7 +77,7 @@ defineProps({
                         class="absolute bottom-0 z-20 h-48 w-full bg-gradient-to-t from-black to-transparent md:h-52"
                     >
                         <h3 class="pt-20 text-center text-2xl">{{ event.title }}</h3>
-                        <p class="text-gray-300 text-center">{{ event.location }}</p>
+                        <p class="text-gray-300 text-center">{{ removePostalCode(event.location) }}</p>
                     </div>
                 </NavLink>
             </div>

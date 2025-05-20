@@ -8,6 +8,7 @@ import MoneyIcon from '@/Components/Icons/MoneyIcon.vue';
 import TicketIcon from '@/Components/Icons/TicketIcon.vue';
 import UrlIcon from '@/Components/Icons/UrlIcon.vue';
 import SocialShare from '@/Components/Socials/SocialShare.vue';
+import { removePostalCode } from '@/Helpers/adressFormatHelper.js';
 
 const props = defineProps({
     event: {
@@ -85,7 +86,7 @@ const props = defineProps({
 
         <h3 class="mt-2 text-center text-2xl">{{ event.title }}</h3>
         <pre class="mt-8 text-pretty text-center">{{ event.content }}</pre>
-        <p class="text-center text-orange">{{ event.location.replace(/\d+.*$/, '') }}</p>
+        <p class="text-center text-orange">{{ removePostalCode(event.location) }}</p>
         <GoogleMap class="mt-5" v-if="event.cordinates" :cordinates="event.cordinates" />
     </GuestLayout>
 </template>
