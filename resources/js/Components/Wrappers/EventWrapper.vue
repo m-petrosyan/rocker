@@ -74,8 +74,7 @@ defineProps({
                         </div>
                     </div>
                     <div
-                        class="absolute bottom-0 z-20 w-full bg-gradient-to-t from-black to-transparent "
-                    >
+                        class="absolute flex flex-col justify-end h-48 bottom-0 z-20 w-full bg-gradient-to-t from-black to-transparent ">
                         <h3 class="text-center text-2xl">{{ event.title }}</h3>
                         <p class="text-gray-300 text-center">{{ removePostalCode(event.location, 30) }}</p>
                     </div>
