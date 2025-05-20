@@ -132,7 +132,7 @@ const submitGallery = () => {
                 </ProgressBar>
 
                 <SelectImages
-                    :setCover
+                    useCover
                     v-model:cover="form.cover"
                     v-model:previews="data.preview"
                     v-model:files="form.images"

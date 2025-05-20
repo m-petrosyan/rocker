@@ -23,7 +23,7 @@ class ProfileController
     public function index(): Response
     {
         if (!request()->route('username')) {
-            dd(1);
+//            dd(1);
             $user = auth()?->user();
             $owner = true;
             if (!$user) {
