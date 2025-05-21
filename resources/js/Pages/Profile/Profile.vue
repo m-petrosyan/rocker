@@ -52,7 +52,7 @@ defineProps({
         <div>
             <UserInfo :url="url" :user :owner />
             <Logout :owner />
-            <NavLink v-if="auth.isAdmin && owner"
+            <NavLink v-if="(auth.isAdmin || auth.isModerator) && owner"
                      :href="route('profile.dashboard')"
                      class="absolute top-0 left-0 z-20 flex bg-black bg-opacity-20">
                 <AnalyticsIcon class="h-6 w-6 text-white" />

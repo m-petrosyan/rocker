@@ -24,7 +24,6 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => RoleMiddleware::class,
             'permission' => PermissionMiddleware::class,
         ]);
-        //
     })
     ->withSchedule(function (Schedule $schedule) {
         $schedule->command('backup:run')->daily()->at('20:00');
