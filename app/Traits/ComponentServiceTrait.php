@@ -62,7 +62,7 @@ trait ComponentServiceTrait
 
     public function setCover(Model $model, int|null $cover): void
     {
-        if (isset($cover)) {
+        if (isset($cover) && ($cover !== $model->cover)) {
             $model->update(['cover' => $model->images_url[$cover]['id']]);
         }
     }
