@@ -8,6 +8,8 @@ import EventWrapper from '@/Components/Wrappers/EventWrapper.vue';
 import BandWrapper from '@/Components/Wrappers/BandWrapper.vue';
 import Logout from '@/Components/Profile/Logout.vue';
 import BlogWrapper from '@/Components/Wrappers/BlogWrapper.vue';
+import NavLink from '@/Components/NavLink.vue';
+import AnalyticsIcon from '@/Components/Icons/AnalyticsIcon.vue';
 import { getHostname } from '@/Helpers/urlHelper.js';
 
 defineProps({
@@ -50,8 +52,11 @@ defineProps({
         <div>
             <UserInfo :url="url" :user :owner />
             <Logout :owner />
-
-
+            <NavLink v-if="auth.isAdmin && owner"
+                     :href="route('profile.dashboard')"
+                     class="absolute top-0 left-0 z-20 flex bg-black bg-opacity-20">
+                <AnalyticsIcon class="h-6 w-6 text-white" />
+            </NavLink>
             <!--            <div class="mx-auto mt-32 p-2 w-full md:w-2/6 text-center">-->
             <!--                <small class="block text-sm text-gray">-->
             <!--                    "Creative professional based in Kyiv, passionate about-->
