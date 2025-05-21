@@ -85,12 +85,14 @@ defineProps({
                 <ProfileActions v-if="owner" class="mx-auto w-full" />
                 <GalleryWrapper v-if="galleries.data?.length" :galleries="galleries.data" :owner :isAdmin="auth.isAdmin"
                                 title="User galleries" />
-                <EventWrapper v-if="events.data?.length && (owner || auth.isAdmin)" :events :owner
+                <EventWrapper v-if="events.data?.length && (owner || (auth.isAdmin || auth.isModerator))" :events :owner
                               :isAdmin="auth.isAdmin" title="User events" />
-                <BandWrapper v-if="bands.data?.length && (owner || auth.isAdmin)" :bands="bands.data" :owner
+                <BandWrapper v-if="bands.data?.length && (owner || (auth.isAdmin || auth.isModerator))"
+                             :bands="bands.data" :owner
                              :isAdmin="auth.isAdmin"
                              title="User bands" />
-                <BlogWrapper v-if="blogs.data?.length &&(owner || auth.isAdmin)" :blogs="blogs.data" :owner
+                <BlogWrapper v-if="blogs.data?.length &&(owner || (auth.isAdmin || auth.isModerator))"
+                             :blogs="blogs.data" :owner
                              :isAdmin="auth.isAdmin"
                              title="User blogs" blogs="" />
             </div>
