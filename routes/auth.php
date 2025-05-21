@@ -6,11 +6,16 @@ use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Profile\BandController;
 use App\Http\Controllers\Profile\BlogController;
+use App\Http\Controllers\Profile\DashboardController;
 use App\Http\Controllers\Profile\EventController;
 use App\Http\Controllers\Profile\GalleryController;
 use App\Http\Controllers\Profile\MediaController;
 use App\Http\Controllers\Profile\ProfileController;
 use Illuminate\Support\Facades\Route;
+
+Route::middleware(['auth', 'verified', 'role:admin'])->as('profile.')->prefix('profile')->group(function () {
+    Route::get('dashboard', DashboardController::class);
+});
 
 
 Route::middleware(['auth', 'verified'])->as('profile.')->prefix('profile')->group(function () {
