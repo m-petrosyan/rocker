@@ -14,7 +14,8 @@ defineProps({
 
 <template>
     <ProfileLayout>
-        <div>
+        <h2 class="text-center">Statistic</h2>
+        <div class="mt-10">
             <div class="flex gap-4 items-center justify-center">
                 <div class="text-center bg-black p-6 rounded-lg shadow-lg">
                     <p>Events</p>
@@ -38,12 +39,13 @@ defineProps({
                 </div>
             </div>
         </div>
+        <h2 class="mt-10 text-center">Users</h2>
         <div
             class="mt-10 grid md:grid-cols-2 md:gap-4 lg:grid-cols-4 auto-rows-[600px] md:auto-rows-[400px] gap-4">
             <NavLink :href="route('profile.show', user.username)" v-for="user in users.data"
                      class="text-center flex flex-col items-center gap-4" href="">
                 <div :style="{ backgroundImage: `url(${user.image?.thumb ?? '/images/user.jpg'})` }"
-                     class="h-48 w-48 bg-no-repeat bg-contain  bg-cover">
+                     class="h-48 w-48 bg-no-repeat bg-contain bg-cover rounded-full">
                 </div>
                 <div>
                     <div>
