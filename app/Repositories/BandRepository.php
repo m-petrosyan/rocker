@@ -36,6 +36,6 @@ class BandRepository
 
     public static function count(): int
     {
-        return Band::query()->count();
+        return Band::query()->whereNotNull('user_id')->count();
     }
 }
