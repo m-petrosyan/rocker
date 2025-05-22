@@ -33,4 +33,9 @@ class BandRepository
     {
         return Band::query()->whereNull('user_id')->get(['id', 'name'])->toArray();
     }
+
+    public static function count(): int
+    {
+        return Band::query()->count();
+    }
 }

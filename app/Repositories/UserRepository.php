@@ -13,4 +13,9 @@ class UserRepository
             ->orderBy('created_at', 'desc')
             ->paginate(100, ['id', 'name', 'email']);
     }
+
+    public static function count(): int
+    {
+        return User::query()->count();
+    }
 }

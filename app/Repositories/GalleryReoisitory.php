@@ -22,4 +22,9 @@ class GalleryReoisitory
             ->orderByRaw('ISNULL(date), date DESC, created_at DESC')
             ->paginate($limit);
     }
+
+    public static function count(): int
+    {
+        return Gallery::query()->count();
+    }
 }

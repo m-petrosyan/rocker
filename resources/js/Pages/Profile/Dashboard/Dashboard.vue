@@ -5,14 +5,41 @@ import NavLink from '@/Components/NavLink.vue';
 defineProps({
     users: {
         type: Array
+    },
+    statistics: {
+        type: Object
     }
 });
 </script>
 
 <template>
     <ProfileLayout>
+        <div>
+            <div class="flex gap-4 items-center justify-center">
+                <div class="text-center bg-black p-6 rounded-lg shadow-lg">
+                    <p>Events</p>
+                    <h2>{{ statistics.events }}</h2>
+                </div>
+                <div class="text-center bg-black p-6 rounded-lg shadow-lg">
+                    <p>Users</p>
+                    <h2>{{ statistics.users }}</h2>
+                </div>
+                <div class="text-center bg-black p-6 rounded-lg shadow-lg">
+                    <p>Bands</p>
+                    <h2>{{ statistics.bands }}</h2>
+                </div>
+                <div class="text-center bg-black p-6 rounded-lg shadow-lg">
+                    <p>Galleries</p>
+                    <h2>{{ statistics.galleries }}</h2>
+                </div>
+                <div class="text-center bg-black p-6 rounded-lg shadow-lg">
+                    <p>Blogs</p>
+                    <h2>{{ statistics.blogs }}</h2>
+                </div>
+            </div>
+        </div>
         <div
-            class="grid md:grid-cols-2 md:gap-4 lg:grid-cols-4 auto-rows-[600px] md:auto-rows-[400px] gap-4">
+            class="mt-10 grid md:grid-cols-2 md:gap-4 lg:grid-cols-4 auto-rows-[600px] md:auto-rows-[400px] gap-4">
             <NavLink :href="route('profile.show', user.username)" v-for="user in users.data"
                      class="text-center flex flex-col items-center gap-4" href="">
                 <div :style="{ backgroundImage: `url(${user.image?.thumb ?? '/images/user.jpg'})` }"
