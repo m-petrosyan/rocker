@@ -28,7 +28,7 @@ class GalleryCreateRequest extends FormRequest
             'date' => ['nullable', 'date'],
             'cover' => ['nullable', 'numeric'],
             'images' => ['required', 'array', 'max:150'],
-            'images.*' => ['image', 'mimes:jpeg,png,jpg', 'max:25000'],
+            'images.*' => ['image', 'mimes:jpeg,png,jpg', 'max:30000'],
             'cid' => ['nullable', 'string'],
             'location' => ['required_with:cid', 'nullable', 'string', 'max:255'],
             'cordinates' => ['required_with:cid', 'nullable', 'array'],
