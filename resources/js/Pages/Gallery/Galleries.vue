@@ -5,6 +5,10 @@ import GalleryWrapper from '@/Components/Wrappers/GalleryWrapper.vue';
 defineProps({
     galleries: {
         type: Object
+    },
+    auth: {
+        type: Object,
+        default: () => ({})
     }
 });
 </script>
@@ -12,6 +16,6 @@ defineProps({
 <template>
     <GuestLayout :meta="{title: 'Galleries'}">
         <template #header> Galleries</template>
-        <GalleryWrapper :galleries="galleries.data" user add />
+        <GalleryWrapper :galleries="galleries.data" :isAdmin="auth.isAdmin" user add />
     </GuestLayout>
 </template>

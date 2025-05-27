@@ -83,7 +83,8 @@ defineProps({
                 </div>
                 <SuccessMessages success class="w-1/3 mx-auto" :message="$page.props.flash.success" timeout="10000" />
                 <ProfileActions v-if="owner" class="mx-auto w-full" />
-                <GalleryWrapper v-if="galleries.data?.length" :galleries="galleries.data" :owner :isAdmin="auth.isAdmin"
+                <GalleryWrapper v-if="galleries.data?.length" profile :galleries="galleries.data" :owner
+                                :isAdmin="auth.isAdmin"
                                 title="User galleries" />
                 <EventWrapper v-if="events.data?.length && (owner || (auth.isAdmin || auth.isModerator))" :events :owner
                               :isAdmin="auth.isAdmin" title="User events" />

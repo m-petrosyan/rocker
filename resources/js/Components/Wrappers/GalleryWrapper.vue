@@ -33,6 +33,10 @@ defineProps({
     more: {
         type: Boolean,
         default: false
+    },
+    profile: {
+        type: Boolean,
+        default: false
     }
 });
 
@@ -65,7 +69,7 @@ const deleteGallery = (id) => {
                          :src="gallery.cover_img.original"
                          class="object-cover w-full h-full"
                          alt="Loading" />
-                    <div v-if="isAdmin" class="absolute right-0 top-0 px-1 bg-yellow">
+                    <div v-if="isAdmin" class="absolute left-0 top-0 px-1 bg-yellow">
                         {{ gallery.total_mb }} MB
                     </div>
                     <div class="absolute right-0 bottom-8 px-1 bg-red">
@@ -75,7 +79,7 @@ const deleteGallery = (id) => {
                              class="text-center absolute bottom-0 left-0 w-full p-1 bg-blackTransparent2">
                         by {{ gallery.user.name }}
                     </NavLink>
-                    <div v-if="owner || isAdmin"
+                    <div v-if="(owner || isAdmin) && profile"
                          class="absolute bottom-0 w-full h-full flex flex-col justify-between  p-1 bg-blackTransparent2">
                         <div class="flex justify-end">
                             <div class="flex gap-x-2 items-center">
