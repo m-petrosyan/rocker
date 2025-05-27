@@ -59,6 +59,7 @@ const deleteGallery = (id) => {
                 :href="route('galleries.show', gallery.id)"
                 :key="gallery.id"
                 class="flex flex-col items-center p-4">
+                <p> {{ gallery.total_mb }}</p>
                 <div class="relative h-64 w-full bg-cover bg-center rounded-lg overflow-hidden">
                     <img v-if="gallery.cover_img.thumb && gallery.cover_img.thumb.trim()"
                          :src="gallery.cover_img.thumb"
