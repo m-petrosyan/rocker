@@ -105,7 +105,7 @@ class Gallery extends Model implements Viewable, HasMedia
 
     public function getTotalMbAttribute(): float
     {
-        return round($this->getMedia('images')->sum('size') / 1024 / 1024, 2);
+        return round($this->getMedia('images')->sum('size') / 1024 / 1024);
     }
 
 
