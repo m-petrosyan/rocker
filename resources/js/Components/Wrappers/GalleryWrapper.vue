@@ -59,7 +59,7 @@ const deleteGallery = (id) => {
                 :href="route('galleries.show', gallery.id)"
                 :key="gallery.id"
                 class="flex flex-col items-center p-4">
-                <div class="relative h-64 w-full bg-cover bg-center rounded-lg overflow-hidden">
+                <div class="relative h-64 w-full bg-cover bg-center rounded-lg overflow-hidden group">
                     <img v-if="gallery.cover_img.thumb && gallery.cover_img.thumb.trim()"
                          :src="gallery.cover_img.thumb"
                          class="object-cover w-full h-full"
@@ -69,7 +69,7 @@ const deleteGallery = (id) => {
                          :src="gallery.cover_img.original"
                          class="object-cover w-full h-full"
                          alt="Loading" />
-                    <div v-if="isAdmin" class="hidden hover:block absolute left-0 top-0 px-1 bg-red">
+                    <div v-if="isAdmin" class="hidden group-hover:block absolute left-0 top-0 px-1 bg-red">
                         {{ gallery.total_mb }} MB
                     </div>
                     <div class="absolute right-0 bottom-8 px-1 bg-orange">
