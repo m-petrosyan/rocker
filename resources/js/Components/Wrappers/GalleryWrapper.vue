@@ -69,10 +69,10 @@ const deleteGallery = (id) => {
                          :src="gallery.cover_img.original"
                          class="object-cover w-full h-full"
                          alt="Loading" />
-                    <div v-if="isAdmin" class="absolute left-0 top-0 px-1 bg-yellow">
+                    <div v-if="isAdmin" class="hidden hover:block absolute left-0 top-0 px-1 bg-red">
                         {{ gallery.total_mb }} MB
                     </div>
-                    <div class="absolute right-0 bottom-8 px-1 bg-red">
+                    <div class="absolute right-0 bottom-8 px-1 bg-orange">
                         {{ gallery.date }}
                     </div>
                     <NavLink :href="route('profile.show', gallery.user.username)" v-if="gallery.user"
