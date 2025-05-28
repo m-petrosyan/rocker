@@ -53,8 +53,19 @@ class EventRepository
     {
         $response = Http::get('https://bot.rocker.am/api/event/'.$eventId);
 
-        return $response->json()['data'];
+        if (!$response->ok()) {
+            return null;
+        }
+
+        $json = $response->json();
+
+        if (!is_array($json) || !isset($json['data'])) {
+            return null;
+        }
+
+        return $json['data'];
     }
+
 
     public static function count(): int
     {
