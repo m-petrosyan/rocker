@@ -12,7 +12,7 @@ class EventObserver
      */
     public function retrieved(Event $event): void
     {
-        dd($event);
+        dump($event);
         $apiEvent = EventRepository::get($event['event_id']);
 
         if ($apiEvent && isset($apiEvent['id']) && $apiEvent['id'] == $event['event_id']) {
