@@ -23,7 +23,7 @@ defineProps({
 
 <template>
     <GuestLayout :meta="{title: 'Home'}">
-        <EventWrapper :events more title="Events" />
+        <EventWrapper :events="events.data" more title="Events" />
         <BandWrapper :bands="bands.data" more title="Bands" />
         <GalleryWrapper :galleries="galleries.data" more title="Galleries" />
     </GuestLayout>

@@ -131,7 +131,7 @@ watch(() => selected.value, (newValue) => {
         overflow-y: auto;
         background-color: theme('colors.graydark2');
         color: white;
-        z-index: 11;
+        z-index: 111;
 
         .multiselect__content {
             width: 100%;

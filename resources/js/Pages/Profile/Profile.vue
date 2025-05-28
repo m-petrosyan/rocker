@@ -86,7 +86,8 @@ defineProps({
                 <GalleryWrapper v-if="galleries.data?.length" profile :galleries="galleries.data" :owner
                                 :isAdmin="auth.isAdmin"
                                 title="User galleries" />
-                <EventWrapper v-if="events.data?.length && (owner || (auth.isAdmin || auth.isModerator))" :events :owner
+                <EventWrapper v-if="events.data?.length && (owner || (auth.isAdmin || auth.isModerator))"
+                              :events="events.data" :owner
                               :isAdmin="auth.isAdmin" title="User events" />
                 <BandWrapper v-if="bands.data?.length && (owner || (auth.isAdmin || auth.isModerator))"
                              :bands="bands.data" :owner

@@ -111,6 +111,9 @@ const useTime = computed(() => {
                 }
             }
 
+            .dp--overlay-absolute {
+                z-index: 100 !important;
+            }
         }
     }
 

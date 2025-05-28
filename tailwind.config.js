@@ -23,7 +23,7 @@ export default {
                 grayblue: '#607D8B',
                 orange: '#FF5722',
                 orangeTransparet: '#ff57224d',
-                red: '#e91e63',
+                red: '#f44336',
                 pwaNavbg: 'rgba(50,62,74,0.58)',
                 green: '#4caf50',
                 yellow: '#ffc107',

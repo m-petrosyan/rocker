@@ -51,6 +51,11 @@ class Band extends Model implements Viewable, HasMedia
         return $this->belongsToMany(Genre::class);
     }
 
+    public function events(): BelongsToMany
+    {
+        return $this->belongsToMany(Event::class);
+    }
+
     public function setNameAttribute($value): void
     {
         $this->attributes['name'] = $value;

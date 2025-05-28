@@ -2,10 +2,11 @@
 
 namespace App\Repositories;
 
+use App\Models\Event;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
-class EventReoisutiry
+class EventRepository
 {
     public static function eventsList($limit = 50, $events = null)
     {
@@ -14,7 +15,7 @@ class EventReoisutiry
         ];
 
         $ids = $events?->pluck('event_id')->toArray();
-//        dd($ids);
+
         if ($ids) {
             $params['ids'] = $ids;
         }
@@ -31,7 +32,28 @@ class EventReoisutiry
             }
         }
 
+        if (!empty($data['data'])) {
+            $apiEventIds = collect($data['data'])->pluck('id')->toArray();
+            $eventModels = Event::query()->whereIn('event_id', $apiEventIds)->get()->keyBy('event_id');
+
+            $data['data'] = collect($data['data'])->map(function ($apiEvent) use ($eventModels) {
+                $eventModel = $eventModels->get($apiEvent['id']);
+                if ($eventModel) {
+                    $apiEvent = array_merge($apiEvent, $eventModel->toArray());
+                }
+
+                return $apiEvent;
+            })->toArray();
+        }
+
         return $data;
+    }
+
+    public static function get($eventId)
+    {
+        $response = Http::get('https://bot.rocker.am/api/event/'.$eventId);
+
+        return $response->json()['data'];
     }
 
     public static function count(): int

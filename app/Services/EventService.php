@@ -2,11 +2,12 @@
 
 namespace App\Services;
 
-use App\Models\Band;
+use App\Traits\ComponentServiceTrait;
 use Illuminate\Support\Facades\Http;
 
 class EventService
 {
+    use  ComponentServiceTrait;
 
     public function store($attributes)
     {
@@ -52,16 +53,12 @@ class EventService
             $data = json_decode($response->body(), true);
 
 
-            if (isset($attributes['bands'])) {
-                foreach ($attributes['bands'] as $band) {
-                    Band::query()->firstOrCreate(['name' => $band['name']], $band);
-                }
-            }
-
-            auth()->user()->events()->create([
+            $event = auth()->user()->events()->create([
                 'event_id' => $data['event_id'],
                 'notify_count' => $data['notify_count'],
             ]);
+
+            $this->addSyncBand($event, $attributes);
 
             return $data;
         } catch (\Exception $e) {

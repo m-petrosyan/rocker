@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Event;
 use App\Models\Gallery;
+use App\Observers\EventObserver;
 use App\Observers\GalleryObserver;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,5 +24,6 @@ class EventServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gallery::observe(GalleryObserver::class);
+        Event::observe(EventObserver::class);
     }
 }

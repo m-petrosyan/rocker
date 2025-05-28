@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
-use App\Repositories\EventReoisutiry;
+use App\Repositories\EventRepository;
 use App\Services\EventService;
-use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -18,14 +17,12 @@ class EventController extends Controller
     public function index(): Response
     {
         return Inertia::render('Events/Events', [
-            'events' => EventReoisutiry::eventsList(),
+            'events' => EventRepository::eventsList(),
         ]);
     }
 
     public function show($eventId): Response
     {
-        $response = Http::get('https://bot.rocker.am/api/event/'.$eventId);
-
         $event = Event::query()->where('event_id', $eventId)->first();
 
         $url = url()->current();
@@ -35,7 +32,8 @@ class EventController extends Controller
         }
 
         return Inertia::render('Events/Event', [
-            'event' => $response->json()['data'],
+//            'event' => EventRepository::get($eventId),
+            'event' => Event::find($eventId)->load('bands'),
             'notify_count' => $event?->notify_count,
             'views' => $event?->views,
             'url' => $url,

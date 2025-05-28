@@ -36,7 +36,7 @@ defineProps({
         <h2 v-if="title" class="text-center">{{ title }}</h2>
         <div class="mt-10 grid gap-y-10 md:grid-cols-2 md:gap-4 lg:grid-cols-4 auto-rows-[600px] md:auto-rows-[400px]">
             <div
-                v-for="event in events.data"
+                v-for="event in events"
                 :key="event.id"
                 class="h-[600px] md:h-[400px]"
             >
