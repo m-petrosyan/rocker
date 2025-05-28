@@ -336,6 +336,11 @@ return [
          * Set to `0` for none
          */
         'retry_delay' => 0,
+
+        'keep_only_latest' => [
+            'amount' => 5,
+        ],
+
     ],
 
 ];
