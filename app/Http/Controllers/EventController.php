@@ -32,8 +32,7 @@ class EventController extends Controller
         }
 
         return Inertia::render('Events/Event', [
-//            'event' => EventRepository::get($eventId),
-            'event' => Event::find($eventId)->load('bands'),
+            'event' => Event::query()->find($eventId)?->load('bands') ?? EventRepository::get($eventId),
             'notify_count' => $event?->notify_count,
             'views' => $event?->views,
             'url' => $url,
