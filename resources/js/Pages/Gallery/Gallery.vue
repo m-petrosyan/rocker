@@ -41,7 +41,7 @@ const venueName = computed(() => {
                 <p>{{ gallery.description }}</p>
                 <div v-if="venueName" class="flex gap-x-1 text-sm">
                     <LocationIcon />
-                    <p>{{ removePostalCode(venueName) }}</p>
+                    <p>{{ removePostalCode(venueName, 80) }}</p>
                 </div>
                 <div class="flex gap-x-1 bg-graydark2 w-fit px-1 rounded-sm">
                     <CalendarIcon />
