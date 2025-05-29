@@ -6,6 +6,7 @@ import { computed } from 'vue';
 import LocationIcon from '@/Components/Icons/LocationIcon.vue';
 import CalendarIcon from '@/Components/Icons/CalendarIcon.vue';
 import BandTags from '@/Components/Tags/BandTags.vue';
+import { removePostalCode } from '@/Helpers/adressFormatHelper.js';
 
 const props = defineProps({
     gallery: {
@@ -40,7 +41,7 @@ const venueName = computed(() => {
                 <p>{{ gallery.description }}</p>
                 <div v-if="venueName" class="flex gap-x-1 text-sm">
                     <LocationIcon />
-                    <p>{{ venueName }}</p>
+                    <p>{{ removePostalCode(venueName, 30) }}</p>
                 </div>
                 <div class="flex gap-x-1 bg-graydark2 w-fit px-1 rounded-sm">
                     <CalendarIcon />
