@@ -10,7 +10,6 @@ class BandRepository
     public static function userBands($user)
     {
         return $user->bands()
-            ->whereNotNull('info')
             ->orderBy('created_at', 'desc')
             ->paginate(30);
     }
