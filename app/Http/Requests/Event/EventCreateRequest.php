@@ -31,7 +31,7 @@ class EventCreateRequest extends FormRequest
             'title' => ['required', 'string', 'min:3', 'max:55'],
             'content' => ['required', 'string', 'min:10', 'max:730'],
             'type' => ['required', Rule::in([1, 2, 3])],
-            'country' => ['required', Rule::in(['am'])],
+            'country' => ['required', Rule::in(['am', 'ge'])],
             'location' => ['required', 'string', 'min:5', 'max:255'],
             'cordinates' => ['nullable', 'array'],
             'cordinates.*' => ['required', 'numeric'],
