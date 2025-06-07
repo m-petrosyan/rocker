@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Traits\ComponentServiceTrait;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
 class EventService
@@ -59,6 +60,8 @@ class EventService
             ]);
 
             $this->addSyncBand($event, $attributes);
+
+            Cache::forget('events');
 
             return $data;
         } catch (\Exception $e) {
