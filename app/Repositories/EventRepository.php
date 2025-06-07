@@ -19,17 +19,17 @@ class EventRepository
         if ($ids) {
             $params['ids'] = $ids;
         }
-   
+
         try {
             $response = Http::throw()->get('https://bot.rocker.am/api/event', $params);
             $data = $response->json();
-            Cache::put('events', $data, now()->addHour(2));
+//            Cache::put('events', $data, now()->addHour(2));
         } catch (\Exception $e) {
-            if (Cache::has('events')) {
-                $data = Cache::get('events');
-            } else {
-                $data = ['data' => [], 'error' => $e->getMessage()];
-            }
+//            if (Cache::has('events')) {
+//                $data = Cache::get('events');
+//            } else {
+            $data = ['data' => [], 'error' => $e->getMessage()];
+//            }
         }
 
         if (!empty($data['data'])) {
