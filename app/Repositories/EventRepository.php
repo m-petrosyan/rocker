@@ -30,7 +30,6 @@ class EventRepository
                 return $apiEvent;
             })->toArray();
         }
-        dump($data);
 
         return $data;
     }
