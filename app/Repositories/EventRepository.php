@@ -8,29 +8,15 @@ use Illuminate\Support\Facades\Http;
 
 class EventRepository
 {
-    public static function eventsList($limit = 50, $events = null)
+    public static function userEvents($events = null)
     {
-        $params = [
-            'limit' => $limit,
-        ];
-
         $ids = $events?->pluck('event_id')->toArray();
 
-        if ($ids) {
-            $params['ids'] = $ids;
-        }
 
-        try {
-            $response = Http::throw()->get('https://bot.rocker.am/api/event', $params);
-            $data = $response->json();
-//            Cache::put('events', $data, now()->addHour(2));
-        } catch (\Exception $e) {
-//            if (Cache::has('events')) {
-//                $data = Cache::get('events');
-//            } else {
-            $data = ['data' => [], 'error' => $e->getMessage()];
-//            }
-        }
+        $params['ids'] = $ids;
+
+        $data = self::request($params);
+
 
         if (!empty($data['data'])) {
             $apiEventIds = collect($data['data'])->pluck('id')->toArray();
@@ -48,6 +34,34 @@ class EventRepository
 
         return $data;
     }
+
+    public static function eventsList($limit = 50)
+    {
+        $params = [
+            'limit' => $limit,
+        ];
+
+        return self::request($params);
+    }
+
+
+    public static function request($params = [])
+    {
+        try {
+            $response = Http::throw()->get('https://bot.rocker.am/api/event', $params);
+            $data = $response->json();
+            Cache::put('events', $data, now()->addHour(2));
+        } catch (\Exception $e) {
+            if (Cache::has('events')) {
+                $data = Cache::get('events');
+            } else {
+                $data = ['data' => [], 'error' => $e->getMessage()];
+            }
+        }
+
+        return $data;
+    }
+
 
     public static function get($eventId)
     {

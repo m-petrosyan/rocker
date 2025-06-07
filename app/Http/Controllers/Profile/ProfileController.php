@@ -46,7 +46,7 @@ class ProfileController
             'owner' => $owner,
             'url' => $owner ? route('profile.show', ['username' => $user->username]) : null,
             'galleries' => GalleryReoisitory::userGallery($user),
-            'events' => EventRepository::eventsList(0, $user->events->load('views')),
+            'events' => EventRepository::userEvents($user->events->load('views')),
             'bands' => BandRepository::userBands($user),
             'blogs' => BlogRepository::userBlogs($user),
         ]);
