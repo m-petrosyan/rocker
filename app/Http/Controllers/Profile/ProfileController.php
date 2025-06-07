@@ -40,6 +40,7 @@ class ProfileController
             }
         }
 
+
         return Inertia::render('Profile/Profile', [
             'user' => $user->load('links'),
             'owner' => $owner,

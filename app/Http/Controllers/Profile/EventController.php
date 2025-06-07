@@ -33,7 +33,9 @@ class EventController
             return redirect()->route('profile.index')
                 ->with(
                     'success',
-                    'Thank you, the event has been created.<br> The event will be added to the list after moderation'
+                    auth()->user()->role === 'user'
+                        ? 'Thank you, the event has been created.<br> The event will be added to the list after moderation'
+                        : 'Thank you, the event has been created.'
                 );
         } catch (\Throwable $e) {
             session()->flash('message', $e->getMessage()['message'] ?? 'An error occurred while creating the event.');
