@@ -12,7 +12,6 @@ class EventRepository
     {
         $ids = $events?->pluck('event_id')->toArray();
 
-
         $params['ids'] = $ids;
 
         $data = self::request($params);
@@ -41,18 +40,20 @@ class EventRepository
             'limit' => $limit,
         ];
 
-        return self::request($params);
+        return self::request($params, true);
     }
 
 
-    public static function request($params = [])
+    public static function request($params = [], $cache = false)
     {
         try {
             $response = Http::throw()->get('https://bot.rocker.am/api/event', $params);
             $data = $response->json();
-            Cache::put('events', $data, now()->addHour(2));
+            if ($cache) {
+                Cache::put('events', $data, now()->addHour(2));
+            }
         } catch (\Exception $e) {
-            if (Cache::has('events')) {
+            if (Cache::has('events') && $cache) {
                 $data = Cache::get('events');
             } else {
                 $data = ['data' => [], 'error' => $e->getMessage()];
