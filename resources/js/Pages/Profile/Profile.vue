@@ -52,7 +52,7 @@ defineProps({
         <div>
             <UserInfo :url="url" :user :owner />
             <Logout :owner />
-            <NavLink v-if="(auth.isAdmin || auth.isModerator) && owner"
+            <NavLink v-if="['admin','modarator','organizer'].includes(auth.role) && owner"
                      :href="route('profile.dashboard')"
                      class="absolute top-0 left-0 z-20 flex bg-black bg-opacity-20">
                 <AnalyticsIcon class="h-6 w-6 text-white" />
@@ -86,17 +86,20 @@ defineProps({
                 <GalleryWrapper v-if="galleries.data?.length" profile :galleries="galleries.data" :owner
                                 :isAdmin="auth.isAdmin"
                                 title="User galleries" />
-                <EventWrapper v-if="events.data?.length && (owner || (auth.isAdmin || auth.isModerator))"
-                              :events="events.data" :owner
-                              :isAdmin="auth.isAdmin" title="User events" />
-                <BandWrapper v-if="bands.data?.length && (owner || (auth.isAdmin || auth.isModerator))"
-                             :bands="bands.data" :owner
-                             :isAdmin="auth.isAdmin"
-                             title="User bands" />
-                <BlogWrapper v-if="blogs.data?.length &&(owner || (auth.isAdmin || auth.isModerator))"
-                             :blogs="blogs.data" :owner
-                             :isAdmin="auth.isAdmin"
-                             title="User blogs" blogs="" />
+                <EventWrapper
+                    v-if="events.data?.length && (owner || ['admin','modarator','organizer'].includes(auth.role))"
+                    :events="events.data" :owner
+                    :isAdmin="auth.isAdmin" title="User events" />
+                <BandWrapper
+                    v-if="bands.data?.length && (owner || ['admin','modarator','organizer'].includes(auth.role))"
+                    :bands="bands.data" :owner
+                    :isAdmin="auth.isAdmin"
+                    title="User bands" />
+                <BlogWrapper
+                    v-if="blogs.data?.length && (owner || ['admin','modarator','organizer'].includes(auth.role))"
+                    :blogs="blogs.data" :owner
+                    :isAdmin="auth.isAdmin"
+                    title="User blogs" blogs="" />
             </div>
         </div>
     </ProfileLayout>

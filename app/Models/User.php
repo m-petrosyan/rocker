@@ -71,11 +71,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         return $this->hasRole('admin');
     }
 
-    public function isModerator(): bool
-    {
-        return $this->hasRole('moderator');
-    }
-
     public function getRoleAttribute(): ?string
     {
         return $this->roles?->pluck('name')->first();

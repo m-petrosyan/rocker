@@ -20,6 +20,9 @@ class RolePermissionSeeder extends Seeder
             'moderator' => [
                 'all',
             ],
+            'organizer' => [
+                'all',
+            ],
             'user' => [
             ],
         ];

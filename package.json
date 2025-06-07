@@ -5,7 +5,8 @@
         "build": "vite build && vite build --ssr",
         "dev": "vite",
         "ssr": "npm run build && php artisan ziggy:generate && php artisan inertia:start-ssr",
-        "lint": "eslint resources/js --ext .js,.vue --ignore-path .gitignore --fix"
+        "lint": "eslint resources/js --ext .js,.vue --ignore-path .gitignore --fix",
+        "pull": "git pull && npm run build && pm2 restart rocker"
     },
     "devDependencies": {
         "@inertiajs/vue3": "^2.0.0",

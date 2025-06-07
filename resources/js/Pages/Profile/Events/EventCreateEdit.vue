@@ -15,9 +15,8 @@ const props = defineProps({
         type: Object,
         required: false
     },
-    role: {
-        type: String,
-        required: true
+    auth: {
+        object: true
     },
     bandsList: {
         type: Array,
@@ -34,6 +33,11 @@ const genres = [
     { name: 'ROCK', key: 'rock' },
     { name: 'METAL', key: 'metal' },
     { name: 'MIX', key: 'all' }
+];
+
+const countries = [
+    { name: 'Armenia', key: 'am' },
+    { name: 'Georgia', key: 'ge' }
 ];
 
 const data = reactive({
@@ -114,6 +118,10 @@ const createEvent = () => {
                         />
                     </div>
                     <div class="flex w-full md:w-1/2 flex-col gap-y-2">
+                        <RadioSwichButton v-if="['admin', 'moderator','organizer'].includes(auth.role)"
+                                          v-model:selectedOption="form.country"
+                                          :options="countries"
+                        />
                         <input
                             type="text"
                             v-model="form.title"

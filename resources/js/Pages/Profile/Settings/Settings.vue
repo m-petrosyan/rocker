@@ -50,13 +50,13 @@ const submitSettings = () => {
             <div class="mt-48">
                 <div class="flex flex-col-reverse md:flex-row gap-4">
                     <textarea
-                        class="w-4/6 mx-auto"
+                        class="w-full md:w-4/6 mx-auto"
                         type="text"
                         rows="5"
                         v-model="form.info"
                         placeholder="info"
                     />
-                    <div class="w-2/6 flex flex-col   gap-4">
+                    <div class="w-full md:w-1/2  flex flex-col gap-4">
                         <input
                             type="text"
                             disabled
@@ -85,7 +85,7 @@ const submitSettings = () => {
                     </div>
 
                 </div>
-                <div class="mt-4 flex w-3/6 flex-col gap-4">
+                <div class="mt-4 flex w-full md:w-3/6 flex-col gap-4">
                     <!--                    <input-->
                     <!--                        v-for="(link,index) in form.links"-->
                     <!--                        class="w-full bg-graydark2"-->

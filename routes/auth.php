@@ -13,9 +13,11 @@ use App\Http\Controllers\Profile\MediaController;
 use App\Http\Controllers\Profile\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth', 'verified', 'role:admin|moderator'])->as('profile.')->prefix('profile')->group(function () {
-    Route::get('dashboard', DashboardController::class)->name('dashboard');
-});
+Route::middleware(['auth', 'verified', 'role:admin|moderator|organizer'])->as('profile.')->prefix('profile')->group(
+    function () {
+        Route::get('dashboard', DashboardController::class)->name('dashboard');
+    }
+);
 
 
 Route::middleware(['auth', 'verified'])->as('profile.')->prefix('profile')->group(function () {
