@@ -19,7 +19,9 @@ class EventRepository
         if ($ids) {
             $params['ids'] = $ids;
         }
-
+        if (auth()->user()->role === 'admin') {
+            dump($params);
+        }
         try {
             $response = Http::throw()->get('https://bot.rocker.am/api/event', $params);
             $data = $response->json();
