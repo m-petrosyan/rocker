@@ -41,7 +41,7 @@ defineProps({
                 class="h-[600px] md:h-[400px]"
             >
                 <NavLink
-                    :href="route('events.show', event.event_id)"
+                    :href="route('events.show', event?.event_id ?? event.id)"
                     class="relative h-full w-full block"
                     :style="{ backgroundImage: `url(${event.poster})` }"
                 >
