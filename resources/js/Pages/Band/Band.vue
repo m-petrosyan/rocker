@@ -48,7 +48,7 @@ defineProps({
         <div class="md:w-5/6 mx-auto mt-8 md:p-0 p-3" v-html="band.info" />
         <EventWrapper v-if="band.events.length" class="mt-20" :events="band.events" title="Upcoming events" />
         <GalleryWrapper v-if="band.galleries.length" :galleries="band.galleries" title="Galleries" user />
-        {{ band }}
+        {{ band.events }}
     </GuestLayout>
 </template>
 
