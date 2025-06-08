@@ -12,7 +12,6 @@ class EventObserver
      */
     public function retrieved(Event $event): void
     {
-        dump(1);
         $response = Http::get('https://bot.rocker.am/api/event/'.$event['event_id']);;
         $apiEvent = $response->json()['data'] ?? null;
 
