@@ -76,7 +76,7 @@ class EventRepository
 
         // Получаем JSON-ответ
         $json = $response->json();
-
+        dump(1);
 
 //        // Проверяем, является ли ответ массивом и содержит ли ключ 'data'
 //        if (!is_array($json) || !isset($json['data'])) {
