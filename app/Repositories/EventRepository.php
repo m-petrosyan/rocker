@@ -66,18 +66,33 @@ class EventRepository
 
     public static function get($eventId)
     {
+        // Выполняем запрос к API
         $response = Http::get('https://bot.rocker.am/api/event/'.$eventId);
 
+        // Проверяем, успешен ли запрос
         if (!$response->ok()) {
             return null;
         }
 
+        // Получаем JSON-ответ
         $json = $response->json();
 
-        if (!is_array($json) || !isset($json['data'])) {
-            return null;
+
+//        // Проверяем, является ли ответ массивом и содержит ли ключ 'data'
+//        if (!is_array($json) || !isset($json['data'])) {
+//            return null;
+//        }
+
+
+        $event = Event::query()->where('event_id', $eventId)->first()->load('bands', 'views');
+        dump(1);
+        // Если локальное событие найдено, объединяем данные и фиксируем просмотр
+        if ($event) {
+            $json['data'] = array_merge($json['data'], $event->toArray());
+            views($event)->record();
         }
 
+        // Возвращаем объединённые данные
         return $json['data'];
     }
 
