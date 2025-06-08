@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Event;
+use Illuminate\Support\Facades\Http;
 
 class EventObserver
 {
@@ -11,15 +12,18 @@ class EventObserver
      */
     public function retrieved(Event $event): void
     {
-//        $apiEvent = EventRepository::get($event['event_id']);
-//
-//        if ($apiEvent && isset($apiEvent['id']) && $apiEvent['id'] == $event['event_id']) {
-//            foreach ($apiEvent as $key => $value) {
-//                if ($key !== 'id') {
-//                    $event->setAttribute($key, $value);
-//                }
-//            }
-//        }
+        dump(1);
+        $response = Http::get('https://bot.rocker.am/api/event/'.$event['event_id']);;
+        $apiEvent = $response->json()['data'] ?? null;
+
+        if ($apiEvent && isset($apiEvent['id']) && $apiEvent['id'] == $event['event_id']) {
+//            dd($apiEvent);
+            foreach ($apiEvent as $key => $value) {
+                if ($key !== 'id') {
+                    $event->setAttribute($key, $value);
+                }
+            }
+        }
     }
 
 }
