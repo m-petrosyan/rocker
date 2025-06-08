@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Models\Event;
-use App\Repositories\EventRepository;
 
 class EventObserver
 {
@@ -12,15 +11,15 @@ class EventObserver
      */
     public function retrieved(Event $event): void
     {
-        $apiEvent = EventRepository::get($event['event_id']);
-
-        if ($apiEvent && isset($apiEvent['id']) && $apiEvent['id'] == $event['event_id']) {
-            foreach ($apiEvent as $key => $value) {
-                if ($key !== 'id') {
-                    $event->setAttribute($key, $value);
-                }
-            }
-        }
+//        $apiEvent = EventRepository::get($event['event_id']);
+//
+//        if ($apiEvent && isset($apiEvent['id']) && $apiEvent['id'] == $event['event_id']) {
+//            foreach ($apiEvent as $key => $value) {
+//                if ($key !== 'id') {
+//                    $event->setAttribute($key, $value);
+//                }
+//            }
+//        }
     }
 
 }
