@@ -62,9 +62,7 @@ const props = defineProps({
                 <SocialShare :title="event.title" :url />
             </div>
 
-            <div
-                class="absolute bottom-0 left-0 z-20 flex gap-x-6 rounded-r-xl bg-black bg-opacity-20 p-4"
-            >
+            <div class="absolute bottom-0 left-0 z-20 flex gap-x-6 rounded-r-xl bg-black bg-opacity-20 p-4">
                 <GoogleCalendar :event />
                 <AppleCalendar :event />
             </div>
@@ -85,8 +83,8 @@ const props = defineProps({
                 </a>
             </div>
         </div>
+        <h3 class="mt-6 text-center text-2xl">{{ event.title }}</h3>
         <BandTags class="mx-auto w-fit my-10" :bands="event.bands" />
-        <h3 class="mt-2 text-center text-2xl">{{ event.title }}</h3>
         <pre class="mt-8 text-pretty text-center">{{ event.content }}</pre>
         <p class="text-center text-orange">{{ removePostalCode(event.location) }}</p>
         <GoogleMap class="mt-5" v-if="event.cordinates" :cordinates="event.cordinates" />

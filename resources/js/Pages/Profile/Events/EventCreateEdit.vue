@@ -136,7 +136,8 @@ const createEvent = () => {
                             :options="genres"
                         />
                         <GoogleAutocomplate :form="form" />
-                        <MultiSelect v-model="form.bands" :options="bandsList" text="Bands" multiple />
+                        <MultiSelect v-if="form.country === 'am'" v-model="form.bands" :options="bandsList" text="Bands"
+                                     multiple />
                         <DatePicker
                             v-model:start_date="form.start_date"
                             v-model:start_time="form.start_time"

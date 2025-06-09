@@ -70,3 +70,24 @@ a {
 button:disabled {
     opacity: 0.5;
 }
+
+
+.tooltip {
+    transition: all 0.2s;
+}
+
+.tooltip-top {
+    transform: translateY(-5px);
+}
+
+.tooltip-bottom {
+    transform: translateY(5px);
+}
+
+.tooltip-left {
+    transform: translateX(-5px);
+}
+
+.tooltip-right {
+    transform: translateX(5px);
+}

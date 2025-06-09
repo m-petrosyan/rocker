@@ -59,7 +59,7 @@ const deleteGallery = (id) => {
                 :href="route('galleries.show', gallery.id)"
                 :key="gallery.id"
                 class="flex flex-col items-center p-4">
-                <div class="relative h-64 w-full bg-cover bg-center rounded-lg overflow-hidden group">
+                <div class="relative h-64 w-full bg-cover bg-center rounded-lg group">
                     <img v-if="gallery.cover_img.thumb && gallery.cover_img.thumb.trim()"
                          :src="gallery.cover_img.thumb"
                          class="object-cover w-full h-full"
@@ -82,17 +82,19 @@ const deleteGallery = (id) => {
                     <div v-if="(owner || isAdmin) && profile"
                          class="absolute bottom-0 w-full h-full flex flex-col justify-between  p-1 bg-blackTransparent2">
                         <div class="flex justify-end">
-                            <div class="flex gap-x-2 items-center">
+                            <div v-tooltip="'Unique views'"
+                                 class="flex gap-x-2 items-center">
                                 <EyesIcon />
                                 <p>{{ gallery.views }}</p>
                             </div>
                         </div>
 
                         <div class="flex justify-between">
-                            <NavLink :href="route('profile.galleries.edit', gallery.id)">
+                            <NavLink v-tooltip="'Edit'"
+                                     :href="route('profile.galleries.edit', gallery.id)">
                                 <EditIcon />
                             </NavLink>
-                            <button @click.prevent="deleteGallery(gallery.id)"
+                            <button v-tooltip="'Delete'" @click.prevent="deleteGallery(gallery.id)"
                                     class="text-red-500 hover:text-red-700">
                                 <DeleteIcon />
                             </button>

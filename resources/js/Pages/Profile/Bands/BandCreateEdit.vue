@@ -107,8 +107,13 @@ const delLink = (index) => {
                             v-model:file="data.logo"
                         />
                         <div class="flex flex-col gap-2 md:w-1/2 w-full">
-                            <Multiselect v-model="form.name" :options="bandsList" text="Name" :disabled="band" />
-                            <Multiselect v-model="form.genres" :options="genres" text="Genres" multiple />
+                            <Multiselect
+                                v-tooltip="'If the group name is already in the list, please select from the list'"
+                                v-model="form.name" :options="bandsList" text="Name"
+                                :disabled="band" />
+                            <Multiselect
+                                v-tooltip="'You can choose from the list or add if there is no list'"
+                                v-model="form.genres" :options="genres" text="Genres" multiple />
                             <div v-if="form.links.length" class="flex flex-col gap-y-2">
                                 <div v-for="(url, index) in form.links" class="flex">
                                     <input
@@ -149,9 +154,10 @@ const delLink = (index) => {
                     v-model:previews="data.preview"
                     v-model:files="form.images"
                 />
-                <div class="relative mt-2">
+                <div class="relative mt-2"
+                     v-tooltip="'You can also add a video from youtube by clicking the video button'">
                     <TextEditor
-                        v-model:content="form.info"
+                        v-model:content.trim="form.info"
                         class="h-64"
                         collection="event-image"
                         :error="form.errors.info"
