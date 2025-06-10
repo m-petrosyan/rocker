@@ -35,6 +35,7 @@ class BlogCreateRequest extends FormRequest
             'content.en' => ['nullable', 'string'],
             'content.am' => ['nullable', 'string'],
             'cover_file' => ['required', 'image', 'mimes:jpeg,jpg,webp,png', 'max:15000'],
+            'bands' => ['array'],
             'bands.*.name' => ['required', 'string', 'max:255'],
             'bands.*.id' => ['nullable', 'integer', 'exists:bands,id'],
             'author' => ['nullable', 'string', 'max:255'],

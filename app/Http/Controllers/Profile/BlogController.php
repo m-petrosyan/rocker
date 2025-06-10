@@ -52,6 +52,7 @@ class BlogController extends Controller
 
         return Inertia::render('Profile/Blogs/BlogCreateEdit', [
             'blog' => $blog->load('bands', 'user'),
+            'bandsList' => BandRepository::withoutPage(),
         ]);
     }
 

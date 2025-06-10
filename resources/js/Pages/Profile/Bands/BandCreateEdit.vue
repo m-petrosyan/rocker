@@ -127,7 +127,8 @@ const delLink = (index) => {
                                     </button>
                                 </div>
                             </div>
-                            <button :disabled="form.links.length > 2" type="button" @click="addLinks"
+                            <button v-tooltip="'Add your social networks'" :disabled="form.links.length > 2"
+                                    type="button" @click="addLinks"
                                     class="bg-grayblue w-fit p-2">Add url
                             </button>
 
@@ -155,7 +156,7 @@ const delLink = (index) => {
                     v-model:files="form.images"
                 />
                 <div class="relative mt-2"
-                     v-tooltip="'You can also add a video from youtube by clicking the video button'">
+                     v-tooltip="'Please fill in the group information \n You can also add a video from youtube by clicking the video button'">
                     <TextEditor
                         v-model:content.trim="form.info"
                         class="h-64"
@@ -163,8 +164,6 @@ const delLink = (index) => {
                         :error="form.errors.info"
                     />
                 </div>
-
-
                 <br />
                 <PrimaryButton
                     class="ms-4"

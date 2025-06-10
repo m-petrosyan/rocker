@@ -14,7 +14,7 @@ const tooltipDirective = {
         tooltip.style.fontSize = '12px';
         tooltip.style.zIndex = '10';
         tooltip.style.display = 'none';
-        tooltip.style.whiteSpace = 'nowrap';
+        tooltip.style.whiteSpace = 'pre-line'; // Поддержка переносов строк
 
         // Добавляем tooltip как дочерний элемент контейнера
         el.style.position = 'relative';
