@@ -81,11 +81,12 @@ const deleteGallery = (id) => {
                     </NavLink>
                     <div v-if="(owner || isAdmin) && profile"
                          class="absolute bottom-0 w-full h-full flex flex-col justify-between  p-1 bg-blackTransparent2">
-                        <div class="flex justify-end">
-                            <div v-tooltip="'Unique views'"
-                                 class="flex gap-x-2 items-center">
+                        <div class="flex justify-end gap-y-2">
+                            <div
+                                class="flex gap-x-2 items-center">
                                 <EyesIcon />
-                                <p>{{ gallery.views }}</p>
+                                <p v-tooltip="'Unique views'">{{ gallery.views }}</p> /
+                                <p v-tooltip="'All views'">{{ gallery.allViews }}</p>
                             </div>
                         </div>
 

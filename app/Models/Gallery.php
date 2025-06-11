@@ -14,7 +14,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Gallery extends Model implements Viewable, HasMedia
 {
-    use  InteractsWithMedia, ViewsTrait;
+    use InteractsWithMedia, ViewsTrait;
 
     protected $fillable = [
         'user_id',
@@ -32,6 +32,7 @@ class Gallery extends Model implements Viewable, HasMedia
         'bands',
         'venue',
         'views',
+        'allViews',
     ];
 
     protected $hidden = [
