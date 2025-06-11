@@ -69,7 +69,8 @@ defineProps({
                                 <NotifyIcon />
                                 {{ event.notify_count }}
                             </div>
-                            <div v-tooltip="'Views in rocker'" class="flex items-center gap-2">
+                            <div v-if="event.country === 'am'" v-tooltip="'Views in rocker'"
+                                 class="flex items-center gap-2">
                                 <EyesIcon />
                                 {{ event.allViews }}
                             </div>
