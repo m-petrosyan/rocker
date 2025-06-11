@@ -7,6 +7,7 @@ import PwaNavbar from '@/Components/Nav/PwaNavbar.vue';
 import defaultImg from '../../../public/screenshots/desktop-screenshot.png';
 import { onMounted, ref } from 'vue';
 import Footer from '@/Components/Footer/Footer.vue';
+import PreloaderPwa from '@/Components/Preloader/PreloaderPwa.vue';
 
 defineProps({
     meta: {
@@ -22,7 +23,6 @@ const defaultTitle = 'Rocker.am';
 const isPWA = ref(false);
 
 onMounted(() => {
-    // Detect PWA mode
     isPWA.value = window.matchMedia('(display-mode: standalone)').matches ||
         window.navigator.standalone === true;
 });
@@ -40,6 +40,7 @@ onMounted(() => {
         <meta name="author" :content="meta?.author ?? 'rocker.am'" />
     </Head>
     <FleshNotification />
+    <PreloaderPwa v-if="isPWA" />
     <section class="min-h-screen bg-black text-white pt-6 sm:pt-0">
         <MainNavbar v-if="!isPWA" />
         <header v-if="$slots.header" class="my-10 text-gray">
