@@ -55,7 +55,9 @@ defineProps({
             <NavLink v-if="['admin','modarator','organizer'].includes(auth.role) && owner"
                      :href="route('profile.dashboard')"
                      class="absolute top-0 left-0 z-20 flex bg-black bg-opacity-20">
-                <AnalyticsIcon class="text-white" />
+                <div v-tooltip="'Dashboard'">
+                    <AnalyticsIcon class="text-white" />
+                </div>
             </NavLink>
             <!--            <div class="mx-auto mt-32 p-2 w-full md:w-2/6 text-center">-->
             <!--                <small class="block text-sm text-gray">-->

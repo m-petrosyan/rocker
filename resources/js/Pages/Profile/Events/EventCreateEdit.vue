@@ -136,7 +136,11 @@ const createEvent = () => {
                             :options="genres"
                         />
                         <GoogleAutocomplate :form="form" />
-                        <MultiSelect v-if="form.country === 'am'" v-model="form.bands" :options="bandsList" text="Bands"
+                        <MultiSelect v-if="form.country === 'am'"
+                                     v-tooltip="'If the band is registered on rocker.am, the event will be visible on their page.'"
+                                     v-model="form.bands"
+                                     :options="bandsList"
+                                     text="Bands"
                                      multiple />
                         <DatePicker
                             v-model:start_date="form.start_date"

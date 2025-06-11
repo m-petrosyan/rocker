@@ -4,10 +4,9 @@ import { ref } from 'vue';
 import QrIcon from '@/Components/Icons/QrIcon.vue';
 
 const props = defineProps({
-    url: String,
+    url: String
 });
 
-// const text = ref(window.location.href);
 const qrCode = useQRCode(props.url);
 const showQr = ref(false);
 </script>
@@ -31,13 +30,16 @@ const showQr = ref(false);
             </div>
         </Transition>
 
-        <!-- Кнопка -->
-        <button
-            @click="showQr = !showQr"
-            class="absolute bottom-0 right-0 bg-black bg-opacity-50"
-        >
-            <QrIcon />
-        </button>
+        <div>
+            <button
+                @click="showQr = !showQr"
+                class="absolute bottom-0 right-0 bg-black bg-opacity-50"
+            >
+                <div v-tooltip="'Profile qr'">
+                    <QrIcon />
+                </div>
+            </button>
+        </div>
     </div>
 </template>
 
