@@ -20,6 +20,7 @@ class Event extends Model implements Viewable
 
     protected $appends = [
         'views',
+        'allViews',
     ];
 
     protected $hidden = [
