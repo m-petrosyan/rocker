@@ -85,7 +85,7 @@ const deleteGallery = (id) => {
                             <div
                                 class="flex gap-x-2 items-center">
                                 <EyesIcon />
-                                <p v-tooltip="'Unique views'">{{ gallery.views }}</p> /
+                                <b v-tooltip="'Unique views'">{{ gallery.views }}</b> /
                                 <p v-tooltip="'All views'">{{ gallery.allViews }}</p>
                             </div>
                         </div>
