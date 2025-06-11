@@ -15,6 +15,7 @@ const tooltipDirective = {
         tooltip.style.zIndex = '10';
         tooltip.style.display = 'none';
         tooltip.style.whiteSpace = 'pre-line'; // Поддержка переносов строк
+        tooltip.style.width = 'max-content'; // Максимальная ширина для удобства
 
         // Добавляем tooltip как дочерний элемент контейнера
         el.style.position = 'relative';

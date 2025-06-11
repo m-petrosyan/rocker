@@ -3,6 +3,7 @@ import moment from 'moment-timezone';
 import NavLink from '@/Components/NavLink.vue';
 import NotifyIcon from '@/Components/Icons/NotifyIcon.vue';
 import { removePostalCode } from '@/Helpers/adressFormatHelper.js';
+import EyesIcon from '@/Components/Icons/EyesIcon.vue';
 
 defineProps({
     events: {
@@ -52,7 +53,8 @@ defineProps({
                         class="absolute z-10 h-full w-full object-contain object-center"
                     />
                     <div
-                        class="absolute left-0 z-20 flex h-28 w-full flex justify-between ">
+                        class="absolute left-0 z-20 flex h-28 w-full flex justify-between"
+                        :class="{ 'bg-blackTransparent2': owner || isAdmin }">
                         <div class="w-28 h-full flex flex-col items-center justify-center bg-orange text-xl">
                             <p class="text-4xl font-bold">
                                 {{ moment(event.start_date, 'DD.MM.YY').format('D').toUpperCase() }}
@@ -62,14 +64,14 @@ defineProps({
                             </p>
                             <small>{{ event.start_time }}</small>
                         </div>
-                        <div v-if="owner || isAdmin" class="flex flex-col items-center justify-center">
-                            <!--                            <div class="flex items-center gap-2">-->
-                            <!--                                <EyesIcon />-->
-                            <!--                                {{ event.notify_count }}-->
-                            <!--                            </div>-->
-                            <div class="flex items-center gap-2">
+                        <div v-if="owner || isAdmin" class="flex flex-col items-start gap-y-2">
+                            <div v-tooltip="'Sent by bot'" class="flex items-center gap-2">
                                 <NotifyIcon />
                                 {{ event.notify_count }}
+                            </div>
+                            <div v-tooltip="'Unique views'" class="flex items-center gap-2">
+                                <EyesIcon />
+                                {{ event.views }}
                             </div>
                         </div>
                     </div>
