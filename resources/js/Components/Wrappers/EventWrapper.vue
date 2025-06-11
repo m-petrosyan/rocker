@@ -69,7 +69,7 @@ defineProps({
                                 <NotifyIcon />
                                 {{ event.notify_count }}
                             </div>
-                            <div v-tooltip="'Views'" class="flex items-center gap-2">
+                            <div v-tooltip="'Views in rocker'" class="flex items-center gap-2">
                                 <EyesIcon />
                                 {{ event.allViews }}
                             </div>
