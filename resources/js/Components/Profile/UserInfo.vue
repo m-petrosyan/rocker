@@ -74,6 +74,7 @@ const previewStyle = computed(() => {
             {{ user.name }}
         </h3>
         <NavLink
+            v-tooltip="'Edit Profile'"
             v-if="owner && (route().current('profile.index') || route().current('profile.show'))"
             :href="route('profile.edit')"
             class="mx-auto w-fit">
