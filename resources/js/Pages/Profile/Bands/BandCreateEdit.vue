@@ -7,6 +7,7 @@ import ProfileLayout from '@/Layouts/ProfileLayout.vue';
 import Multiselect from '@/Components/Forms/MultiSelect.vue';
 import TextEditor from '@/Components/Forms/TextEditor.vue';
 import SelectImages from '@/Components/Forms/SelectImages.vue';
+import SuccessMessages from '@/Components/Messages/SuccessMessages.vue';
 
 const props = defineProps({
     band: {
@@ -133,10 +134,7 @@ const delLink = (index) => {
                             </button>
 
                             <div class="text-gray">
-                                <div class="text-red">
-                                    <b>Note :</b>
-                                    <p>If the group name is already in the list, please select from the list</p>
-                                </div>
+                                <b>Note :</b>
                                 <div class="flex">
                                     <p>You can also add a video from youtube by clicking the button</p>
                                     <img src="/images/video_instruction.png" alt="instruction">
@@ -145,7 +143,12 @@ const delLink = (index) => {
                                     When did you start? Who's in the lineup? Just a few words about your story, vibe,
                                     and members will make your profile way cooler.
                                 </p>
+                                <p>For all questions write <a href="https://t.me/mpetrosyan1" target="_blank">@mpetrosyan1</a>
+                                </p>
+                                <SuccessMessages success class="mt-4"
+                                                 :message="'You can add us to the guest list and we will send a photographer to the concert 📸'" />
                             </div>
+
                         </div>
                     </div>
                 </div>
