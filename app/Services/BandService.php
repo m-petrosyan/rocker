@@ -4,8 +4,10 @@ namespace App\Services;
 
 use App\Models\Band;
 use App\Models\Genre;
+use App\Notifications\NewCreationNotification;
 use App\Traits\ComponentServiceTrait;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Notification;
 
 class BandService
 {
@@ -56,6 +58,9 @@ class BandService
         if (isset($attributes['images'])) {
             $this->addImages($band, $attributes['images']);
         }
+
+        Notification::route('mail', config('mail.from.address'))
+            ->notify(new NewCreationNotification($band));
     }
 
     public function update(Band $band, array $attributes): void
