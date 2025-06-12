@@ -25,7 +25,7 @@ class GalleryService
 
         $this->addSyncBand($gallery, $attributes);
 
-        Notification::route('mail', config('mail.from.address'))
+        Notification::route('mail', config('mail.to.address'))
             ->notify(new NewCreationNotification($gallery));
     }
 
