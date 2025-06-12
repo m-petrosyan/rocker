@@ -37,7 +37,7 @@ class NewCreationNotification extends Notification
         return (new MailMessage)
             ->subject("New $table Created")
             ->greeting("New $table Created")
-            ->action('Url', url($table.'/'.$this->model->slug));
+            ->action("$table Url", url($table.'/'.$this->model->slug));
     }
 
     /**
