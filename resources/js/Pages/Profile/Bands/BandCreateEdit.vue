@@ -146,7 +146,7 @@ const delLink = (index) => {
                                 <p>For all questions write <a href="https://t.me/mpetrosyan1" target="_blank">@mpetrosyan1</a>
                                 </p>
                                 <SuccessMessages success class="mt-4"
-                                                 :message="'You can add us to the guest list and we will send a photographer to the concert 📸'" />
+                                                 :message="'You can add us to the guest list,  we’ll arrange for a photographer to attend and capture the concert 📸'" />
                             </div>
 
                         </div>
