@@ -97,7 +97,7 @@ class EventRepository
     }
 
 
-    public static function count(): int
+    public static function count(): mixed
     {
         try {
             $response = Http::throw()->get('https://bot.rocker.am/api/events_count');
