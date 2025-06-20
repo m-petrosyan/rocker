@@ -15,6 +15,10 @@ defineProps({
     url: {
         type: String,
         required: true
+    },
+    events: {
+        type: Object,
+        required: true
     }
 });
 </script>
@@ -46,7 +50,7 @@ defineProps({
         </div>
         <ImageWrapper classes="flex gap-4" :images="band.images_url" :title="band.title" :url />
         <div class="md:w-5/6 mx-auto mt-8 md:p-0 p-3" v-html="band.info" />
-        <EventWrapper v-if="band.events.length" class="mt-20" :events="band.events" title="Upcoming events" />
+        <EventWrapper v-if="events.data.length" class="mt-20" :events="events.data" title="Upcoming events" />
         <GalleryWrapper v-if="band.galleries.length" :galleries="band.galleries" title="Galleries" user />
     </GuestLayout>
 </template>

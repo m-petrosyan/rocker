@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Band;
 use App\Repositories\BandRepository;
+use App\Repositories\EventRepository;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -28,7 +29,8 @@ class BandController extends Controller
         views($band)->record();
 
         return Inertia::render('Band/Band', [
-            'band' => $band->load('genres', 'galleries.user', 'links', 'events'),
+            'band' => $band->load('genres', 'galleries.user', 'links'),
+            'events' => EventRepository::userEvents($band->events->load('views')),
             'url' => url()->current(),
         ]);
     }
