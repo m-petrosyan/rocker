@@ -2,9 +2,7 @@
 
 namespace App\Services;
 
-use App\Notifications\NewCreationNotification;
 use App\Traits\ComponentServiceTrait;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 
 class BlogService
@@ -24,8 +22,8 @@ class BlogService
 
         $this->addSyncBand($blog, $attributes);
 
-        Notification::route('mail', config('mail.to.address'))
-            ->notify(new NewCreationNotification($blog));
+//        Notification::route('mail', config('mail.to.address'))
+//            ->notify(new NewCreationNotification($blog));
     }
 
     public function update($blog, $attributes): void

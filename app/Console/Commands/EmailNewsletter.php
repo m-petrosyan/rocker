@@ -20,8 +20,7 @@ class EmailNewsletter extends Command
         config(['mail.default' => 'bulk']);
 
         foreach ($emails as $email) {
-//            Notification::route('mail', $email)->notify(new NewsletterNotification());
-            Notification::route('mail', 'miqayel@inbox.ru')->notify(new NewsletterNotification());
+            Notification::route('mail', $email)->notify(new NewsletterNotification());
 
             $this->info("Sent to: $email");
         }

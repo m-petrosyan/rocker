@@ -2,10 +2,8 @@
 
 namespace App\Services;
 
-use App\Notifications\NewCreationNotification;
 use App\Traits\ComponentServiceTrait;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Notification;
 
 class GalleryService
 {
@@ -25,8 +23,8 @@ class GalleryService
 
         $this->addSyncBand($gallery, $attributes);
 
-        Notification::route('mail', config('mail.to.address'))
-            ->notify(new NewCreationNotification($gallery));
+//        Notification::route('mail', config('mail.to.address'))
+//            ->notify(new NewCreationNotification($gallery));
     }
 
     public function update($gallery, $attributes): void
