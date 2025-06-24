@@ -9,13 +9,13 @@ class NewsletterNotification extends Notification
 {
     public function via(object $notifiable): array
     {
-        dd($notifiable);
-
         return ['mail'];
     }
 
     public function toMail(object $notifiable): MailMessage
     {
+        dd($notifiable->routes);
+
         return (new MailMessage)
             ->subject("Photographer for events")
             ->greeting(
