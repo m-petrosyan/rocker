@@ -36,9 +36,9 @@ class RegisteredUserController extends Controller
     {
         $this->userRegisterService->store($request->validated());
 
-        $this->resend($request['email']);
+//        $this->resend($request['email']);
 
-        return redirect()->route('verification.notice');
+        return redirect()->route('login');
     }
 
     /**
