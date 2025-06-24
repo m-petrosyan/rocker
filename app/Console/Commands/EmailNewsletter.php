@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Notification;
 
 class EmailNewsletter extends Command
 {
-    protected $signature = 'app:email-newsletter {emails*}';
+    protected $signature = 'app:email-newsletter';
     protected $description = 'Send newsletter via Notification using bulk mailer';
 
     public function handle(): void
     {
-        $emails = $this->argument('emails');
+        $emails = ['miqayel@inbox.ru', 'miqayelpetrosyan@gmail.com'];
 
         // временно подменим mailer
         $originalMailer = config('mail.default');
