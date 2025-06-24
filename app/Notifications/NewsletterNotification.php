@@ -9,6 +9,8 @@ class NewsletterNotification extends Notification
 {
     public function via(object $notifiable): array
     {
+        dd($notifiable);
+
         return ['mail'];
     }
 

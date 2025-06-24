@@ -24,7 +24,6 @@ class EmailNewsletter extends Command
             $this->info("Sent to: $email");
         }
 
-        // вернём обратно mailer
         config(['mail.default' => $originalMailer]);
     }
 }
