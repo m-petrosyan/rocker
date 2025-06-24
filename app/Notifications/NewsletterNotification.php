@@ -3,10 +3,10 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Mail\Mailable;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
 
-class NewsletterNotification extends Notification implements \Illuminate\Contracts\Mail\Mailable
+class NewsletterNotification extends Mailable
 {
     use Queueable;
 
