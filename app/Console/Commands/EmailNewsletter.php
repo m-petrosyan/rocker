@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Band;
 use App\Notifications\NewsletterNotification;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Notification;
@@ -14,11 +13,7 @@ class EmailNewsletter extends Command
 
     public function handle(): void
     {
-        $emails = Band::query()->whereNotNull('user_id')->join('users', 'bands.user_id', '=', 'users.id')->where(
-            'users.email',
-            '!=',
-            'sos.voskanyan@gmail.com'
-        )->pluck('users.email')->unique();;
+        $emails = ['miqayel@inbox.ru', 'miqayelpetrosyan@gmail.com'];
 
         $originalMailer = config('mail.default');
         config(['mail.default' => 'bulk']);
