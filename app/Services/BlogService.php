@@ -24,7 +24,7 @@ class BlogService
 
         $this->addSyncBand($blog, $attributes);
 
-        Notification::route('mail', config('mail.to.address'))
+        Notification::route('mail', config('mail.admin.address'))
             ->notify(new NewCreationNotification($blog));
     }
 

@@ -59,7 +59,7 @@ class BandService
             $this->addImages($band, $attributes['images']);
         }
 
-        Notification::route('mail', config('mail.to.address'))
+        Notification::route('mail', config('mail.admin.address'))
             ->notify(new NewCreationNotification($band));
     }
 

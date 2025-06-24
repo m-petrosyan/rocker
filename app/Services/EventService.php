@@ -65,7 +65,7 @@ class EventService
 
             Cache::forget('events');
 
-            Notification::route('mail', config('mail.to.address'))
+            Notification::route('mail', config('mail.admin.address'))
                 ->notify(new NewCreationNotification($event));
 
             return $data;
