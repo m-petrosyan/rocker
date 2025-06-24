@@ -17,8 +17,9 @@ class NewsletterNotification extends Notification
         return (new MailMessage)
             ->subject("Photographer for events")
             ->greeting(
-                "You can add us to the guest list, we’ll arrange for a photographer to attend and capture the concert 📸"
+                "You can add us to the guest list, we’ll arrange for a photographer to attend and capture the concert 📸,
+                For all questions write"
             )
-            ->action("For all questions write @mpetrosyan1", url('https://t.me/mpetrosyan1'));
+            ->action("@mpetrosyan1", url('https://t.me/mpetrosyan1'));
     }
 }
