@@ -38,7 +38,7 @@ class RegisteredUserController extends Controller
 
 //        $this->resend($request['email']);
 
-        return redirect()->route('login');
+        return redirect()->route('verification.notice');
     }
 
     /**
