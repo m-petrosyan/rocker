@@ -15,7 +15,6 @@ class NewsletterNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->to($notifiable->routes['mail'] ?? null)
             ->subject("Photographer for events")
             ->greeting(
                 "You can add us to the guest list, we’ll arrange for a photographer to attend and capture the concert 📸"
