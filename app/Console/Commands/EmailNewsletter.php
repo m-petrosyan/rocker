@@ -4,33 +4,28 @@ namespace App\Console\Commands;
 
 use App\Notifications\NewsletterNotification;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 
 class EmailNewsletter extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'app:email-newsletter';
+    protected $signature = 'app:email-newsletter {emails*}';
+    protected $description = 'Send newsletter via Notification using bulk mailer';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Command description';
-
-    /**
-     * Execute the console command.
-     */
     public function handle(): void
     {
-        $recipients = ['miqayel@inbox.ru', 'miqayelpetrosyan@gmail.com'];
+        $emails = $this->argument('emails');
 
-        foreach ($recipients as $email) {
-            Mail::mailer('bulk')->to($email)->send(new NewsletterNotification());
+        // временно подменим mailer
+        $originalMailer = config('mail.default');
+        config(['mail.default' => 'bulk']);
+
+        foreach ($emails as $email) {
+            Notification::route('mail', $email)->notify(new NewsletterNotification());
+            $this->info("Sent to: $email");
         }
+
+        // вернём обратно mailer
+        config(['mail.default' => $originalMailer]);
     }
 }
+
