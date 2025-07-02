@@ -9,6 +9,6 @@ class Bot extends TelegraphBot
 {
     public function chats(): HasMany
     {
-        return $this->hasMany(Chat::class);
+        return $this->hasMany(UserBot::class);
     }
 }

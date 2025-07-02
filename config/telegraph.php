@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Bot;
-use App\Models\Chat;
+use App\Models\UserBot;
 use App\Telegram\TelegraphHandler;
 use DefStudio\Telegraph\Telegraph;
 
@@ -128,7 +128,7 @@ return [
      */
     'models' => [
         'bot' => Bot::class,
-        'chat' => Chat::class,
+        'chat' => UserBot::class,
     ],
 
     'storage' => [

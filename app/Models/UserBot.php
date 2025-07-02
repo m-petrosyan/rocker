@@ -5,7 +5,7 @@ namespace App\Models;
 use DefStudio\Telegraph\Models\TelegraphChat;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Chat extends TelegraphChat
+class UserBot extends TelegraphChat
 {
 //    protected $fillable = [
 //        'chat_id',
