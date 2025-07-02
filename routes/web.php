@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Route;
 
 require_once __DIR__.'/guest.php';
 require_once __DIR__.'/auth.php';
-
+//Route::get('/test', function () {
+//    return 'Laravel is working 🎉';
+//});
 Route::get('/', HomeController::class)->name('home');
 Route::resource('events', EventController::class)->only('index', 'show');
 Route::resource('bands', BandController::class)->only('index');
