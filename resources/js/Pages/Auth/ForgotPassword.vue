@@ -5,6 +5,8 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/Forms/TextInput.vue';
 import { useForm } from '@inertiajs/vue3';
 import AuthLayouth from '@/Layouts/AuthLayouth.vue';
+import SuccessMessages from '@/Components/Messages/SuccessMessages.vue';
+import { ref } from 'vue';
 
 defineProps({
     status: {
@@ -16,18 +18,26 @@ const form = useForm({
     email: ''
 });
 
+const message = ref(false);
+
 const submit = () => {
-    form.post(route('password.email'));
+    form.post(route('password.email'), {
+        onSuccess: () => {
+            message.value = true;
+        }
+    });
 };
 </script>
 
 <template>
     <AuthLayouth title="Forgot Password">
+        <SuccessMessages :message="status" success />
         <div class="text-gray-600 mb-4 text-sm">
             Forgot your password? No problem. Just let us know your email
             address and we will email you a password reset link that will
             allow you to choose a new one.
         </div>
+
 
         <div v-if="status" class="text-green-600 mb-4 text-sm font-medium">
             {{ status }}

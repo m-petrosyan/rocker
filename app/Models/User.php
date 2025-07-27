@@ -8,6 +8,7 @@ use App\Notifications\CustomVerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -36,6 +37,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         'email',
         'password',
         'email_verified_at',
+        'last_activity',
     ];
 
     /**
@@ -114,6 +116,11 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     public function blogs(): HasMany
     {
         return $this->hasMany(Blog::class);
+    }
+
+    public function settings(): HasOne
+    {
+        return $this->hasOne(UserSettings::class);
     }
 
     public function getImageAttribute(): ?array

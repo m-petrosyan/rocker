@@ -10,13 +10,23 @@ use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\PwaInstallController;
-use Illuminate\Support\Facades\Route;
+use App\Models\UserBot;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 require_once __DIR__.'/guest.php';
 require_once __DIR__.'/auth.php';
-//Route::get('/test', function () {
-//    return 'Laravel is working 🎉';
-//});
+
+Route::get('/test', function () {
+    return Inertia::render('Test');
+});
+
+
+Route::post('/telegram/auth', function (Request $request) {
+//    dd($request->input('id'));
+    auth()->loginUsingId(UserBot::query()->where('chat_id', $request->input('id'))->first()->user?->id);
+});
+
 Route::get('/', HomeController::class)->name('home');
 Route::resource('events', EventController::class)->only('index', 'show');
 Route::resource('bands', BandController::class)->only('index');

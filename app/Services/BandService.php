@@ -31,19 +31,7 @@ class BandService
             );
         }
 
-        if (isset($attributes['genres'])) {
-            $genreIds = collect($attributes['genres'] ?? [])
-                ->map(function ($genreData) {
-                    $genre = Genre::query()->firstOrCreate(
-                        ['name' => $genreData['name']]
-                    );
-
-                    return $genre->id;
-                });
-
-            $band->genres()->sync($genreIds);
-        }
-
+        $this->setGenres($band, $attributes);
 
         if (isset($attributes['links'])) {
             $this->updateLinks($band, $attributes['links']);
@@ -76,6 +64,20 @@ class BandService
             $this->addImage($band, $attributes['logo_file'], 'logo');
         }
 
+        $this->setGenres($band, $attributes);
+
+
+        if (isset($attributes['links'])) {
+            $this->updateLinks($band, $attributes['links']);
+        }
+
+        if (isset($attributes['images'])) {
+            $this->addImages($band, $attributes['images']);
+        }
+    }
+
+    public function setGenres(Band $band, array $attributes): void
+    {
         if (isset($attributes['genres'])) {
             $genreIds = collect($attributes['genres'] ?? [])
                 ->map(function ($genreData) {
@@ -87,15 +89,6 @@ class BandService
                 });
 
             $band->genres()->sync($genreIds);
-        }
-
-
-        if (isset($attributes['links'])) {
-            $this->updateLinks($band, $attributes['links']);
-        }
-
-        if (isset($attributes['images'])) {
-            $this->addImages($band, $attributes['images']);
         }
     }
 

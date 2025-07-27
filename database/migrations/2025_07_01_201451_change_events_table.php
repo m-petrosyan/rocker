@@ -13,10 +13,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('events', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
-            $table->dropColumn('user_id');
             $table->dropColumn('event_id');
-            $table->morphs('userable');
             $table->string('title')->after('id');
             $table->text('content')->after('title');
             $table->text('link')->nullable();
@@ -54,8 +51,6 @@ return new class extends Migration {
                     'country',
                 ]
             );
-            $table->dropMorphs('userable');
-            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->dropColumn('type');
             $table->dropColumn('start_date');
             $table->dropColumn('start_time');

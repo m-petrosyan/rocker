@@ -108,7 +108,7 @@ return [
 
 
     'configs' => [
-        'token' => '6744946968:AAEFRB1yblbVOsBtTuiOqn_IyntoLLQhOAU',
+        'token' => env('TELEGRAM_BOT_TOKEN'),
         'name' => env('TELEGRAM_BOT_NAME'),
     ],
 

@@ -10,7 +10,7 @@ import { route as ziggyRoute, ZiggyVue } from '../../vendor/tightenco/ziggy';
 import VueGtag from 'vue-gtag-next';
 import PrimeVue from 'primevue/config';
 import PreloaderPwa from '@/Components/Preloader/PreloaderPwa.vue';
-import tooltipDirective from '@/Directives/tooltipDirective';
+import tooltipDirective from '@/Directives/tooltipDirective.js';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -64,3 +64,4 @@ createInertiaApp({
         color: '#FF5722'
     }
 });
+// useTelegramAuth();
