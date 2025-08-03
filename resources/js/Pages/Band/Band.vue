@@ -42,7 +42,7 @@ defineProps({
             </div>
             <SocialShare class="absolute right-0 bottom-0 bg-opacity-20 bg-graydark" :title="band.name" :url />
         </div>
-        <div class="flex flex-col gap-y-4 mt-5">
+        <div :class="band.name.length > 40 ? 'md:mt-20 mt-56' : 'mt-5'" class="flex flex-col gap-y-4 ">
             <h3 class="text-center mt-5">
                 Genres
             </h3>

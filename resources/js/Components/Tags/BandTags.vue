@@ -18,7 +18,7 @@ defineProps({
             :href="route('bands.show',band.slug)"
             class="px-1 rounded-sm"
             :class="band.info  ? 'bg-red' : 'bg-gray cursor-default' ">
-            <div>{{ band.name }}</div>
+            <div>{{ band.name.length > 40 ? band.name.slice(0, 40) + '...' : band.name }}</div>
         </component>
     </div>
 </template>
