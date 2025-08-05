@@ -32,6 +32,7 @@ class BandCreateRequest extends FormRequest
             'genres' => ['required', 'array', 'max:255'],
             'links' => ['nullable', 'array'],
             'links.*.url' => ['required', 'url'],
+            'cover_position' => ['nullable', 'array'],
         ];
     }
 }

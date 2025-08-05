@@ -22,6 +22,7 @@ class Band extends Model implements Viewable, HasMedia
         'slug',
         'info',
         'user_id',
+        'cover_position',
     ];
 
     protected $appends = [
@@ -33,6 +34,10 @@ class Band extends Model implements Viewable, HasMedia
 
     protected $hidden = [
         'media',
+    ];
+
+    protected $casts = [
+        'cover_position' => 'array',
     ];
 
 
@@ -104,5 +109,10 @@ class Band extends Model implements Viewable, HasMedia
             ->width(1280)
             ->quality(100)
             ->format('webp');
+    }
+
+    public function getCoverPositionAttribute($value)
+    {
+        return $value ? json_decode($value, true) : ['x' => 50, 'y' => 50];
     }
 }

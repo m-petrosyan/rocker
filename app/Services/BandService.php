@@ -27,7 +27,7 @@ class BandService
             }
         } else {
             $band = auth()->user()->bands()->create(
-                array_merge(['name' => $attributes['name']['name']], Arr::only($attributes, ['info']))
+                array_merge(['name' => $attributes['name']['name']], Arr::only($attributes, ['info', 'cover_position']))
             );
         }
 

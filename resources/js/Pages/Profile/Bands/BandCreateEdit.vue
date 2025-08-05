@@ -48,7 +48,8 @@ const form = useForm(
             name: '',
             genres: '',
             info: '',
-            links: []
+            links: [],
+            cover_position: { x: 50, y: 50 }
         }
 );
 
@@ -93,8 +94,8 @@ const delLink = (index) => {
                             classes="bg-cover"
                             labelClass="h-full"
                             :image="form.cover"
+                            v-model:backgroundPosition="form.cover_position"
                             v-model:preview="form.cover_file"
-                            v-model:file="data.cover"
                         />
                     </div>
                     <div class="flex md:flex-row flex-col w-full gap-2">
@@ -105,7 +106,6 @@ const delLink = (index) => {
                             labelClass="h-full"
                             :image="form.logo"
                             v-model:preview="form.logo_file"
-                            v-model:file="data.logo"
                         />
                         <div class="flex flex-col gap-2 md:w-1/2 w-full">
                             <Multiselect
