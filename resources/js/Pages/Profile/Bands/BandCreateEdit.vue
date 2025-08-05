@@ -135,6 +135,9 @@ const delLink = (index) => {
 
                             <div class="text-gray">
                                 <b>Note :</b>
+                                <p class="text-orange">A mandatory requirement for adding a band is that it must have
+                                    performed
+                                    concerts.</p>
                                 <div class="flex">
                                     <p>You can also add a video from youtube by clicking the button</p>
                                     <img src="/images/video_instruction.png" alt="instruction">
