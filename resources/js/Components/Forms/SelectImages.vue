@@ -142,18 +142,21 @@ const dropZoneClass = computed(() =>
                     v-if="previews.length"
                     v-for="(preview, index) in previews"
                     :key="index"
-                    class="aspect-square overflow-hidden relative"
+                    class="aspect-square relative"
                 >
                     <img :src="preview.thumb ?? preview"
                          :class="{'border border-2 border-orange': cover === preview.id || cover === index}"
                          class="w-full h-full object-cover object-center" alt="Image" />
                     <div
                         class="absolute left-0 top-0 md:opacity-0 hover:opacity-100 flex flex-col justify-between w-full h-full z-10 p-2 bg-blackTransparent2">
-                        <button v-if="useCover" type="button" class="w-fit" @click="setCover(index)">
+                        <button v-if="useCover" type="button" class="w-fit"
+                                @click="setCover(index)"
+                                v-tooltip="'Set cover image'">
                             <ImageIcon />
                         </button>
                         <div class="flex justify-end">
-                            <button type="button" class="w-fit" @click="removeImage(index, preview.id)">
+                            <button type="button" class="w-fit" @click="removeImage(index, preview.id)"
+                                    v-tooltip="'Delete image'">
                                 <DeleteIcon />
                             </button>
                         </div>

@@ -78,15 +78,16 @@ const previewStyle = computed(() => {
         @mouseup="endInteraction"
         @mouseleave="endInteraction"
     >
-        <ArrowUpDown v-if="backgroundPosition" class="hidden group-hover:block" />
         <input type="file" hidden accept="image/*" :id="label" @change="changePreview">
         <label
             :class="[
                 'absolute h-full w-full z-10 flex h-inherit min-h-60 w-inherit items-center justify-center border-dashed border-2 border-graydark2 cursor-pointer rounded-md bg-no-repeat bg-center bg-contain rounded-10 mx-auto',
-                labelClass
+                labelClass,(image || preview) && backgroundPosition ? 'cursor-n-resize' : ''
             ]"
             :style="blur ? previewStyle : {}"
         >
+            <ArrowUpDown v-if="backgroundPosition && (image || preview)" class="hidden group-hover:block" />
+
             <span v-if="!Object.keys(previewStyle).length">Click to upload {{ label }}</span>
         </label>
         <div v-if="blur" class="absolute inset-0 backdrop-blur-md z-0 brightness-50"></div>
