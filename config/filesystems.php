@@ -29,6 +29,7 @@ return [
     */
 
     'disks' => [
+
         'media' => [
             'driver' => 'local',
             'root' => public_path('media'),
@@ -36,6 +37,7 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),
@@ -52,6 +54,11 @@ return [
             'throw' => false,
         ],
 
+        'rocker_backups' => [
+            'driver' => 'local',
+            'root' => storage_path('app/private/Rocker.am'),
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
@@ -64,8 +71,8 @@ return [
             'throw' => false,
             'report' => false,
         ],
-
     ],
+
 
     /*
     |--------------------------------------------------------------------------
@@ -80,9 +87,5 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
-    ],
-    'rocker_backups' => [
-        'driver' => 'local',
-        'root' => storage_path('app/private/Rocker.am'),
     ],
 ];
