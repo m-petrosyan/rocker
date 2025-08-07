@@ -158,7 +158,7 @@ return [
         /*
          * The directory where the temporary files will be stored.
          */
-        'temporary_directory' => storage_path('app/private/Rocker.am/temp'),
+        'temporary_directory' => storage_path('app/backup-temp'),
 
         /*
          * The password to be used for archive encryption.
