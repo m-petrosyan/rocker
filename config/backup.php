@@ -288,7 +288,7 @@ return [
             /*
              * The number of days for which backups must be kept.
              */
-            'keep_all_backups_for_days' => 14,
+            'keep_all_backups_for_days' => 7,
 
             /*
              * After the "keep_all_backups_for_days" period is over, the most recent backup
@@ -336,7 +336,7 @@ return [
         'retry_delay' => 0,
 
         'keep_only_latest' => [
-            'amount' => 5,
+            'amount' => 7,
         ],
 
     ],
