@@ -105,7 +105,7 @@ return [
          * If 'database' (default), the dumped filename will contain the database name.
          * If 'connection', the dumped filename will contain the connection name.
          */
-        'database_dump_filename_base' => 'database',
+        'database_dump_filename_base' => '',
 
         /*
          * The file extension used for the database dump files.
@@ -288,7 +288,7 @@ return [
             /*
              * The number of days for which backups must be kept.
              */
-            'keep_all_backups_for_days' => 7,
+            'keep_all_backups_for_days' => 14,
 
             /*
              * After the "keep_all_backups_for_days" period is over, the most recent backup

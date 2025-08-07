@@ -56,7 +56,7 @@ return [
 
         'rocker_backups' => [
             'driver' => 'local',
-            'root' => storage_path('app/private/Rocker.am'),
+            'root' => storage_path('app/private'),
         ],
 
         's3' => [
