@@ -3,6 +3,10 @@ import { usePDF, VuePDF } from '@tato30/vue-pdf';
 import { ref } from 'vue';
 import ZoomInIcon from '@/Components/Icons/ZoomInIcon.vue';
 import ZoomOutIcon from '@/Components/Icons/ZoomOutIcon.vue';
+import BookIcon from '@/Components/Icons/BookIcon.vue';
+import FitPagesIcon from '@/Components/Icons/FitPagesIcon.vue';
+import ArrowForward from '@/Components/Icons/ArrowForward.vue';
+import ArrowBack from '@/Components/Icons/ArrowBack.vue';
 
 const props = defineProps({
     file: {
@@ -15,13 +19,30 @@ const props = defineProps({
 const fileUrl = props.file instanceof File ? URL.createObjectURL(props.file) : props.file;
 const { pdf, pages } = usePDF(fileUrl);
 
-const scale = ref(100);
+const scale = ref(75);
+const onePageMode = ref(false);
+const page = ref(1);
 </script>
 
 <template>
-    <div class="bg-graydark2 flex items-center justify-between p-2 rounded-t-lg mt-20">
-        <div>Pages: {{ pages }}</div>
-        <div class="flex items-center justify-center gap-2">
+    <div class="relative bg-graydark2 flex items-center justify-between p-2 rounded-t-lg mt-20 mx-auto"
+         :style="{ width: `${scale}%` }">
+        <div class="flex items-center gap-2">
+            <p>Pages:
+                <span v-if="onePageMode">{{ page }} / </span>
+                <span> {{ pages }} </span>
+            </p>
+
+            <div v-if="onePageMode">
+                <button v-if="page !== 1" @click.prevent="page = page -1 ">
+                    <ArrowBack />
+                </button>
+                <button v-if="page !== pages" @click.prevent="page = page +1 ">
+                    <ArrowForward />
+                </button>
+            </div>
+        </div>
+        <div class="absolute left-1/2 -translate-x-1/2 flex items-center justify-center gap-2">
             <button @click.prevent="scale = scale < 100 ? scale + 25 : scale">
                 <ZoomInIcon />
             </button>
@@ -30,15 +51,32 @@ const scale = ref(100);
                 <ZoomOutIcon />
             </button>
         </div>
-        <div></div>
+        <div>
+            <button v-if="!onePageMode" @click.prevent="onePageMode = true">
+                <BookIcon />
+            </button>
+            <button v-else @click.prevent="onePageMode = false">
+                <FitPagesIcon />
+            </button>
+        </div>
     </div>
-    <div v-for="page in pages" :key="page" :style="{ width: `${scale}%` }" class="mx-auto">
-        <VuePDF :pdf="pdf" :page="page" />
+    <div class="mx-auto" :style="{ width: `${scale}%` }">
+        <div v-if="!onePageMode" v-for="page in pages" :key="page" class="pb-1 page bg-white">
+            <VuePDF :pdf="pdf" :page="page" />
+        </div>
+        <VuePDF v-else :pdf="pdf" :page="page" />
     </div>
 </template>
 
-<style>
-canvas {
+<style scoped lang="scss">
+:deep(.page) {
+    -webkit-box-shadow: 4px 4px 8px 0px rgba(84, 84, 84, 1.2);
+    -moz-box-shadow: 4px 4px 8px 0px rgba(84, 84, 84, 1.2);
+    box-shadow: 4px 4px 8px 0px rgba(84, 84, 84, 1.2);
+
+}
+
+:deep(canvas) {
     width: 100% !important;
     height: auto !important;
 }
