@@ -75,6 +75,8 @@ class BlogController extends Controller
      */
     public function destroy(Blog $blog): RedirectResponse
     {
+        $this->authorize('delete', $blog);
+
         $this->blogService->destroy($blog);
 
         session()->flash('message', 'The blog has been deleted.');

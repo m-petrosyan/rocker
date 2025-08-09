@@ -13,9 +13,24 @@ class Event extends Model implements Viewable
     use ViewsTrait;
 
     protected $fillable = [
-        'user_id',
-        'event_id',
+        'title',
+        'content',
+        'link',
+        'type',
+        'ticket',
+        'price',
+        'genre',
+        'country',
+        'city',
+        'location',
+        'cordinates',
+        'start_date',
+        'start_time',
         'notify_count',
+    ];
+
+    protected $casts = [
+        'cordinates' => 'json',
     ];
 
     protected $appends = [

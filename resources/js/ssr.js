@@ -5,6 +5,7 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createSSRApp, h } from 'vue';
 import { route as ziggyRoute, ZiggyVue } from '../../vendor/tightenco/ziggy';
 import PrimeVue from 'primevue/config';
+import tooltipDirective from '@/Directives/tooltipDirective.js';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -45,6 +46,7 @@ try {
 
                         // Ensure $route is globally available
                         app.config.globalProperties.$route = ziggyRoute;
+                        app.directive('tooltip', tooltipDirective);
 
                         return app;
                     } catch (setupError) {

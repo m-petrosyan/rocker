@@ -25,23 +25,17 @@ class EventController
 
     public function store(EventCreateRequest $request): RedirectResponse
     {
-        try {
-            $response = $this->eventService->store($request->validated());
+        $this->eventService->store($request->validated());
 
-            session()->flash('message', $response['message']);
+//        session()->flash('message', $response['message']);
 
-            return redirect()->route('profile.index')
-                ->with(
-                    'success',
-                    auth()->user()->role === 'user'
-                        ? 'Thank you, the event has been created.<br> The event will be added to the list after moderation'
-                        : 'Thank you, the event has been created.'
-                );
-        } catch (\Throwable $e) {
-            session()->flash('message', $e->getMessage()['message'] ?? 'An error occurred while creating the event.');
-
-            return redirect()->back()->withInput();
-        }
+        return redirect()->route('profile.index')
+            ->with(
+                'success',
+                auth()->user()->role === 'user'
+                    ? 'Thank you, the event has been created.<br> The event will be added to the list after moderation'
+                    : 'Thank you, the event has been created.'
+            );
     }
 
     public function update()

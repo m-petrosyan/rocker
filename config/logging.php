@@ -113,11 +113,12 @@ return [
         ],
 
         'errorlog' => [
-            'driver' => 'errorlog',
-            'level' => env('LOG_LEVEL', 'debug'),
+            'driver' => 'daily',
+            'path' => storage_path('logs/errors.log'),
+            'level' => 'error',
             'replace_placeholders' => true,
+            'days' => 14,
         ],
-
         'null' => [
             'driver' => 'monolog',
             'handler' => NullHandler::class,

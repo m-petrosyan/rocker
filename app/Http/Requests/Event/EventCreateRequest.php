@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests\Event;
 
-use App\Enums\CountyEnum;
-use App\Enums\EventTypeEnum;
 use App\Enums\GenreEnum;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -45,6 +43,13 @@ class EventCreateRequest extends FormRequest
             'bands.*.name' => ['required', 'string', 'max:255'],
             'bands.*.id' => ['nullable', 'integer', 'exists:bands,id'],
         ];
+    }
+
+    public function prepareForValidation(): void
+    {
+        $this->merge([
+            'content' => mb_convert_encoding($this->input('content'), 'UTF-8'),
+        ]);
     }
 
     public function messages(): array

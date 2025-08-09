@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\ServiceProvider;
+
 return [
 
     /*
@@ -52,7 +54,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'https://rockerloc.loca.lt'),
 
     /*
     |--------------------------------------------------------------------------
@@ -123,5 +125,7 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
-
+    'providers' => ServiceProvider::defaultProviders()->merge([
+        App\Providers\RouteServiceProvider::class,
+    ])->toArray(),
 ];

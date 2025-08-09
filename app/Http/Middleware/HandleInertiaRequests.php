@@ -34,6 +34,8 @@ class HandleInertiaRequests extends Middleware
             config(['app.debug' => true]);
         }
 
+//        dd(auth('bot')->user());
+
         return [
             ...parent::share($request),
             'auth' => [

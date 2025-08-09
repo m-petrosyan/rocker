@@ -31,7 +31,7 @@ onMounted(() => {
 });
 
 const verify = async () => {
-    form.post(route('verification.verify'));
+    form.post(route('verification.verify1'));
 };
 </script>
 

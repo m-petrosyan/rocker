@@ -42,7 +42,7 @@ defineProps({
                         },
                     ]"
         />
-        <MultiSelect class="w-48" />
+        <!--        <MultiSelect class="w-48" />-->
         <EventWrapper :events="events.data" add />
     </GuestLayout>
 </template>

@@ -1,5 +1,7 @@
 const tooltipDirective = {
     mounted(el, binding) {
+        if (typeof window === 'undefined') return; // Защита для SSR
+
         // Создаем элемент tooltip
         const tooltip = document.createElement('div');
         tooltip.className = 'tooltip tooltip-top';
@@ -49,6 +51,8 @@ const tooltipDirective = {
         el._tooltip._updatePosition = updatePosition;
     },
     unmounted(el) {
+        if (typeof window === 'undefined') return; // Защита для SSR
+
         // Удаляем tooltip и слушатели событий
         if (el._tooltip) {
             el._tooltip.remove();

@@ -7,7 +7,6 @@ use App\Http\Requests\User\UserUpdateRequest;
 use App\Models\User;
 use App\Repositories\BandRepository;
 use App\Repositories\BlogRepository;
-use App\Repositories\EventRepository;
 use App\Repositories\GalleryReoisitory;
 use App\Services\UserService;
 use Illuminate\Http\RedirectResponse;
@@ -46,7 +45,7 @@ class ProfileController
             'owner' => $owner,
             'url' => $owner ? route('profile.show', ['username' => $user->username]) : null,
             'galleries' => GalleryReoisitory::userGallery($user),
-            'events' => EventRepository::userEvents($user->events->load('views')),
+            'events' => ['data' => []],
             'bands' => BandRepository::userBands($user),
             'blogs' => BlogRepository::userBlogs($user),
         ]);

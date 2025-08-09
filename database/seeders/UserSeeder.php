@@ -13,17 +13,16 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         if (app()->environment('local')) {
-            $user = User::query()->firstOrCreate(
-                ['email' => 'admin@gmail.com'],
+            User::query()->firstOrCreate(
+                ['email' => 'john@gmail.com'],
                 [
-                    'name' => 'admin',
-                    'username' => 'admin',
-                    'password' => bcrypt('12345678'),
+                    'email' => 'john@gmail.com',
                     'email_verified_at' => now(),
+                    'name' => 'John doe',
+                    'username' => 'john',
+                    'password' => '12345678',
                 ]
-            );
-
-            $user->assignRole('admin');
+            )->assignRole('admin');
         }
     }
 }

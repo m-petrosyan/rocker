@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Notifications\NewCreationNotification;
 use App\Traits\ComponentServiceTrait;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Notification;
 
@@ -62,7 +63,7 @@ class EventService
 
             $this->addSyncBand($event, $attributes);
 
-//            Cache::forget('events');
+            Cache::forget('events');
 
             Notification::route('mail', config('mail.admin.address'))
                 ->notify(new NewCreationNotification($event));

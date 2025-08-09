@@ -1,7 +1,7 @@
 <template>
     <GoogleMap
         v-if="center"
-        api-key="AIzaSyCovr1rcKSduU9SLpe_IX-EzuF-_sVVAlY"
+        api-key="`import.meta.env.VITE_GOOGLE_MAPS_API_KEY`"
         :center="center"
         :zoom="18"
         :styles="darkTheme"
