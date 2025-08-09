@@ -22,6 +22,10 @@ class BlogService
             $this->addImage($blog, $attributes['cover_file'], 'cover');
         }
 
+        if (isset($attributes['pdf_file'])) {
+            $this->addImage($blog, $attributes['pdf_file'], 'pdf');
+        }
+
         $this->addSyncBand($blog, $attributes);
 
         Notification::route('mail', config('mail.admin.address'))
@@ -34,6 +38,11 @@ class BlogService
 
         $this->addSyncBand($blog, $attributes);
 
+        if (isset($attributes['pdf_file'])) {
+            $blog->clearMediaCollection('pdf');
+            $this->addImage($blog, $attributes['pdf_file'], 'pdf');
+        }
+
         if (isset($attributes['cover_file'])) {
             $blog->clearMediaCollection('cover');
             $this->addImage($blog, $attributes['cover_file'], 'cover');
@@ -43,6 +52,7 @@ class BlogService
     public function destroy($blog): void
     {
         $blog->clearMediaCollection('cover');
+        $blog->clearMediaCollection('pdf');
 
         $blog->delete();
     }

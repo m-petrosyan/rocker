@@ -27,6 +27,7 @@ class Blog extends Model implements Viewable, HasMedia
     ];
 
     protected $appends = [
+        'pdf',
         'cover',
         'views',
         'bands',
@@ -52,6 +53,21 @@ class Blog extends Model implements Viewable, HasMedia
     public function getCoverAttribute(): array
     {
         return $this->getImage('cover');
+    }
+
+    public function getPdfAttribute(): ?array
+    {
+        $media = $this->getMedia('pdf')->first();
+        if (!$media) {
+            return null;
+        }
+
+        return [
+            'url' => $media->getUrl(),
+            'name' => $media->name,
+            'size' => $media->size,
+            'mime_type' => $media->mime_type,
+        ];
     }
 
     public function registerMediaConversions(?Media $media = null): void

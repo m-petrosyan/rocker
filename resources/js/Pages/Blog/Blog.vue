@@ -5,6 +5,7 @@ import NavLink from '@/Components/NavLink.vue';
 import { ref } from 'vue';
 import { getUrlQuery } from '@/Helpers/urlHelper.js';
 import SocialShare from '@/Components/Socials/SocialShare.vue';
+import PDFViewer from '@/Components/Tools/PDFViewer.vue';
 
 const props = defineProps({
     blog: {
@@ -27,12 +28,14 @@ const setLang = (language) => {
     }
 };
 
+
 </script>
 
 <template>
     <GuestLayout
         :meta="{title:  blog.title['en'] ?? blog.title['am']  ,image:blog.cover.large , description: blog.description['en'] ?? blog.description['am'] , author: blog.author ?? blog.user.name,keywords: blog.bands.map(band => band?.name).join(',')}">
         <h1 class="text-center">{{ blog.title[lang] }}</h1>
+
         <div class="flex flex-col-reverse md:flex-row mt-5 gap-x-4 gap-y-6">
             <div class="md:w-2/3">
                 <div
@@ -69,5 +72,6 @@ const setLang = (language) => {
             </div>
         </div>
         <div class="md:w-5/6 mx-auto mt-8 md:p-0 p-3" v-html="blog.content[lang]" />
+        <PDFViewer v-if="blog.pdf" :file="blog.pdf" />
     </GuestLayout>
 </template>

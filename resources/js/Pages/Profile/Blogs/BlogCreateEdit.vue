@@ -7,6 +7,7 @@ import ProfileLayout from '@/Layouts/ProfileLayout.vue';
 import TextEditor from '@/Components/Forms/TextEditor.vue';
 import Multiselect from '@/Components/Forms/MultiSelect.vue';
 import RadioSwichButton from '@/Components/Forms/RadioSwichButton.vue';
+import PDFViewer from '@/Components/Tools/PDFViewer.vue';
 
 const props = defineProps({
     blog: {
@@ -45,7 +46,9 @@ const form = useForm(
             description: { en: '', am: '' },
             content: { en: '', am: '' },
             author: '',
-            bands: []
+            bands: [],
+            pdf_file: null,
+            pdf: null
         }
 );
 
@@ -139,6 +142,25 @@ const createBlog = () => {
                     collection="event-image"
                 />
             </div>
+            <div class="flex items-center gap-x-2">
+                <label for="pdf" class="text-gray">PDF</label>
+                <input
+                    type="file"
+                    id="pdf"
+                    accept=".pdf"
+                    ref="pdfInput"
+                    @change="(e) => form.pdf_file = e.target.files[0]"
+                    class="hidden"
+                />
+                <button
+                    type="button"
+                    class="bg-graydark2 rounded-sm p-2 text-pretty hover:bg-opacity-100"
+                    @click="$refs.pdfInput.click()"
+                >
+                    Select PDF
+                </button>
+            </div>
+            <PDFViewer v-if="form.pdf_file ?? form.pdf" :file="form.pdf_file ?? form.pdf" />
             <PrimaryButton
                 class="ms-4"
                 :class="{ 'opacity-25': form.processing }"

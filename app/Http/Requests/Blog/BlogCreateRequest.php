@@ -39,6 +39,7 @@ class BlogCreateRequest extends FormRequest
             'bands.*.name' => ['required', 'string', 'max:255'],
             'bands.*.id' => ['nullable', 'integer', 'exists:bands,id'],
             'author' => ['nullable', 'string', 'max:255'],
+            'pdf_file' => ['nullable', 'file', 'mimes:pdf', 'max:10000'],
         ];
     }
 
@@ -61,8 +62,12 @@ class BlogCreateRequest extends FormRequest
                 return empty($cleaned);
             };
 
-            // Validation for English fields
-            if (!empty($title['en']) || !empty($description['en']) || !$isContentEmpty($content['en'])) {
+            $hasPdfFile = !empty($this->file('pdf_file')) || !empty($this->file('pdf')) ||
+                !empty($this->input('pdf_file')) || !empty($this->input('pdf'));
+
+            if (!$hasPdfFile && (!empty($title['en']) || !empty($description['en']) || !$isContentEmpty(
+                        $content['en']
+                    ))) {
                 if (empty($title['en'])) {
                     $validator->errors()->add(
                         'title.en',
@@ -78,7 +83,7 @@ class BlogCreateRequest extends FormRequest
                 if ($isContentEmpty($content['en'])) {
                     $validator->errors()->add(
                         'content.en',
-                        'English content is required and cannot consist only of HTML tags (e.g., <p><br></p> or <p></p>) when any English field is provided.'
+                        'English content is required when any English field is provided.'
                     );
                 } elseif (strlen(trim(strip_tags($content['en']))) < 50) {
                     $validator->errors()->add(
@@ -88,7 +93,10 @@ class BlogCreateRequest extends FormRequest
                 }
             }
 
-            if (!empty($title['am']) || !empty($description['am']) || !$isContentEmpty($content['am'])) {
+// Проверка для армянского языка
+            if (!$hasPdfFile && (!empty($title['am']) || !empty($description['am']) || !$isContentEmpty(
+                        $content['am']
+                    ))) {
                 if (empty($title['am'])) {
                     $validator->errors()->add(
                         'title.am',
