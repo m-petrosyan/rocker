@@ -20,11 +20,11 @@ class CheckDiskSpaceCommand extends Command
         if ($usedSpace >= $prcent) {
             $chat = UserBot::where('chat_id', config('telegraph.webhook.chat_id'))->firstOrFail();
 
-            $chat->message("⚠️ Диск заполнен на (int){$usedSpace}%!")->send();
+            $chat->message("⚠️ Disk is ".(int)$usedSpace."%  full!")->send();
 
-            $this->info('Уведомление отправлено в Telegram.');
+            $this->info('Notification sent to Telegram.');
         } else {
-            $this->info("Диск заполнен менее чем на ".$prcent."%.");
+            $this->info("Disk is less than ".$prcent."% full.");
         }
     }
 }
