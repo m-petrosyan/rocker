@@ -25,7 +25,7 @@ defineProps({
 
 <template>
     <GuestLayout
-        :meta="{title: band.name ,image:band.logo?.large , description: band.info, keywords: band.name}">
+        :meta="{title: band.name ,image:band.logo , description: band.info, keywords: band.name}">
         <div class="lg:h-96 h-64  relative">
             <div v-if="band.links.length"
                  class="absolute flex md:flex-col gap-x-5 right-0 w-fit top-0 bg-opacity-20 bg-graydark p-3">
@@ -39,7 +39,7 @@ defineProps({
                 :alt="band.name"
                 :style="band.cover_position ? `object-position: ${band.cover_position.x}% ${band.cover_position.y}%` : ''"
             />
-            <img :src="band.logo?.thumb"
+            <img :src="band.logo"
                  class="z-10 lg:w-48 md:w-32 w-2/12 absolute lg:bottom-0 lg:-translate-x-0 lg:left-0 bottom-5 left-1/2  -translate-x-1/2"
                  :alt="band.name">
             <div class="absolute h-1/6 left-1/2 lg:w-fit w-full -translate-x-1/2 text-center bottom-0 bg-graydark p-5">

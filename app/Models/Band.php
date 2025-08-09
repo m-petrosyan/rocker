@@ -72,11 +72,12 @@ class Band extends Model implements Viewable, HasMedia
         return $this->getImage('cover');
     }
 
-    public function getLogoAttribute(): array
+    public function getLogoAttribute(): ?string
     {
-        return $this->getImage('logo');
-    }
+        $mediaItem = $this->getMedia('logo')->first();
 
+        return $mediaItem ? $mediaItem->getUrl() : null;
+    }
 
     public function getImagesUrlAttribute(): array
     {
