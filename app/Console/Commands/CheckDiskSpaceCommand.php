@@ -15,7 +15,7 @@ class CheckDiskSpaceCommand extends Command
         $drive = '/';
         $usedSpace = (1 - disk_free_space($drive) / disk_total_space($drive)) * 100;
 
-        $prcent = 5;
+        $prcent = 90;
 
         if ($usedSpace >= $prcent) {
             $chat = UserBot::where('chat_id', config('telegraph.webhook.chat_id'))->firstOrFail();
@@ -24,7 +24,8 @@ class CheckDiskSpaceCommand extends Command
 
             $this->info('Уведомление отправлено в Telegram.');
         } else {
-            $this->info("Диск заполнен менее чем на $prcent %.");
+            $usedSpace = round((1 - disk_free_space($drive) / disk_total_space($drive)) * 100);
+            $this->info("Диск заполнен менее чем на  $usedSpace %.");
         }
     }
 }
