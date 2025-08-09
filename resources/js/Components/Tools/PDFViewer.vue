@@ -7,6 +7,7 @@ import BookIcon from '@/Components/Icons/BookIcon.vue';
 import FitPagesIcon from '@/Components/Icons/FitPagesIcon.vue';
 import ArrowForward from '@/Components/Icons/ArrowForward.vue';
 import ArrowBack from '@/Components/Icons/ArrowBack.vue';
+import PagesIcon from '@/Components/Icons/PagesIcon.vue';
 
 const props = defineProps({
     file: {
@@ -28,27 +29,28 @@ const page = ref(1);
     <div class="relative bg-graydark2 flex items-center justify-between p-2 rounded-t-lg mt-20 mx-auto"
          :style="{ width: `${scale}%` }">
         <div class="flex items-center gap-2">
-            <p>Pages:
-                <span v-if="onePageMode">{{ page }} / </span>
-                <span> {{ pages }} </span>
-            </p>
+            <p class="flex items-center gap-2">
+                <PagesIcon />
+                <span v-if="!onePageMode"> {{ pages }} </span></p>
 
-            <div v-if="onePageMode">
+            <div v-if="onePageMode" class="flex items-center gap-2">
                 <button v-if="page !== 1" @click.prevent="page = page -1 ">
                     <ArrowBack />
                 </button>
+                <span v-if="onePageMode">{{ page }} / </span>
+                <span> {{ pages }} </span>
                 <button v-if="page !== pages" @click.prevent="page = page +1 ">
                     <ArrowForward />
                 </button>
             </div>
         </div>
         <div class="absolute left-1/2 -translate-x-1/2 flex items-center justify-center gap-2">
-            <button @click.prevent="scale = scale < 100 ? scale + 25 : scale">
-                <ZoomInIcon />
-            </button>
-            <div class="mx-2">{{ scale }}%</div>
             <button @click.prevent="scale = scale > 50 ? scale - 25 : scale">
                 <ZoomOutIcon />
+            </button>
+            <div class="mx-2">{{ scale }}%</div>
+            <button @click.prevent="scale = scale < 100 ? scale + 25 : scale">
+                <ZoomInIcon />
             </button>
         </div>
         <div>
