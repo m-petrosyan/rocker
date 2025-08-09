@@ -55,13 +55,13 @@ const deleteBand = (id) => {
                 :key="band.id"
                 class="flex flex-col items-center p-4">
                 <div class="relative h-64 w-full rounded-lg overflow-hidden bg-black">
-                    <img v-if="band.logo.thumb && band.logo.thumb.trim()"
-                         :src="band.logo.thumb"
+                    <img v-if="band.logo && band.logo.trim()"
+                         :src="band.logo"
                          class="object-contain w-full h-full"
                          alt="Loading"
-                         @error="$event.target.src = band.logo.original" />
-                    <img v-else-if="band.logo.original"
-                         :src="band.logo.original"
+                         @error="$event.target.src = band.logo" />
+                    <img v-else-if="band.logo"
+                         :src="band.logo"
                          class="object-contain w-full h-full"
                          alt="Loading" />
                     <div v-if="owner || isAdmin"
