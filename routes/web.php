@@ -10,10 +10,15 @@ use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\PwaInstallController;
+use DefStudio\Telegraph\Facades\Telegraph;
 use Illuminate\Support\Facades\Route;
 
 require_once __DIR__.'/guest.php';
 require_once __DIR__.'/auth.php';
+
+Route::get('/get-updates', function () {
+    return Telegraph::getUpdates();
+});
 
 Route::get('/', HomeController::class)->name('home');
 Route::resource('events', EventController::class)->only('index', 'show');
