@@ -24,8 +24,7 @@ class CheckDiskSpaceCommand extends Command
 
             $this->info('Уведомление отправлено в Telegram.');
         } else {
-            $usedSpace = round((1 - disk_free_space($drive) / disk_total_space($drive)) * 100);
-            $this->info("Диск заполнен менее чем на {$usedSpace}%.");
+            $this->info("Диск заполнен менее чем на ".(int)$prcent."%.");
         }
     }
 }
