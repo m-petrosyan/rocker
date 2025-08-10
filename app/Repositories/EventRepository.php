@@ -84,13 +84,15 @@ class EventRepository
 //        }
 
 
-        $event = Event::query()->where('event_id', $eventId)->first()?->load('bands', 'views');
-//        dump(1);
-        // Если локальное событие найдено, объединяем данные и фиксируем просмотр
-        if ($event) {
-            $json['data'] = array_merge($json['data'], $event->toArray());
-            views($event)->record();
-        }
+//        $event = Event::query()->where('event_id', $eventId)->first()?->load('bands', 'views');
+////        dump(1);
+//        // Если локальное событие найдено, объединяем данные и фиксируем просмотр
+//        if ($event) {
+//            dd(1);
+//            $json['data'] = array_merge($json['data'], $event->toArray());
+//            views($event)->record();
+//        }
+//        dd($json['data']);
 
         // Возвращаем объединённые данные
         return $json['data'];
