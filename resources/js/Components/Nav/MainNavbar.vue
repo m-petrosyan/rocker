@@ -46,7 +46,7 @@ onBeforeUnmount(() => {
             </component>
         </div>
         <div class="absolute top-0 right-2 flex gap-x-4 p-5 uppercase">
-            <template v-if="$page.props.auth.user">
+            <template v-if="$page.props.auth.user?.email_verified_at">
                 <Link :href="route('profile.show', {'username': $page.props.auth.user.username})">
                     Profile
                 </Link>

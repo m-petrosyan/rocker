@@ -1,7 +1,6 @@
 <script setup>
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { useForm } from '@inertiajs/vue3';
-import ErrorMessages from '@/Components/Messages/ErrorMessages.vue';
 import SuccessMessages from '@/Components/Messages/SuccessMessages.vue';
 import TextInput from '@/Components/Forms/TextInput.vue';
 import { onMounted } from 'vue';
@@ -31,13 +30,12 @@ onMounted(() => {
 });
 
 const verify = async () => {
-    form.post(route('verification.verify1'));
+    form.post(route('verification.verify'));
 };
 </script>
 
 <template>
     <AuthLayouth title="Email Verification">
-        <ErrorMessages :messages="$page.props.errors" />
         <h4 class="text-md  mb-4">
             Thanks for signing up! Before getting started, could you verify
             your email address by clicking on the link we just emailed to
