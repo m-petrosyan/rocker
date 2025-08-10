@@ -1,20 +1,6 @@
-<template>
-    <GoogleMap
-        v-if="center"
-        api-key="`import.meta.env.VITE_GOOGLE_MAPS_API_KEY`"
-        :center="center"
-        :zoom="18"
-        :styles="darkTheme"
-        class="w-full h-[500px]"
-    >
-        <Marker :options="{ position: center }" />
-    </GoogleMap>
-</template>
-
 <script setup>
 import { GoogleMap, Marker } from 'vue3-google-map';
 import { computed } from 'vue';
-
 
 const props = defineProps({
     cordinates: {
@@ -22,6 +8,8 @@ const props = defineProps({
         required: true
     }
 });
+
+const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 const center = computed(() => {
     return {
@@ -41,3 +29,16 @@ const darkTheme = [
     { featureType: 'poi', elementType: 'geometry', stylers: [{ color: '#1a1a1a' }] }
 ];
 </script>
+
+<template>
+    <GoogleMap
+        v-if="center"
+        :api-key="apiKey"
+        :center="center"
+        :zoom="18"
+        :styles="darkTheme"
+        class="w-full h-[500px]"
+    >
+        <Marker :options="{ position: center }" />
+    </GoogleMap>
+</template>
