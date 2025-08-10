@@ -64,9 +64,9 @@ const page = ref(1);
     </div>
     <div class="mx-auto" :style="{ width: `${scale}%` }">
         <div v-if="!onePageMode" v-for="page in pages" :key="page" class="pb-1 page bg-white">
-            <VuePDF :pdf="pdf" :page="page" />
+            <VuePDF :pdf="pdf" :page="page" :scale="3" />
         </div>
-        <VuePDF v-else :pdf="pdf" :page="page" />
+        <VuePDF v-else :pdf="pdf" :page="page" :scale="3" />
     </div>
 </template>
 

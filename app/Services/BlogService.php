@@ -37,7 +37,7 @@ class BlogService
         $blog->update($attributes);
 
         $this->addSyncBand($blog, $attributes);
-
+    
         if (isset($attributes['pdf_file'])) {
             $blog->clearMediaCollection('pdf');
             $this->addImage($blog, $attributes['pdf_file'], 'pdf');

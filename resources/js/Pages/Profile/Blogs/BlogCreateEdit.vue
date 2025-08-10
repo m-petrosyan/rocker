@@ -38,6 +38,7 @@ const form = useForm(
         ? {
             ...props.blog,
             cover_file: null,
+            pdf_file: null,
             _method: 'PUT'
         }
         : {
@@ -160,7 +161,11 @@ const createBlog = () => {
                     Select PDF
                 </button>
             </div>
-            <PDFViewer v-if="form.pdf_file ?? form.pdf" :file="form.pdf_file ?? form.pdf" />
+            <PDFViewer
+                v-if="form.pdf_file ?? form.pdf"
+                :key="form.pdf_file ? form.pdf_file.name + form.pdf_file.lastModified : form.pdf"
+                :file="form.pdf_file ?? form.pdf"
+            />
             <PrimaryButton
                 class="ms-4"
                 :class="{ 'opacity-25': form.processing }"
