@@ -71,7 +71,7 @@ class EventService
                 'notify_count' => $data['notify_count'],
             ]);
 
-            $this->addSyncBand($event, $attributes);
+//            $this->addSyncBand($event, $attributes);
 
             Cache::forget('events');
 
