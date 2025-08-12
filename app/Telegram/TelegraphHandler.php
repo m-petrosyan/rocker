@@ -71,33 +71,41 @@ class TelegraphHandler extends WebhookHandler
 
         $this->sendMessageWithButton('menu', $buttons, 4702);
 
-//        $this->chat->message(trans('messages.indicate_city'))
-//            ->keyboard(
-//                Keyboard::make()->buttons([
-//                    Button::make('➕ Add event')->webApp(env('APP_URL').'/profile/events/create'),
-//                    Button::make('📃 Events list')->action('stats'),
-//                    Button::make('📅 Events list (web)')->webApp(env('APP_URL')),
-//                    Button::make('web')->webApp(env('APP_URL').'/test'),
-//                ])
-//            )->send();
+        $this->chat->message(trans('messages.indicate_city'))
+            ->keyboard(
+                Keyboard::make()->buttons([
+                    Button::make('➕ Add event')->webApp(env('APP_URL').'/profile/events/create'),
+                    Button::make('📃 Events list')->action('stats'),
+                    Button::make('📅 Events list (web)')->webApp(env('APP_URL')),
+                    Button::make('web')->webApp(env('APP_URL').'/test'),
+                ])
+            )->send();
     }
 
-    protected function sendMessageWithButton(string $messageText, array $buttons, int|null $messageId = null): void
+    protected function sendMessageWithButton(string $messageText, array $buttons, ?int $messageId = null): void
     {
         Log::info('$messageId keyboard', [$messageId]);
+
         if ($messageId) {
             $this->chat->replaceKeyboard(
-                $messageId + 2,
+                $messageId,
                 Keyboard::make()->buttons($buttons)
             )->send();
-        } else {
-            Log::info('Sending new message with keyboard');
-            $this->chat->message($messageText)
-                ->keyboard(
-                    Keyboard::make()->buttons($buttons)
-                )
-                ->send();
+
+            return;
         }
+
+        $msg = $this->chat->message($messageText)
+            ->keyboard(Keyboard::make()->buttons($buttons))
+            ->send();
+
+        $lastMenuId = Cache::store('redis')->get("chat:{$this->chat->chat_id}:last_menu_id");
+
+        if ($lastMenuId) {
+            $this->chat->deleteMessage($lastMenuId)->send();
+        }
+
+        Cache::store('redis')->put("chat:{$this->chat->chat_id}:last_menu_id", $msg->telegraphMessageId(), 432000);
     }
 
 
@@ -134,26 +142,22 @@ class TelegraphHandler extends WebhookHandler
 
     private function prepareMessageParams(string $chatId, ?int $currentMessageId): ?int
     {
-        $cacheKey = "chat:{$chatId}:message_id";
+        $cacheKey = "chat:{$chatId}:last_menu_id";
         $lastMessageId = Cache::store('redis')->get($cacheKey);
 
+        Log::info('Cached message_id', [
+            'cacheKey' => $cacheKey,
+            'lastMessageId' => $lastMessageId,
+            'currentMessageId' => $currentMessageId,
+        ]);
 
-        Log::info(
-            'Cached message_id',
-            [
-                'cacheKey' => $cacheKey,
-                'lastMessageId' => $lastMessageId,
-                'currentMessageId' => $currentMessageId,
-            ]
-        );
-
-
-        if ($lastMessageId + 2 <= $currentMessageId) {
+        if ($lastMessageId && $lastMessageId + 2 >= $currentMessageId) {
             Log::info('Using cached message_id');
-            Cache::store('redis')->put($cacheKey, $currentMessageId, 432000);
 
             return $lastMessageId;
         }
+
+        Cache::store('redis')->put($cacheKey, $currentMessageId, 432000);
 
         return null;
     }
@@ -195,7 +199,6 @@ class TelegraphHandler extends WebhookHandler
             Button::make(trans('menu.events_list_web'))->webApp(config('app.url')),
             Button::make(trans('menu.favorite_events'))->action('stats'),
             Button::make(trans('menu.settings'))->action('settings'),
-//            Button::make(rand(1, 100))->webApp(env('APP_URL').'/test'),
         ];
 
         if (auth()->user()->isAdmin()) {
@@ -203,14 +206,9 @@ class TelegraphHandler extends WebhookHandler
         }
 
         $lastMessageId = $this->prepareMessageParams($this->chat->chat_id, $this->message?->id());
-
-//        Log::info('lastMessageId--1', [$lastMessageId]);
-        $this->sendMessageWithButton(
-            trans('menu.menu'),
-            $buttons,
-            $lastMessageId
-        );
+        $this->sendMessageWithButton(trans('menu.menu'), $buttons, $lastMessageId);
     }
+
 
     public function settings(): void
     {
