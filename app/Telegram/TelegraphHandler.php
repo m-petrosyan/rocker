@@ -84,10 +84,10 @@ class TelegraphHandler extends WebhookHandler
 
     protected function sendMessageWithButton(string $messageText, array $buttons, int|null $messageId = null): void
     {
+        Log::info('$messageId keyboard', [$messageId]);
         if ($messageId) {
-            Log::info('Replacing keyboard for message ID: '.$messageId);
             $this->chat->replaceKeyboard(
-                $messageId,
+                $messageId + 2,
                 Keyboard::make()->buttons($buttons)
             )->send();
         } else {
@@ -137,9 +137,6 @@ class TelegraphHandler extends WebhookHandler
         $cacheKey = "chat:{$chatId}:message_id";
         $lastMessageId = Cache::store('redis')->get($cacheKey);
 
-//        if ($currentMessageId) {
-//            Cache::store('redis')->put($cacheKey, $currentMessageId, 432000);
-//        }
 
         Log::info(
             'Cached message_id',
@@ -151,7 +148,7 @@ class TelegraphHandler extends WebhookHandler
         );
 
 
-        if ($lastMessageId && $currentMessageId && ($lastMessageId + 6 <= $currentMessageId)) {
+        if ($lastMessageId + 2 <= $currentMessageId) {
             Log::info('Using cached message_id');
             Cache::store('redis')->put($cacheKey, $currentMessageId, 432000);
 
@@ -159,6 +156,20 @@ class TelegraphHandler extends WebhookHandler
         }
 
         return null;
+    }
+
+
+    public function add_event_instruction(): void
+    {
+        $buttons = [
+            Button::make(trans('menu.add_event'))->webApp(config('app.url').'/profile/events/create'),
+        ];
+
+        $this->chat
+            ->photo('images/add_event_instruction.jpg')
+            ->html(trans('messages.add_event_instruction'))
+            ->keyboard(Keyboard::make()->buttons($buttons))
+            ->send();
     }
 
 
@@ -178,35 +189,45 @@ class TelegraphHandler extends WebhookHandler
     {
         Log::info('menu');
 
-//        Log::info($this->chat->user->isAdmin());
-//        Log::info(auth()->user()->isAdmin());
-//        $this->chat->message(trans('messages.indicate_city'))
-//            ->keyboard(
-//                Keyboard::make()->buttons([
-//                    Button::make('➕ Add event')->webApp(env('APP_URL').'/profile/events/create'),
-//                    Button::make('📃 Events list')->action('stats'),
-//                    Button::make('📅 Events list (web)')->webApp(env('APP_URL')),
-//                    Button::make('web')->webApp(env('APP_URL').'/test'),
-//                ])
-//            )->send();
-//
         $buttons = [
-            Button::make('back')->action('settings'),
+            Button::make(trans('menu.add_event'))->webApp(config('app.url').'/profile/events/create'),
+            Button::make(trans('menu.events_list'))->action('stats'),
+            Button::make(trans('menu.events_list_web'))->webApp(config('app.url')),
+            Button::make(trans('menu.favorite_events'))->action('stats'),
+            Button::make(trans('menu.settings'))->action('settings'),
+//            Button::make(rand(1, 100))->webApp(env('APP_URL').'/test'),
         ];
+
+        if (auth()->user()->isAdmin()) {
+            $buttons[] = Button::make(trans('menu.admin_panel'))->webApp(config('app.url').'/test');
+        }
 
         $lastMessageId = $this->prepareMessageParams($this->chat->chat_id, $this->message?->id());
 
-        Log::info('lastMessageId', [$lastMessageId]);
-        $this->sendMessageWithButton(trans('messages.indicate_country'), $buttons, $lastMessageId);
-//        'menu_title' => '🎉 Menu for now:',
-//    'menu' => '📃 Menu',
-//    'events_list' => '📅 Events list',
-//    'events_list_web' => '📅 Events list (web)',
-//    'add_event' => '➕ Add event',
+//        Log::info('lastMessageId--1', [$lastMessageId]);
+        $this->sendMessageWithButton(
+            trans('menu.menu'),
+            $buttons,
+            $lastMessageId
+        );
     }
 
     public function settings(): void
     {
-        $this->reply("settings");
+        $buttons = [
+            Button::make(trans('settings.country'))->action('stats'),
+            Button::make(trans('settings.city'))->action('stats'),
+
+//            Button::make(rand(1, 100))->webApp(env('APP_URL').'/test'),
+        ];
+        Log::info('asadsa', [$this]);
+        $lastMessageId = $this->prepareMessageParams($this->chat->chat_id, $this->message?->id());
+        $this->sendMessageWithButton(
+            trans('settings.countries.Armenia 🇦🇲'),
+            $buttons,
+            $lastMessageId
+        );
+//        $this->reply("settings");
     }
+
 }

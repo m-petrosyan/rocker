@@ -25,3 +25,6 @@ npm run ssr
 ```
 sudo supervisorctl restart laravel-worker-rocker-app:*
 ```
+
+ngrok http http://rocker.loc
+php artisan telegraph:set-webhook 

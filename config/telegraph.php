@@ -18,6 +18,7 @@ return [
      */
     'default_parse_mode' => Telegraph::PARSE_HTML,
 
+
     'webhook' => [
         /*
          * Sets the webhook URL that will be exposed by the server,
@@ -113,13 +114,6 @@ return [
     'configs' => [
         'token' => env('TELEGRAM_BOT_TOKEN'),
         'name' => env('TELEGRAM_BOT_NAME'),
-    ],
-
-    'menu' => [
-        'menu' => 'menu.menu',
-        'events_list' => 'menu.events_list',
-        'favorite_events' => 'menu.favorite_events',
-        'settings' => 'menu.settings',
     ],
 
     /*
