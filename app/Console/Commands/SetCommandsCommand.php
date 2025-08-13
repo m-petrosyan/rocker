@@ -13,14 +13,6 @@ class SetCommandsCommand extends Command
 
     public function handle(): void
     {
-        $menu = trans('commands');
-        dd($menu);
-        $menu = array_merge($menu, ['add_event_instruction' => trans('commands.add_event_instruction')]);
-
-        $menuButtons = array_map(function ($value) {
-            return trans($value);
-        }, $menu);
-
-        Bot::firstOrFail()->registerCommands($menuButtons)->send();
+        Bot::firstOrFail()->registerCommands(trans('commands'))->send();
     }
 }

@@ -1,17 +1,21 @@
 > Testing ssr
 
-
-
-> Run
-
-```bash
-sudo -u www-data php artisan queue:work --tries=3 --verbose
-```
-
 > Local run ssr
 
 ```bash
 npm run ssr
+```
+
+> Run
+
+```bash
+php artisan queue:work --tries=3 --verbose
+```
+
+> Set commands
+
+```
+php artisan app:set-commands
 ```
 
 > Diploy
@@ -20,7 +24,7 @@ npm run ssr
  git pull && npm run build && pm2 restart rocker
 ```
 
-> restart queue
+> Server restart queue
 
 ```
 sudo supervisorctl restart laravel-worker-rocker-app:*
