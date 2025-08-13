@@ -23,7 +23,6 @@ Route::get('/test', function () {
 
 
 Route::post('/telegram/auth', function (Request $request) {
-//    dd($request->input('id'));
     auth()->loginUsingId(UserBot::query()->where('chat_id', $request->input('id'))->first()->user?->id);
 });
 

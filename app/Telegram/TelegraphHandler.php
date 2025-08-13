@@ -82,7 +82,7 @@ class TelegraphHandler extends WebhookHandler
             )->send();
     }
 
-    protected function sendMessageWithButton(string $messageText, array $buttons, ?int $messageId = null): void
+    public function sendMessageWithButton(string $messageText, array $buttons, ?int $messageId = null): void
     {
         Log::info('$messageId keyboard', [$messageId]);
 
@@ -127,20 +127,7 @@ class TelegraphHandler extends WebhookHandler
         $this->sendMessageWithButton(trans('messages.indicate_country'), $buttons, $lastMessageId);
     }
 
-
-//    public function menu(): void
-//    {
-//        $buttons = [
-//            Button::make('back')->action('settings'),
-//        ];
-//
-//        $lastMessageId = $this->prepareMessageParams($this->chat->chat_id, $this->message?->id());
-//
-//
-//        $this->sendMessageWithButton(trans('messages.indicate_country'), $buttons, $lastMessageId);
-//    }
-
-    private function prepareMessageParams(string $chatId, ?int $currentMessageId): ?int
+    public function prepareMessageParams(string $chatId, ?int $currentMessageId): ?int
     {
         $cacheKey = "chat:{$chatId}:last_menu_id";
         $lastMessageId = Cache::store('redis')->get($cacheKey);
@@ -191,7 +178,7 @@ class TelegraphHandler extends WebhookHandler
 
     public function menu(): void
     {
-        Log::info('menu');
+        Log::info('menu', [$this->chat]);
 
         $buttons = [
             Button::make(trans('menu.add_event'))->webApp(config('app.url').'/profile/events/create'),
@@ -215,13 +202,13 @@ class TelegraphHandler extends WebhookHandler
         $buttons = [
             Button::make(trans('settings.country'))->action('stats'),
             Button::make(trans('settings.city'))->action('stats'),
-
-//            Button::make(rand(1, 100))->webApp(env('APP_URL').'/test'),
+            Button::make('back')->action('menu'),
         ];
-        Log::info('asadsa', [$this]);
+
+//        Log::info('asadsa', [$this]);
         $lastMessageId = $this->prepareMessageParams($this->chat->chat_id, $this->message?->id());
         $this->sendMessageWithButton(
-            trans('settings.countries.Armenia 🇦🇲'),
+            trans('menu.menu'),
             $buttons,
             $lastMessageId
         );
