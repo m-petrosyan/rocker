@@ -66,10 +66,10 @@ class EventService
             $data = json_decode($response->body(), true);
 
 
-            $event = auth()->user()->events()->create([
-                'event_id' => $data['event_id'],
-                'notify_count' => $data['notify_count'],
-            ]);
+//            $event = auth()->user()->events()->create([
+//                'event_id' => $data['event_id'],
+//                'notify_count' => $data['notify_count'],
+//            ]);
 
 //            $this->addSyncBand($event, $attributes);
 
