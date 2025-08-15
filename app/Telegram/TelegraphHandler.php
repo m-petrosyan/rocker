@@ -84,8 +84,6 @@ class TelegraphHandler extends WebhookHandler
 
     public function sendMessageWithButton(string $messageText, array $buttons, ?int $messageId = null): void
     {
-        Log::info('$messageId keyboard', [$messageId]);
-
         if ($messageId) {
             $this->chat->replaceKeyboard(
                 $messageId,
@@ -99,52 +97,22 @@ class TelegraphHandler extends WebhookHandler
             ->keyboard(Keyboard::make()->buttons($buttons))
             ->send();
 
-        $lastMenuId = Cache::store('redis')->get("chat:{$this->chat->chat_id}:last_menu_id");
-
-        if ($lastMenuId) {
-            $this->chat->deleteMessage($lastMenuId)->send();
-        }
-
         Cache::store('redis')->put("chat:{$this->chat->chat_id}:last_menu_id", $msg->telegraphMessageId(), 432000);
     }
 
-
-    public function getCountries(): void
-    {
-        $buttons = [
-            Button::make('back')->action('settings'),
-        ];
-
-//        Log::info('getCountries', [$this]);
-
-        foreach (trans('settings.countries') as $icon => $value) {
-            $checked = auth()->user()->settings->country === $value ? ' ☑️' : '';
-            array_unshift($buttons, Button::make($icon.$checked)->action('update_settings')->param('country', $value));
-        }
-
-        $lastMessageId = $this->prepareMessageParams($this->chat->chat_id, $this->message?->id());
-
-        $this->sendMessageWithButton(trans('messages.indicate_country'), $buttons, $lastMessageId);
-    }
 
     public function prepareMessageParams(string $chatId, ?int $currentMessageId): ?int
     {
         $cacheKey = "chat:{$chatId}:last_menu_id";
         $lastMessageId = Cache::store('redis')->get($cacheKey);
 
-        Log::info('Cached message_id', [
-            'cacheKey' => $cacheKey,
-            'lastMessageId' => $lastMessageId,
-            'currentMessageId' => $currentMessageId,
-        ]);
-
         if ($lastMessageId && $lastMessageId + 2 >= $currentMessageId) {
-            Log::info('Using cached message_id');
-
             return $lastMessageId;
         }
 
         Cache::store('redis')->put($cacheKey, $currentMessageId, 432000);
+
+        $this->chat->deleteMessage($lastMessageId)->send();
 
         return null;
     }
@@ -197,22 +165,128 @@ class TelegraphHandler extends WebhookHandler
     }
 
 
+/// Settings
     public function settings(): void
     {
         $buttons = [
-            Button::make(trans('settings.country'))->action('stats'),
-            Button::make(trans('settings.city'))->action('stats'),
+            Button::make(trans('settings.country'))->action('get_countries'),
+            Button::make(trans('settings.city'))->action('get_cities'),
             Button::make('back')->action('menu'),
         ];
 
-//        Log::info('asadsa', [$this]);
         $lastMessageId = $this->prepareMessageParams($this->chat->chat_id, $this->message?->id());
+
         $this->sendMessageWithButton(
             trans('menu.menu'),
             $buttons,
             $lastMessageId
         );
-//        $this->reply("settings");
     }
+
+
+    public function get_countries(): void
+    {
+        $buttons = [
+            Button::make('back')->action('settings'),
+        ];
+
+        foreach (trans('settings.countries') as $icon => $value) {
+            $checked = auth()->user()->settings->country === $value ? ' ☑️' : '';
+
+            array_unshift(
+                $buttons,
+                Button::make($icon.$checked)->action('update_settings')
+                    ->param('key', 'country')->param('value', $value)
+            );
+        }
+
+        $lastMessageId = $this->prepareMessageParams($this->chat->chat_id, $this->message?->id());
+
+        $this->sendMessageWithButton(trans('messages.indicate_country'), $buttons, $lastMessageId);
+    }
+
+
+    public function get_cities($country = null): void
+    {
+        $country = $country ?? auth()->user()->settings->country;
+
+//        if (!$country) {
+//            $this->get_countries();
+//        }
+
+        $buttons = [
+            Button::make('back')->action('settings'),
+        ];
+
+        foreach (trans("settings.cities.$country") as $key => $value) {
+            $checked = auth()->user()->settings->city === $value ? ' ☑️' : '';
+
+            array_unshift(
+                $buttons,
+                Button::make($key.$checked)->action('update_settings')
+                    ->param('key', 'city')->param('value', $value)
+            );
+        }
+        $lastMessageId = $this->prepareMessageParams($this->chat->chat_id, $this->message?->id());
+
+        $this->sendMessageWithButton(trans('messages.indicate_city'), $buttons, $lastMessageId);
+    }
+
+    public function update_settings($key, $value): void
+    {
+        auth()->user()->settings()->update([$key => $value]);
+
+        if ($key === 'country') {
+            if ($value === 'all') {
+                $this->settings();
+                $this->reply("Saved");
+            } else {
+                $this->get_cities($value);
+            }
+        } elseif ($key === 'city') {
+            $this->reply("Saved");
+            $this->menu();
+            sleep(2);
+            $this->chat->message(trans('messages.change_city'))->send();
+        }
+    }
+
+    public function events_list()
+    {
+        $this->chat->action(ChatActions::TYPING)->send();
+
+        if (!auth()->user()->settings->country) {
+            $this->chat->message(trans('messages.indicate_country'))->send();
+
+            $this->get_countries();
+
+            return false;
+        } else {
+            $this->get_events_list();
+        }
+    }
+
+    public function get_events_list(): void
+    {
+        $events = $this->activeEvents();
+
+        $buttons = [];
+
+        foreach ($events as $event) {
+            $flag = $event->country === 'am' ? '🇦🇲' : '🇬🇪';
+
+            $buttons[] = Button::make(
+                $event->start_date.' / '.$event->title.'  '.$flag
+            )
+                ->action('get_event')
+                ->param('id', $event->id);
+        }
+
+        $this->get_chat()
+            ->message('events')
+            ->keyboard(Keyboard::make()->buttons($buttons))
+            ->send();
+    }
+    // events
 
 }

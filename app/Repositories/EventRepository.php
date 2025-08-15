@@ -8,6 +8,31 @@ use Illuminate\Support\Facades\Http;
 
 class EventRepository
 {
+
+    public static function activeEvents(string|null $country = null)
+    {
+        return Event::where(['still_relevant' => true])
+            ->when(!$country, function ($query, $country) {
+                if (auth()->user()->settings->country === 'all') {
+                    $query->whereIn('country', ['am', 'ge']);
+                } else {
+                    $query->where('country', auth()->user()->settings->country);
+                }
+            }, function ($query) use ($country) {
+                if ($country === 'all') {
+                    $query->whereIn('country', ['am', 'ge']);
+                } else {
+                    $query->where('country', $country);
+                }
+            })
+            ->with('user')
+            ->whereDoesntHave('delete')
+            ->whereHas('confirm', function ($query) {
+                $query->where('confirmed', true);
+            })
+            ->orderBy('start_date');
+    }
+
     public static function userEvents($events = null)
     {
         $ids = $events?->pluck('event_id')->toArray();
