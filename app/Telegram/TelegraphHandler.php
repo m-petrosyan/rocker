@@ -3,6 +3,7 @@
 namespace App\Telegram;
 
 use App\Models\UserBot;
+use App\Repositories\EventRepository;
 use DefStudio\Telegraph\DTO\User;
 use DefStudio\Telegraph\Enums\ChatActions;
 use DefStudio\Telegraph\Handlers\WebhookHandler;
@@ -268,7 +269,7 @@ class TelegraphHandler extends WebhookHandler
 
     public function get_events_list(): void
     {
-        $events = $this->activeEvents();
+        $events = EventRepository::activeEvents();
 
         $buttons = [];
 

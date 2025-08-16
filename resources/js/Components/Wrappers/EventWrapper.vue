@@ -44,11 +44,11 @@ defineProps({
                 <NavLink
                     :href="route('events.show', event?.event_id ?? event.id)"
                     class="relative h-full w-full block"
-                    :style="{ backgroundImage: `url(${event.poster})` }"
+                    :style="{ backgroundImage: `url(${event.poster.thumb})` }"
                 >
                     <div class="absolute inset-0 z-0 brightness-50 backdrop-blur-md"></div>
                     <img
-                        :src="event.poster"
+                        :src="event.poster.thumb"
                         :alt="event.title"
                         class="absolute z-10 h-full w-full object-contain object-center"
                     />

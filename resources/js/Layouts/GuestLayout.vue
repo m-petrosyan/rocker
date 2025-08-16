@@ -48,7 +48,7 @@ onMounted(() => {
     </Head>
     <PreloaderPwa v-if="isPWA" />
     <FleshNotification />
-    <section class="min-h-screen text-white pt-6 sm:pt-0">
+    <section class="min-h-screen text-white pt-6 sm:pt-0 mb-40">
         <MainNavbar v-if="!isPWA" />
         <header v-if="$slots.header" class="my-10 text-gray">
             <h1 class="text-center mb-5">

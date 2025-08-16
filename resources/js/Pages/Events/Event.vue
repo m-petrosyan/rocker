@@ -31,10 +31,10 @@ const props = defineProps({
     <GuestLayout :meta="{ title: event.title, image: event.poster, description: event.content }">
         <div
             class="relative h-96 w-full"
-            :style="{ backgroundImage: `url(${event.poster})`}">
+            :style="{ backgroundImage: `url(${event.poster.large})`}">
             <div class="absolute inset-0 z-0 brightness-50 backdrop-blur-md"></div>
             <img
-                :src="event.poster"
+                :src="event.poster.large"
                 :alt="event.title"
                 class="absolute z-10 h-96 w-full object-contain object-center"
             />

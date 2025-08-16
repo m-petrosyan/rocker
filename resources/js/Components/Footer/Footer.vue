@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <footer class="mt-40">
+    <footer>
         <div class="flex justify-center md:justify-end pr-3 pb-1">
             <div class="flex items-center flex-col md:flex-row justify-between w-full pl-2 text-graydarker">
                 <p class="text-center"> © {{ new Date().getFullYear() }} rocker.am. Some rights reserved. |

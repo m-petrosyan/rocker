@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Models\EventConfirm;
+use App\Models\EventStatus;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
@@ -11,14 +11,14 @@ class EventConfirmUpdatedEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public EventConfirm $eventConfirm;
+    public EventStatus $eventStatus;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(EventConfirm $eventConfirm)
+    public function __construct(EventStatus $eventStatus)
     {
-        $this->eventConfirm = $eventConfirm;
+        $this->eventStatus = $eventStatus;
     }
 
 }

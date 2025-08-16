@@ -25,7 +25,7 @@ class EventConfirmUpdatedListener
 
         $user = $eventConfirm->eventConfirm->event->user;
 
-        if ($user?->role->name === 'USER') {
+        if (!$user->isAdmin() || !$user->isModerator()) {
             $notify_count = $eventConfirm->eventConfirm->event->notify_count;
 
             $message = "🤘Thank you, the event has been added and was sent to $notify_count people.";

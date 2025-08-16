@@ -26,66 +26,30 @@ class EventRepository
                 }
             })
             ->with('user')
-            ->whereDoesntHave('delete')
             ->whereHas('confirm', function ($query) {
                 $query->where('confirmed', true);
             })
             ->orderBy('start_date');
     }
 
-    public static function userEvents($events = null)
+    public static function userEvents()
     {
-        $ids = $events?->pluck('event_id')->toArray();
-
-        $params['ids'] = $ids;
-
-        $data = self::request($params);
-
-
-        if (!empty($data['data'])) {
-            $apiEventIds = collect($data['data'])->pluck('id')->toArray();
-            $eventModels = Event::query()->whereIn('event_id', $apiEventIds)->get()->keyBy('event_id');
-
-            $data['data'] = collect($data['data'])->map(function ($apiEvent) use ($eventModels) {
-                $eventModel = $eventModels->get($apiEvent['id']);
-                if ($eventModel) {
-                    $apiEvent = array_merge($apiEvent, $eventModel->toArray());
-                }
-
-                return $apiEvent;
-            })->toArray();
-        }
-
-        return $data;
+        return auth()->user()->events()
+//            ->whereHas('confirm', function ($query) {
+//            $query->where('confirmed', true);
+//        })
+            ->orderBy('start_date')->paginate();
     }
 
     public static function eventsList($limit = 50)
     {
-        $params = [
-            'limit' => $limit,
-        ];
-
-        return self::request($params, true);
-    }
-
-
-    public static function request($params = [], $cache = false)
-    {
-        try {
-            $response = Http::throw()->get('https://bot.rocker.am/api/event', $params);
-            $data = $response->json();
-            if ($cache) {
-                Cache::put('events', $data, now()->addHour(2));
-            }
-        } catch (\Exception $e) {
-            if (Cache::has('events') && $cache) {
-                $data = Cache::get('events');
-            } else {
-                $data = ['data' => [], 'error' => $e->getMessage()];
-            }
-        }
-
-        return $data;
+        return Event::where('start_date', '>=', now())
+            ->with('user')
+//            ->whereHas('confirm', function ($query) {
+//                $query->where('confirmed', true);
+//            })
+            ->orderBy('start_date')
+            ->paginate($limit);
     }
 
 
