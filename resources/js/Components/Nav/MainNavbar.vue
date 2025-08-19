@@ -33,6 +33,7 @@ onBeforeUnmount(() => {
             <component
                 v-for="item in menu"
                 :key="item.name"
+                :aria-label="item.name"
                 :is="item.external ? 'a' : Link"
                 :href="item.external ? item.url : route(item.url)"
                 :target="item.external ? '_blank' : null"

@@ -121,7 +121,7 @@ const deleteGallery = (id) => {
              class="col-span-full text-center py-4">
             <NavLink :href="route('galleries.index')"
                      class="text-orange font-bold">
-                See more
+                See more galleries
             </NavLink>
         </div>
     </div>

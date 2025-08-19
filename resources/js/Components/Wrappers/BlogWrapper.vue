@@ -96,7 +96,7 @@ const deleteBlog = (id) => {
              class="col-span-full text-center py-4">
             <NavLink :href="route('blogs.index')"
                      class="text-orange font-bold">
-                See more
+                See more blogs
             </NavLink>
         </div>
     </div>
