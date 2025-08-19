@@ -29,6 +29,7 @@ console.log(Ziggy);
 
 <template>
     <GuestLayout :meta="{title: 'Home'}">
+        <template #header> Home</template>
         <EventWrapper :events="events.data" more title="Events" />
         <BandWrapper :bands="bands.data" more title="Bands" />
         <GalleryWrapper :galleries="galleries.data" more title="Galleries" />

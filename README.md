@@ -14,14 +14,32 @@ sudo -u www-data php artisan queue:work --tries=3 --verbose
 npm run ssr
 ```
 
+
+> Set commands
+
+```
+php artisan app:set-commands
+```
+
 > Diploy
 
 ```bash
  git pull && npm run build && pm2 restart rocker
 ```
 
-> restart queue
+> Server restart queue
 
 ```
 sudo supervisorctl restart laravel-worker-rocker-app:*
+```
+
+ngrok http http://rocker.loc
+php artisan telegraph:set-webhook
+
+
+> SEO
+
+```
+64%
+https://www.seobility.net/en/seocheck/check/?url=https%3A%2F%2Frocker.am%2F&mode=standard
 ```

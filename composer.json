@@ -23,6 +23,7 @@
         "spatie/laravel-backup": "^9.2",
         "spatie/laravel-medialibrary": "^11.12",
         "spatie/laravel-permission": "^6.17",
+        "spatie/laravel-sitemap": "^7.3",
         "spatie/laravel-translatable": "^6.11",
         "tightenco/ziggy": "^2.5"
     },
