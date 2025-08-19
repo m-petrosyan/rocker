@@ -13,7 +13,7 @@ class SitemapCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'app:sitemap-command';
+    protected $signature = 'app:sitemap';
 
     /**
      * The console command description.

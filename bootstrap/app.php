@@ -32,6 +32,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $schedule->command('backup:run')->daily()->at('20:00');
         $schedule->command('backup:clean')->daily()->at('21:00');
         $schedule->command('disk:check')->daily()->at('21:00');
+        $schedule->command('app:sitemap')->daily()->at('21:00');
     })
     ->withExceptions(function (Exceptions $exceptions) {
         if (!app()->environment('local')) {
