@@ -22,8 +22,8 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('email')->change()->nullable(false)->unique(false);
-            $table->string('password')->change()->nullable(false)->unique(false);
+            $table->string('email')->nullable()->change();
+            $table->string('password')->nullable()->change();
         });
     }
 };
