@@ -27,8 +27,8 @@ class RobotsCommand extends Command
     public function handle(): void
     {
         $content = "User-agent: *\n";
-        $content .= "Disallow: /dashboard\n";
-        $content .= "Disallow: /account\n";
+        $content .= "Disallow: /profile\n";
+        $content .= "Disallow: /forgot-password\n";
         $content .= "Allow: /\n";
         $content .= "Sitemap: ".url('/sitemap.xml')."\n";
         $content .= "Host: ".url('/')."\n";
