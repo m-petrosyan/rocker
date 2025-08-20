@@ -14,6 +14,7 @@
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.png') }}" />
+    <link rel="canonical" href="{{ url()->current() }}" />
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     @routes
     @vite([
