@@ -31,7 +31,7 @@ class RegisterRequest extends FormRequest
                 'string',
                 'min:2',
                 'max:50',
-                'regex:/^[\p{L}\p{N}_-]+$/u',
+                'regex:/^[\p{L}\p{N}-]+$/u',
                 Rule::unique('users', 'username'),
             ],
             'email' => ['required', 'email', Rule::unique('users', 'email'), 'max:100'],
