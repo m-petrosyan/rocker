@@ -50,3 +50,6 @@ Route::prefix('auth')->group(function () {
     Route::get('/google/callback', [GoogleAuthController::class, 'handleGoogleCallback']);
 });
 
+Route::fallback(function () {
+    return Inertia::render('404');
+});
