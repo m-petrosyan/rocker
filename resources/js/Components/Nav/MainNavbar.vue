@@ -59,7 +59,7 @@ onBeforeUnmount(() => {
                 <!--                    Log Out-->
                 <!--                </Link>-->
             </template>
-            <template>
+            <template v-else>
                 <Link :href="route('login')">
                     Log In
                 </Link>
