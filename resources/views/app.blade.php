@@ -6,6 +6,7 @@
     <meta name="theme-color" content="#000000">
 
     <link rel="manifest" href="/manifest.webmanifest">
+    <meta name="theme-color" content="#000000">
     <meta name="apple-mobile-web-app-title" content="Название приложения">
     <link rel="apple-touch-icon" href="/favicon-apple.png">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
