@@ -68,8 +68,7 @@ const deleteBand = (id) => {
                     <div v-if="owner || isAdmin"
                          class="absolute bottom-0 w-full h-full flex flex-col justify-between  p-1 bg-blackTransparent2">
                         <div class="flex justify-end gap-y-2">
-                            <div v-if="isAdmin"
-                                 class="flex gap-x-2 items-center">
+                            <div class="flex gap-x-2 items-center">
                                 <EyesIcon />
                                 <p v-tooltip="'Views'">{{ band.allViews }}</p>
                             </div>
