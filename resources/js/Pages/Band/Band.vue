@@ -6,6 +6,7 @@ import GenresTags from '@/Components/Tags/GenresTags.vue';
 import ImageWrapper from '@/Components/Wrappers/ImageWrapper.vue';
 import { getHostname } from '@/Helpers/urlHelper.js';
 import EventWrapper from '@/Components/Wrappers/EventWrapper.vue';
+import BandAlbums from '@/Components/Forms/BandAlbums.vue';
 
 defineProps({
     band: {
@@ -54,7 +55,15 @@ defineProps({
             <GenresTags class="mx-auto w-fit" :genres="band.genres" />
         </div>
         <ImageWrapper classes="flex gap-4" :images="band.images_url" :title="band.title" :url />
-        <div class="md:w-5/6 mx-auto mt-8 md:p-0 p-3" v-html="band.info" />
+        <div class="md:w-5/6 mx-auto mt-8 md:p-0 p-3 whitespace-break-spaces" v-html="band.info" />
+        <div class="mt-2 grid-cols-3 grid gap-4">
+            <BandAlbums
+                v-for="(album, index) in band.albums"
+                :key="`album-${album.id || 'new'}-${index}`"
+                :album="album"
+                :index="index"
+            />
+        </div>
         <EventWrapper v-if="events.data.length" class="mt-20" :events="events.data" title="Upcoming events" />
         <GalleryWrapper v-if="band.galleries.length" :galleries="band.galleries" title="Galleries" user />
     </GuestLayout>
