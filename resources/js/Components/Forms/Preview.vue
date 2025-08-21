@@ -26,10 +26,13 @@ const changePreview = (file) => {
 };
 
 const startInteraction = (event) => {
-    event.preventDefault();
-    clickTimer = setTimeout(() => {
-        isDragging.value = true;
-    }, clickDuration);
+    if (event.button === 0) {
+        event.preventDefault();
+        clickTimer = setTimeout(() => {
+            isDragging.value = true;
+        }, clickDuration);
+    }
+
 };
 
 const endInteraction = (event) => {
