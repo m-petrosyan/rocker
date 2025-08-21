@@ -32,7 +32,6 @@ const startInteraction = (event) => {
             isDragging.value = true;
         }, clickDuration);
     }
-
 };
 
 const endInteraction = (event) => {

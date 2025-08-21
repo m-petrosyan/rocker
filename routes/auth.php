@@ -29,6 +29,7 @@ Route::middleware(['auth', 'email.verified.if.present'])->as('profile.')->prefix
     Route::resource('events', EventController::class)->except('show');
     Route::resource('galleries', GalleryController::class)->except('show');
     Route::resource('bands', BandController::class)->except('show');
+    Route::delete('bands/album/{album}/delete', [BandController::class, 'albumDestroy'])->name('album.delete');
     Route::resource('blogs', BlogController::class)->except('show');
     Route::post('image', [ProfileController::class, 'updateImage'])->name('media.update');
     Route::post('media', [MediaController::class, 'store'])->name('media.store');

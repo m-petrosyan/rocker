@@ -65,6 +65,12 @@ a {
             color: theme('colors.graydarker');
         }
     }
+
+    select {
+        margin-top: 0;
+        background-color: theme('colors.graydark2') !important;
+        border: none;
+    }
 }
 
 button:disabled {

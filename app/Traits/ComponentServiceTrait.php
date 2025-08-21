@@ -6,6 +6,7 @@ use App\Models\Band;
 use App\Models\Venue;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Log;
 
 trait ComponentServiceTrait
 {
@@ -69,12 +70,21 @@ trait ComponentServiceTrait
 
     public function updateLinks(Model $model, $links = []): void
     {
-        if (isset($links)) {
-            $model->links()->delete();
-            foreach ($links as $link) {
-                $model->links()->create(
-                    ['url' => $link['url']],
-                );
+        if (!empty($links) && is_array($links)) {
+            try {
+                $newUrls = array_map(fn($link) => $link['url'], $links);
+                $existingUrls = $model->links()->pluck('url')->toArray();
+
+                $model->links()->whereNotIn('url', $newUrls)->delete();
+
+                $urlsToCreate = array_diff($newUrls, $existingUrls);
+                foreach ($urlsToCreate as $url) {
+                    $model->links()->create(['url' => $url]);
+                }
+
+                Log::info('Links updated for model ID: '.$model->id);
+            } catch (\Exception $e) {
+                Log::error('Failed to update links: '.$e->getMessage());
             }
         }
     }

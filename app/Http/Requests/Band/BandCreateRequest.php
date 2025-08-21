@@ -33,6 +33,15 @@ class BandCreateRequest extends FormRequest
             'links' => ['nullable', 'array'],
             'links.*.url' => ['required', 'url'],
             'cover_position' => ['nullable', 'array'],
+            'albums' => ['nullable', 'array'],
+            'albums.*' => ['nullable', 'array'],
+            'albums.*.id' => ['nullable', 'integer', 'exists:albums,id'],
+            'albums.*.title' => ['required', 'string', 'max:255'],
+            'albums.*.year' => ['required', 'digits:4'],
+            'albums.*.tracks_count' => ['required', 'numeric', 'min:1', 'max:100'],
+            'albums.*.cover_file' => ['nullable', 'image', 'mimes:jpeg,jpg,webp,png', 'max:15000'],
+            'albums.*.links' => ['nullable', 'array'],
+            'albums.*.links.*.url' => ['nullable', 'url'],
         ];
     }
 }
