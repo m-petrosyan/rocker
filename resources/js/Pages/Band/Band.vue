@@ -56,7 +56,7 @@ defineProps({
         </div>
         <ImageWrapper classes="flex gap-4" :images="band.images_url" :title="band.title" :url />
         <div class="md:w-5/6 mx-auto mt-8 md:p-0 p-3 whitespace-break-spaces" v-html="band.info" />
-        <div class="mt-2 grid-cols-3 grid gap-4">
+        <div class="mt-2 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 grid gap-4">
             <BandAlbums
                 v-for="(album, index) in band.albums"
                 :key="`album-${album.id || 'new'}-${index}`"

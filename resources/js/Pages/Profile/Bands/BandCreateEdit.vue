@@ -161,7 +161,7 @@ const deleteAlbum = (album) => {
                     />
                 </div>
                 <h3 class="text-center text-gray mt-4">Albums</h3>
-                <div class="mt-2 grid-cols-3 grid gap-4">
+                <div class="mt-2 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 grid gap-4">
                     <BandAlbums
                         v-for="(album, index) in form.albums"
                         :key="`album-${album.id || 'new'}-${index}`"
