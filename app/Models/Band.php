@@ -30,6 +30,7 @@ class Band extends Model implements Viewable, HasMedia
         'logo',
         'cover',
         'views',
+        'allViews',
         'images_url',
     ];
 
