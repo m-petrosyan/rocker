@@ -27,7 +27,7 @@ class EmailNewsletter extends Command
 //        $emails = ['miqayelpetrosyan@gmail.com'];
 //        dd(getType($emails));
         $originalMailer = config('mail.default');
-        config(['mail.default' => 'bulk']);
+//        config(['mail.default' => 'bulk']); // պետք ա թե չէ
 
         foreach ($emails as $email) {
             dump($email);
