@@ -13,7 +13,17 @@ class EmailNewsletter extends Command
 
     public function handle(): void
     {
-        $emails = ['miqayelpetrosyan@gmail.com', 'miqayel@inbox.ru'];
+//        $emails = Band::query()
+//            ->whereNotNull('user_id')
+//            ->join('users', 'bands.user_id', '=', 'users.id')
+////            ->whereNotIn('users.email', [
+////                'sos.voskanyan@gmail.com',
+////                'infernalrecordsarmenia@gmail.com',
+////            ])
+//            ->pluck('users.email')
+//            ->unique();
+//
+        $emails = ['miqayelpetrosyan@gmail.com', 'sos.voskanyan@gmail.com'];
 
         $originalMailer = config('mail.default');
 //        config(['mail.default' => 'bulk']);
