@@ -47,21 +47,16 @@ class Album extends Model implements HasMedia
 
     public function getCoverAttribute(): array
     {
-        return $this->getImage('cover');
+        return $this->getImage('cover', ['thumb']);
     }
 
     public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('thumb')
-            ->width(300)
-            ->quality(100)
+            ->width(500)
             ->sharpen(7)
             ->optimize()
-            ->format('webp');
-
-        $this->addMediaConversion('large')
-            ->width(1280)
-            ->quality(100)
-            ->format('webp');
+            ->format('webp')
+            ->nonQueued();
     }
 }

@@ -59,7 +59,7 @@ const dragImage = (event) => {
 };
 
 const previewStyle = computed(() => {
-    const imageUrl = previewFile.value ?? props.image?.svg ?? props.image?.large ?? null;
+    const imageUrl = previewFile.value ?? props.image ?? null;
 
     return imageUrl
         ? {

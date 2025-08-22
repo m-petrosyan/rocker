@@ -39,7 +39,7 @@ const confirmDelete = () => {
             classes="bg-cover"
             class="min-h-96 w-full"
             labelClass="h-full"
-            :image="album.cover"
+            :image="album.cover?.thumb"
             v-model:preview="album.cover_file"
         />
         <input
@@ -90,7 +90,7 @@ const confirmDelete = () => {
 
             <div
                 class="bg-cover h-full h-full flex items-end  rounded-md overflow-hidden"
-                :style="album.cover?.large ? `background-image: url('${album.cover?.large}')` : `background-image: url('${'/images/vinyl.jpg'}')` "
+                :style="album.cover?.thumb ? `background-image: url('${album.cover?.thumb}')` : `background-image: url('${'/images/vinyl.jpg'}')` "
             >
                 <div class="w-full flex justify-between items-end">
                     <div class="flex gap-2 bg-blackTransparent2 py-1 px-2 rounded-sm">

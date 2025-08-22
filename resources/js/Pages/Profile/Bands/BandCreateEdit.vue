@@ -100,7 +100,7 @@ const deleteAlbum = (album) => {
                             class="min-h-96"
                             classes="bg-cover"
                             labelClass="h-full"
-                            :image="form.cover"
+                            :image="form.cover?.large"
                             v-model:backgroundPosition="form.cover_position"
                             v-model:preview="form.cover_file"
                         />
@@ -111,7 +111,7 @@ const deleteAlbum = (album) => {
                             classes="bg-contain"
                             class="min-h-96 md:w-1/2 w-full"
                             labelClass="h-full"
-                            :image="form.logo"
+                            :image="form.logo?.svg ?? form.logo?.large"
                             v-model:preview="form.logo_file"
                         />
                         <div class="flex flex-col gap-2 md:w-1/2 w-full">
