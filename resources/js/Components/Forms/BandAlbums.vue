@@ -89,18 +89,20 @@ const confirmDelete = () => {
             </div>
 
             <div
-                class="p-2 bg-cover h-full h-full flex justify-between items-end rounded-md overflow-hidden"
+                class="bg-cover h-full h-full flex items-end  rounded-md overflow-hidden"
                 :style="album.cover?.large ? `background-image: url('${album.cover?.large}')` : `background-image: url('${'/images/vinyl.jpg'}')` "
             >
+                <div class="w-full flex justify-between items-end">
+                    <div class="flex gap-2 bg-blackTransparent2 py-1 px-2 rounded-sm">
+                        <MusicIcon />
+                        <p> {{ album.tracks_count }}</p>
+                    </div>
+                    <div class="flex gap-2 bg-blackTransparent2 py-1 px-2 rounded-sm">
+                        <DateIcon />
+                        <p>{{ album.year }}</p>
+                    </div>
+                </div>
 
-                <div class="flex gap-2">
-                    <MusicIcon />
-                    {{ album.tracks_count }}
-                </div>
-                <div class="flex gap-2">
-                    <DateIcon />
-                    {{ album.year }}
-                </div>
             </div>
         </div>
         <h3 class="text-center mt-1">{{ album.title }}</h3>
