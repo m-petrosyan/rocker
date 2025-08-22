@@ -23,7 +23,8 @@ class NewsletterNotification extends Notification
             ->line("- **Band description** including who plays which instrument")
             ->line("- **Photos** of the band members")
             ->line("- **YouTube videos** of your performances or clips")
-            ->line("- **Albums** – we’ve just added this brand-new feature! 🎶")
+            ->line("- **Albums** – we’ve just added this brand-new feature!")
+            ->line('Like **[Avarayr](https://rocker.am/bands/avarayr)** band\'s page')
             ->line(
                 '[![Band Page](https://rocker.am/images/temp/band_page_example.jpg)](https://rocker.am/bands/avarayr)'
             )

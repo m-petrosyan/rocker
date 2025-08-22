@@ -23,7 +23,7 @@ class EmailNewsletter extends Command
 //            ->pluck('users.email')
 //            ->unique();
 //
-        $emails = ['miqayelpetrosyan@gmail.com', 'sos.voskanyan@gmail.com'];
+        $emails = ['miqayelpetrosyan@gmail.com'];
 
         $originalMailer = config('mail.default');
 //        config(['mail.default' => 'bulk']);
