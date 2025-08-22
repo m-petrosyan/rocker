@@ -56,13 +56,16 @@ defineProps({
         </div>
         <ImageWrapper classes="flex gap-4" :images="band.images_url" :title="band.title" :url />
         <div class="md:w-5/6 mx-auto mt-8 md:p-0 p-3 whitespace-break-spaces" v-html="band.info" />
-        <div class="mt-2 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 grid gap-4">
-            <BandAlbums
-                v-for="(album, index) in band.albums"
-                :key="`album-${album.id || 'new'}-${index}`"
-                :album="album"
-                :index="index"
-            />
+        <div v-if="band.albums.length" class="mt-20">
+            <h2 class="text-center">Albums</h2>
+            <div class="mt-2 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 grid gap-4 mt-4">
+                <BandAlbums
+                    v-for="(album, index) in band.albums"
+                    :key="`album-${album.id || 'new'}-${index}`"
+                    :album="album"
+                    :index="index"
+                />
+            </div>
         </div>
         <EventWrapper v-if="events.data.length" class="mt-20" :events="events.data" title="Upcoming events" />
         <GalleryWrapper v-if="band.galleries.length" :galleries="band.galleries" title="Galleries" user />
