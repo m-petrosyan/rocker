@@ -25,11 +25,12 @@ class EmailNewsletter extends Command
             ->unique();
 //
 //        $emails = ['miqayelpetrosyan@gmail.com'];
-
+//        dd(getType($emails));
         $originalMailer = config('mail.default');
-//        config(['mail.default' => 'bulk']);
+        config(['mail.default' => 'bulk']);
 
         foreach ($emails as $email) {
+            dump($email);
             Notification::route('mail', $email)->notify(new NewsletterNotification());
 
             $this->info("Sent to: $email");
