@@ -130,7 +130,7 @@ const deleteAlbum = (album) => {
                                     concerts.</p>
                                 <div class="flex">
                                     <p>You can also add a video from youtube by clicking the button</p>
-                                    <img src="/images/video_instruction.png" alt="instruction">
+                                    <img src="/images/bot/video_instruction.png" alt="instruction">
                                 </div>
                                 <p>Tell us a bit about your band!
                                     When did you start? Who's in the lineup? Just a few words about your story, vibe,

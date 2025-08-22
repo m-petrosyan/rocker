@@ -15,13 +15,19 @@ class NewsletterNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject("We'd love to photograph your upcoming concert 🎤📸")
-            ->greeting(
-                "We’d love to support your upcoming performance!
-If you add us to the guest list, we’ll send a professional photographer to cover the event — and share the photos with you afterward.
-It’s free of charge and helps showcase your concert on our platform.
- For any questions, feel free to reach out:"
+            ->subject("Keep your band profile fresh – add new content")
+            ->greeting("Hi there! 🎸")
+            ->line("We’d love to see your band page up to date!")
+            ->line("To make it more engaging for your fans, please take a moment to update your page with:")
+            ->line("- **External links** (official website, social media, streaming platforms)")
+            ->line("- **Band description** including who plays which instrument")
+            ->line("- **Photos** of the band members")
+            ->line("- **YouTube videos** of your performances or clips")
+            ->line("- **Albums** – we’ve just added this brand-new feature! 🎶")
+            ->line(
+                '[![Band Page](https://rocker.am/images/temp/band_page_example.jpg)](https://rocker.am/bands/avarayr)'
             )
-            ->action("@mpetrosyan1", url('https://t.me/mpetrosyan1'));
+            ->action("Update your band page", url('https://rocker.am'))
+            ->salutation("— The Rocker Team");
     }
 }
