@@ -90,7 +90,7 @@ const confirmDelete = () => {
 
             <div
                 class="p-2 bg-cover h-full h-full flex justify-between items-end rounded-md overflow-hidden"
-                :style="album.cover?.large ? `background-image: url('${album.cover?.large}')` : ''"
+                :style="album.cover?.large ? `background-image: url('${album.cover?.large}')` : `background-image: url('${'/images/vinyl.jpg'}')` "
             >
 
                 <div class="flex gap-2">
