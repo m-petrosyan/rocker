@@ -82,7 +82,7 @@ const confirmDelete = () => {
     <div v-else>
         <div class="relative group">
             <div v-if="album.links.length"
-                 class=" opacity-100 group-hover:opacity-100 transition-opacity absolute top-0 flex flex-col gap-y-4 justify-center items-center h-full w-full bg-blackTransparent2">
+                 class="opacity-0 group-hover:opacity-100 transition-opacity absolute top-0 flex flex-col gap-y-4 justify-center items-center h-full w-full bg-blackTransparent2">
                 <a v-for="link in album.links" :key="link.id" :href="link.url"
                    target="_blank">{{ getHostname(link.url)
                     }}</a>
