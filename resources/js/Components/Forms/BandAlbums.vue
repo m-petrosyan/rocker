@@ -80,7 +80,14 @@ const confirmDelete = () => {
         </button>
     </div>
     <div v-else>
-        <div class="relative ">
+        <div class="relative group">
+            <div v-if="album.links.length"
+                 class=" opacity-100 group-hover:opacity-100 transition-opacity absolute top-0 flex flex-col gap-y-4 justify-center items-center h-full w-full bg-blackTransparent2">
+                <a v-for="link in album.links" :key="link.id" :href="link.url"
+                   target="_blank">{{ getHostname(link.url)
+                    }}</a>
+            </div>
+
             <div
                 class="p-2 bg-cover h-96 w-96 flex justify-between items-end rounded-md overflow-hidden"
                 :style="album.cover?.large ? `background-image: url('${album.cover?.large}')` : ''"
@@ -97,11 +104,5 @@ const confirmDelete = () => {
             </div>
         </div>
         <h3 class="text-center mt-1">{{ album.title }}</h3>
-        <div class="flex gap-2 mt-6">
-            <a v-for="link in album.links" :key="link.id" :href="link.url"
-               target="_blank">{{ getHostname(link.url)
-                }}</a>
-        </div>
-
     </div>
 </template>
