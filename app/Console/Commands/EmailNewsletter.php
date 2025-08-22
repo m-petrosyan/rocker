@@ -22,7 +22,8 @@ class EmailNewsletter extends Command
 //                'infernalrecordsarmenia@gmail.com',
 //            ])
             ->pluck('users.email')
-            ->unique();
+            ->unique()
+            ->push('miqayelpetrosyan@gmail.com');
 //
 //        $emails = ['miqayelpetrosyan@gmail.com'];
 //        dd(getType($emails));
