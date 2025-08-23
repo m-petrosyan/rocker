@@ -128,15 +128,19 @@ const deleteAlbum = (album) => {
                                 <p class="text-orange">A mandatory requirement for adding a band is that it must have
                                     performed
                                     concerts.</p>
-                                <div class="flex">
+                                <div class="flex gap-5">
                                     <p>You can also add a video from youtube by clicking the button</p>
                                     <img src="/images/video_instruction.png" alt="instruction">
                                 </div>
                                 <p>Tell us a bit about your band!
                                     When did you start? Who's in the lineup? Just a few words about your story, vibe,
                                     and members will make your profile way cooler.
+                                    And if you have any albums, don’t forget to list them below – it’s a brand-new
+                                    feature we’ve just added! 🎶
                                 </p>
-                                <p>For all questions write <a href="https://t.me/mpetrosyan1" target="_blank">@mpetrosyan1</a>
+                                <p>For all questions write
+                                    <b class="text-red"><a href="https://www.instagram.com/rocker._.am/"
+                                                           target="_blank">Rocker instagram page</a></b>
                                 </p>
                                 <SuccessMessages success class="mt-4"
                                                  :message="'You can add us to the guest list,  we’ll arrange for a photographer to attend and capture the concert 📸'" />
