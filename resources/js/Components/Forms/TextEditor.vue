@@ -103,7 +103,32 @@ const customToolbar = [
         background-image: url('/images/icon/youtube.png') !important;
         filter: grayscale(0);
     }
+
 }
+
+.ql-snow .ql-tooltip {
+    background-color: theme('colors.graydark2');
+    border: none;
+    box-shadow: none;
+
+    &[data-mode=video]::before {
+        content: "Youtube url:" !important;
+    }
+
+    input {
+        background-color: white !important;
+
+        &::placeholder {
+
+        }
+    }
+
+    .ql-action {
+        color: white !important;
+    }
+
+}
+
 
 .ql-toolbar.ql-snow .ql-video::before {
     content: '' !important;
