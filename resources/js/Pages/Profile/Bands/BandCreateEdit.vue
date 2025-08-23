@@ -150,7 +150,7 @@ const deleteAlbum = (album) => {
                     </div>
                 </div>
                 <SelectImages
-                    limit="6"
+                    limit="7"
                     label="Click or drag files here (up to 6 images)"
                     v-model:previews="data.preview"
                     v-model:files="form.images"
