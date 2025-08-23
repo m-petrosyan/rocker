@@ -108,7 +108,7 @@ const customToolbar = [
 
 .ql-snow .ql-tooltip {
     background-color: theme('colors.graydark2');
-    border: none;
+    border: 1px dotted theme('colors.graydark');
     box-shadow: none;
 
     &[data-mode=video]::before {
