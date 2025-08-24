@@ -7,7 +7,6 @@ import ProfileLayout from '@/Layouts/ProfileLayout.vue';
 import Multiselect from '@/Components/Forms/MultiSelect.vue';
 import TextEditor from '@/Components/Forms/TextEditor.vue';
 import SelectImages from '@/Components/Forms/SelectImages.vue';
-import SuccessMessages from '@/Components/Messages/SuccessMessages.vue';
 import AddLinks from '@/Components/Forms/AddLinks.vue';
 import BandAlbums from '@/Components/Forms/BandAlbums.vue';
 
@@ -142,8 +141,8 @@ const deleteAlbum = (album) => {
                                     <b class="text-red"><a href="https://www.instagram.com/rocker._.am/"
                                                            target="_blank">Rocker instagram page</a></b>
                                 </p>
-                                <SuccessMessages success class="mt-4"
-                                                 :message="'You can add us to the guest list,  we’ll arrange for a photographer to attend and capture the concert 📸'" />
+                                <!--                                <SuccessMessages success class="mt-4"-->
+                                <!--                                                 :message="'You can add us to the guest list,  we’ll arrange for a photographer to attend and capture the concert 📸'" />-->
                             </div>
 
                         </div>
