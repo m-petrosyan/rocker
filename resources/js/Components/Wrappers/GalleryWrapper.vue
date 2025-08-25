@@ -75,10 +75,12 @@ const deleteGallery = (id) => {
                     <div class="absolute right-0 bottom-8 px-1 bg-orange">
                         {{ gallery.date }}
                     </div>
-                    <NavLink :href="route('profile.show', gallery.user.username)" v-if="gallery.user"
-                             class="text-center absolute bottom-0 left-0 w-full p-1 bg-blackTransparent2">
+                    <a v-if="gallery.user"
+                       :href="route('profile.show', gallery.user.username)"
+                       class="text-center absolute bottom-0 left-0 w-full p-1 bg-blackTransparent2"
+                       @click.stop>
                         by {{ gallery.user.name }}
-                    </NavLink>
+                    </a>
                     <div v-if="(owner || isAdmin) && profile"
                          class="absolute bottom-0 w-full h-full flex flex-col justify-between  p-1 bg-blackTransparent2">
                         <div class="flex justify-end gap-y-2">
