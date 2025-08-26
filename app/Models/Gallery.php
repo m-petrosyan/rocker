@@ -118,7 +118,8 @@ class Gallery extends Model implements Viewable, HasMedia
             ->fit(Fit::Crop, 300, 300)
             ->quality(80)
             ->sharpen(7)
-            ->optimize();
+            ->optimize()
+            ->format('webp');
 
         $this->addMediaConversion('large')
             ->width(1920)
