@@ -160,7 +160,7 @@ const dropZoneClass = computed(() =>
                         class="absolute left-0 top-0 md:opacity-0 hover:opacity-100 flex flex-col justify-between w-full h-full z-10 p-2 bg-blackTransparent2">
                         <button v-if="useCover" type="button" class="w-fit"
                                 @click="setCover(index)"
-                                v-tooltip="'Set cover'">
+                                v-tooltip="'Cover'">
                             <ImageIcon />
                         </button>
                         <div class="flex justify-end">
