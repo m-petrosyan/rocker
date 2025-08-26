@@ -121,7 +121,7 @@ class Gallery extends Model implements Viewable, HasMedia
             ->format('webp');
 
         $this->addMediaConversion('large')
-            ->width(1920)
+            ->height(900)
             ->quality(90);
     }
 }
