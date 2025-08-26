@@ -114,7 +114,7 @@ class Gallery extends Model implements Viewable, HasMedia
         $this->addMediaConversion('thumb')
             ->width(350)
             ->height(350)
-            ->quality(100)
+            ->quality(80)
             ->sharpen(7)
             ->optimize()
             ->format('webp');
