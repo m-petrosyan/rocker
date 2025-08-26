@@ -154,8 +154,8 @@ const dropZoneClass = computed(() =>
                     class="aspect-square relative"
                 >
                     <img :src="preview.thumb ?? preview"
-                         :class="{'border border-2 border-orange opacity-100 brightness-125': cover === preview.id || cover === index}"
-                         class="w-full h-full object-cover object-center opacity-75" alt="Image" />
+                         :class="{'border border-2 border-orange brightness-125': cover === preview.id || cover === index}"
+                         class="w-full h-full object-cover object-center" alt="Image" />
                     <div
                         class="absolute left-0 top-0 md:opacity-0 hover:opacity-100 flex flex-col justify-between w-full h-full z-10 p-2 bg-blackTransparent2">
                         <button v-if="useCover" type="button" class="w-fit"
