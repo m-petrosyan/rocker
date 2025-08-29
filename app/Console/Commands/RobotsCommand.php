@@ -29,7 +29,6 @@ class RobotsCommand extends Command
         $content = "User-agent: *\n";
         $content .= "Disallow: /profile\n";
         $content .= "Disallow: /forgot-password\n";
-        $content .= "Allow: /\n";
         $content .= "Sitemap: ".url('/sitemap.xml')."\n";
         $content .= "Host: ".url('/')."\n";
 
