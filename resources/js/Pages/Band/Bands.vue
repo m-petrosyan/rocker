@@ -10,7 +10,8 @@ defineProps({
 </script>
 
 <template>
-    <GuestLayout :meta="{title: 'Bands'}">
+    <GuestLayout
+        :meta="{title: 'Bands', keywords: 'armenian rock, armenian metal, armenian rock bands, armenian metal bands, armenia music, armenian hard rock, armenian heavy metal, armenian punk, armenian alternative rock, armenian folk metal, yerevan rock scene, armenian rock concerts, armenian underground music, armenian progressive rock, armenian thrash metal, armenian doom metal, armenian gothic rock, armenian post-rock, armenian music portal'+ bands.data.map(band => band.name).join(', ')}">
         <template #header> Bands</template>
         <BandWrapper :bands="bands.data" user add />
     </GuestLayout>
