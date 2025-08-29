@@ -90,7 +90,8 @@ const type = props.event.type === 2 ? 'concert' : 'event';
                 </a>
             </div>
         </div>
-        <h1>{{ event.title }} – Armenian Rock & Metal Event {{ event.genre }} / {{ type }}</h1>
+        <h1>{{ event.title }} – Armenian Rock & Metal Event {{ event.genre }} / {{ type }},
+            {{ removePostalCode(event.location) }}</h1>
         <h2 class="mt-6 text-center text-2xl">{{ event.title }}</h2>
         <div class="text-center text-red">
             <p>genre: {{ event.genre }}</p>
