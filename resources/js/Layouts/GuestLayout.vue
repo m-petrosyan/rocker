@@ -50,10 +50,13 @@ onMounted(() => {
     <FleshNotification />
     <section class="min-h-screen text-white pt-6 sm:pt-0">
         <MainNavbar v-if="!isPWA" />
-        <header v-if="$slots.header" class="mt-10 text-gray">
-            <h1 class="text-center">
-                <slot name="header" />
+        <header class="mt-10 text-gray">
+            <h1 v-if="$slots.h1" class="text-center">
+                <slot name="h1" />
             </h1>
+            <h2 v-if="$slots.header" class="text-center">
+                <slot name="header" />
+            </h2>
         </header>
         <main class="my-20 max-w-screen-sm md:max-w-screen-xl mx-auto">
             <slot />

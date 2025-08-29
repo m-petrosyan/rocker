@@ -28,8 +28,8 @@ console.log(Ziggy);
 </script>
 
 <template>
-    <GuestLayout :meta="{title: 'Home'}">
-        <template #header><span class="hidden">Events, Bands & Galleries</span></template>
+    <GuestLayout :meta="{title: 'Home - Armenian Rock & Metal Bands, Concerts & Galleries'}">
+        <template #h1>Armenian Rock & Metal Bands, Concerts & Galleries</template>
         <EventWrapper :events="events.data" more title="Events" />
         <BandWrapper :bands="bands.data" more title="Bands" />
         <GalleryWrapper :galleries="galleries.data" more title="Galleries" />
