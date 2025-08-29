@@ -25,6 +25,10 @@ const props = defineProps({
         type: String
     }
 });
+
+const type = props.event.type === 2 ? 'concert' : 'event';
+
+
 </script>
 
 <template>
@@ -86,8 +90,12 @@ const props = defineProps({
                 </a>
             </div>
         </div>
-        <h1>{{ event.title }} – Armenian Rock & Metal Event</h1>
+        <h1>{{ event.title }} – Armenian Rock & Metal Event {{ event.genre }} / {{ type }}</h1>
         <h2 class="mt-6 text-center text-2xl">{{ event.title }}</h2>
+        <div class="text-center text-red">
+            <p>genre: {{ event.genre }}</p>
+            <p>type: {{ type }}</p>
+        </div>
         <BandTags class="mx-auto w-fit my-10" :bands="event.bands" />
         <pre class="mt-8 text-pretty text-center">{{ event.content }}</pre>
         <p class="text-center text-orange">{{ removePostalCode(event.location) }}</p>
