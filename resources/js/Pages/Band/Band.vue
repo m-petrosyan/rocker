@@ -26,7 +26,7 @@ defineProps({
 
 <template>
     <GuestLayout
-        :meta="{title: band.name+' – Armenian Rock/Metal Band' ,image: band.logo?.svg ?? band.logo?.large , description: band.info, keywords: band.name+ band.genres.map(genre =>  genre.name).join(', Armenian band ') }">
+        :meta="{title: band.name+' – Armenian Rock/Metal Band' ,image: band.logo?.svg ?? band.logo?.large , description: band.info, keywords: band.name+ band.genres.map(genre =>  genre.name).join(',')+' Armenian band ' }">
         <div class="lg:h-96 h-64  relative">
             <div v-if="band.links.length"
                  class="absolute flex md:flex-col gap-x-5 right-0 w-fit top-0 bg-opacity-20 bg-graydark p-3">
