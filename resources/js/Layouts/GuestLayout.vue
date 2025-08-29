@@ -45,6 +45,7 @@ onMounted(() => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" :content="meta?.image ?? defaultImg" />
         <meta name="author" :content="meta?.author ?? 'rocker.am'" />
+        <meta name="robots" content="index, follow">
     </Head>
     <PreloaderPwa v-if="isPWA" />
     <FleshNotification />
