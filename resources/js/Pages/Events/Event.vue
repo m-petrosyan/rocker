@@ -84,7 +84,7 @@ const props = defineProps({
                 </a>
             </div>
         </div>
-        <h3 class="mt-6 text-center text-2xl">{{ event.title }}</h3>
+        <h2 class="mt-6 text-center text-2xl">{{ event.title }}</h2>
         <BandTags class="mx-auto w-fit my-10" :bands="event.bands" />
         <pre class="mt-8 text-pretty text-center">{{ event.content }}</pre>
         <p class="text-center text-orange">{{ removePostalCode(event.location) }}</p>

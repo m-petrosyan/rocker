@@ -44,9 +44,9 @@ onMounted(() => {
     <section class="min-h-screen bg-black text-white pt-6 sm:pt-0">
         <MainNavbar v-if="!isPWA" />
         <header v-if="$slots.header" class="my-10 text-gray">
-            <h1 class="text-center mb-5">
+            <h2 class="text-center mb-5">
                 <slot name="header" />
-            </h1>
+            </h2>
         </header>
         <main
             class="profile relative my-28 bg-graydark py-2 sm:px-6 lg:p-4 md:px-0  max-w-screen-sm md:max-w-screen-xl mx-auto">
