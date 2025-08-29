@@ -29,7 +29,7 @@ const props = defineProps({
 
 <template>
     <GuestLayout
-        :meta="{ title: event.title, image: event.poster, description: event.content, keywords: event.title+', '+event.genre+', '+event.location}">
+        :meta="{ title: event.title+' Armenian Rock & Metal Concerts', image: event.poster, description: event.content, keywords: event.title+', '+event.genre+', '+event.location}">
         <div
             class="relative h-96 w-full"
             :style="{ backgroundImage: `url(${event.poster})`}">
