@@ -72,18 +72,21 @@ const props = defineProps({
             >
                 <div v-if="event.price" class="flex items-center gap-x-2">
                     <MoneyIcon />
-                    {{ event.price }}
+                    <p> {{ event.price }}</p>
                 </div>
-                <a v-if="event.ticket" :href="event.ticket" class="flex items-center gap-x-2" target="_blank">
+                <a v-if="event.ticket" :href="event.ticket" class="flex items-center gap-x-2" target="_blank"
+                   aria-label="Buy Ticket">
                     <TicketIcon />
-                    Ticket
+                    <span>Ticket</span>
                 </a>
-                <a v-if="event.link" :href="event.link" class="flex items-center gap-x-2" target="_blank">
+                <a v-if="event.link" :href="event.link" class="flex items-center gap-x-2" target="_blank"
+                   aria-label="Event Link">
                     <UrlIcon />
-                    Link
+                    <span>Link</span>
                 </a>
             </div>
         </div>
+        <h1>{{ event.title }} – Armenian Rock & Metal Event</h1>
         <h2 class="mt-6 text-center text-2xl">{{ event.title }}</h2>
         <BandTags class="mx-auto w-fit my-10" :bands="event.bands" />
         <pre class="mt-8 text-pretty text-center">{{ event.content }}</pre>
