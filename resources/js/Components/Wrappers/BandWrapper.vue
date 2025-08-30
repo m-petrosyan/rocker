@@ -48,7 +48,7 @@ const deleteBand = (id) => {
 
 <template>
     <div class="mt-10">
-        <h2 v-if="title" class="text-center">{{ title }}</h2>
+        <h3 v-if="title" class="text-center">{{ title }}</h3>
         <div class="mt-10 grid gap-y-10 md:grid-cols-2 lg:grid-cols-4">
             <NavLink
                 v-for="band in bands"

@@ -41,7 +41,7 @@ const menu = [
             <div
                 class="mx-auto flex w-32 flex-col items-center gap-y-4 rounded-lg bg-black p-4 transition-all duration-300 hover:bg-orange">
                 <component :is="item.icon" />
-                <h3 class="text-nowrap">{{ item.name }}</h3>
+                <h4 class="text-nowrap">{{ item.name }}</h4>
             </div>
         </NavLink>
     </div>

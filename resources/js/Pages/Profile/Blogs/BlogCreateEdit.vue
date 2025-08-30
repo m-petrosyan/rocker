@@ -79,10 +79,10 @@ const createBlog = () => {
                 <div class="flex md:flex-row flex-col w-full gap-2">
                     <Preview
                         label="cover"
-                        classes="bg-contain"
+                        classes="bg-cover"
                         class="min-h-96 md:w-1/2 w-full"
                         labelClass="h-full"
-                        :image="form.cover.large"
+                        :image="form.cover"
                         v-model:preview="form.cover_file"
                         v-model:file="data.cover"
                     />
