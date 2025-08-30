@@ -82,9 +82,8 @@ const createBlog = () => {
                         classes="bg-cover"
                         class="min-h-96 md:w-1/2 w-full"
                         labelClass="h-full"
-                        :image="form.cover"
+                        :image="form.cover?.large"
                         v-model:preview="form.cover_file"
-                        v-model:file="data.cover"
                     />
                     <div class="flex flex-col gap-2 md:w-1/2 w-full">
                         <div class="flex gap-x-2">
