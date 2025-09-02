@@ -7,9 +7,9 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class GalleryReoisitory
 {
-    public static function getGallery(Gallery $gallery)
+    public static function getGallery(Gallery $gallery): Gallery
     {
-        return $gallery->with(['bands', 'user.roles', 'venue'])->first();
+        return $gallery->load(['bands', 'user.roles', 'venue']);
     }
 
 
