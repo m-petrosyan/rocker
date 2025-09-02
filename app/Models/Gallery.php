@@ -7,6 +7,7 @@ use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -26,12 +27,7 @@ class Gallery extends Model implements Viewable, HasMedia
 
     protected $appends = [
         'images_url',
-        'total_mb',
         'cover_img',
-        'bands',
-        'venue',
-        'views',
-        'allViews',
     ];
 
     protected $hidden = [
@@ -59,51 +55,41 @@ class Gallery extends Model implements Viewable, HasMedia
         return $this->belongsTo(Venue::class);
     }
 
-    public function getBandsAttribute()
-    {
-        return $this->bands()->get();
-    }
-
-
     public function getCoverImgAttribute(): array
     {
         $cover = Media::query()->find($this->cover);
 
         return $cover
             ? [
-                'large' => $cover->getUrl('large'),
                 'thumb' => $cover->getUrl('thumb'),
                 'original' => $cover->getUrl(),
             ]
             : [
                 'thumb' => isset($this->getImagesUrlAttribute()[0]['thumb'])
                     ? $this->getImagesUrlAttribute()[0]['thumb'] : null,
-                'large' => isset($this->getImagesUrlAttribute()[0]['large'])
-                    ? $this->getImagesUrlAttribute()[0]['large'] : null,
                 'original' => isset($this->getImagesUrlAttribute()[0]['original'])
                     ? $this->getImagesUrlAttribute()[0]['original'] : null,
             ];
+    }
+
+    public function media(): MorphMany
+    {
+        return $this->morphMany(Media::class, 'model');
     }
 
     public function getImagesUrlAttribute(): array
     {
         $mediaItems = $this->getMedia('images');
 
-        if ($mediaItems->isEmpty()) {
-            return [];
-        }
-
-        return $mediaItems->map(function (Media $media) {
-            return [
-                'id' => $media->id,
-                'large' => $media->getUrl('large'),
-                'thumb' => $media->getUrl('thumb'),
-                'original' => $media->getUrl(),
-            ];
-        })->toArray();
+        return $mediaItems->isEmpty() ? [] : $mediaItems->map(fn(Media $media) => [
+            'id' => $media->id,
+            'large' => $media->getUrl('large'),
+            'thumb' => $media->getUrl('thumb'),
+            'original' => $media->getUrl(),
+        ])->toArray();
     }
 
-    public function getTotalMbAttribute(): float
+    public function totalMb(): float
     {
         return round($this->getMedia('images')->sum('size') / 1024 / 1024);
     }

@@ -3,7 +3,6 @@ import GuestLayout from '@/Layouts/GuestLayout.vue';
 import EventWrapper from '@/Components/Wrappers/EventWrapper.vue';
 import GalleryWrapper from '@/Components/Wrappers/GalleryWrapper.vue';
 import BandWrapper from '@/Components/Wrappers/BandWrapper.vue';
-import { Ziggy } from '@/ziggy.js';
 
 defineProps({
     auth: {
@@ -24,7 +23,6 @@ defineProps({
     }
 });
 
-console.log(Ziggy);
 </script>
 
 <template>

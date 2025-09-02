@@ -7,10 +7,16 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class GalleryReoisitory
 {
+    public static function getGallery(Gallery $gallery)
+    {
+        return $gallery->with(['bands', 'user.roles', 'venue'])->first();
+    }
+
+
     public static function userGallery($user)
     {
         return $user->galleries()
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at', 'desc', 'views', 'allViews', 'total_mb')
             ->paginate(30);
     }
 

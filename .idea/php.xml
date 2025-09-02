@@ -191,6 +191,8 @@
       <path value="$PROJECT_DIR$/vendor/spatie/browsershot" />
       <path value="$PROJECT_DIR$/vendor/spatie/laravel-sitemap" />
       <path value="$PROJECT_DIR$/vendor/spatie/robots-txt" />
+      <path value="$PROJECT_DIR$/vendor/barryvdh/laravel-debugbar" />
+      <path value="$PROJECT_DIR$/vendor/php-debugbar/php-debugbar" />
     </include_path>
   </component>
   <component name="PhpInterpreters">
