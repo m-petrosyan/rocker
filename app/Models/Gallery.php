@@ -27,7 +27,7 @@ class Gallery extends Model implements Viewable, HasMedia
 
     protected $appends = [
         'views',
-        'all_views',
+        'allViews',
         'total_mb',
         'images_url',
         'cover_img',
