@@ -26,6 +26,9 @@ class Gallery extends Model implements Viewable, HasMedia
     ];
 
     protected $appends = [
+        'views',
+        'all_views',
+        'total_mb',
         'images_url',
         'cover_img',
     ];
@@ -89,7 +92,7 @@ class Gallery extends Model implements Viewable, HasMedia
         ])->toArray();
     }
 
-    public function totalMb(): float
+    public function getTotalMbAttribute(): float
     {
         return round($this->getMedia('images')->sum('size') / 1024 / 1024);
     }
