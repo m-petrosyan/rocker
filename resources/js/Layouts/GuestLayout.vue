@@ -24,7 +24,8 @@ const page = usePage();
 const cleanDescription = computed(() => {
     const raw = props.meta?.description ?? defaultDescription;
     const text = raw.replace(/<[^>]*>/g, '');
-    return text.slice(0, 150);
+    const shortened = text.slice(0, 150);
+    return shortened.slice(0, shortened.lastIndexOf(' ')) || shortened;
 });
 
 const isPWA = ref(false);
