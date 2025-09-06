@@ -44,7 +44,8 @@ defineProps({
                  class="z-10 lg:w-48 md:w-32 w-2/12 absolute lg:bottom-0 lg:-translate-x-0 lg:left-0 bottom-5 left-1/2  -translate-x-1/2"
                  :alt="band.name">
             <div class="absolute h-1/6 left-1/2 lg:w-fit w-full -translate-x-1/2 text-center bottom-0 bg-graydark p-5">
-                <h1>{{ band.name + 'Armenian ' + band.genres.map(genre => genre.name).join(' Band from Armenia') }}</h1>
+                <h1>{{ band.name + ' Armenian ' + band.genres.map(genre => genre.name).join(' Band from Armenia')
+                    }}</h1>
                 <h2>{{ band.name }}</h2>
             </div>
             <SocialShare class="absolute right-0 bottom-0 bg-opacity-20 bg-graydark" :title="band.name" :url />
