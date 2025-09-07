@@ -27,6 +27,7 @@ class SitemapCommand extends Command
      */
     public function handle(): void
     {
+        \Log::info('Sitemap generation started.', ['time' => now()]);
         SitemapGenerator::create(config('app.url'))
             ->setConcurrency(1)
             ->hasCrawled(function (Url $url) {
