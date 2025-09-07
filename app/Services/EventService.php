@@ -33,4 +33,21 @@ class EventService
         Notification::route('mail', config('mail.admin.address'))
             ->notify(new NewCreationNotification($event));
     }
+
+    public function update($attributes, $event): void
+    {
+        $event->update($attributes);
+
+        if (isset($attributes['poster_file'])) {
+            $event->clearMediaCollection('poster');
+            $this->addImage($event, $attributes['poster_file'], 'poster');
+        }
+    }
+
+    public function destroy($event): void
+    {
+        $event->clearMediaCollection('poster');
+
+        $event->delete();
+    }
 }

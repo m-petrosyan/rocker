@@ -48,14 +48,14 @@ const type = props.event.type === 2 ? 'concert' : 'event';
             >
                 <p class="text-4xl font-bold">
                     {{
-                        moment(event.start_date, 'DD.MM.YY')
+                        moment(event.start_date_short, 'DD.MM.YY')
                             .format('D')
                             .toUpperCase()
                     }}
                 </p>
                 <p>
                     {{
-                        moment(event.start_date, 'DD.MM.YY')
+                        moment(event.start_date_short, 'DD.MM.YY')
                             .format('MMMM')
                             .toUpperCase()
                     }}

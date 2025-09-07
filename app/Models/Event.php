@@ -43,6 +43,7 @@ class Event extends Model implements Viewable, HasMedia
         'views',
         'allViews',
         'poster',
+        'start_date_short',
     ];
 
     protected $hidden = [
@@ -61,9 +62,12 @@ class Event extends Model implements Viewable, HasMedia
         return Carbon::parse($value)->format('H:i');
     }
 
-    public function getStartDateAttribute($value): string
+    public function getStartDateShortAttribute(): string
     {
-        $date = Carbon::createFromFormat('Y-m-d', $value);
+//        dd($this->attributes['start_date']);
+        $date = Carbon::createFromFormat('Y-m-d', $this->attributes['start_date']);
+
+//        dd($date->format('d.m.y'));
 
         return $date->format('d.m.y');
     }

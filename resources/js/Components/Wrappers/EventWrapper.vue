@@ -2,8 +2,10 @@
 import moment from 'moment-timezone';
 import NavLink from '@/Components/NavLink.vue';
 import NotifyIcon from '@/Components/Icons/NotifyIcon.vue';
-import { removePostalCode } from '@/Helpers/adressFormatHelper.js';
 import EyesIcon from '@/Components/Icons/EyesIcon.vue';
+import { router } from '@inertiajs/vue3';
+import DeleteIcon from '@/Components/Icons/DeleteIcon.vue';
+import EditIcon from '@/Components/Icons/EditIcon.vue';
 
 defineProps({
     events: {
@@ -31,6 +33,15 @@ defineProps({
         default: false
     }
 });
+
+const deleteEvent = (id) => {
+    if (confirm('Are you sure you want to delete this event?')) {
+        router.delete(route('profile.events.destroy', id), {
+            preserveState: false,
+            preserveScroll: true
+        });
+    }
+};
 </script>
 <template>
     <div class="relative">
@@ -53,33 +64,43 @@ defineProps({
                         class="absolute z-10 h-full w-full object-contain object-center"
                     />
                     <div
-                        class="absolute left-0 z-20 flex h-28 w-full flex justify-between">
-                        <div class="w-28 h-full flex flex-col items-center justify-center bg-orange text-xl">
-                            <p class="text-4xl font-bold">
-                                {{ moment(event.start_date, 'DD.MM.YY').format('D').toUpperCase() }}
-                            </p>
-                            <p>
-                                {{ moment(event.start_date, 'DD.MM.YY').format('MMMM').toUpperCase() }}
-                            </p>
-                            <small>{{ event.start_time }}</small>
-                        </div>
-                        <div v-if="owner || isAdmin" class="flex flex-col items-start gap-y-2"
-                             :class="{ 'bg-blackTransparent2': owner || isAdmin }">
-                            <div v-tooltip="'Sent by bot'" class="flex items-center gap-2">
-                                <NotifyIcon />
-                                {{ event.notify_count }}
+                        class="absolute  left-0 z-20 flex flex-col w-full h-full flex justify-between">
+                        <div class="h-28 w-full flex  justify-between">
+                            <div class="w-28 h-full flex flex-col items-center justify-center bg-orange text-xl">
+                                <p class="text-4xl font-bold">
+                                    {{ moment(event.start_date_short, 'DD.MM.YY').format('D').toUpperCase() }}
+                                </p>
+                                <p>
+                                    {{ moment(event.start_date_short, 'DD.MM.YY').format('MMMM').toUpperCase() }}
+                                </p>
+                                <small>{{ event.start_time }}</small>
                             </div>
-                            <div v-if="event.country === 'am'" v-tooltip="'Views in rocker'"
-                                 class="flex items-center gap-2">
-                                <EyesIcon />
-                                {{ event.allViews }}
+                            <div v-if="owner || isAdmin" class="flex flex-col  gap-y-2"
+                                 :class="{ 'bg-blackTransparent2': owner || isAdmin }">
+                                <div v-tooltip="'Sent by bot'" class="flex items-center gap-2">
+                                    <NotifyIcon />
+                                    {{ event.notify_count }}
+                                </div>
+                                <div v-if="event.country === 'am'" v-tooltip="'Views in rocker'"
+                                     class="flex items-center gap-2">
+                                    <EyesIcon />
+                                    {{ event.allViews }}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div
-                        class="absolute pb-2 flex flex-col justify-end h-48 bottom-0 z-20 w-full bg-gradient-to-t from-black to-transparent ">
-                        <h3 class="text-center text-2xl">{{ event.title }}</h3>
-                        <p class="text-gray-300 text-center">{{ removePostalCode(event.location, 30) }}</p>
+                        <div
+                            class="flex flex-col h-20 w-full z-20 items-center justify-between bg-gradient-to-t from-black to-transparent">
+                            <h3 class="text-center text-2xl">{{ event.title }}</h3>
+                            <div class="flex w-full items-center justify-between">
+                                <NavLink v-tooltip="'Edit'" :href="route('profile.events.edit', event.id)">
+                                    <EditIcon />
+                                </NavLink>
+                                <button v-tooltip="'Delete'" @click.prevent="deleteEvent(event.id)"
+                                        class="text-red-500 hover:text-red-700">
+                                    <DeleteIcon />
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </NavLink>
             </div>

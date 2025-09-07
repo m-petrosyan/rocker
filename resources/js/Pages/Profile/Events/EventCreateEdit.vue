@@ -8,6 +8,7 @@ import GoogleAutocomplate from '@/Components/Maps/GoogleAutocomplate.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import ProfileLayout from '@/Layouts/ProfileLayout.vue';
 import SuccessMessages from '@/Components/Messages/SuccessMessages.vue';
+import MultiSelect from '@/Components/Forms/MultiSelect.vue';
 
 const props = defineProps({
     event: {
@@ -50,8 +51,12 @@ const data = reactive({
 });
 
 const form = useForm(
-    props.event
-        ? { ...props.event }
+    props.event?.id
+        ? {
+            ...props.event,
+            poster_file: null,
+            _method: 'PUT'
+        }
         : {
             title: '',
             content: '',
@@ -70,23 +75,28 @@ const form = useForm(
         }
 );
 
-const createEvent = () => {
-    form.post(
-        route(
-            props.event?.id ? 'profile.events.update' : 'profile.events.store',
-            props.event?.id
-        ),
-        {
+const submitEvent = () => {
+    // form.post(
+    //     route(
+    //         props.event?.id ? 'profile.events.update' : 'profile.events.store',
+    //         props.event?.id
+    //     ),
+    //     {
+    //
+    //         onError: () => {
+    //             window.scrollTo({
+    //                 top: 0,
+    //                 behavior: 'smooth'
+    //             });
+    //         },
+    //         preserveScroll: true
+    //     }
+    // );
 
-            onError: () => {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            },
-            preserveScroll: true
-        }
-    );
+
+    form.post(route(form.id ? 'profile.events.update' : 'profile.events.store', form.id), {
+        preserveScroll: false
+    });
 };
 </script>
 
@@ -103,14 +113,14 @@ const createEvent = () => {
                     <a href="https://t.me/gyumrimetal" target="_blank">Rock Metal Gyumri</a>
                 </div>
             </SuccessMessages>
-            <form @submit.prevent="createEvent" class="flex flex-col gap-y-2">
+            <form @submit.prevent="submitEvent" class="flex flex-col gap-y-2">
                 <div class="flex flex-col md:flex-row gap-4">
                     <div class="w-full md:w-1/2">
                         <Preview
                             label="preview"
                             class="h-full min-h-96"
                             labelClass="h-full"
-                            :image="form.poster"
+                            :image="form.poster?.large"
                             blur
                             v-model:preview="form.poster_file"
                             v-model:file="data.preview"
@@ -135,16 +145,17 @@ const createEvent = () => {
                             :options="genres"
                         />
                         <GoogleAutocomplate :form="form" />
-                        <!--                        <MultiSelect v-if="form.country === 'am'"-->
-                        <!--                                     v-tooltip="'If the band is registered on rocker.am, the event will be visible on their page.'"-->
-                        <!--                                     v-model="form.bands"-->
-                        <!--                                     :options="bandsList"-->
-                        <!--                                     text="Bands"-->
-                        <!--                                     multiple />-->
+                        <MultiSelect v-if="form.country === 'am'"
+                                     v-tooltip="'If the band is registered on rocker.am, the event will be visible on their page.'"
+                                     v-model="form.bands"
+                                     :options="bandsList"
+                                     text="Bands"
+                                     multiple />
                         <DatePicker
                             v-model:start_date="form.start_date"
                             v-model:start_time="form.start_time"
                         />
+
                     </div>
                 </div>
                 <div class="relative mt-2">
@@ -201,7 +212,7 @@ const createEvent = () => {
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
-                    Create
+                    {{ form.id ? 'Update' : 'Create' }}
                 </PrimaryButton>
             </form>
         </div>
