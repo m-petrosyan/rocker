@@ -34,7 +34,6 @@ class HandleInertiaRequests extends Middleware
         if (in_array($request->user()?->role, ['admin', 'moderator'], true)) {
             config(['app.debug' => true]);
             Debugbar::enable();
-//            dd(config('app.debug'));
         } else {
             Debugbar::disable();
         }
