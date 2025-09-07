@@ -50,6 +50,7 @@ const submit = () => {
                     type="text"
                     class="mt-1 block w-full"
                     v-model="form.username"
+                    @input="form.username = form.username.toLowerCase()"
                     required
                     autofocus
                     autocomplete="username"

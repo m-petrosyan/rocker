@@ -3,7 +3,6 @@ import { reactive } from 'vue';
 import RadioSwichButton from '@/Components/Forms/RadioSwichButton.vue';
 import { useForm } from '@inertiajs/vue3';
 import DatePicker from '@/Components/Forms/DatePicker.vue';
-import MultiSelect from '@/Components/Forms/MultiSelect.vue';
 import Preview from '@/Components/Forms/Preview.vue';
 import GoogleAutocomplate from '@/Components/Maps/GoogleAutocomplate.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -136,12 +135,12 @@ const createEvent = () => {
                             :options="genres"
                         />
                         <GoogleAutocomplate :form="form" />
-                        <MultiSelect v-if="form.country === 'am'"
-                                     v-tooltip="'If the band is registered on rocker.am, the event will be visible on their page.'"
-                                     v-model="form.bands"
-                                     :options="bandsList"
-                                     text="Bands"
-                                     multiple />
+                        <!--                        <MultiSelect v-if="form.country === 'am'"-->
+                        <!--                                     v-tooltip="'If the band is registered on rocker.am, the event will be visible on their page.'"-->
+                        <!--                                     v-model="form.bands"-->
+                        <!--                                     :options="bandsList"-->
+                        <!--                                     text="Bands"-->
+                        <!--                                     multiple />-->
                         <DatePicker
                             v-model:start_date="form.start_date"
                             v-model:start_time="form.start_time"

@@ -7,7 +7,8 @@ import ProfileLayout from '@/Layouts/ProfileLayout.vue';
 import Multiselect from '@/Components/Forms/MultiSelect.vue';
 import TextEditor from '@/Components/Forms/TextEditor.vue';
 import SelectImages from '@/Components/Forms/SelectImages.vue';
-import SuccessMessages from '@/Components/Messages/SuccessMessages.vue';
+import AddLinks from '@/Components/Forms/AddLinks.vue';
+import BandAlbums from '@/Components/Forms/BandAlbums.vue';
 
 const props = defineProps({
     band: {
@@ -49,6 +50,7 @@ const form = useForm(
             genres: '',
             info: '',
             links: [],
+            albums: [],
             cover_position: { x: 50, y: 50 }
         }
 );
@@ -71,14 +73,18 @@ const createBand = () => {
     );
 };
 
-const addLinks = () => {
-    form.links.push({
-        url: ''
+const addAlbum = () => {
+    form.albums.push({
+        title: '',
+        cover_file: null,
+        tracks_count: null,
+        year: '',
+        links: [{ url: '' }]
     });
 };
 
-const delLink = (index) => {
-    form.links.splice(index, 1);
+const deleteAlbum = (album) => {
+    form.albums = form.albums.filter(a => a !== album);
 };
 </script>
 
@@ -93,7 +99,7 @@ const delLink = (index) => {
                             class="min-h-96"
                             classes="bg-cover"
                             labelClass="h-full"
-                            :image="form.cover"
+                            :image="form.cover?.large"
                             v-model:backgroundPosition="form.cover_position"
                             v-model:preview="form.cover_file"
                         />
@@ -104,7 +110,7 @@ const delLink = (index) => {
                             classes="bg-contain"
                             class="min-h-96 md:w-1/2 w-full"
                             labelClass="h-full"
-                            :image="form.logo"
+                            :image="form.logo?.svg ?? form.logo?.large"
                             v-model:preview="form.logo_file"
                         />
                         <div class="flex flex-col gap-2 md:w-1/2 w-full">
@@ -115,48 +121,35 @@ const delLink = (index) => {
                             <Multiselect
                                 v-tooltip="'You can choose from the list or add if there is no list'"
                                 v-model="form.genres" :options="genres" text="Genres" multiple />
-                            <div v-if="form.links.length" class="flex flex-col gap-y-2">
-                                <div v-for="(url, index) in form.links" class="flex">
-                                    <input
-                                        class="w-full bg-graydark2"
-                                        type="text"
-                                        v-model="form.links[index].url"
-                                        placeholder="Url"
-                                    />
-                                    <button type="button" class="bg-red px-4 bg-opacity-40 hover:bg-opacity-100"
-                                            @click="delLink(index)">x
-                                    </button>
-                                </div>
-                            </div>
-                            <button v-tooltip="'Add your social networks'" :disabled="form.links.length > 2"
-                                    type="button" @click="addLinks"
-                                    class="bg-grayblue w-fit p-2">Add url
-                            </button>
-
+                            <AddLinks maxLinks="3" v-model:data="form.links" tooltip="Add your social networks" />
                             <div class="text-gray">
                                 <b>Note :</b>
                                 <p class="text-orange">A mandatory requirement for adding a band is that it must have
                                     performed
                                     concerts.</p>
-                                <div class="flex">
+                                <div class="flex gap-5">
                                     <p>You can also add a video from youtube by clicking the button</p>
                                     <img src="/images/video_instruction.png" alt="instruction">
                                 </div>
                                 <p>Tell us a bit about your band!
                                     When did you start? Who's in the lineup? Just a few words about your story, vibe,
                                     and members will make your profile way cooler.
+                                    And if you have any albums, don’t forget to list them below – it’s a brand-new
+                                    feature we’ve just added! 🎶
                                 </p>
-                                <p>For all questions write <a href="https://t.me/mpetrosyan1" target="_blank">@mpetrosyan1</a>
+                                <p>For all questions write
+                                    <b class="text-red"><a href="https://www.instagram.com/rocker._.am/"
+                                                           target="_blank">Rocker instagram page</a></b>
                                 </p>
-                                <SuccessMessages success class="mt-4"
-                                                 :message="'You can add us to the guest list,  we’ll arrange for a photographer to attend and capture the concert 📸'" />
+                                <!--                                <SuccessMessages success class="mt-4"-->
+                                <!--                                                 :message="'You can add us to the guest list,  we’ll arrange for a photographer to attend and capture the concert 📸'" />-->
                             </div>
 
                         </div>
                     </div>
                 </div>
                 <SelectImages
-                    limit="6"
+                    limit="7"
                     label="Click or drag files here (up to 6 images)"
                     v-model:previews="data.preview"
                     v-model:files="form.images"
@@ -170,6 +163,27 @@ const delLink = (index) => {
                         :error="form.errors.info"
                     />
                 </div>
+                <h3 class="text-center text-gray mt-4">Albums</h3>
+                <div class="mt-2 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 grid gap-4">
+                    <BandAlbums
+                        v-for="(album, index) in form.albums"
+                        :key="`album-${album.id || 'new'}-${index}`"
+                        :album="album"
+                        :index="index"
+                        canEdit
+                        @delete="deleteAlbum"
+                    />
+                    <button
+                        type="button"
+                        @click="addAlbum"
+                        class="flex min-h-64 items-center gap-2 border-2 border-dashed border-graydark2 p-4 hover:border-orange hover:bg-graydark2"
+                    >
+                        <div class="mx-auto flex w-32 flex-col items-center gap-y-4 rounded-lg">
+                            <h2 class="text-3xl">+</h2>
+                        </div>
+                    </button>
+                </div>
+
                 <br />
                 <PrimaryButton
                     class="ms-4"

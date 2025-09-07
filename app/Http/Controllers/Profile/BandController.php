@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Profile;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Band\BandCreateRequest;
 use App\Http\Requests\Band\BandUpdateRequest;
+use App\Models\Album;
 use App\Models\Band;
 use App\Models\Genre;
 use App\Repositories\BandRepository;
@@ -53,7 +54,7 @@ class BandController extends Controller
         $this->authorize('update', $band);
 
         return Inertia::render('Profile/Bands/BandCreateEdit', [
-            'band' => $band->load('genres', 'links'),
+            'band' => $band->load('genres', 'links', 'albums'),
             'genres' => Genre::query()->get(),
         ]);
     }
@@ -83,5 +84,12 @@ class BandController extends Controller
 
         return redirect()->route('profile.index');
         // չենք ջնջում այլ մաքրումն ենք սաղ ինֆոն + նկարները բացի անունից
+    }
+
+    public function albumDestroy(Album $album): void
+    {
+        $this->bandService->destroyAlbum($album);
+
+        session()->flash('message', 'The album has been deleted.');
     }
 }

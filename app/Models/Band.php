@@ -7,6 +7,7 @@ use App\Traits\ViewsTrait;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
@@ -29,6 +30,7 @@ class Band extends Model implements Viewable, HasMedia
         'logo',
         'cover',
         'views',
+        'allViews',
         'images_url',
     ];
 
@@ -40,6 +42,11 @@ class Band extends Model implements Viewable, HasMedia
         'cover_position' => 'array',
     ];
 
+
+    public function albums(): HasMany
+    {
+        return $this->hasMany(Album::class);
+    }
 
     public function links(): MorphMany
     {

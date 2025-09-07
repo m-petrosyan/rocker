@@ -47,7 +47,7 @@ const deleteBlog = (id) => {
 
 <template>
     <div class="mt-10">
-        <h2 v-if="title" class="text-center">{{ title }}</h2>
+        <h3 v-if="title" class="text-center">{{ title }}</h3>
         <div class="mt-10 grid gap-y-10 md:grid-cols-2 lg:grid-cols-4">
             <NavLink
                 v-for="blog in blogs"
@@ -96,7 +96,7 @@ const deleteBlog = (id) => {
              class="col-span-full text-center py-4">
             <NavLink :href="route('blogs.index')"
                      class="text-orange font-bold">
-                See more
+                See more blogs
             </NavLink>
         </div>
     </div>

@@ -25,7 +25,7 @@ class GalleryController extends Controller
         $url = url()->current();
 
         return Inertia::render('Gallery/Gallery', [
-            'gallery' => $gallery->load(['user', 'venue']),
+            'gallery' => GalleryReoisitory::getGallery($gallery),
             'url' => $url,
         ]);
     }

@@ -34,7 +34,7 @@ const setLang = (language) => {
 <template>
     <GuestLayout
         :meta="{title:  blog.title['en'] ?? blog.title['am']  ,image:blog.cover.large , description: blog.description['en'] ?? blog.description['am'] , author: blog.author ?? blog.user.name,keywords: blog.bands.map(band => band?.name).join(',')}">
-        <h1 class="text-center">{{ blog.title[lang] }}</h1>
+        <h2 class="text-center">{{ blog.title[lang] }}</h2>
 
         <div class="flex flex-col-reverse md:flex-row mt-5 gap-x-4 gap-y-6">
             <div class="md:w-2/3">

@@ -1,16 +1,19 @@
 > Testing ssr
 
+
+
+> Run
+
+```bash
+sudo -u www-data php artisan queue:work --tries=3 --verbose
+```
+
 > Local run ssr
 
 ```bash
 npm run ssr
 ```
 
-> Run
-
-```bash
-php artisan queue:work --tries=3 --verbose
-```
 
 > Set commands
 
@@ -31,4 +34,12 @@ sudo supervisorctl restart laravel-worker-rocker-app:*
 ```
 
 ngrok http http://rocker.loc
-php artisan telegraph:set-webhook 
+php artisan telegraph:set-webhook
+
+
+> SEO
+
+```
+64%
+https://www.seobility.net/en/seocheck/check/?url=https%3A%2F%2Frocker.am%2F&mode=standard
+```

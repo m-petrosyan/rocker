@@ -20,12 +20,16 @@ const props = defineProps({
 const venueName = computed(() => {
     return props.gallery.venue?.location ?? props.gallery.venue?.name;
 });
+
+const description = 'by ' + props.gallery.user.name + '. ' + (props.gallery.description || 'Discover Armenian rock and metal bands, upcoming concerts, announcements, and photo galleries. Stay updated with the Armenian music scene on Rocker.am.');
+
 </script>
 
 <template>
     <GuestLayout
-        :meta="{title: gallery.title ,image:gallery.cover_img.large , description: 'by '+gallery.user.name, author:gallery.user.name,keywords: gallery.bands.map(band => band.name).join(',')}">
-        <h1 class="text-center">{{ gallery.title }}</h1>
+        :meta="{title: gallery.title+' – Armenian Rock/Metal Music, Concerts & Albums' ,image:gallery.cover_img.large , description, author:gallery.user.name,keywords: gallery.bands.map(band => band.name).join(', ')+ ', '+ gallery.title }">
+        <h1>{{ gallery.title }}</h1>
+        <h2 class="text-center">{{ gallery.title }}</h2>
         <div class="flex flex-col-reverse md:flex-row mt-5 gap-y-6">
             <div class="md:w-1/3">
                 <NavLink :href="route('profile.show', gallery.user.username)"

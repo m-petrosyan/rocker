@@ -24,7 +24,8 @@ const page = usePage();
 const cleanDescription = computed(() => {
     const raw = props.meta?.description ?? defaultDescription;
     const text = raw.replace(/<[^>]*>/g, '');
-    return text.slice(0, 160);
+    const shortened = text.slice(0, 150);
+    return shortened.slice(0, shortened.lastIndexOf(' ')) || shortened;
 });
 
 const isPWA = ref(false);
@@ -45,15 +46,19 @@ onMounted(() => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" :content="meta?.image ?? defaultImg" />
         <meta name="author" :content="meta?.author ?? 'rocker.am'" />
+        <meta name="robots" content="index, follow">
     </Head>
     <PreloaderPwa v-if="isPWA" />
     <FleshNotification />
     <section class="min-h-screen text-white pt-6 sm:pt-0 mb-40">
         <MainNavbar v-if="!isPWA" />
-        <header v-if="$slots.header" class="my-10 text-gray">
-            <h1 class="text-center mb-5">
-                <slot name="header" />
+        <header class="mt-10 text-gray">
+            <h1 v-if="$slots.h1" class="text-center">
+                <slot name="h1" />
             </h1>
+            <h2 v-if="$slots.header" class="text-center">
+                <slot name="header" />
+            </h2>
         </header>
         <main class="my-20 max-w-screen-sm md:max-w-screen-xl mx-auto">
             <slot />

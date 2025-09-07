@@ -25,10 +25,15 @@ const props = defineProps({
         type: String
     }
 });
+
+const type = props.event.type === 2 ? 'concert' : 'event';
+
+
 </script>
 
 <template>
-    <GuestLayout :meta="{ title: event.title, image: event.poster, description: event.content }">
+    <GuestLayout
+        :meta="{ title: event.title+' Armenian Rock & Metal Concerts', image: event.poster, description: event.content, keywords: event.title+', '+event.genre+', '+event.location}">
         <div
             class="relative h-96 w-full"
             :style="{ backgroundImage: `url(${event.poster.large})`}">
@@ -71,19 +76,27 @@ const props = defineProps({
             >
                 <div v-if="event.price" class="flex items-center gap-x-2">
                     <MoneyIcon />
-                    {{ event.price }}
+                    <p> {{ event.price }}</p>
                 </div>
-                <a v-if="event.ticket" :href="event.ticket" class="flex items-center gap-x-2" target="_blank">
+                <a v-if="event.ticket" :href="event.ticket" class="flex items-center gap-x-2" target="_blank"
+                   aria-label="Buy Ticket">
                     <TicketIcon />
-                    Ticket
+                    <span>Ticket</span>
                 </a>
-                <a v-if="event.link" :href="event.link" class="flex items-center gap-x-2" target="_blank">
+                <a v-if="event.link" :href="event.link" class="flex items-center gap-x-2" target="_blank"
+                   aria-label="Event Link">
                     <UrlIcon />
-                    Link
+                    <span>Link</span>
                 </a>
             </div>
         </div>
-        <h3 class="mt-6 text-center text-2xl">{{ event.title }}</h3>
+        <h1>{{ event.title }} – Armenian Rock & Metal Event {{ event.genre }} / {{ type }},
+            {{ removePostalCode(event.location) }}</h1>
+        <h2 class="mt-6 text-center text-2xl">{{ event.title }}</h2>
+        <div class="text-center text-red">
+            <p>genre: {{ event.genre }}</p>
+            <p>type: {{ type }}</p>
+        </div>
         <BandTags class="mx-auto w-fit my-10" :bands="event.bands" />
         <pre class="mt-8 text-pretty text-center">{{ event.content }}</pre>
         <p class="text-center text-orange">{{ removePostalCode(event.location) }}</p>

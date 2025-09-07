@@ -17,17 +17,21 @@ class EmailNewsletter extends Command
         $emails = Band::query()
             ->whereNotNull('user_id')
             ->join('users', 'bands.user_id', '=', 'users.id')
-            ->whereNotIn('users.email', [
-                'sos.voskanyan@gmail.com',
-                'infernalrecordsarmenia@gmail.com',
-            ])
+//            ->whereNotIn('users.email', [
+//                'sos.voskanyan@gmail.com',
+//                'infernalrecordsarmenia@gmail.com',
+//            ])
             ->pluck('users.email')
-            ->unique();
-
+            ->unique()
+            ->push('miqayelpetrosyan@gmail.com');
+//
+//        $emails = ['miqayelpetrosyan@gmail.com'];
+//        dd(getType($emails));
         $originalMailer = config('mail.default');
-        config(['mail.default' => 'bulk']);
+//        config(['mail.default' => 'bulk']); // պետք ա թե չէ
 
         foreach ($emails as $email) {
+            dump($email);
             Notification::route('mail', $email)->notify(new NewsletterNotification());
 
             $this->info("Sent to: $email");

@@ -67,24 +67,33 @@ const processFiles = async (files) => {
     isLoading.value = true;
     const fileList = Array.from(files);
 
-    // Calculate remaining capacity based on the limit
+    // Вычисляем оставшуюся емкость с учетом лимита
     const remainingCapacity = props.limit > 0 ? props.limit - props.previews.length : fileList.length;
 
-    // If no capacity remains, alert the user and return
+    // Если нет свободного места, выводим предупреждение
     if (props.limit > 0 && remainingCapacity <= 0) {
-        alert(`You have reached the maximum limit of ${props.limit} images.`);
+        alert(`Вы достигли максимального лимита в ${props.limit} изображений.`);
         isLoading.value = false;
         return;
     }
 
-    // Limit the number of files to process
+    // Ограничиваем количество обрабатываемых файлов
     const filesToProcess = fileList.slice(0, remainingCapacity);
     const newPreviews = [...props.previews];
 
+    // Создаем новый DataTransfer, включая существующие файлы
     const dataTransfer = new DataTransfer();
+
+    // Добавляем существующие файлы из props.files
+    if (props.files && props.files.length) {
+        Array.from(props.files).forEach(file => dataTransfer.items.add(file));
+    }
+
+    // Добавляем новые файлы
     filesToProcess.forEach(file => dataTransfer.items.add(file));
     emit('update:files', dataTransfer.files);
 
+    // Обрабатываем файлы по частям
     const chunkSize = 5;
     for (let i = 0; i < filesToProcess.length; i += chunkSize) {
         const chunk = filesToProcess.slice(i, i + chunkSize);
@@ -145,18 +154,18 @@ const dropZoneClass = computed(() =>
                     class="aspect-square relative"
                 >
                     <img :src="preview.thumb ?? preview"
-                         :class="{'border border-2 border-orange': cover === preview.id || cover === index}"
+                         :class="{'border border-2 border-orange brightness-125': cover === preview.id || cover === index}"
                          class="w-full h-full object-cover object-center" alt="Image" />
                     <div
                         class="absolute left-0 top-0 md:opacity-0 hover:opacity-100 flex flex-col justify-between w-full h-full z-10 p-2 bg-blackTransparent2">
                         <button v-if="useCover" type="button" class="w-fit"
                                 @click="setCover(index)"
-                                v-tooltip="'Set cover image'">
+                                v-tooltip="'Cover'">
                             <ImageIcon />
                         </button>
                         <div class="flex justify-end">
                             <button type="button" class="w-fit" @click="removeImage(index, preview.id)"
-                                    v-tooltip="'Delete image'">
+                                    v-tooltip="'Delete'">
                                 <DeleteIcon />
                             </button>
                         </div>

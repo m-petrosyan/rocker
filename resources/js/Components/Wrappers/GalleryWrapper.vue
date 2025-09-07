@@ -52,7 +52,7 @@ const deleteGallery = (id) => {
 
 <template>
     <div class="mt-10">
-        <h2 v-if="title" class="text-center">{{ title }}</h2>
+        <h3 v-if="title" class="text-center">{{ title }}</h3>
         <div class="mt-10 grid gap-y-10 md:grid-cols-2 lg:grid-cols-4">
             <NavLink
                 v-for="gallery in galleries"
@@ -75,10 +75,12 @@ const deleteGallery = (id) => {
                     <div class="absolute right-0 bottom-8 px-1 bg-orange">
                         {{ gallery.date }}
                     </div>
-                    <NavLink :href="route('profile.show', gallery.user.username)" v-if="gallery.user"
-                             class="text-center absolute bottom-0 left-0 w-full p-1 bg-blackTransparent2">
+                    <a v-if="gallery.user"
+                       :href="route('profile.show', gallery.user.username)"
+                       class="text-center absolute bottom-0 left-0 w-full p-1 bg-blackTransparent2"
+                       @click.stop>
                         by {{ gallery.user.name }}
-                    </NavLink>
+                    </a>
                     <div v-if="(owner || isAdmin) && profile"
                          class="absolute bottom-0 w-full h-full flex flex-col justify-between  p-1 bg-blackTransparent2">
                         <div class="flex justify-end gap-y-2">
@@ -121,7 +123,7 @@ const deleteGallery = (id) => {
              class="col-span-full text-center py-4">
             <NavLink :href="route('galleries.index')"
                      class="text-orange font-bold">
-                See more
+                See more galleries
             </NavLink>
         </div>
     </div>

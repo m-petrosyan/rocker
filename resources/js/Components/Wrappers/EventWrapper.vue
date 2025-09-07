@@ -34,7 +34,7 @@ defineProps({
 </script>
 <template>
     <div class="relative">
-        <h2 v-if="title" class="text-center">{{ title }}</h2>
+        <h3 v-if="title" class="text-center">{{ title }}</h3>
         <div class="mt-10 grid gap-y-10 md:grid-cols-2 md:gap-4 lg:grid-cols-4 auto-rows-[600px] md:auto-rows-[400px]">
             <div
                 v-for="event in events"
@@ -98,7 +98,7 @@ defineProps({
              class="col-span-full text-center py-4">
             <NavLink :href="route('events.index')"
                      class="text-orange font-bold">
-                See more
+                See more events
             </NavLink>
         </div>
     </div>

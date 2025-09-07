@@ -3,6 +3,7 @@ import { router } from '@inertiajs/vue3';
 import NavLink from '@/Components/NavLink.vue';
 import DeleteIcon from '@/Components/Icons/DeleteIcon.vue';
 import EditIcon from '@/Components/Icons/EditIcon.vue';
+import EyesIcon from '@/Components/Icons/EyesIcon.vue';
 
 defineProps({
     bands: {
@@ -47,14 +48,14 @@ const deleteBand = (id) => {
 
 <template>
     <div class="mt-10">
-        <h2 v-if="title" class="text-center">{{ title }}</h2>
+        <h3 v-if="title" class="text-center">{{ title }}</h3>
         <div class="mt-10 grid gap-y-10 md:grid-cols-2 lg:grid-cols-4">
             <NavLink
                 v-for="band in bands"
                 :href="route('bands.show', band.slug)"
                 :key="band.id"
                 class="flex flex-col items-center p-4">
-                <div class="relative h-64 w-full rounded-lg overflow-hidden bg-black">
+                <div class="relative h-64 w-full rounded-lg bg-black">
                     <img v-if="band.logo.thumb && band.logo.thumb.trim()"
                          :src="band.logo?.svg ?? band.logo.thumb"
                          class="object-contain w-full h-full"
@@ -65,7 +66,13 @@ const deleteBand = (id) => {
                          class="object-contain w-full h-full"
                          alt="Loading" />
                     <div v-if="owner || isAdmin"
-                         class="absolute bottom-0 w-full h-full flex flex-col justify-end  p-1 bg-blackTransparent2">
+                         class="absolute bottom-0 w-full h-full flex flex-col justify-between  p-1 bg-blackTransparent2">
+                        <div class="flex justify-end gap-y-2">
+                            <div class="flex gap-x-2 items-center">
+                                <EyesIcon />
+                                <p v-tooltip="'Views'">{{ band.allViews }}</p>
+                            </div>
+                        </div>
                         <div class="flex justify-between">
                             <NavLink v-tooltip="'Edit'" :href="route('profile.bands.edit', band.id)">
                                 <EditIcon />
@@ -97,7 +104,7 @@ const deleteBand = (id) => {
              class="col-span-full text-center py-4">
             <NavLink :href="route('bands.index')"
                      class="text-orange font-bold">
-                See more
+                See more bands
             </NavLink>
         </div>
     </div>

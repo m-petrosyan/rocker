@@ -34,13 +34,13 @@ const modules = {
 };
 
 const customToolbar = [
-    ['bold', 'italic', 'underline', 'strike'],
-    ['blockquote'],
-    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+    ['bold', 'italic'],
+    [{ 'list': 'bullet' }],
     [{ 'indent': '-1' }, { 'indent': '+1' }],
-    [{ 'direction': 'rtl' }],
     [{ 'align': [] }],
-    ['link', 'image', 'video'],
+    // ['image'],
+    ['link'],
+    ['video'],
     ['clean']
 ];
 
@@ -84,5 +84,53 @@ const customToolbar = [
             float: right !important;
         }
     }
+}
+
+.ql-toolbar.ql-snow .ql-video {
+    background-image: url('/images/icon/youtube.png') !important;
+    background-size: 80% !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    width: 24px !important;
+    height: 24px !important;
+    filter: grayscale(1) brightness(1.5);
+
+    svg {
+        display: none !important;
+    }
+
+    &:hover {
+        background-image: url('/images/icon/youtube.png') !important;
+        filter: grayscale(0);
+    }
+
+}
+
+.ql-snow .ql-tooltip {
+    background-color: theme('colors.graydark2');
+    border: 1px dotted theme('colors.graydark');
+    box-shadow: none;
+
+    &[data-mode=video]::before {
+        content: "Youtube url:" !important;
+    }
+
+    input {
+        background-color: white !important;
+
+        &::placeholder {
+
+        }
+    }
+
+    .ql-action {
+        color: white !important;
+    }
+
+}
+
+
+.ql-toolbar.ql-snow .ql-video::before {
+    content: '' !important;
 }
 </style>

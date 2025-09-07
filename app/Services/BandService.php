@@ -7,6 +7,7 @@ use App\Models\Genre;
 use App\Notifications\NewCreationNotification;
 use App\Traits\ComponentServiceTrait;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 
 class BandService
@@ -39,12 +40,17 @@ class BandService
 
 
         $this->addImage($band, $attributes['cover_file'], 'cover');
+
         if (isset($attributes['logo_file'])) {
             $this->addImage($band, $attributes['logo_file'], 'logo');
         }
 
         if (isset($attributes['images'])) {
             $this->addImages($band, $attributes['images']);
+        }
+
+        if (isset($attributes['albums'])) {
+            $this->updateAlbums($band, $attributes['albums']);
         }
 
         Notification::route('mail', config('mail.admin.address'))
@@ -74,6 +80,10 @@ class BandService
         if (isset($attributes['images'])) {
             $this->addImages($band, $attributes['images']);
         }
+
+        if (isset($attributes['albums'])) {
+            $this->updateAlbums($band, $attributes['albums']);
+        }
     }
 
     public function setGenres(Band $band, array $attributes): void
@@ -92,11 +102,50 @@ class BandService
         }
     }
 
+    public function updateAlbums(Band $band, array $albums): void
+    {
+        try {
+            foreach ($albums as $albumData) {
+                $album = $band->albums()->updateOrCreate(
+                    ['id' => $albumData['id'] ?? null],
+                    Arr::only($albumData, [
+                        'title',
+                        'tracks_count',
+                        'year',
+                    ])
+                );
+
+                if (isset($albumData['cover_file'])) {
+                    $album->clearMediaCollection('cover');
+                    $this->addImage($album, $albumData['cover_file'], 'cover');
+                }
+
+                if (isset($albumData['links'])) {
+                    $this->updateLinks($album, $albumData['links']);
+                }
+            }
+
+            Log::info('Albums updated for band ID: '.$band->id);
+        } catch (\Exception $e) {
+            Log::error('Failed to update albums: '.$e->getMessage());
+            throw $e; // Или обработать ошибку иным способом
+        }
+    }
+
+
     public function destroy(Band $band): void
     {
         $band->update(['user_id' => null, 'info' => null]);
+        $band->albums()->delete();
         $band->clearMediaCollection('cover');
         $band->clearMediaCollection('logo');
         $band->clearMediaCollection('images');
+    }
+
+    public function destroyAlbum($album): void
+    {
+        $album->links()->delete();
+        $album->clearMediaCollection('cover');
+        $album->delete();
     }
 }
