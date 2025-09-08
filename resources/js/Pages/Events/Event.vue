@@ -13,7 +13,8 @@ import BandTags from '@/Components/Tags/BandTags.vue';
 
 const props = defineProps({
     event: {
-        type: Object
+        type: Object,
+        default: null
     },
     views: {
         type: Number
@@ -26,9 +27,8 @@ const props = defineProps({
     }
 });
 
-const type = props.event.type === 2 ? 'concert' : 'event';
 
-
+const type = props.event && props.event.type === 2 ? 'concert' : 'event';
 </script>
 
 <template>
