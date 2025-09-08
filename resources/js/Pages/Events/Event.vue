@@ -9,12 +9,10 @@ import TicketIcon from '@/Components/Icons/TicketIcon.vue';
 import UrlIcon from '@/Components/Icons/UrlIcon.vue';
 import SocialShare from '@/Components/Socials/SocialShare.vue';
 import { removePostalCode } from '@/Helpers/adressFormatHelper.js';
-import BandTags from '@/Components/Tags/BandTags.vue';
 
 const props = defineProps({
     event: {
-        type: Object,
-        default: null
+        type: Object
     },
     views: {
         type: Number
@@ -100,7 +98,7 @@ const type = props.event && props.event.type === 2 ? 'concert' : 'event';
             <p>genre: {{ event.genre }}</p>
             <p>type: {{ type }}</p>
         </div>
-        <BandTags class="mx-auto w-fit my-10" :bands="event.bands" />
+        <!--        <BandTags class="mx-auto w-fit my-10" :bands="event.bands" />-->
         <pre class="mt-8 text-pretty text-center">{{ event.content }}</pre>
         <p class="text-center text-orange">{{ removePostalCode(event.location) }}</p>
         <GoogleMap class="mt-5" v-if="event.cordinates" :cordinates="event.cordinates" />

@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
@@ -31,15 +30,11 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        if (in_array($request->user()?->role, ['admin', 'moderator'], true)) {
+//        dd(auth('bot')->user());
+        if ($request->user() && in_array($request->user()->role, ['admin', 'moderator'], true)) {
             config(['app.debug' => true]);
-            Debugbar::enable();
-        } else {
-            Debugbar::disable();
         }
 
-
-//        dd(auth('bot')->user());
 
         return [
             ...parent::share($request),

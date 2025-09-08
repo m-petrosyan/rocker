@@ -25,3 +25,5 @@ yarn-error.log
 /storage/media-library
 /resources/js/ziggy.js
 
+/public/sitemap.xml
+/public/sitemap-temp.xml
