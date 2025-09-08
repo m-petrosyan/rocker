@@ -8,12 +8,14 @@ defineProps({
     events: {
         type: Object
     },
+    isPast: {
+        type: Boolean,
+        default: false
+    },
     auth: {
         type: Object
     }
 });
-
-const isPast = route().current('events.past');
 
 </script>
 

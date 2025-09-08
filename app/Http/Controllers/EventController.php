@@ -37,11 +37,9 @@ class EventController extends Controller
 
     public function past()
     {
-//        dd(request()->query('page', 1));
-
-        //$page = request()->query('page', 1);
         return Inertia::render('Events/Events', [
             'events' => EventRepository::eventsList(limit: 52, page: request()->query('page', 1), past: true),
+            'isPast' => true,
         ]);
     }
 }
