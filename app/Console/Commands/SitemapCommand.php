@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
+use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\SitemapGenerator;
 use Spatie\Sitemap\Tags\Url;
 
@@ -14,7 +15,10 @@ class SitemapCommand extends Command
 
     public function handle(): void
     {
-        $generated = SitemapGenerator::create(config('app.url'))
+        $this->info('Generating sitemap...');
+
+        // Generate base sitemap
+        $sitemap = SitemapGenerator::create(config('app.url'))
             ->setConcurrency(10)
             ->hasCrawled(function (Url $url) {
                 $exclude = ['login', 'register', 'forgot-password', 'profile'];
@@ -27,49 +31,63 @@ class SitemapCommand extends Command
             })
             ->getSitemap();
 
-        try {
+        // Add events from API
+        $this->addEventsToSitemap($sitemap);
+
+        // Write the sitemap
+        $sitemap->writeToFile(public_path('sitemap.xml'));
+
+        $this->info('Sitemap generated successfully!');
+    }
+
+    private function addEventsToSitemap(Sitemap $sitemap): void
+    {
+        $this->info('Fetching events from API...');
+
+        $page = 1;
+        $totalEvents = 0;
+
+        do {
             $params = [
                 'limit' => 10000,
-                'page' => 1,
+                'page' => $page,
                 'past' => true,
             ];
 
-            do {
+            try {
                 $response = Http::throw()->get('https://bot.rocker.am/api/event', $params);
-                if ($response->successful()) {
-                    $responseData = $response->json();
-                    \Log::info('API response:', ['response' => $responseData]);
-                    if (!isset($responseData['data']) || !is_array($responseData['data'])) {
-                        \Log::error('Invalid API response structure');
-                        break;
-                    }
-                    $events = $responseData['data'];
-                    foreach ($events as $event) {
-                        if (isset($event['id'])) {
-                            $generated->add(Url::create("/events/{$event['id']}"));
-                        }
-                    }
-                    $params['page']++;
-                    $nextPageUrl = $responseData['links']['next'] ?? null;
-                } elseif ($response->status() === 429) {
-                    $retryAfter = $response->header('Retry-After') ?? 60;
-                    \Log::warning("API rate limit exceeded, waiting $retryAfter seconds...");
-                    sleep($retryAfter);
-                    continue;
-                } else {
-                    \Log::error('API request failed', ['status' => $response->status()]);
+                $data = $response->json();
+
+                if (empty($data['data'])) {
                     break;
                 }
-            } while ($nextPageUrl);
-        } catch (\Exception $e) {
-            \Log::error('Error fetching events from API.', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
-        }
 
-        \Log::info('Attempting to write sitemap to file');
-        $generated->writeToFile(public_path('sitemap.xml'));
-        \Log::info('Sitemap written to file', ['urls' => array_map(fn($tag) => $tag->url, $generated->getTags())]);
+                foreach ($data['data'] as $event) {
+                    // Add event URL to sitemap
+                    // Assuming your event URLs follow pattern: /event/{id}
+                    $eventUrl = config('app.url').'/event/'.$event['id'];
+
+                    $sitemap->add(
+                        Url::create($eventUrl)
+                            ->setLastModificationDate(now())
+                            ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY)
+                            ->setPriority(0.8)
+                    );
+
+                    $totalEvents++;
+                }
+
+                $this->info("Processed page {$page} - Added ".count($data['data'])." events");
+
+                // Check if we have more pages
+                $hasNextPage = !empty($data['links']['next']);
+                $page++;
+            } catch (\Exception $e) {
+                $this->error("Error fetching events from API: ".$e->getMessage());
+                break;
+            }
+        } while ($hasNextPage && $page <= ($data['meta']['last_page'] ?? 1));
+
+        $this->info("Total events added to sitemap: {$totalEvents}");
     }
 }
