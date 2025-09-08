@@ -10,31 +10,20 @@ use Spatie\Sitemap\Tags\Url;
 
 class SitemapCommand extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'app:sitemap';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Generate the sitemap for the application';
 
-    /**
-     * Execute the console command.
-     */
     public function handle(): void
     {
         \Log::info('Sitemap generation started.', ['time' => now()]);
 
-        // Сначала генерируем базовый sitemap
+        // Создаём пустой sitemap
+        $sitemap = Sitemap::create();
+
+        // Сканируем сайт (базовые страницы)
         SitemapGenerator::create(config('app.url'))
             ->setConcurrency(10)
-            ->hasCrawled(function (Url $url) {
+            ->hasCrawled(function (Url $url) use ($sitemap) {
                 $exclude = ['login', 'register', 'forgot-password', 'profile'];
                 $firstSegment = $url->segment(1) ?? '';
 
@@ -42,12 +31,12 @@ class SitemapCommand extends Command
                     return null;
                 }
 
-                return $url;
-            })
-            ->writeToFile(public_path('sitemap-temp.xml'));
+                // Добавляем URL в наш sitemap
+                $sitemap->add($url);
 
-        // Загружаем уже сгенерированные URL
-        $sitemap = Sitemap::createFromFile(public_path('sitemap-temp.xml'));
+                return null; // предотвращаем дублирование
+            })
+            ->start(); // Не writeToFile, потому что мы сами будем писать позже
 
         // Добавляем все события
         $allEvents = Event::all();
@@ -58,7 +47,7 @@ class SitemapCommand extends Command
             );
         }
 
-        // Добавляем страницы пагинации для past events
+        // Добавляем страницы пагинации past events
         $perPage = 52;
         $totalPastPages = ceil(Event::where('start_date', '<', now())->count() / $perPage);
         for ($i = 1; $i <= $totalPastPages; $i++) {
@@ -67,11 +56,6 @@ class SitemapCommand extends Command
 
         // Записываем финальный sitemap
         $sitemap->writeToFile(public_path('sitemap.xml'));
-
-        // Удаляем временный файл
-        if (file_exists(public_path('sitemap-temp.xml'))) {
-            unlink(public_path('sitemap-temp.xml'));
-        }
 
         \Log::info('Sitemap generation finished.', ['time' => now()]);
     }
