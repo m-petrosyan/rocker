@@ -34,22 +34,31 @@ class SitemapCommand extends Command
             $params = [
                 'limit' => 10000,
                 'page' => 1,
-                'past' => true,
+                'past' => true, // Проверьте, нужен ли этот параметр
             ];
 
-//            $response = Http::get('https://bot.rocker.am/api/event', $params); // Замените на ваш API
-            $response = Http::throw()->get('https://bot.rocker.am/api/event', $params);
-            if ($response->successful()) {
-                $events = $response->json(); // Предполагаем, что API возвращает массив событий
-                foreach ($events as $event) {
-                    if (isset($event['id'])) {
-                        $sitemap->add(Url::create("/events/{$event['id']}"));
+            do {
+                $response = Http::throw()->get('https://bot.rocker.am/api/event', $params);
+                if ($response->successful()) {
+                    $responseData = $response->json();
+                    $events = $responseData['data'] ?? []; // Извлекаем массив событий из 'data'
+                    foreach ($events as $event) {
+                        if (isset($event['id'])) {
+                            $sitemap->add(Url::create("/events/{$event['id']}"));
+                        }
                     }
+                    \Log::info('Events added from API.', ['page' => $params['page'], 'count' => count($events)]);
+                    // Проверяем наличие следующей страницы
+                    $params['page']++;
+                    $nextPageUrl = $responseData['links']['next'] ?? null;
+                } else {
+                    \Log::error('Failed to fetch events from API.', ['status' => $response->status()]);
+                    break;
                 }
-                \Log::info('Events added from API.', ['count' => count($events)]);
-            } else {
-                \Log::error('Failed to fetch events from API.', ['status' => $response->status()]);
-            }
+            } while ($nextPageUrl); // Продолжаем, пока есть следующая страница
+
+            // Вручную добавляем /events/17, если оно не найдено
+            $sitemap->add(Url::create('/events/17'));
         } catch (\Exception $e) {
             \Log::error('Error fetching events from API.', ['error' => $e->getMessage()]);
         }
