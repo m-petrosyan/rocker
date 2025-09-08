@@ -32,6 +32,7 @@
         "resources/js/Pages/{$page['component']}.vue"
     ])
     @inertiaHead
+    <script src="https://analytics.ahrefs.com/analytics.js" data-key="JlkZWpy6L+iLwXazLzWCqQ" async></script>
 </head>
 <body class="font-sans antialiased bg-gray-900 text-white">
 @inertia
