@@ -8,6 +8,8 @@ use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\SitemapGenerator;
 use Spatie\Sitemap\Tags\Url;
 
+// Добавляем Sitemap
+
 class SitemapCommand extends Command
 {
     protected $signature = 'app:sitemap';
@@ -17,7 +19,7 @@ class SitemapCommand extends Command
     {
         \Log::info('Sitemap generation started.', ['time' => now()]);
 
-        // Создаём объект Sitemap
+        // Создаём объект Sitemap вместо SitemapGenerator для ручного добавления
         $sitemap = Sitemap::create();
 
         // Обход сайта с помощью SitemapGenerator
@@ -29,20 +31,19 @@ class SitemapCommand extends Command
                 if (in_array($firstSegment, $exclude)) {
                     return null;
                 }
-                $sitemap->add($url);
+                $sitemap->add($url); // Добавляем URL в sitemap
 
                 return $url;
             });
 
-        // Получаем все события из API
+        // Получаем события из API
         try {
             $params = [
-                'limit' => 100, // Уменьшаем limit для оптимизации
+                'limit' => 10000,
                 'page' => 1,
-                // Убрали 'past' => true, чтобы получить все события
+                'past' => true,
             ];
 
-            $totalEvents = 0;
             do {
                 $response = Http::throw()->get('https://bot.rocker.am/api/event', $params);
                 if ($response->successful()) {
@@ -50,15 +51,10 @@ class SitemapCommand extends Command
                     $events = $responseData['data'] ?? [];
                     foreach ($events as $event) {
                         if (isset($event['id'])) {
-                            $sitemap->add(Url::create("https://rocker.am/events/{$event['id']}"));
-                            $totalEvents++;
+                            $sitemap->add(Url::create("/events/{$event['id']}"));
                         }
                     }
-                    \Log::info('Events added from API.', [
-                        'page' => $params['page'],
-                        'count' => count($events),
-                        'total' => $totalEvents,
-                    ]);
+                    \Log::info('Events added from API.', ['page' => $params['page'], 'count' => count($events)]);
                     $params['page']++;
                     $nextPageUrl = $responseData['links']['next'] ?? null;
                 } else {
@@ -66,12 +62,16 @@ class SitemapCommand extends Command
                     break;
                 }
             } while ($nextPageUrl);
+
+            // Вручную добавляем /events/17
+//            $sitemap->add(Url::create('https://rocker.am/events/17'));
+
         } catch (\Exception $e) {
             \Log::error('Error fetching events from API.', ['error' => $e->getMessage()]);
         }
 
         // Сохраняем sitemap
         $sitemap->writeToFile(public_path('sitemap.xml'));
-        \Log::info('Sitemap generation completed.', ['time' => now(), 'total_events' => $totalEvents]);
+        \Log::info('Sitemap generation completed.', ['time' => now()]);
     }
 }
