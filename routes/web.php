@@ -28,7 +28,9 @@ Route::post('/telegram/auth', function (Request $request) {
 });
 
 Route::get('/', HomeController::class)->name('home');
+Route::get('events/past', [EventController::class, 'past'])->name('events.past');
 Route::resource('events', EventController::class)->only('index', 'show');
+
 Route::resource('bands', BandController::class)->only('index');
 Route::get('bands/{band:slug}', [BandController::class, 'show'])
     ->name('bands.show');

@@ -34,10 +34,12 @@ class EventRepository
         return $data;
     }
 
-    public static function eventsList($limit = 50)
+    public static function eventsList($limit = 51, $page = 1, $past = false)
     {
         $params = [
             'limit' => $limit,
+            'page' => $page,
+            'past' => $past,
         ];
 
         return self::request($params, true);
