@@ -42,99 +42,81 @@ class SitemapCommand extends Command
 
     private function addEventsToSitemap(Sitemap $sitemap): void
     {
-        $this->info('Fetching events from API...');
+        $this->info('Fetching all events from API...');
 
-        $page = 1;
-        $totalEvents = 0;
+        $params = [
+            'limit' => 50000, // Большой лимит чтобы получить все записи
+            'page' => 1,
+            'past' => true,
+        ];
+
         $maxRetries = 3;
+        $retryCount = 0;
 
-        do {
-            $params = [
-                'limit' => 1000, // Reduced limit to be gentler on the API
-                'page' => $page,
-                'past' => true,
-            ];
+        while ($retryCount < $maxRetries) {
+            try {
+                $this->info("Making API request".($retryCount > 0 ? " (retry {$retryCount})" : ""));
 
-            $retryCount = 0;
-            $success = false;
+                $response = Http::timeout(60) // Увеличили timeout для большого запроса
+                ->get('https://bot.rocker.am/api/event', $params);
 
-            while ($retryCount < $maxRetries && !$success) {
-                try {
-                    $this->info("Fetching page {$page}".($retryCount > 0 ? " (retry {$retryCount})" : ""));
-
-                    $response = Http::timeout(30)
-                        ->retry(3, 2000) // Retry 3 times with 2 second delay
-                        ->get('https://bot.rocker.am/api/event', $params);
-
-                    if ($response->status() === 429) {
-                        $retryAfter = $response->header('Retry-After', 60);
-                        $this->warn("Rate limited. Waiting {$retryAfter} seconds before retry...");
-                        sleep((int)$retryAfter);
-                        $retryCount++;
-                        continue;
-                    }
-
-                    $response->throw();
-                    $data = $response->json();
-
-                    if (empty($data['data'])) {
-                        $success = true;
-                        break;
-                    }
-
-                    foreach ($data['data'] as $event) {
-                        // Add event URL to sitemap
-                        // Assuming your event URLs follow pattern: /event/{id}
-                        $eventUrl = config('app.url').'/event/'.$event['id'];
-
-                        $sitemap->add(
-                            Url::create($eventUrl)
-                                ->setLastModificationDate(now())
-                                ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY)
-                                ->setPriority(0.8)
-                        );
-
-                        $totalEvents++;
-                    }
-
-                    $this->info("Processed page {$page} - Added ".count($data['data'])." events");
-
-                    // Check if we have more pages
-                    $hasNextPage = !empty($data['links']['next']);
-                    $page++;
-                    $success = true;
-
-                    // Add delay between requests to be respectful
-                    if ($hasNextPage) {
-                        $this->info("Waiting 1 second before next request...");
-                        sleep(1);
-                    }
-                } catch (\Illuminate\Http\Client\RequestException $e) {
-                    if ($e->response->status() === 429) {
-                        $retryAfter = $e->response->header('Retry-After', 60);
-                        $this->warn("Rate limited. Waiting {$retryAfter} seconds before retry...");
-                        sleep((int)$retryAfter);
-                        $retryCount++;
-                    } else {
-                        $this->error("HTTP error: ".$e->getMessage());
-                        break;
-                    }
-                } catch (\Exception $e) {
-                    $this->error("Error fetching events from API: ".$e->getMessage());
+                if ($response->status() === 429) {
+                    $retryAfter = $response->header('Retry-After', 60);
+                    $this->warn("Rate limited. Waiting {$retryAfter} seconds before retry...");
+                    sleep((int)$retryAfter);
                     $retryCount++;
-                    if ($retryCount < $maxRetries) {
-                        $this->info("Retrying in 5 seconds...");
-                        sleep(5);
-                    }
+                    continue;
+                }
+
+                $response->throw();
+                $data = $response->json();
+
+                if (empty($data['data'])) {
+                    $this->warn('No events found in API response');
+
+                    return;
+                }
+
+                $totalEvents = 0;
+                foreach ($data['data'] as $event) {
+                    // Add event URL to sitemap
+                    // Assuming your event URLs follow pattern: /event/{id}
+                    $eventUrl = config('app.url').'/event/'.$event['id'];
+
+                    $sitemap->add(
+                        Url::create($eventUrl)
+                            ->setLastModificationDate(now())
+                            ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY)
+                            ->setPriority(0.8)
+                    );
+
+                    $totalEvents++;
+                }
+
+                $this->info("Successfully fetched and processed {$totalEvents} events in 1 API request");
+                $this->info("Total records available: ".($data['meta']['total'] ?? 'unknown'));
+
+                return;
+            } catch (\Illuminate\Http\Client\RequestException $e) {
+                if ($e->response && $e->response->status() === 429) {
+                    $retryAfter = $e->response->header('Retry-After', 60);
+                    $this->warn("Rate limited. Waiting {$retryAfter} seconds before retry...");
+                    sleep((int)$retryAfter);
+                    $retryCount++;
+                } else {
+                    $this->error("HTTP error: ".$e->getMessage());
+                    break;
+                }
+            } catch (\Exception $e) {
+                $this->error("Error fetching events from API: ".$e->getMessage());
+                $retryCount++;
+                if ($retryCount < $maxRetries) {
+                    $this->info("Retrying in 5 seconds...");
+                    sleep(5);
                 }
             }
+        }
 
-            if (!$success) {
-                $this->error("Failed to fetch page {$page} after {$maxRetries} retries. Stopping.");
-                break;
-            }
-        } while ($hasNextPage && $page <= ($data['meta']['last_page'] ?? 1));
-
-        $this->info("Total events added to sitemap: {$totalEvents}");
+        $this->error("Failed to fetch events after {$maxRetries} retries");
     }
 }
