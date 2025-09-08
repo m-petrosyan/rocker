@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Event;
 use Illuminate\Console\Command;
-use Spatie\Sitemap\Sitemap;
+use Illuminate\Support\Facades\Http;
+use Spatie\Sitemap\SitemapGenerator;
 use Spatie\Sitemap\Tags\Url;
 
 class SitemapCommand extends Command
@@ -16,40 +16,46 @@ class SitemapCommand extends Command
     {
         \Log::info('Sitemap generation started.', ['time' => now()]);
 
-        $sitemap = Sitemap::create();
+        // Создаём sitemap с фильтрацией
+        $sitemap = SitemapGenerator::create(config('app.url'))
+            ->setConcurrency(10)
+            ->hasCrawled(function (Url $url) {
+                $exclude = ['login', 'register', 'forgot-password', 'profile'];
+                $firstSegment = $url->segment(1) ?? '';
+                if (in_array($firstSegment, $exclude)) {
+                    return null;
+                }
 
-        // Добавляем статические страницы
-        $staticUrls = [
-            '/',
-            '/events',
-            '/bands',
-            '/galleries',
-        ];
+                return $url;
+            });
 
-        foreach ($staticUrls as $url) {
-            $sitemap->add(Url::create($url));
-        }
+        // Получаем события из API
+        try {
+            $params = [
+                'limit' => 10000,
+                'page' => 1,
+                'past' => true,
+            ];
 
-        // Добавляем все events
-        Event::chunk(100, function ($events) use ($sitemap) {
-            foreach ($events as $event) {
-                $sitemap->add(
-                    Url::create("/events/{$event->id}")
-                        ->setLastModificationDate($event->updated_at)
-                );
+//            $response = Http::get('https://bot.rocker.am/api/event', $params); // Замените на ваш API
+            $response = Http::throw()->get('https://bot.rocker.am/api/event', $params);
+            if ($response->successful()) {
+                $events = $response->json(); // Предполагаем, что API возвращает массив событий
+                foreach ($events as $event) {
+                    if (isset($event['id'])) {
+                        $sitemap->add(Url::create("/events/{$event['id']}"));
+                    }
+                }
+                \Log::info('Events added from API.', ['count' => count($events)]);
+            } else {
+                \Log::error('Failed to fetch events from API.', ['status' => $response->status()]);
             }
-        });
-
-        // Добавляем страницы пагинации past events
-        $perPage = 52;
-        $totalPastPages = ceil(Event::where('start_date', '<', now())->count() / $perPage);
-        for ($i = 1; $i <= $totalPastPages; $i++) {
-            $sitemap->add(Url::create("/events/past?page={$i}"));
+        } catch (\Exception $e) {
+            \Log::error('Error fetching events from API.', ['error' => $e->getMessage()]);
         }
 
-        // Записываем sitemap
+        // Сохраняем sitemap
         $sitemap->writeToFile(public_path('sitemap.xml'));
-
-        \Log::info('Sitemap generation finished.', ['time' => now()]);
+        \Log::info('Sitemap generation completed.', ['time' => now()]);
     }
 }
