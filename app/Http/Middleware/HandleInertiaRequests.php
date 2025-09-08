@@ -30,7 +30,6 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-//        dd(auth('bot')->user());
         if ($request->user() && in_array($request->user()->role, ['admin', 'moderator'], true)) {
             config(['app.debug' => true]);
         }
@@ -52,9 +51,6 @@ class HandleInertiaRequests extends Middleware
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
-//            'app_env' => in_array($request->user()?->role, ['admin', 'moderator']) ? 'local' : env('APP_ENV'),
-//
-//
         ];
     }
 }
