@@ -29,7 +29,7 @@ class SitemapCommand extends Command
     {
         \Log::info('Sitemap generation started.', ['time' => now()]);
         SitemapGenerator::create(config('app.url'))
-            ->setConcurrency(1)
+            ->setConcurrency(10)
             ->hasCrawled(function (Url $url) {
                 $exclude = ['login', 'register', 'forgot-password', 'profile'];
                 $firstSegment = $url->segment(1) ?? '';
