@@ -81,7 +81,7 @@ class SitemapCommand extends Command
                 foreach ($data['data'] as $event) {
                     // Add event URL to sitemap
                     // Assuming your event URLs follow pattern: /event/{id}
-                    $eventUrl = config('app.url').'/event/'.$event['id'];
+                    $eventUrl = config('app.url').'/events/'.$event['id'];
 
                     $sitemap->add(
                         Url::create($eventUrl)
