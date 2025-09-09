@@ -200,6 +200,7 @@ const getSpotifyId = (album) => {
                 </div>
             </div>
             <button
+                v-if="canEdit"
                 type="button"
                 @click="addAlbum"
                 class="flex min-h-64 items-center gap-2 border-2 border-dashed border-graydark2 p-4
