@@ -29,33 +29,15 @@ defineProps({
             : 'Upcoming Armenian Rock & Metal Concerts and Events'
             }}
         </template>
-        <!--        <MegaMaps-->
-        <!--            v-if="auth?.isAdmin"-->
-        <!--            :markers="[-->
-        <!--                        { latitude: 40.188067, longitude: 44.5139577, info: 'Tonlab' },-->
-        <!--                        {-->
-        <!--                            latitude: 40.1800023,-->
-        <!--                            longitude: 44.5160956,-->
-        <!--                            info: 'The venue',-->
-        <!--                        },-->
-        <!--                        {-->
-        <!--                            latitude: 40.1895131,-->
-        <!--                            longitude: 44.521072,-->
-        <!--                            info: 'Stop club',-->
-        <!--                        },-->
-        <!--                        {-->
-        <!--                            latitude: 40.1800023,-->
-        <!--                            longitude: 44.5160956,-->
-        <!--                            info: 'Tonlab2',-->
-        <!--                        },-->
-        <!--                        {-->
-        <!--                            latitude: 40.1737167,-->
-        <!--                            longitude: 44.516279399999995,-->
-        <!--                            info: 'Hardrock',-->
-        <!--                        },-->
-        <!--                    ]"-->
-        <!--        />-->
-        <!--        <MultiSelect class="w-48" />-->
+        <p>
+            Armenian rock and metal concerts are a vibrant part of the local scene.
+            This page features
+            {{ isPast ? 'past Armenian rock & metal concerts and events' : 'upcoming Armenian rock & metal concerts and events'
+            }}
+            in Yerevan and beyond, collected in one place for quick discovery.
+        </p>
+
+
         <EventWrapper :events="events.data" v-bind:add="!isPast" />
         <Pagination :links="events.links" />
         <NavLink
@@ -64,5 +46,10 @@ defineProps({
             class="flex flex-col items-center p-4">
             Past events
         </NavLink>
+        <p class="px-4 pt-10">
+            Check listings for dates, venues, and band details.
+            Use this guide to revisit standout performances in the archive or plan your next night out at a live show.
+            Stay tuned so you never miss key Armenian rock and metal events.
+        </p>
     </GuestLayout>
 </template>
