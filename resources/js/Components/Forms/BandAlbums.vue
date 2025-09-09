@@ -136,6 +136,9 @@ const getSpotifyId = (album) => {
                     <div class="flex flex-col mt-2 gap-2">
                         <AddLinks maxLinks="3" v-model:data="album.links" tooltip="Add album url" />
                     </div>
+                    <p class="text-gray p-2">If your album is available on Spotify, add the link so users can play it
+                        directly here."</p>
+
                     <button
                         type="button"
                         class="bg-red w-full mt-2 flex justify-center items-center py-1 bg-opacity-40 hover:bg-opacity-100"
