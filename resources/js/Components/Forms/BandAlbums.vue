@@ -95,7 +95,7 @@ const getSpotifyId = (album) => {
 
 <template>
     <div class="mt-20">
-        <h3 class="text-center">Albums</h3>
+        <h3 v-if="albums.length" class="text-center">Albums</h3>
         <div class="mt-2 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 grid gap-4 mt-4">
             <div v-for="(album, index) in albums" :key="album.id || index">
                 <div v-if="canEdit">
