@@ -21,7 +21,7 @@ defineProps({
 
 <template>
     <GuestLayout
-        :meta="{ title: 'Events', keywords: 'armenian rock events, armenian metal events, armenian rock concerts, armenian metal concerts, armenian rock festivals, armenian metal festivals, yerevan rock events, yerevan metal concerts, yerevan rock concerts, yerevan metal concerts, armenian live rock, armenian live metal, armenian concert events, armenian rock events calendar, armenian metal events calendar, armenian music events, armenian underground concerts, armenian underground music events, armenian concert announcements, armenian rock show announcements, armenian metal show announcements, armenian rock gigs, armenian metal gigs, armenian live music shows, yerevan concert events' + events.data.map(event => event.title).join(', ') }">
+        :meta="{ title: 'Events - Upcoming & Past Armenian Rock & Metal Concerts and Events', keywords: 'armenian rock events, armenian metal events, armenian rock concerts, armenian metal concerts, armenian rock festivals, armenian metal festivals, yerevan rock events, yerevan metal concerts, yerevan rock concerts, yerevan metal concerts, armenian live rock, armenian live metal, armenian concert events, armenian rock events calendar, armenian metal events calendar, armenian music events, armenian underground concerts, armenian underground music events, armenian concert announcements, armenian rock show announcements, armenian metal show announcements, armenian rock gigs, armenian metal gigs, armenian live music shows, yerevan concert events' + events.data.map(event => event.title).join(', ') }">
         <template #header> Events</template>
         <template #h1>
             {{ isPast
