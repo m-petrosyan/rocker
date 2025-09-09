@@ -36,8 +36,6 @@ defineProps({
             }}
             in Yerevan and beyond, collected in one place for quick discovery.
         </p>
-
-
         <EventWrapper :events="events.data" v-bind:add="!isPast" />
         <Pagination :links="events.links" />
         <NavLink
