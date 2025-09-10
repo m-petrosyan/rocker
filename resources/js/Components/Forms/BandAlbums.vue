@@ -73,12 +73,6 @@ const deleteAlbum = (album) => {
     emit('update:albums', newAlbums);
 };
 
-// const updateAlbum = (index, key, value) => {
-//     const newAlbums = [...props.albums];
-//     newAlbums[index] = { ...newAlbums[index], [key]: value };
-//     emit('update:albums', newAlbums);
-// };
-
 const getSpotifyId = (album) => {
     if (!album.links?.length) return null;
     const spotifyLink = album.links.find(link =>

@@ -13,18 +13,16 @@ const embedUrl = ref(`https://open.spotify.com/embed/album/${props.spotifyId}?si
 
 
 <template>
-    <div class="p-4">
+    <div class="h-full w-full">
         <button
             @click="$emit('close')"
-            class="absolute top-6 right-3 bg-black bg-black text-white py-1 px-2 rounded-full hover:bg-opacity-80 transition-all z-20"
+            class="absolute top-3 sm:top-4 right-[3%] bg-black bg-black text-white py-1 px-2 rounded-full hover:bg-opacity-80 transition-all z-20"
         >
             ✕
         </button>
-        <h1 class="text-xl font-bold mb-4">🎵 Spotify Player</h1>
         <iframe
             :src="embedUrl"
-            width="400"
-            height="400"
+            class="w-full h-full rounded-lg"
             frameborder="0"
             allowtransparency="true"
             allow="encrypted-media"
