@@ -35,11 +35,13 @@ class HandleInertiaRequests extends Middleware
         }
 
         $url = $request->url();
-        $page = (int)$request->get('page', 1);
+        $page = (int)$request->get('page');
 
         $canonical = $page > 1
             ? $url.'?page='.$page
             : $url;
+
+//        dd($canonical);
 
         return [
             ...parent::share($request),
