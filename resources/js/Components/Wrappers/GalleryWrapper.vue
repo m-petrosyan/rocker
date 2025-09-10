@@ -105,7 +105,7 @@ const deleteGallery = (id) => {
                     </div>
                 </div>
                 <div class="p-2">
-                    <h3 class="text-lg font-semibold text-pretty">{{ gallery.title }}</h3>
+                    <p class="text-lg font-semibold text-pretty">{{ gallery.title }}</p>
                 </div>
             </NavLink>
             <NavLink

@@ -26,7 +26,7 @@ defineProps({
 </script>
 
 <template>
-    <GuestLayout :meta="{title: 'Armenian Rock & Metal Bands, Concerts & Galleries'}">
+    <GuestLayout :meta="{title: 'Armenian Rock & Metal Portal'}">
 
         <template #h1>Armenian Rock & Metal Bands, Concerts, Galleries</template>
         <p class="text-pretty text-gray mb-6">Welcome to Rocker.am – your portal for Armenian rock and metal bands.

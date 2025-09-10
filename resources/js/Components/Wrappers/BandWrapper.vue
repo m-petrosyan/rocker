@@ -85,8 +85,8 @@ const deleteBand = (id) => {
                     </div>
                 </div>
                 <div class="p-2">
-                    <h3 class="text-lg font-semibold text-pretty">
-                        {{ band.name.length > 40 ? band.name.slice(0, 40) + '...' : band.name }}</h3>
+                    <p class="text-lg font-semibold text-pretty">
+                        {{ band.name.length > 40 ? band.name.slice(0, 40) + '...' : band.name }}</p>
                 </div>
             </NavLink>
             <NavLink

@@ -78,7 +78,7 @@ const deleteBlog = (id) => {
                     </div>
                 </div>
                 <div class="p-2">
-                    <h3 class="text-lg font-semibold text-pretty">{{ blog.title['en'] ?? blog.title['am'] }}</h3>
+                    <p class="text-lg font-semibold text-pretty">{{ blog.title['en'] ?? blog.title['am'] }}</p>
                 </div>
             </NavLink>
             <NavLink
