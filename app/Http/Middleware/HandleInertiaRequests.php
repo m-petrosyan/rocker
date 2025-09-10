@@ -37,7 +37,7 @@ class HandleInertiaRequests extends Middleware
         $url = $request->url();
         $page = (int)$request->get('page');
 
-        $canonical = $page > 1
+        $canonical = $page > 0
             ? $url.'?page='.$page
             : $url;
 
