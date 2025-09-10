@@ -34,6 +34,12 @@ class HandleInertiaRequests extends Middleware
             config(['app.debug' => true]);
         }
 
+        $url = $request->url();
+        $page = (int)$request->get('page', 1);
+
+        $canonical = $page > 1
+            ? $url.'?page='.$page
+            : $url;
 
         return [
             ...parent::share($request),
@@ -51,6 +57,7 @@ class HandleInertiaRequests extends Middleware
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
+            'canonical' => $canonical,
         ];
     }
 }
