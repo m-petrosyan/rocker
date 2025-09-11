@@ -29,11 +29,11 @@ defineProps({
     <GuestLayout :meta="{title: 'Armenian Rock & Metal Portal'}">
 
         <template #h1>Armenian Rock & Metal Bands, Concerts, Galleries</template>
-        <p class="text-pretty text-gray mb-6">Welcome to Rocker.am – your portal for Armenian rock and metal bands.
+        <h2 class="text-pretty text-gray mb-6">Welcome to Rocker.am – your portal for Armenian rock and metal bands.
             Discover
             upcoming
             concerts, explore
-            photo galleries from live performances, and stay updated with the Armenian music scene.</p>
+            photo galleries from live performances, and stay updated with the Armenian music scene.</h2>
 
         <EventWrapper :events="events.data" more title="Events" />
         <BandWrapper :bands="bands.data" more title="Bands" />
