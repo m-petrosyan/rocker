@@ -29,7 +29,9 @@ defineProps({
     <GuestLayout :meta="{title: 'Armenian Rock & Metal Portal'}">
 
         <template #h1>Armenian Rock & Metal Bands, Concerts, Galleries</template>
-        <h2 class="text-pretty text-gray mb-6">Welcome to Rocker.am – your portal for Armenian rock and metal bands.
+        <h2 class="text-pretty text-lg font-medium text-gray mb-6">Welcome to Rocker.am – your portal for Armenian rock
+            and
+            metal bands.
             Discover
             upcoming
             concerts, explore
