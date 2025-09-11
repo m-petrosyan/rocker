@@ -98,7 +98,7 @@ defineProps({
              class="col-span-full text-center py-4">
             <NavLink :href="route('events.index')"
                      class="text-orange font-bold">
-                See more events
+                Explore upcoming concerts
             </NavLink>
         </div>
     </div>

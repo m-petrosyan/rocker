@@ -104,7 +104,7 @@ const deleteBand = (id) => {
              class="col-span-full text-center py-4">
             <NavLink :href="route('bands.index')"
                      class="text-orange font-bold">
-                See more bands
+                Discover more bands
             </NavLink>
         </div>
     </div>
