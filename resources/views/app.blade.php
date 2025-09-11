@@ -1,30 +1,20 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#000000">
     <meta name="publisher" content="Rocker.am">
-    <meta name="theme-color" content="#000000">
-    <meta name="apple-mobile-web-app-title" content="rocker.am">
+    <meta name="apple-mobile-web-app-title" content="Rocker.am">
     <link rel="manifest" href="/manifest.webmanifest">
-    <link rel="apple-touch-icon" href="/favicon-apple.png">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
-    <link rel="shortcut icon" href="/favicon.ico">
-    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.png') }}" />
-    {{--    <link rel="canonical" href="{{ url()->current() }}" />--}}
+    <link rel="apple-touch-icon" href="/icons/icon-192.png">
+    <link rel="icon" type="image/png" href="/favicon.png">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script type="application/ld+json">
-    @verbatim
-            {
-              "@context": "https://schema.org",
-      "@type": "WebSite",
-      "url": "{{ url('/') }}",
-      "name": "Rocker"
-    }
-        @endverbatim
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "url": "{{ url('/') }}",
+            "name": "Rocker"
+        }
     </script>
     @routes
     @vite([
@@ -33,7 +23,3 @@
     ])
     @inertiaHead
 </head>
-<body class="font-sans antialiased bg-gray-900 text-white">
-@inertia
-</body>
-</html>
