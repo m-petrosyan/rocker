@@ -97,6 +97,7 @@ defineProps({
         <div v-if="more"
              class="col-span-full text-center py-4">
             <NavLink :href="route('events.index')"
+                     label="Events list"
                      class="text-orange font-bold">
                 Explore upcoming concerts
             </NavLink>

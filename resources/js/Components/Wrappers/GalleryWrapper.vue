@@ -129,6 +129,7 @@ const ssr = computed(() => {
         <div v-if="more"
              class="col-span-full text-center py-4">
             <NavLink :href="route('galleries.index')"
+                     label="Galleries list"
                      class="text-orange font-bold">
                 Browse more photo galleries
             </NavLink>

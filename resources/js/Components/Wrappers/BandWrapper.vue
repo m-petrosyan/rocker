@@ -102,7 +102,7 @@ const deleteBand = (id) => {
         </div>
         <div v-if="more"
              class="col-span-full text-center py-4">
-            <NavLink :href="route('bands.index')"
+            <NavLink :href="route('bands.index')" label="Bands list"
                      class="text-orange font-bold">
                 Discover more bands
             </NavLink>
