@@ -18,11 +18,12 @@ import BotIcon from '@/Components/Icons/BotIcon.vue';
                         <InstagramIcon />
                     </a>
                     <a href="https://t.me/RockMetalEventsbot"
+                       rel="nofollow noopener"
                        target="_blank">
                         <BotIcon />
                     </a>
                 </div>
-                <a class="order-3" href="https://t.me/mpetrosyan1" target="_blank">
+                <a class="order-3" href="https://t.me/mpetrosyan1" target="_blank" rel="nofollow noopener">
                     <small>Developed by Miqayel Petrosyan</small>
                 </a>
             </div>
