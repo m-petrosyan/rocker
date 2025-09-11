@@ -4,6 +4,7 @@ import NavLink from '@/Components/NavLink.vue';
 import DeleteIcon from '@/Components/Icons/DeleteIcon.vue';
 import EditIcon from '@/Components/Icons/EditIcon.vue';
 import EyesIcon from '@/Components/Icons/EyesIcon.vue';
+import { computed } from 'vue';
 
 defineProps({
     galleries: {
@@ -48,9 +49,14 @@ const deleteGallery = (id) => {
         });
     }
 };
+
+const ssr = computed(() => {
+    return typeof window === 'undefined';
+});
 </script>
 
 <template>
+    {{ ssr }}
     <div class="mt-10">
         <h3 v-if="title" class="text-center">{{ title }}</h3>
         <div class="mt-10 grid gap-y-10 md:grid-cols-2 lg:grid-cols-4">
@@ -63,6 +69,7 @@ const deleteGallery = (id) => {
                     <img v-if="gallery.cover_img.thumb && gallery.cover_img.thumb.trim()"
                          :src="gallery.cover_img.thumb"
                          class="object-cover w-full h-full"
+                         loading="lazy"
                          :alt="gallery.title"
                          @error="$event.target.src = gallery.cover_img.original" />
                     <img v-else-if="gallery.cover_img.original"
@@ -105,7 +112,8 @@ const deleteGallery = (id) => {
                     </div>
                 </div>
                 <div class="p-2">
-                    <p class="text-lg font-semibold">{{ gallery.title }}</p>
+                    <p v-if="ssr" class="text-lg font-semibold">{{ gallery.title }} by {{ gallery.user.name }}</p>
+                    <p v-else class="text-lg font-semibold">{{ gallery.title }}</p>
                 </div>
             </NavLink>
             <NavLink
