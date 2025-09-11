@@ -63,7 +63,7 @@ const deleteGallery = (id) => {
                     <img v-if="gallery.cover_img.thumb && gallery.cover_img.thumb.trim()"
                          :src="gallery.cover_img.thumb"
                          class="object-cover w-full h-full"
-                         alt="Loading"
+                         :alt="gallery.title"
                          @error="$event.target.src = gallery.cover_img.original" />
                     <img v-else-if="gallery.cover_img.original"
                          :src="gallery.cover_img.original"
@@ -105,7 +105,7 @@ const deleteGallery = (id) => {
                     </div>
                 </div>
                 <div class="p-2">
-                    <p class="text-lg font-semibold text-pretty">{{ gallery.title }}</p>
+                    <p class="text-lg font-semibold">{{ gallery.title }}</p>
                 </div>
             </NavLink>
             <NavLink
