@@ -40,6 +40,6 @@ class SitemapCommand extends Command
 
                 return $url;
             })
-            ->writeToFile(public_path('sitemap.xml'));
+            ->writeToFile(storage_path('app/public/sitemap.xml'));
     }
 }

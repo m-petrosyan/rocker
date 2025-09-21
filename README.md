@@ -43,3 +43,13 @@ php artisan telegraph:set-webhook
 64%
 https://www.seobility.net/en/seocheck/check/?url=https%3A%2F%2Frocker.am%2F&mode=standard
 ```
+
+
+> deploy
+
+```
+backup 
+enum types change to string
+rollback steps
+
+```
