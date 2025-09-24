@@ -34,7 +34,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $schedule->command('disk:check')->daily()->at('18:30');
         $schedule->command('app:sitemap')->daily()->at('19:00');
         $schedule->command('backup:run')->daily()->at('19:30');
-        $schedule->command('backup:clean')->monthlyOn(1, '20:00');
+        $schedule->command('backup:clean')->cron('0 23 */14 * *');
     })
     ->withExceptions(function (Exceptions $exceptions) {
         if (!app()->environment('local')) {
