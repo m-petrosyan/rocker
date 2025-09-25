@@ -30,11 +30,18 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        if (in_array($request->user()?->role, ['admin', 'moderator'], true)) {
+        if ($request->user() && in_array($request->user()->role, ['admin', 'moderator'], true)) {
             config(['app.debug' => true]);
         }
 
-//        dd(auth('bot')->user());
+        $url = $request->url();
+        $page = (int)$request->get('page');
+
+        $canonical = $page > 0
+            ? $url.'?page='.$page
+            : $url;
+
+//        dd($canonical);
 
         return [
             ...parent::share($request),
@@ -52,9 +59,7 @@ class HandleInertiaRequests extends Middleware
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
-//            'app_env' => in_array($request->user()?->role, ['admin', 'moderator']) ? 'local' : env('APP_ENV'),
-//
-//
+            'canonical' => $canonical,
         ];
     }
 }

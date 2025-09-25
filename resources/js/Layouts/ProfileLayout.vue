@@ -38,6 +38,7 @@ onMounted(() => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:image" :content="meta?.image ?? defaultImg" />
         <meta name="author" :content="meta?.author ?? 'rocker.am'" />
+        <link rel="canonical" :href="$page.props.canonical" />
     </Head>
     <FleshNotification />
     <PreloaderPwa v-if="isPWA" />

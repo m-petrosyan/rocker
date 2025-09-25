@@ -64,7 +64,7 @@ const deleteEvent = (id) => {
                         class="absolute z-10 h-full w-full object-contain object-center"
                     />
                     <div
-                        class="absolute  left-0 z-20 flex flex-col w-full h-full flex justify-between">
+                        class="absolute left-0 z-20 flex h-28 w-full flex justify-between">
                         <div class="h-28 w-full flex  justify-between">
                             <div class="w-28 h-full flex flex-col items-center justify-center bg-orange text-xl">
                                 <p class="text-4xl font-bold">
@@ -88,19 +88,33 @@ const deleteEvent = (id) => {
                                 </div>
                             </div>
                         </div>
-                        <div
-                            class="flex flex-col h-20 w-full z-20 items-center justify-between bg-gradient-to-t from-black to-transparent">
-                            <h3 class="text-center text-2xl">{{ event.title }}</h3>
-                            <div class="flex w-full items-center justify-between">
-                                <NavLink v-tooltip="'Edit'" :href="route('profile.events.edit', event.id)">
-                                    <EditIcon />
-                                </NavLink>
-                                <button v-tooltip="'Delete'" @click.prevent="deleteEvent(event.id)"
-                                        class="text-red-500 hover:text-red-700">
-                                    <DeleteIcon />
-                                </button>
+                        <div class="h-28 w-full flex  justify-between">
+                         <div class="w-28 h-full flex flex-col items-center justify-center bg-orange text-xl">
+                            <p class="text-4xl font-bold">
+                                {{ moment(event.start_date_short, 'DD.MM.YY').format('D').toUpperCase() }}
+                            </p>
+                            <p>
+                                {{ moment(event.start_date_short, 'DD.MM.YY').format('MMMM').toUpperCase() }}
+                            </p>
+                            <small>{{ event.start_time }}</small>
+                        </div>
+                        <div v-if="owner || isAdmin" class="flex flex-col  gap-y-2"
+                             :class="{ 'bg-blackTransparent2': owner || isAdmin }">
+                            <div v-tooltip="'Sent by bot'" class="flex items-center gap-2">
+                                <NotifyIcon />
+                                {{ event.notify_count }}
+                            </div>
+                            <div v-if="event.country === 'am'" v-tooltip="'Views in rocker'"
+                                 class="flex items-center gap-2">
+                                <EyesIcon />
+                                {{ event.allViews }}
                             </div>
                         </div>
+                    </div>
+                    <div
+                        class="absolute pb-2 flex flex-col justify-end h-48 bottom-0 z-20 w-full bg-gradient-to-t from-black to-transparent ">
+                        <h3 class="text-center text-2xl">{{ event.title }}</h3>
+                        <p class="text-gray-300 text-center">{{ removePostalCode(event.location, 30) }}</p>
                     </div>
                 </NavLink>
             </div>
@@ -118,8 +132,9 @@ const deleteEvent = (id) => {
         <div v-if="more"
              class="col-span-full text-center py-4">
             <NavLink :href="route('events.index')"
+                     label="Events list"
                      class="text-orange font-bold">
-                See more events
+                Explore upcoming concerts
             </NavLink>
         </div>
     </div>

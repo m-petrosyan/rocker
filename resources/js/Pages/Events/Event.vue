@@ -9,7 +9,6 @@ import TicketIcon from '@/Components/Icons/TicketIcon.vue';
 import UrlIcon from '@/Components/Icons/UrlIcon.vue';
 import SocialShare from '@/Components/Socials/SocialShare.vue';
 import { removePostalCode } from '@/Helpers/adressFormatHelper.js';
-import BandTags from '@/Components/Tags/BandTags.vue';
 
 const props = defineProps({
     event: {
@@ -26,9 +25,8 @@ const props = defineProps({
     }
 });
 
-const type = props.event.type === 2 ? 'concert' : 'event';
 
-
+const type = props.event && props.event.type === 2 ? 'concert' : 'event';
 </script>
 
 <template>
@@ -90,14 +88,17 @@ const type = props.event.type === 2 ? 'concert' : 'event';
                 </a>
             </div>
         </div>
-        <h1>{{ event.title }} – Armenian Rock & Metal Event {{ event.genre }} / {{ type }},
-            {{ removePostalCode(event.location) }}</h1>
+        <h1>
+            {{ event.title }} – {{ type }}, {{ moment(event.start_date, 'DD MMMM YYYY').format('DD MMMM YYYY') }},
+            {{ removePostalCode(event.location) }}
+        </h1>
+
         <h2 class="mt-6 text-center text-2xl">{{ event.title }}</h2>
         <div class="text-center text-red">
             <p>genre: {{ event.genre }}</p>
             <p>type: {{ type }}</p>
         </div>
-        <BandTags class="mx-auto w-fit my-10" :bands="event.bands" />
+        <!--        <BandTags class="mx-auto w-fit my-10" :bands="event.bands" />-->
         <pre class="mt-8 text-pretty text-center">{{ event.content }}</pre>
         <p class="text-center text-orange">{{ removePostalCode(event.location) }}</p>
         <GoogleMap class="mt-5" v-if="event.cordinates" :cordinates="event.cordinates" />

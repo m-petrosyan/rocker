@@ -8,12 +8,16 @@ const props = defineProps({
     },
     active: {
         type: Boolean
+    },
+    label: {
+        type: String,
+        default: ''
     }
 });
 </script>
 
 <template>
-    <Link :href="href" class="block">
+    <Link :href="href" class="block" :aria-label="label">
         <slot />
     </Link>
 </template>

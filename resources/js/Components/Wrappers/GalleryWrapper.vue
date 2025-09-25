@@ -4,6 +4,7 @@ import NavLink from '@/Components/NavLink.vue';
 import DeleteIcon from '@/Components/Icons/DeleteIcon.vue';
 import EditIcon from '@/Components/Icons/EditIcon.vue';
 import EyesIcon from '@/Components/Icons/EyesIcon.vue';
+import { computed } from 'vue';
 
 defineProps({
     galleries: {
@@ -48,6 +49,10 @@ const deleteGallery = (id) => {
         });
     }
 };
+
+const ssr = computed(() => {
+    return typeof window === 'undefined';
+});
 </script>
 
 <template>
@@ -63,7 +68,8 @@ const deleteGallery = (id) => {
                     <img v-if="gallery.cover_img.thumb && gallery.cover_img.thumb.trim()"
                          :src="gallery.cover_img.thumb"
                          class="object-cover w-full h-full"
-                         alt="Loading"
+                         loading="lazy"
+                         :alt="gallery.title"
                          @error="$event.target.src = gallery.cover_img.original" />
                     <img v-else-if="gallery.cover_img.original"
                          :src="gallery.cover_img.original"
@@ -105,7 +111,8 @@ const deleteGallery = (id) => {
                     </div>
                 </div>
                 <div class="p-2">
-                    <h3 class="text-lg font-semibold text-pretty">{{ gallery.title }}</h3>
+                    <p v-if="ssr" class="text-lg font-semibold">{{ gallery.title }} by {{ gallery.user.name }}</p>
+                    <p v-else class="text-lg font-semibold">{{ gallery.title }}</p>
                 </div>
             </NavLink>
             <NavLink
@@ -122,8 +129,9 @@ const deleteGallery = (id) => {
         <div v-if="more"
              class="col-span-full text-center py-4">
             <NavLink :href="route('galleries.index')"
+                     label="Galleries list"
                      class="text-orange font-bold">
-                See more galleries
+                Browse more photo galleries
             </NavLink>
         </div>
     </div>

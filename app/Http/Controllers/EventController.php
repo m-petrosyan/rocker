@@ -30,4 +30,12 @@ class EventController extends Controller
             'url' => $url,
         ]);
     }
+
+    public function past()
+    {
+        return Inertia::render('Events/Events', [
+            'events' => EventRepository::eventsList(limit: 52, page: request()->query('page', 1), past: true),
+            'isPast' => true,
+        ]);
+    }
 }

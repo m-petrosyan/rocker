@@ -47,6 +47,7 @@ onMounted(() => {
         <meta name="twitter:image" :content="meta?.image ?? defaultImg" />
         <meta name="author" :content="meta?.author ?? 'rocker.am'" />
         <meta name="robots" content="index, follow">
+        <link rel="canonical" :href="$page.props.canonical" />
     </Head>
     <PreloaderPwa v-if="isPWA" />
     <FleshNotification />

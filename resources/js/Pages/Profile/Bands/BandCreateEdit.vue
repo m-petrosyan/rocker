@@ -72,20 +72,6 @@ const createBand = () => {
         }
     );
 };
-
-const addAlbum = () => {
-    form.albums.push({
-        title: '',
-        cover_file: null,
-        tracks_count: null,
-        year: '',
-        links: [{ url: '' }]
-    });
-};
-
-const deleteAlbum = (album) => {
-    form.albums = form.albums.filter(a => a !== album);
-};
 </script>
 
 <template>
@@ -164,26 +150,9 @@ const deleteAlbum = (album) => {
                     />
                 </div>
                 <h3 class="text-center text-gray mt-4">Albums</h3>
-                <div class="mt-2 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 grid gap-4">
-                    <BandAlbums
-                        v-for="(album, index) in form.albums"
-                        :key="`album-${album.id || 'new'}-${index}`"
-                        :album="album"
-                        :index="index"
-                        canEdit
-                        @delete="deleteAlbum"
-                    />
-                    <button
-                        type="button"
-                        @click="addAlbum"
-                        class="flex min-h-64 items-center gap-2 border-2 border-dashed border-graydark2 p-4 hover:border-orange hover:bg-graydark2"
-                    >
-                        <div class="mx-auto flex w-32 flex-col items-center gap-y-4 rounded-lg">
-                            <h2 class="text-3xl">+</h2>
-                        </div>
-                    </button>
-                </div>
-
+                <BandAlbums
+                    v-model:albums="form.albums"
+                    canEdit />
                 <br />
                 <PrimaryButton
                     class="ms-4"

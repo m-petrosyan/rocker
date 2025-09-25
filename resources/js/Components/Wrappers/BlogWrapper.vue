@@ -78,7 +78,7 @@ const deleteBlog = (id) => {
                     </div>
                 </div>
                 <div class="p-2">
-                    <h3 class="text-lg font-semibold text-pretty">{{ blog.title['en'] ?? blog.title['am'] }}</h3>
+                    <p class="text-lg font-semibold text-pretty">{{ blog.title['en'] ?? blog.title['am'] }}</p>
                 </div>
             </NavLink>
             <NavLink
@@ -95,6 +95,7 @@ const deleteBlog = (id) => {
         <div v-if="more"
              class="col-span-full text-center py-4">
             <NavLink :href="route('blogs.index')"
+                     label="Blogs list"
                      class="text-orange font-bold">
                 See more blogs
             </NavLink>

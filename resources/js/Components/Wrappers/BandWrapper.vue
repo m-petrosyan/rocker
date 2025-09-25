@@ -59,7 +59,7 @@ const deleteBand = (id) => {
                     <img v-if="band.logo.thumb && band.logo.thumb.trim()"
                          :src="band.logo?.svg ?? band.logo.thumb"
                          class="object-contain w-full h-full"
-                         alt="Loading"
+                         :alt="band.name"
                          @error="$event.target.src = band.logo.original" />
                     <img v-else-if="band.logo.original"
                          :src="band.logo.original"
@@ -85,8 +85,8 @@ const deleteBand = (id) => {
                     </div>
                 </div>
                 <div class="p-2">
-                    <h3 class="text-lg font-semibold text-pretty">
-                        {{ band.name.length > 40 ? band.name.slice(0, 40) + '...' : band.name }}</h3>
+                    <p class="text-lg font-semibold text-pretty">
+                        {{ band.name.length > 40 ? band.name.slice(0, 40) + '...' : band.name }}</p>
                 </div>
             </NavLink>
             <NavLink
@@ -102,9 +102,9 @@ const deleteBand = (id) => {
         </div>
         <div v-if="more"
              class="col-span-full text-center py-4">
-            <NavLink :href="route('bands.index')"
+            <NavLink :href="route('bands.index')" label="Bands list"
                      class="text-orange font-bold">
-                See more bands
+                Discover more bands
             </NavLink>
         </div>
     </div>

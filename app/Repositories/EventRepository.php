@@ -3,35 +3,10 @@
 namespace App\Repositories;
 
 use App\Models\Event;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
 class EventRepository
 {
-
-    public static function activeEvents(string|null $country = null)
-    {
-        return Event::where(['still_relevant' => true])
-            ->when(!$country, function ($query, $country) {
-                if (auth()->user()->settings->country === 'all') {
-                    $query->whereIn('country', ['am', 'ge']);
-                } else {
-                    $query->where('country', auth()->user()->settings->country);
-                }
-            }, function ($query) use ($country) {
-                if ($country === 'all') {
-                    $query->whereIn('country', ['am', 'ge']);
-                } else {
-                    $query->where('country', $country);
-                }
-            })
-            ->with('user')
-            ->whereHas('confirm', function ($query) {
-                $query->where('confirmed', true);
-            })
-            ->orderBy('start_date');
-    }
-
     public static function userEvents()
     {
         return auth()->user()->events()
@@ -41,8 +16,15 @@ class EventRepository
             ->orderBy('start_date')->paginate();
     }
 
-    public static function eventsList($limit = 50)
+    public static function eventsList($limit = 51, $page = 1, $past = false)
     {
+        $params = [
+            'limit' => $limit,
+            'page' => $page,
+            'past' => $past,
+        ];
+
+        /// add paramas
         return Event::where('start_date', '>=', now())
             ->with('user')
 //            ->whereHas('confirm', function ($query) {
@@ -51,6 +33,7 @@ class EventRepository
             ->orderBy('start_date')
             ->paginate($limit);
     }
+
 
 
     public static function get($eventId)
@@ -90,18 +73,6 @@ class EventRepository
 
     public static function count(): mixed
     {
-        try {
-            $response = Http::throw()->get('https://bot.rocker.am/api/events_count');
-            $data = $response->json();
-            Cache::put('events_count', $data, now()->addHour(2));
-        } catch (\Exception $e) {
-            if (Cache::has('events')) {
-                $data = Cache::get('events_count');
-            } else {
-                $data = ['data' => [], 'error' => $e->getMessage()];
-            }
-        }
-
-        return $data;
+        return Event::count();
     }
 }
