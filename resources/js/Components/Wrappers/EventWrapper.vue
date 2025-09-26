@@ -4,7 +4,8 @@ import NavLink from '@/Components/NavLink.vue';
 import NotifyIcon from '@/Components/Icons/NotifyIcon.vue';
 import EyesIcon from '@/Components/Icons/EyesIcon.vue';
 import { router } from '@inertiajs/vue3';
-import { removePostalCode } from '@/Helpers/adressFormatHelper.js';
+import EditIcon from '@/Components/Icons/EditIcon.vue';
+import DeleteIcon from '@/Components/Icons/DeleteIcon.vue';
 
 defineProps({
     events: {
@@ -56,6 +57,18 @@ const deleteEvent = (id) => {
                     class="relative h-full w-full block"
                     :style="{ backgroundImage: `url(${event.poster.thumb})` }"
                 >
+                    <div v-if="owner && (['pending','declined'].includes(event.status_name))"
+                         class="absolute w-full text-center h-full content-center bg-blackTransparent2"
+                         :class="event.status_name === 'pending' ? 'z-20' : 'z-30'">
+                        <div>
+                            <h2 class="border border-2 border-dashed border-white  text-white capitalize"
+                                :class="event.status_name === 'pending' ? 'bg-green' : 'bg-red'">
+                                {{ event.status_name }}
+                            </h2>
+                            <p v-if="event.status_text" class="bg-blackTransparent2 p-2 mt-2">Reason:
+                                {{ event.status_text }}</p>
+                        </div>
+                    </div>
                     <div class="absolute inset-0 z-0 brightness-50 backdrop-blur-md"></div>
                     <img
                         :src="event.poster.thumb"
@@ -63,7 +76,7 @@ const deleteEvent = (id) => {
                         class="absolute z-10 h-full w-full object-contain object-center"
                     />
                     <div
-                        class="absolute left-0 z-20 flex h-28 w-full flex justify-between">
+                        class="absolute  left-0 z-20 flex flex-col w-full h-full flex justify-between">
                         <div class="h-28 w-full flex  justify-between">
                             <div class="w-28 h-full flex flex-col items-center justify-center bg-orange text-xl">
                                 <p class="text-4xl font-bold">
@@ -87,11 +100,19 @@ const deleteEvent = (id) => {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div
-                        class="absolute pb-2 flex flex-col justify-end h-48 bottom-0 z-20 w-full bg-gradient-to-t from-black to-transparent ">
-                        <h3 class="text-center text-2xl">{{ event.title }}</h3>
-                        <p class="text-gray-300 text-center">{{ removePostalCode(event.location, 30) }}</p>
+                        <div
+                            class="flex flex-col h-20 w-full z-20 items-center justify-between bg-gradient-to-t from-black to-transparent">
+                            <h3 class="text-center text-2xl">{{ event.title }}</h3>
+                            <div class="flex w-full items-center justify-between">
+                                <NavLink v-tooltip="'Edit'" :href="route('profile.events.edit', event.id)">
+                                    <EditIcon />
+                                </NavLink>
+                                <button v-tooltip="'Delete'" @click.prevent="deleteEvent(event.id)"
+                                        class="text-red-500 hover:text-red-700">
+                                    <DeleteIcon />
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </NavLink>
             </div>

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\EventStatusEnum;
 use App\Traits\MediaTrait;
 use App\Traits\ViewsTrait;
 use Carbon\Carbon;
@@ -44,13 +45,29 @@ class Event extends Model implements Viewable, HasMedia
         'allViews',
         'poster',
         'start_date_short',
+        'status_name',
+        'status_text',
+
     ];
 
     protected $hidden = [
         'created_at',
         'updated_at',
+        'status_id',
+        'status',
     ];
 
+    public function getStatusNameAttribute(): string
+    {
+        $value = $this->status?->status ?? 1; // Берем поле status из связи
+
+        return strtolower(EventStatusEnum::from($value)->name);
+    }
+
+    public function getStatusTextAttribute()
+    {
+        return $this->status?->reason ?? '';
+    }
 
     public function getDateTimeAttribute(): bool|Carbon
     {
@@ -87,7 +104,7 @@ class Event extends Model implements Viewable, HasMedia
         return $this->belongsToMany(Band::class);
     }
 
-    public function confirm(): HasOne
+    public function status(): HasOne
     {
         return $this->hasOne(EventStatus::class);
     }
