@@ -51,7 +51,7 @@ class EventRepository
 
     public static function userEvents()
     {
-        return auth()->user()->events()
+        return auth()->user()?->events()
 //            ->whereHas('confirm', function ($query) {
 //            $query->where('confirmed', true);
 //        })
