@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Enums\EventStatusEnum;
 use App\Models\Event;
 
 class EventRepository
@@ -39,11 +40,11 @@ class EventRepository
 
     public static function eventsList($limit = 50)
     {
-        return Event::where('start_date', '>=', now())
-            ->with('user')
-//            ->whereHas('confirm', function ($query) {
-//                $query->where('confirmed', true);
-//            })
+        return Event::query()
+            ->with(['user.roles'])
+            ->where('start_date', '>=', now())
+            ->whereHas('confirm', fn($query) => $query->where('status', EventStatusEnum::ACCEPTED->value)
+            )
             ->orderBy('start_date')
             ->paginate($limit);
     }

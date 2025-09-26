@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class EventStatus extends Model
 {
+    protected $table = 'event_status';
+    
     protected $fillable = [
         'user_id',
         'confirmed',

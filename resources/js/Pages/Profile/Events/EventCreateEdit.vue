@@ -106,10 +106,10 @@ const submitEvent = () => {
             <SuccessMessages
                 info
                 class="mb-5">
-                <div class="flex items-center gap-x-2">
+                <div class="flex flex-col md:flex-row items-center gap-x-2 text-pretty">
                     <p>The event will also be published in the Telegram bot </p>
-                    <a href="https://t.me/RockMetalEventsbot" target="_blank">@RockMetalEventsbot</a> |
-                    <a href="https://t.me/yerevanmetal" target="_blank">Rock Metal Yerevan</a> |
+                    <a href="https://t.me/RockMetalEventsbot" target="_blank">@RockMetalEventsbot</a>
+                    <a href="https://t.me/yerevanmetal" target="_blank">Rock Metal Yerevan</a>
                     <a href="https://t.me/gyumrimetal" target="_blank">Rock Metal Gyumri</a>
                 </div>
             </SuccessMessages>

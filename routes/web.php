@@ -21,7 +21,6 @@ Route::get('/test', function () {
     return Inertia::render('Test');
 });
 
-
 Route::post('/telegram/auth', function (Request $request) {
     $userBot = UserBot::query()
         ->where('chat_id', $request->input('id'))
@@ -38,7 +37,6 @@ Route::post('/telegram/auth', function (Request $request) {
 
     return response()->json(['error' => 'Unauthorized'], 401);
 });
-
 
 Route::get('/', HomeController::class)->name('home');
 Route::get('events/past', [EventController::class, 'past'])->name('events.past');

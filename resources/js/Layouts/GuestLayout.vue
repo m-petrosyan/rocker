@@ -35,10 +35,6 @@ onMounted(() => {
         window.navigator.standalone === true;
 });
 
-// onBeforeMount(() => {
-//     useTelegramAuth();
-// });
-
 </script>
 
 <template>

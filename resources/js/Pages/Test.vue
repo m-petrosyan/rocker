@@ -1,6 +1,5 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
-import { useTelegramAuth } from '@/Helpers/setAppUser.js';
 
 defineProps({
     auth: {
@@ -8,7 +7,6 @@ defineProps({
     }
 });
 
-useTelegramAuth();
 </script>
 
 <template>

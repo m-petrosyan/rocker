@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Enums\EventStatusEnum;
 use App\Notifications\NewCreationNotification;
 use App\Traits\ComponentServiceTrait;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Notification;
 
 class EventService
@@ -13,6 +15,14 @@ class EventService
     public function store($attributes): void
     {
         $event = auth()->user()->events()->create($attributes);
+        $event->confirm()->create(
+            [
+                'status' => Gate::allows(
+                    'crud-access'
+                ) ? EventStatusEnum::ACCEPTED->value : EventStatusEnum::PENDING->value,
+            ]
+        );
+
 
         if (isset($attributes['poster_file'])) {
             $this->addImage($event, $attributes['poster_file'], 'poster');
