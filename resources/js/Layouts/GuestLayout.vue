@@ -34,6 +34,11 @@ onMounted(() => {
     isPWA.value = window.matchMedia('(display-mode: standalone)').matches ||
         window.navigator.standalone === true;
 });
+
+// onBeforeMount(() => {
+//     useTelegramAuth();
+// });
+
 </script>
 
 <template>

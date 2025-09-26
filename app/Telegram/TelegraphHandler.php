@@ -155,6 +155,7 @@ class TelegraphHandler extends WebhookHandler
             Button::make(trans('menu.events_list_web'))->webApp(config('app.url')),
             Button::make(trans('menu.favorite_events'))->action('stats'),
             Button::make(trans('menu.settings'))->action('settings'),
+            Button::make('test')->webApp(config('app.url').'/test'),
         ];
 
         if (auth()->user()->isAdmin()) {

@@ -18,15 +18,27 @@ require_once __DIR__.'/guest.php';
 require_once __DIR__.'/auth.php';
 
 Route::get('/test', function () {
-    dd(1);
-
     return Inertia::render('Test');
 });
 
 
 Route::post('/telegram/auth', function (Request $request) {
-    auth()->loginUsingId(UserBot::query()->where('chat_id', $request->input('id'))->first()->user?->id);
+    $userBot = UserBot::query()
+        ->where('chat_id', $request->input('id'))
+        ->first();
+
+    if ($userBot && $userBot->user) {
+        auth()->loginUsingId($userBot->user->id);
+        $request->session()->regenerate();
+
+        return response()->json([
+            'redirect' => session()->pull('url.intended', route('home')),
+        ]);
+    }
+
+    return response()->json(['error' => 'Unauthorized'], 401);
 });
+
 
 Route::get('/', HomeController::class)->name('home');
 Route::get('events/past', [EventController::class, 'past'])->name('events.past');

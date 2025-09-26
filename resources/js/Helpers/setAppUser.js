@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { onMounted } from 'vue';
 import { router } from '@inertiajs/vue3';
 
@@ -9,9 +10,15 @@ export function useTelegramAuth() {
             const userParam = params.get('user');
             if (userParam) {
                 const user = JSON.parse(decodeURIComponent(userParam));
-                // alert(user);
-                // router.post('/telegram/auth', { id: user });
-                router.post('/telegram/auth', { id: user.id });
+                axios.post('/telegram/auth', { id: user.id })
+                    .then(res => {
+                        if (res.data?.redirect) {
+                            const url = new URL(res.data.redirect, window.location.origin);
+                            router.visit(url.pathname + url.search);
+
+                            // router.visit(res.data.redirect);
+                        }
+                    });
             }
         }
     });

@@ -4,8 +4,7 @@ import NavLink from '@/Components/NavLink.vue';
 import NotifyIcon from '@/Components/Icons/NotifyIcon.vue';
 import EyesIcon from '@/Components/Icons/EyesIcon.vue';
 import { router } from '@inertiajs/vue3';
-import DeleteIcon from '@/Components/Icons/DeleteIcon.vue';
-import EditIcon from '@/Components/Icons/EditIcon.vue';
+import { removePostalCode } from '@/Helpers/adressFormatHelper.js';
 
 defineProps({
     events: {
@@ -86,28 +85,6 @@ const deleteEvent = (id) => {
                                     <EyesIcon />
                                     {{ event.allViews }}
                                 </div>
-                            </div>
-                        </div>
-                        <div class="h-28 w-full flex  justify-between">
-                         <div class="w-28 h-full flex flex-col items-center justify-center bg-orange text-xl">
-                            <p class="text-4xl font-bold">
-                                {{ moment(event.start_date_short, 'DD.MM.YY').format('D').toUpperCase() }}
-                            </p>
-                            <p>
-                                {{ moment(event.start_date_short, 'DD.MM.YY').format('MMMM').toUpperCase() }}
-                            </p>
-                            <small>{{ event.start_time }}</small>
-                        </div>
-                        <div v-if="owner || isAdmin" class="flex flex-col  gap-y-2"
-                             :class="{ 'bg-blackTransparent2': owner || isAdmin }">
-                            <div v-tooltip="'Sent by bot'" class="flex items-center gap-2">
-                                <NotifyIcon />
-                                {{ event.notify_count }}
-                            </div>
-                            <div v-if="event.country === 'am'" v-tooltip="'Views in rocker'"
-                                 class="flex items-center gap-2">
-                                <EyesIcon />
-                                {{ event.allViews }}
                             </div>
                         </div>
                     </div>
