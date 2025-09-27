@@ -6,6 +6,7 @@ import EyesIcon from '@/Components/Icons/EyesIcon.vue';
 import { router } from '@inertiajs/vue3';
 import EditIcon from '@/Components/Icons/EditIcon.vue';
 import DeleteIcon from '@/Components/Icons/DeleteIcon.vue';
+import { removePostalCode } from '@/Helpers/adressFormatHelper.js';
 
 defineProps({
     events: {
@@ -29,6 +30,10 @@ defineProps({
         default: false
     },
     isAdmin: {
+        type: Boolean,
+        default: false
+    },
+    profile: {
         type: Boolean,
         default: false
     }
@@ -60,12 +65,12 @@ const deleteEvent = (id) => {
                     <div v-if="owner && (['pending','declined'].includes(event.status_name))"
                          class="absolute w-full text-center h-full content-center bg-blackTransparent2"
                          :class="event.status_name === 'pending' ? 'z-20' : 'z-30'">
-                        <div>
-                            <h2 class="border border-2 border-dashed border-white  text-white capitalize"
-                                :class="event.status_name === 'pending' ? 'bg-green' : 'bg-red'">
+                        <div class="bg-blackTransparent2">
+                            <h2 class="capitalize"
+                                :class="event.status_name === 'pending' ? 'text-green' : 'text-red'">
                                 {{ event.status_name }}
                             </h2>
-                            <p v-if="event.status_text" class="bg-blackTransparent2 p-2 mt-2">Reason:
+                            <p v-if="event.status_text" class="p-2 mt-2">Reason:
                                 {{ event.status_text }}</p>
                         </div>
                     </div>
@@ -87,23 +92,30 @@ const deleteEvent = (id) => {
                                 </p>
                                 <small>{{ event.start_time }}</small>
                             </div>
-                            <div v-if="owner || isAdmin" class="flex flex-col  gap-y-2"
-                                 :class="{ 'bg-blackTransparent2': owner || isAdmin }">
-                                <div v-tooltip="'Sent by bot'" class="flex items-center gap-2">
-                                    <NotifyIcon />
-                                    {{ event.notify_count }}
-                                </div>
-                                <div v-if="event.country === 'am'" v-tooltip="'Views in rocker'"
-                                     class="flex items-center gap-2">
-                                    <EyesIcon />
-                                    {{ event.allViews }}
+                            <div v-if="(owner || isAdmin ) && event.status_name === 'accepted'">
+                                <div class="flex flex-col gap-y-2 bg-blackTransparent2 p-2">
+                                    <div v-if="event.notify_count" v-tooltip="'Sent by bot'"
+                                         class="flex items-center gap-2">
+                                        <NotifyIcon />
+                                        {{ event.notify_count }}
+                                    </div>
+                                    <div v-if="event.allViews" v-tooltip="'Views in rocker'"
+                                         class="flex items-center gap-2">
+                                        <EyesIcon />
+                                        {{ event.allViews }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div
                             class="flex flex-col h-20 w-full z-20 items-center justify-between bg-gradient-to-t from-black to-transparent">
-                            <h3 class="text-center text-2xl">{{ event.title }}</h3>
-                            <div class="flex w-full items-center justify-between">
+                            <div
+                                class="absolute pb-2 flex flex-col justify-end h-48 bottom-0 z-20 w-full bg-gradient-to-t from-black to-transparent ">
+                                <p class="text-center text-xl font-bold">{{ event.title }}</p>
+                                <p class="text-gray-300 text-center">{{ removePostalCode(event.location, 30) }}</p>
+                            </div>
+                            <div v-if="(owner || isAdmin) && profile"
+                                 class="flex w-full items-center justify-between z-20">
                                 <NavLink v-tooltip="'Edit'" :href="route('profile.events.edit', event.id)">
                                     <EditIcon />
                                 </NavLink>

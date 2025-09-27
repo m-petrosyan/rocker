@@ -91,6 +91,7 @@ defineProps({
                 <EventWrapper
                     v-if="events.data?.length && (owner || ['admin','modarator','organizer'].includes(auth.role))"
                     :events="events.data" :owner
+                    profile
                     :isAdmin="auth.isAdmin" title="User events" />
                 <BandWrapper
                     v-if="bands.data?.length && (owner || ['admin','modarator','organizer'].includes(auth.role))"

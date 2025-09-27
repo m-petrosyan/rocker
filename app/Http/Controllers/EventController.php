@@ -23,6 +23,8 @@ class EventController extends Controller
 
     public function show(Event $event): Response
     {
+        views($event)->record();
+
         $url = url()->current();
 
         return Inertia::render('Events/Event', [

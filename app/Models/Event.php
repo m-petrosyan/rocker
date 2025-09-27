@@ -54,14 +54,12 @@ class Event extends Model implements Viewable, HasMedia
         'created_at',
         'updated_at',
         'status_id',
-        'status',
+
     ];
 
     public function getStatusNameAttribute(): string
     {
-        $value = $this->status?->status ?? 1; // Берем поле status из связи
-
-        return strtolower(EventStatusEnum::from($value)->name);
+        return strtolower(EventStatusEnum::from($this->status?->status ?? 1)->name);
     }
 
     public function getStatusTextAttribute()
@@ -81,10 +79,7 @@ class Event extends Model implements Viewable, HasMedia
 
     public function getStartDateShortAttribute(): string
     {
-//        dd($this->attributes['start_date']);
         $date = Carbon::createFromFormat('Y-m-d', $this->attributes['start_date']);
-
-//        dd($date->format('d.m.y'));
 
         return $date->format('d.m.y');
     }

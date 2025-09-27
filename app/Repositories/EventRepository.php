@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Enums\EventStatusEnum;
 use App\Models\Event;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class EventRepository
 {
@@ -38,13 +39,12 @@ class EventRepository
 //            ->orderBy('start_date');
 //    }
 
-    public static function eventsList($limit = 50)
+    public static function eventsList($limit = 50): LengthAwarePaginator
     {
         return Event::query()
-            ->with(['user.roles'])
+            ->with(['user.roles', 'status'])
             ->where('start_date', '>=', now())
-            ->whereHas('confirm', fn($query) => $query->where('status', EventStatusEnum::ACCEPTED->value)
-            )
+            ->whereHas('status', fn($query) => $query->where('status', EventStatusEnum::ACCEPTED->value))
             ->orderBy('start_date')
             ->paginate($limit);
     }
