@@ -2,12 +2,12 @@
 
 namespace App\Enums;
 
-enum EventStatusEnum: int
+enum EventStatusEnum: string
 {
     use EnumFunctions;
 
-    case PENDING = 1;
-    case ACCEPTED = 2;
-    case DECLINED = 3;
-    case DELETED = 4;
+    case PENDING = 'pending';
+    case ACCEPTED = 'accepted';
+    case DECLINED = 'declined';
+    case DELETED = 'deleted';
 }

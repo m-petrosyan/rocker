@@ -14,8 +14,9 @@ class UserRepository
             ->paginate(100, ['id', 'name', 'email']);
     }
 
-    public static function count(): int
+    public static function count($bot = null): int
     {
-        return User::query()->count();
+        return User::query()
+            ->when($bot, fn($query) => $query->whereHas('chat'))->count();
     }
 }

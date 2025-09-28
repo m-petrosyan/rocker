@@ -10,7 +10,7 @@ import { route as ziggyRoute, ZiggyVue } from '../../vendor/tightenco/ziggy';
 import VueGtag from 'vue-gtag-next';
 import PrimeVue from 'primevue/config';
 import PreloaderPwa from '@/Components/Preloader/PreloaderPwa.vue';
-import tooltipDirective from '@/Directives/tooltipDirective.js';
+import tooltipPlugin from '@/Plugins/tooltipPlugin.js';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -41,9 +41,8 @@ createInertiaApp({
                     }
                 }
             })
-            .directive('tooltip', tooltipDirective); // Исправлено: .directive идет в цепочке
 
-        // Provide route function globally
+            .use(tooltipPlugin);
         app.config.globalProperties.$route = ziggyRoute;
         app.component('PwaLoader', PreloaderPwa);
 

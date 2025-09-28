@@ -1,6 +1,8 @@
 <script setup>
 import ProfileLayout from '@/Layouts/ProfileLayout.vue';
 import NavLink from '@/Components/NavLink.vue';
+import BotIcon from '@/Components/Icons/BotIcon.vue';
+import WebSiteIcon from '@/Components/Icons/WebSiteIcon.vue';
 
 defineProps({
     users: {
@@ -18,12 +20,22 @@ defineProps({
         <div class="mt-10">
             <div class="flex gap-4 items-center justify-center">
                 <div class="text-center bg-black p-6 rounded-lg shadow-lg">
-                    <p>Events</p>
-                    <h2>{{ statistics.events }}</h2>
+                    <p>Users</p>
+                    <div class="flex gap-x-4">
+                        <div tooltip="Website users" class="flex items-center gap-x-2">
+                            <WebSiteIcon />
+                            <h2>{{ statistics.users_web }}</h2>
+                        </div>
+
+                        <div tooltip="Bot users" class="flex items-center gap-x-2">
+                            <BotIcon />
+                            <h2>{{ statistics.users_bot }}</h2>
+                        </div>
+                    </div>
                 </div>
                 <div class="text-center bg-black p-6 rounded-lg shadow-lg">
-                    <p>Users</p>
-                    <h2>{{ statistics.users }}</h2>
+                    <p>Events</p>
+                    <h2>{{ statistics.events }}</h2>
                 </div>
                 <div class="text-center bg-black p-6 rounded-lg shadow-lg">
                     <p>Bands</p>
@@ -36,6 +48,10 @@ defineProps({
                 <div class="text-center bg-black p-6 rounded-lg shadow-lg">
                     <p>Blogs</p>
                     <h2>{{ statistics.blogs }}</h2>
+                </div>
+                <div class="text-center bg-black p-6 rounded-lg shadow-lg">
+                    <p>PWA install</p>
+                    <h2>num</h2>
                 </div>
             </div>
         </div>

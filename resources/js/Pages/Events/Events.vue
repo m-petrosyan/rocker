@@ -31,7 +31,7 @@ defineProps({
             : 'Upcoming Armenian Rock & Metal Concerts and Events'
             }}
         </template>
-        <p>
+        <p class="text-gray text-pretty">
             Armenian rock and metal concerts are a vibrant part of the local scene.
             This page features
             {{ isPast ? 'past Armenian rock & metal concerts and events' : 'upcoming Armenian rock & metal concerts and events'
@@ -46,7 +46,7 @@ defineProps({
             class="flex flex-col items-center p-4">
             Past events
         </NavLink>
-        <p class="px-4 pt-10">
+        <p class="px-4 pt-10 text-gray text-pretty">
             Check listings for dates, venues, and band details.
             Use this guide to revisit standout performances in the archive or plan your next night out at a live show.
             Stay tuned so you never miss key Armenian rock and metal events.

@@ -2,11 +2,11 @@
 
 namespace App\Enums;
 
-enum EventTypeEnum: int
+enum EventTypeEnum: string
 {
     use EnumFunctions;
 
-    case CONCERTS_EVENTS = 1;
-    case CONCERT = 2;
-    case EVENT = 3;
+    case CONCERTS_EVENTS = 'concerts_events';
+    case CONCERT = 'concert';
+    case EVENT = 'event';
 }

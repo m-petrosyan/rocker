@@ -59,7 +59,7 @@ class Event extends Model implements Viewable, HasMedia
 
     public function getStatusNameAttribute(): string
     {
-        return strtolower(EventStatusEnum::from($this->status?->status ?? 1)->name);
+        return strtolower(EventStatusEnum::from($this->status?->status)->name);
     }
 
     public function getStatusTextAttribute()

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Enums\EventStatusEnum;
+use App\Jobs\EventNotificationJob;
 use App\Notifications\NewCreationNotification;
 use App\Traits\ComponentServiceTrait;
 use Illuminate\Support\Facades\Gate;
@@ -14,8 +15,9 @@ class EventService
 
     public function store($attributes): void
     {
+//        dd(EventStatusEnum::ACCEPTED->value);
         $event = auth()->user()->events()->create($attributes);
-        $event->confirm()->create(
+        $event->status()->create(
             [
                 'status' => Gate::allows(
                     'crud-access'
@@ -27,6 +29,19 @@ class EventService
         if (isset($attributes['poster_file'])) {
             $this->addImage($event, $attributes['poster_file'], 'poster');
         }
+        dispatch(new EventNotificationJob($event));
+
+//        $buttons[] = Button::make('Add to favorites')
+//            ->action('add_to_favorite')
+//            ->param('eventId', $event->id);
+//
+//        $content = new (EventFormatingTrait::class())->getEventContent($event);
+//
+//
+//        $users = User::get();
+//        foreach ($users as $user) {
+//            dispatch(new EventNotificationJob($event, $content, $buttons, $user));
+//        }
 
 //        if (auth()->user()->isAdmin()) {
 //            event(new EventConfirmUpdatedEvent($event->confirm));

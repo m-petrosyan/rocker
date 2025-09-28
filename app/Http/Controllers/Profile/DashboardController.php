@@ -17,7 +17,8 @@ class DashboardController
         return Inertia::render('Profile/Dashboard/Dashboard', [
             'users' => UserRepository::usersList(),
             'statistics' => [
-                'users' => UserRepository::count(),
+                'users_web' => UserRepository::count(),
+                'users_bot' => UserRepository::count(true),
                 'events' => EventRepository::count(),
                 'galleries' => GalleryReoisitory::count(),
                 'bands' => BandRepository::count(),
