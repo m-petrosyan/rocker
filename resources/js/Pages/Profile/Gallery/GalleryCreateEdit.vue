@@ -128,10 +128,8 @@ const submitGallery = () => {
                 <SuccessMessages info class="mt-4">
                     Event photos may also be featured on our <b><a target="_blank"
                                                                    href="https://www.instagram.com/rocker._.am/">Instagram
-                    page</a></b> if they cover the entire event, not just a
-                    single band. Photo credits will always be included.Event photos may also be featured on our
-                    Instagram page if they cover the entire event, not just a single band. Photo credits will always be
-                    included.
+                    page</a></b> if they cover the entire event. Photo credits are always included, and image quality is
+                    never reduced or cropped.
                 </SuccessMessages>
                 <ProgressBar
                     v-show="data.preview?.length"
