@@ -99,6 +99,12 @@ const submitGallery = () => {
     <ProfileLayout :meta="{title: 'Gallery create'}">
         <div>
             <form @submit.prevent="submitGallery" class="px-4 md:px-0">
+                <SuccessMessages info class="mt-4">
+                    Event photos may also be featured on our <b><a target="_blank"
+                                                                   href="https://www.instagram.com/rocker._.am/">Instagram
+                    page</a></b> if they cover the entire event. Photo credits are always included, and image quality is
+                    never reduced or cropped.
+                </SuccessMessages>
                 <div class="flex flex-col-reverse md:flex-row gap-4">
                     <div class="w-full md:w-1/2">
                         <DatePicker
@@ -125,12 +131,6 @@ const submitGallery = () => {
                         <GoogleAutocomplate :form="form" />
                     </div>
                 </div>
-                <SuccessMessages info class="mt-4">
-                    Event photos may also be featured on our <b><a target="_blank"
-                                                                   href="https://www.instagram.com/rocker._.am/">Instagram
-                    page</a></b> if they cover the entire event. Photo credits are always included, and image quality is
-                    never reduced or cropped.
-                </SuccessMessages>
                 <ProgressBar
                     v-show="data.preview?.length"
                     class="w-full bg-green mt-10 mb-5"
