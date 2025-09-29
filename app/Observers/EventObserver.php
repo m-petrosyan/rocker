@@ -2,26 +2,27 @@
 
 namespace App\Observers;
 
+use App\Enums\EventStatusEnum;
 use App\Models\Event;
+use App\Notifications\NewCreationNotification;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Notification;
 
 class EventObserver
 {
-    /**
-     * Handle the Event "created" event.
-     */
-    public function retrieved(Event $event): void
+    public function created(Event $event): void
     {
-//        $response = Http::get('https://bot.rocker.am/api/event/'.$event['event_id']);;
-//        $apiEvent = $response->json()['data'] ?? null;
-//
-//        if ($apiEvent && isset($apiEvent['id']) && $apiEvent['id'] == $event['event_id']) {
-////            dd($apiEvent);
-//            foreach ($apiEvent as $key => $value) {
-//                if ($key !== 'id') {
-//                    $event->setAttribute($key, $value);
-//                }
-//            }
-//        }
-    }
+        $event->status()->create(
+            [
+                'status' => Gate::allows('full-access')
+                    ? EventStatusEnum::ACCEPTED->value
+                    : EventStatusEnum::PENDING->value,
+            ]
+        );
 
+        if (config('app.env') === 'production') {
+            Notification::route('mail', config('mail.admin.address'))
+                ->notify(new NewCreationNotification($event));
+        }
+    }
 }

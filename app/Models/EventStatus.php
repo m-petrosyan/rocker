@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class EventStatus extends Model
 {
     protected $table = 'event_status';
-    
+
     protected $fillable = [
+        'event_id',
         'user_id',
-        'confirmed',
+        'status',
         'reason',
     ];
 

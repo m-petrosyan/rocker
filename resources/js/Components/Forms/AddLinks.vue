@@ -48,7 +48,7 @@ const delLink = (index) => {
             </button>
         </div>
     </div>
-    <button v-tooltip="tooltip" :disabled="data.length >= maxLinks"
+    <button :tooltip="tooltip" :disabled="data.length >= maxLinks"
             type="button" @click="addLinks"
             class="bg-green w-fit p-2">
         <UrlAddIcon />

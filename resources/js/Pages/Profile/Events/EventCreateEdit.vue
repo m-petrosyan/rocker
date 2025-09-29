@@ -146,7 +146,7 @@ const submitEvent = () => {
                         />
                         <GoogleAutocomplate :form="form" />
                         <MultiSelect v-if="form.country === 'am'"
-                                     v-tooltip="'If the band is registered on rocker.am, the event will be visible on their page.'"
+                                     tooltip="If the band is registered on rocker.am, the event will be visible on their page."
                                      v-model="form.bands"
                                      :options="bandsList"
                                      text="Bands"

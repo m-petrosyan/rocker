@@ -93,17 +93,17 @@ const ssr = computed(() => {
                             <div
                                 class="flex gap-x-2 items-center">
                                 <EyesIcon />
-                                <b v-tooltip="'Unique views'">{{ gallery.views }}</b> /
-                                <p v-tooltip="'All views'">{{ gallery.allViews }}</p>
+                                <b tooltip="Unique views">{{ gallery.views }}</b> /
+                                <p tooltip="All views">{{ gallery.allViews }}</p>
                             </div>
                         </div>
 
                         <div class="flex justify-between">
-                            <NavLink v-tooltip="'Edit'"
+                            <NavLink tooltip="Edit"
                                      :href="route('profile.galleries.edit', gallery.id)">
                                 <EditIcon />
                             </NavLink>
-                            <button v-tooltip="'Delete'" @click.prevent="deleteGallery(gallery.id)"
+                            <button tooltip="Delete" @click.prevent="deleteGallery(gallery.id)"
                                     class="text-red-500 hover:text-red-700">
                                 <DeleteIcon />
                             </button>

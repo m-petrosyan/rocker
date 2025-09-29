@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Enums\EventGenreEnum;
 use App\Enums\EventTypeEnum;
+use DefStudio\Telegraph\Keyboard\Button;
 
 
 trait EventFormatingTrait
@@ -72,5 +73,27 @@ trait EventFormatingTrait
         $botSignature = "\n\n🎉 Rock/Metal Events Bot Calendar in Armenia/Georgia: t.me/RockMetalEventsbot";
 
         return mb_strlen($content, 'UTF-8') >= $maxContentLength ? $content : $content.$botSignature;
+    }
+
+    public function getButtons(object $event): array
+    {
+        $buttons[] = Button::make('Add to favorites')
+            ->action('add_to_favorite')
+            ->param('eventId', $event->id);
+
+        if (!empty($event->link)) {
+            $buttons[] = Button::make('Event link')->url($event->link);
+        }
+
+        if (!empty($event->ticket)) {
+            $buttons[] = Button::make('Tickets')->url($event->ticket);
+        }
+
+        if ($event->country === 'am') {
+            $buttons[] = Button::make('Rocker link')
+                ->url(route('events.show', $event->id));
+        }
+
+        return $buttons;
     }
 }

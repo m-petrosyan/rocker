@@ -18,6 +18,8 @@ require_once __DIR__.'/guest.php';
 require_once __DIR__.'/auth.php';
 
 Route::get('/test', function () {
+//    \App\Models\EventStatus::find(36)->update(['status' => EventStatusEnum::ACCEPTED->value]);
+//    dd(1);
     return Inertia::render('Test');
 });
 

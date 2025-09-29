@@ -118,7 +118,7 @@ const submitGallery = () => {
                             placeholder="Description"
                         />
                         <Multiselect v-model="form.bands"
-                                     v-tooltip="'If you tag the bands, the photo album will also appear on their page'"
+                                     tooltip="If you tag the bands, the photo album will also appear on their page"
                                      :options="bandsList"
                                      text="Bands" multiple />
                         <GoogleAutocomplate :form="form" />

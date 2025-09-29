@@ -101,11 +101,11 @@ const createBand = () => {
                         />
                         <div class="flex flex-col gap-2 md:w-1/2 w-full">
                             <Multiselect
-                                v-tooltip="'If the group name is already in the list, please select from the list'"
+                                tooltip="If the group name is already in the list, please select from the list"
                                 v-model="form.name" :options="bandsList" text="Name"
                                 :disabled="band" />
                             <Multiselect
-                                v-tooltip="'You can choose from the list or add if there is no list'"
+                                tooltip="You can choose from the list or add if there is no list"
                                 v-model="form.genres" :options="genres" text="Genres" multiple />
                             <AddLinks maxLinks="3" v-model:data="form.links" tooltip="Add your social networks" />
                             <div class="text-gray">
@@ -141,7 +141,7 @@ const createBand = () => {
                     v-model:files="form.images"
                 />
                 <div class="relative mt-2"
-                     v-tooltip="'Please fill in the group information \n You can also add a video from youtube by clicking the video button'">
+                     tooltip="Please fill in the group information \n You can also add a video from youtube by clicking the video button">
                     <TextEditor
                         v-model:content.trim="form.info"
                         class="h-64"

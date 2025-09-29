@@ -17,6 +17,10 @@ class UserRepository
     public static function count($bot = null): int
     {
         return User::query()
-            ->when($bot, fn($query) => $query->whereHas('chat'))->count();
+            ->when(
+                $bot,
+                fn($query) => $query->whereHas('chat'),
+                fn($query) => $query->doesntHave('chat')
+            )->count();
     }
 }

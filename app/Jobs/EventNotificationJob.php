@@ -2,16 +2,15 @@
 
 namespace App\Jobs;
 
-use App\Models\User;
 use App\Traits\EventFormatingTrait;
-use DefStudio\Telegraph\Keyboard\Button;
+use App\Traits\UsersBotNotificationTrait;
 use DefStudio\Telegraph\Keyboard\Keyboard;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 
 class EventNotificationJob implements ShouldQueue
 {
-    use Queueable, EventFormatingTrait;
+    use Queueable, EventFormatingTrait, UsersBotNotificationTrait;
 
     protected object $event;
     protected object $user;
@@ -24,9 +23,6 @@ class EventNotificationJob implements ShouldQueue
     public function __construct($event)
     {
         $this->event = $event;
-//        $this->content = $content;
-//        $this->buttons = $buttons;
-//        $this->user = $user;
     }
 
     /**
@@ -39,17 +35,12 @@ class EventNotificationJob implements ShouldQueue
 //        $this->event->notifications()->syncWithoutDetaching([
 //            $this->user->id => ['message_id' => $msg->telegraphMessageId()],
 //        ]);
-
+//        sleep(3);
         $content = $this->getEventContent($this->event);
 
-        $buttons[] = Button::make('Add to favorites')
-            ->action('add_to_favorite')
-            ->param('eventId', $this->event->id);
+        $buttons = $this->getButtons($this->event);
 
-        $users = User::whereNull('email')
-            ->has('chat')
-            ->with('chat')
-            ->get();
+        $users = $this->usersList($this->event);
 
         foreach ($users as $user) {
             $user->chat

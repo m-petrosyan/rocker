@@ -70,14 +70,14 @@ const deleteBand = (id) => {
                         <div class="flex justify-end gap-y-2">
                             <div class="flex gap-x-2 items-center">
                                 <EyesIcon />
-                                <p v-tooltip="'Views'">{{ band.allViews }}</p>
+                                <p tooltip="Views">{{ band.allViews }}</p>
                             </div>
                         </div>
                         <div class="flex justify-between">
-                            <NavLink v-tooltip="'Edit'" :href="route('profile.bands.edit', band.id)">
+                            <NavLink tooltip="Edit" :href="route('profile.bands.edit', band.id)">
                                 <EditIcon />
                             </NavLink>
-                            <button v-tooltip="'Delete'" @click.prevent="deleteBand(band.id)"
+                            <button tooltip="Delete" @click.prevent="deleteBand(band.id)"
                                     class="text-red-500 hover:text-red-700">
                                 <DeleteIcon />
                             </button>

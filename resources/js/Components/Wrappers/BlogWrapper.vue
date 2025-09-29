@@ -67,10 +67,10 @@ const deleteBlog = (id) => {
                     <div v-if="owner || isAdmin"
                          class="absolute bottom-0 w-full h-full flex flex-col justify-end  p-1 bg-blackTransparent2">
                         <div class="flex justify-between">
-                            <NavLink v-tooltip="'Edit'" :href="route('profile.blogs.edit', blog.id)">
+                            <NavLink tooltip="Edit" :href="route('profile.blogs.edit', blog.id)">
                                 <EditIcon />
                             </NavLink>
-                            <button v-tooltip="'Delete'" @click.prevent="deleteBlog(blog.id)"
+                            <button tooltip="Delete" @click.prevent="deleteBlog(blog.id)"
                                     class="text-red-500 hover:text-red-700">
                                 <DeleteIcon />
                             </button>

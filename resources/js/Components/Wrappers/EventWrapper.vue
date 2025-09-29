@@ -94,12 +94,12 @@ const deleteEvent = (id) => {
                             </div>
                             <div v-if="(owner || isAdmin ) && event.status_name === 'accepted'">
                                 <div class="flex flex-col gap-y-2 bg-blackTransparent2 p-2">
-                                    <div v-if="event.notify_count" v-tooltip="'Sent by bot'"
+                                    <div v-if="event.notify_count" tooltip="Sent by bot"
                                          class="flex items-center gap-2">
                                         <NotifyIcon />
                                         {{ event.notify_count }}
                                     </div>
-                                    <div v-if="event.allViews" v-tooltip="'Views in rocker'"
+                                    <div v-if="event.allViews" tooltip="Views in rocker"
                                          class="flex items-center gap-2">
                                         <EyesIcon />
                                         {{ event.allViews }}
@@ -116,10 +116,10 @@ const deleteEvent = (id) => {
                             </div>
                             <div v-if="(owner || isAdmin) && profile"
                                  class="flex w-full items-center justify-between z-20">
-                                <NavLink v-tooltip="'Edit'" :href="route('profile.events.edit', event.id)">
+                                <NavLink tooltip="Edit" :href="route('profile.events.edit', event.id)">
                                     <EditIcon />
                                 </NavLink>
-                                <button v-tooltip="'Delete'" @click.prevent="deleteEvent(event.id)"
+                                <button tooltip="Delete" @click.prevent="deleteEvent(event.id)"
                                         class="text-red-500 hover:text-red-700">
                                     <DeleteIcon />
                                 </button>

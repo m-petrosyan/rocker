@@ -51,7 +51,7 @@ const previewStyle = computed(() => {
 <template>
     <div class="absolute left-1/2 top-[-80px] w-fit -translate-x-1/2 text-center">
         <div class="relative mx-auto w-fit">
-            <div v-if="owner" v-tooltip="'Upload Profile Picture'">
+            <div v-if="owner" tooltip="Upload Profile Picture">
                 <input type="file" hidden accept="image/*" id="preview"
                        @change="changePreview">
                 <label
@@ -74,7 +74,7 @@ const previewStyle = computed(() => {
             {{ user.name }}
         </h3>
         <NavLink
-            v-tooltip="'Edit Profile'"
+            tooltip="Edit Profile"
             v-if="owner && (route().current('profile.index') || route().current('profile.show'))"
             :href="route('profile.edit')"
             class="mx-auto w-fit">
