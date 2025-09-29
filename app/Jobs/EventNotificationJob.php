@@ -41,10 +41,10 @@ class EventNotificationJob implements ShouldQueue
         $buttons = $this->getButtons($this->event);
 
         $users = $this->usersList($this->event);
-
+//        info(json_encode($this->event->poster['large']));
         foreach ($users as $user) {
             $user->chat
-                ->photo($this->event->poster['large'])
+                ->photo($this->event->poster['thumb'])
                 ->html($content)
                 ->keyboard(Keyboard::make()->buttons($buttons))
                 ->send();

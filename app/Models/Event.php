@@ -113,7 +113,7 @@ class Event extends Model implements Viewable, HasMedia
     public function registerMediaConversions(?Media $media = null): void
     {
         $this->addMediaConversion('thumb')
-            ->width(300)
+            ->width(600)
             ->quality(80)
             ->sharpen(7)
             ->optimize()

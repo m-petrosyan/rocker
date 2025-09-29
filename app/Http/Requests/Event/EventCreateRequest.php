@@ -25,7 +25,7 @@ class EventCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'poster_file' => ['required', 'image', 'mimetypes:image/jpeg,image/jpg,image/webp,image/png', 'max:4000'],
+            'poster_file' => ['required', 'image', 'mimes:jpeg,jpg,webp,png', 'max:4000'],
             'title' => ['required', 'string', 'min:3', 'max:55'],
             'content' => ['required', 'string', 'min:10', 'max:730'],
             'type' => ['required', Rule::in([1, 2, 3])],
