@@ -3,6 +3,8 @@
 namespace App\Telegram;
 
 use DefStudio\Telegraph\Keyboard\Button;
+use Illuminate\Support\Facades\Log;
+
 
 trait TelegramSettingsHandler
 {
@@ -90,5 +92,13 @@ trait TelegramSettingsHandler
             sleep(2);
             $this->chat->message(trans('messages.change_city'))->send();
         }
+    }
+
+    public function add_to_favorite(int $eventId): void
+    {
+        Log::info('add_to_favorite', [$eventId]);
+        auth()->user()->favorites()->syncWithoutDetaching([$eventId]);
+
+        $this->reply("Added");
     }
 }

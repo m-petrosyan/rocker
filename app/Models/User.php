@@ -7,6 +7,7 @@ use App\Notifications\CustomResetPassword;
 use App\Notifications\CustomVerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -126,6 +127,12 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     public function settings(): HasOne
     {
         return $this->hasOne(UserSettings::class);
+    }
+
+    public function favorites(): BelongsToMany
+    {
+        return $this->belongsToMany(Event::class, 'event_user_favorites')
+            ->withTimestamps();
     }
 
     public function getImageAttribute(): ?array

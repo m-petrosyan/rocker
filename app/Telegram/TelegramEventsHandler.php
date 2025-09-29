@@ -51,4 +51,16 @@ trait TelegramEventsHandler
         dispatch(new EventNotificationJob($event));
     }
 
+    public function get_favorite_events(): void
+    {
+        if (auth()->user()->favorites()->exists()) {
+            dispatch(new EventNotificationJob($event));
+            $buttons[] = Button::make('Remove from favorites')
+                ->action('remove_from_favorite')
+                ->param('favoriteId', $favorite->id);
+        } else {
+            auth()->user()->chat->message('Your list is empty')->send();
+        }
+    }
+
 }

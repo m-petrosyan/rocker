@@ -19,8 +19,8 @@ class TelegraphHandler extends WebhookHandler
 
     public function handle(Request $request, TelegraphBot $bot): void
     {
-        Log::info('handle', ['request' => $request->all()]);
-        Log::info('handle', ['bot' => $bot]);
+//        Log::info('handle', ['request' => $request->all()]);
+//        Log::info('handle', ['bot' => $bot]);
 
         $chatType = $request->input('callback_query.message.chat.type')
             ?? $request->input('message.chat.type')
