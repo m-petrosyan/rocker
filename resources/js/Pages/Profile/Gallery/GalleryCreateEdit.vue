@@ -8,6 +8,7 @@ import DatePicker from '@/Components/Forms/DatePicker.vue';
 import ProfileLayout from '@/Layouts/ProfileLayout.vue';
 import GoogleAutocomplate from '@/Components/Maps/GoogleAutocomplate.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import SuccessMessages from '@/Components/Messages/SuccessMessages.vue';
 
 const props = defineProps({
     gallery: {
@@ -124,7 +125,14 @@ const submitGallery = () => {
                         <GoogleAutocomplate :form="form" />
                     </div>
                 </div>
-
+                <SuccessMessages info class="mt-4">
+                    Event photos may also be featured on our <b><a target="_blank"
+                                                                   href="https://www.instagram.com/rocker._.am/">Instagram
+                    page</a></b> if they cover the entire event, not just a
+                    single band. Photo credits will always be included.Event photos may also be featured on our
+                    Instagram page if they cover the entire event, not just a single band. Photo credits will always be
+                    included.
+                </SuccessMessages>
                 <ProgressBar
                     v-show="data.preview?.length"
                     class="w-full bg-green mt-10 mb-5"
