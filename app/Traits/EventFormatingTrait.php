@@ -19,7 +19,7 @@ trait EventFormatingTrait
         if ($event->start_date) {
             $eventData['start_date'] = sprintf(
                 "⏰ %s\n\n",
-                $this->formatDateTime($event->start_date, $event->start_time)
+                $this->formatDateTime($event->start_date_short, $event->start_time)
             );
         }
 

@@ -3,7 +3,6 @@
 namespace App\Telegram;
 
 use DefStudio\Telegraph\Keyboard\Button;
-use Illuminate\Support\Facades\Log;
 
 
 trait TelegramSettingsHandler
@@ -96,9 +95,15 @@ trait TelegramSettingsHandler
 
     public function add_to_favorite(int $eventId): void
     {
-        Log::info('add_to_favorite', [$eventId]);
         auth()->user()->favorites()->syncWithoutDetaching([$eventId]);
 
         $this->reply("Added");
+    }
+
+    public function remove_from_favorite(int $eventId): void
+    {
+        auth()->user()->favorites()->detach($eventId);
+
+        $this->reply("Removed");
     }
 }
