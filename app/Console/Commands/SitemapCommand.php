@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\UserBot;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use Spatie\Sitemap\Sitemap;
@@ -31,6 +32,10 @@ class SitemapCommand extends Command
             })
             ->getSitemap();
 
+//        $chat = UserBot::where('chat_id', config('telegraph.webhook.chat_id'))->firstOrFail();
+//
+//        $chat->message("⚠️ Disk is ".(int)$usedSpace."%  full!")->send();
+
         // Add events from API
         $this->addEventsToSitemap($sitemap);
 
@@ -45,7 +50,7 @@ class SitemapCommand extends Command
         $this->info('Fetching all events from API...');
 
         $params = [
-            'limit' => 50000, // Большой лимит чтобы получить все записи
+            'limit' => 50000,
             'page' => 1,
             'past' => true,
         ];
@@ -57,8 +62,8 @@ class SitemapCommand extends Command
             try {
                 $this->info("Making API request".($retryCount > 0 ? " (retry {$retryCount})" : ""));
 
-                $response = Http::timeout(60) // Увеличили timeout для большого запроса
-                ->get('https://bot.rocker.am/api/event', $params);
+                $response = Http::timeout(60)
+                    ->get('https://bot.rocker.am/api/event', $params);
 
                 if ($response->status() === 429) {
                     $retryAfter = $response->header('Retry-After', 60);
@@ -77,20 +82,26 @@ class SitemapCommand extends Command
                     return;
                 }
 
-                $totalEvents = 0;
-                foreach ($data['data'] as $event) {
-                    // Add event URL to sitemap
-                    // Assuming your event URLs follow pattern: /event/{id}
-                    $eventUrl = config('app.url').'/events/'.$event['id'];
+                // Проверка количества событий
+                $totalEvents = count($data['data']);
+                if ($totalEvents < 600) {
+                    $this->warn("Too few events ({$totalEvents}). Sitemap creation skipped.");
 
+                    $chat = UserBot::where('chat_id', config('telegraph.webhook.chat_id'))->firstOrFail();
+
+                    $chat->message("⚠️ Sitemaps error, total: ".$totalEvents)->send();
+
+                    return;
+                }
+
+                foreach ($data['data'] as $event) {
+                    $eventUrl = config('app.url').'/events/'.$event['id'];
                     $sitemap->add(
                         Url::create($eventUrl)
                             ->setLastModificationDate(now())
                             ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY)
                             ->setPriority(0.8)
                     );
-
-                    $totalEvents++;
                 }
 
                 $this->info("Successfully fetched and processed {$totalEvents} events in 1 API request");
@@ -116,7 +127,5 @@ class SitemapCommand extends Command
                 }
             }
         }
-
-        $this->error("Failed to fetch events after {$maxRetries} retries");
     }
 }
