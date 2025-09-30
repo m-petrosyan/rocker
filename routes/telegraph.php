@@ -2,9 +2,8 @@
 
 use App\Models\UserBot;
 
-\Illuminate\Support\Facades\Log::info('Telegraph route loaded');
 $userId = data_get(request()->input('callback_query'), 'from.id') ?? data_get(request()->input('message'), 'from.id');
-//dd(request());
+
 if ($userId) {
     $userBot = UserBot::query()->where('chat_id', $userId)->first();
 

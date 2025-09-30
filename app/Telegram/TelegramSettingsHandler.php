@@ -104,6 +104,15 @@ trait TelegramSettingsHandler
     {
         auth()->user()->favorites()->detach($eventId);
 
+        $buttons = [
+            Button::make('Some text')->action('action')->width(0.66),
+            Button::make('Some tex')->action('action')->width(0.33),
+        ];
+
+
+        $lastMessageId = $this->prepareMessageParams($this->chat->chat_id, $this->message?->id());
+        $this->sendMessageWithButton(trans('menu.menu'), $buttons, $lastMessageId);
+
         $this->reply("Removed");
     }
 }
