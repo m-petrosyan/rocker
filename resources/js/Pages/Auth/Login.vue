@@ -7,7 +7,7 @@ import TextInput from '@/Components/Forms/TextInput.vue';
 import { Link, useForm } from '@inertiajs/vue3';
 import AuthLayouth from '@/Layouts/AuthLayouth.vue';
 import GoogleLogin from '@/Components/Forms/GoogleLogin.vue';
-import { webApp } from '@/Helpers/setAppUser.js';
+import { isWebApp } from '@/Helpers/setAppUser.js';
 import Preloader from '@/Components/Icons/Preloader.vue';
 
 defineProps({
@@ -31,12 +31,12 @@ const submit = () => {
     });
 };
 
-const isWebApp = webApp();
+const webApp = isWebApp();
 </script>
 
 <template>
     <AuthLayouth title="Log in">
-        <template v-if="!isWebApp">
+        <template v-if="!webApp">
             <div v-if="status" class="text-green-600 mb-4 text-sm font-medium">
                 {{ status }}
             </div>

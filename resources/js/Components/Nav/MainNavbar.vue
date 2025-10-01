@@ -2,14 +2,17 @@
 import { Link } from '@inertiajs/vue3';
 import menu from '@/Constants/menu.js';
 import { onBeforeUnmount, ref, watch } from 'vue';
+import { isWebApp } from '@/Helpers/setAppUser.js';
 
 const showBurger = ref(false);
+const webApp = isWebApp();
 
 const bugerMenu = [...menu].sort((a, b) => {
     if (a.img && !b.img) return -1;
     if (!a.img && b.img) return 1;
     return 0;
 });
+
 
 watch(showBurger, (val) => {
     if (val) {
@@ -24,6 +27,7 @@ onBeforeUnmount(() => {
         document.body.classList.remove('overflow-hidden');
     }
 });
+
 </script>
 
 <template>
@@ -108,6 +112,7 @@ onBeforeUnmount(() => {
                     </li>
                     <li v-if="$page.props.auth.user">
                         <Link
+                            v-if="!webApp"
                             :href="route('logout')"
                             method="post"
                             as="button"

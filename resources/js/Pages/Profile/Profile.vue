@@ -11,6 +11,7 @@ import BlogWrapper from '@/Components/Wrappers/BlogWrapper.vue';
 import NavLink from '@/Components/NavLink.vue';
 import AnalyticsIcon from '@/Components/Icons/AnalyticsIcon.vue';
 import { getHostname } from '@/Helpers/urlHelper.js';
+import { isWebApp } from '@/Helpers/setAppUser.js';
 
 defineProps({
     user: {
@@ -45,13 +46,15 @@ defineProps({
         required: true
     }
 });
+
+const webApp = isWebApp();
 </script>
 
 <template>
     <ProfileLayout :meta="{title: user.name, image: user?.image?.thumb}">
         <div>
             <UserInfo :url="url" :user :owner />
-            <Logout :owner />
+            <Logout v-if="!isWebApp" :owner />
             <NavLink v-if="['admin','modarator','organizer'].includes(auth.role) && owner"
                      :href="route('profile.dashboard')"
                      class="absolute top-0 left-0 z-20 flex bg-black bg-opacity-20">

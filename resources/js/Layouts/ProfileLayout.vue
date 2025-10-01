@@ -8,6 +8,7 @@ import defaultImg from '../../../public/screenshots/desktop-screenshot.png';
 import { onMounted, ref } from 'vue';
 import Footer from '@/Components/Footer/Footer.vue';
 import PreloaderPwa from '@/Components/Preloader/PreloaderPwa.vue';
+import { isWebApp } from '@/Helpers/setAppUser.js';
 
 defineProps({
     meta: {
@@ -26,6 +27,8 @@ onMounted(() => {
     isPWA.value = window.matchMedia('(display-mode: standalone)').matches ||
         window.navigator.standalone === true;
 });
+
+const webApp = isWebApp();
 </script>
 
 <template>
@@ -43,7 +46,7 @@ onMounted(() => {
     <FleshNotification />
     <PreloaderPwa v-if="isPWA" />
     <section class="min-h-screen bg-black text-white pt-6 sm:pt-0 pb-40">
-        <MainNavbar v-if="!isPWA" />
+        <MainNavbar v-if="!isPWA && !webApp" />
         <header v-if="$slots.header" class="my-10 text-gray">
             <h2 class="text-center mb-5">
                 <slot name="header" />
@@ -56,5 +59,5 @@ onMounted(() => {
         </main>
     </section>
     <Footer />
-    <PwaNavbar v-if="isPWA" />
+    <PwaNavbar v-if="isPWA || webApp" />
 </template>

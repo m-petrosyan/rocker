@@ -6,10 +6,12 @@ import ErrorMessages from '@/Components/Messages/ErrorMessages.vue';
 import { onMounted, ref } from 'vue';
 import Footer from '@/Components/Footer/Footer.vue';
 import PreloaderPwa from '@/Components/Preloader/PreloaderPwa.vue';
-import { useTelegramAuth } from '@/Helpers/setAppUser.js';
+import { isWebApp, useTelegramAuth } from '@/Helpers/setAppUser.js';
 
 
-const webApp = useTelegramAuth();
+const webApp = isWebApp();
+useTelegramAuth();
+
 
 defineProps({
     title: {
@@ -31,15 +33,13 @@ onMounted(() => {
         window.navigator.standalone === true;
 });
 
-
 </script>
 
 <template>
     <Head :title />
     <PreloaderPwa />
-    {{ webApp }}
     <section class="text-white pt-6 sm:pt-0 mb-20">
-        <MainNavbar v-if="page.url !== '/' && !isPWA" />
+        <MainNavbar v-if="page.url !== '/' && (!isPWA && !webApp)" />
         <main class="mt-20 sm:mx-auto w-full sm:w-8/12 md:w-4/12 md:max-w-[500px] rounded-lg  bg-graydark2 p-6">
             <ErrorMessages :messages="$page.props.errors" />
             <slot />
@@ -47,5 +47,5 @@ onMounted(() => {
         <slot name="underslot" />
     </section>
     <Footer />
-    <PwaNavbar v-if="isPWA" />
+    <PwaNavbar v-if="isPWA || webApp" />
 </template>

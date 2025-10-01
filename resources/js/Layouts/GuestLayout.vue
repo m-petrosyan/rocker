@@ -8,6 +8,7 @@ import { computed, onMounted, ref } from 'vue';
 import MainNavbar from '@/Components/Nav/MainNavbar.vue';
 import PwaNavbar from '@/Components/Nav/PwaNavbar.vue';
 import PreloaderPwa from '@/Components/Preloader/PreloaderPwa.vue';
+import { isWebApp } from '@/Helpers/setAppUser.js';
 
 const props = defineProps({
     meta: {
@@ -34,7 +35,7 @@ onMounted(() => {
     isPWA.value = window.matchMedia('(display-mode: standalone)').matches ||
         window.navigator.standalone === true;
 });
-
+const webApp = isWebApp();
 </script>
 
 <template>
@@ -53,7 +54,7 @@ onMounted(() => {
     <PreloaderPwa v-if="isPWA" />
     <FleshNotification />
     <section class="text-white pt-6 sm:pt-0 mb-20">
-        <MainNavbar v-if="!isPWA" />
+        <MainNavbar v-if="!isPWA && !webApp" />
         <header class="mt-10 text-gray">
             <h1 v-if="$slots.h1" class="text-center">
                 <slot name="h1" />
@@ -68,5 +69,5 @@ onMounted(() => {
         <PWAinstall />
     </section>
     <Footer />
-    <PwaNavbar v-if="isPWA" />
+    <PwaNavbar v-if="isPWA || webApp" />
 </template>

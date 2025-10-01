@@ -26,7 +26,7 @@ class TelegraphHandler extends WebhookHandler
             ?? $request->input('message.chat.type')
             ?? $request->input('channel_post.chat.type')
             ?? null;
-
+        Log::info($request);
         Log::info('chatType', [$chatType]);
 
         if ($chatType === 'private') {
