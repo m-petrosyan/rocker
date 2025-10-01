@@ -4,7 +4,7 @@ import NavLink from '@/Components/NavLink.vue';
 import DeleteIcon from '@/Components/Icons/DeleteIcon.vue';
 import EditIcon from '@/Components/Icons/EditIcon.vue';
 import EyesIcon from '@/Components/Icons/EyesIcon.vue';
-import { computed } from 'vue';
+import { isSSR } from '@/Helpers/ssrHelper.js';
 
 defineProps({
     galleries: {
@@ -50,9 +50,7 @@ const deleteGallery = (id) => {
     }
 };
 
-const ssr = computed(() => {
-    return typeof window === 'undefined';
-});
+const ssr = isSSR();
 </script>
 
 <template>
@@ -64,7 +62,7 @@ const ssr = computed(() => {
                 :href="route('galleries.show', gallery.id)"
                 :key="gallery.id"
                 class="flex flex-col items-center p-4">
-                <div class="relative h-64 w-full bg-cover bg-center rounded-lg group">
+                <div class="relative h-64 w-full rounded-lg bg-black">
                     <img v-if="gallery.cover_img.thumb && gallery.cover_img.thumb.trim()"
                          :src="gallery.cover_img.thumb"
                          class="object-cover w-full h-full"
@@ -75,7 +73,7 @@ const ssr = computed(() => {
                          :src="gallery.cover_img.original"
                          class="object-cover w-full h-full"
                          alt="Loading" />
-                    <div v-if="isAdmin" class="hidden group-hover:block absolute left-0 top-0 px-1 bg-red">
+                    <div v-if="isAdmin" class="absolute left-0 top-0 px-1 bg-red">
                         {{ gallery.total_mb }} MB
                     </div>
                     <div class="absolute right-0 bottom-8 px-1 bg-orange">
@@ -111,7 +109,7 @@ const ssr = computed(() => {
                     </div>
                 </div>
                 <div class="p-2">
-                    <p v-if="ssr" class="text-lg font-semibold">{{ gallery.title }} by {{ gallery.user.name }}</p>
+                    <p v-if="ssr" class="text-lg font-semibold">{{ gallery.title }} by {{ gallery.user?.name }}</p>
                     <p v-else class="text-lg font-semibold">{{ gallery.title }}</p>
                 </div>
             </NavLink>

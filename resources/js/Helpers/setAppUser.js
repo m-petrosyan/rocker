@@ -20,7 +20,10 @@ export function useTelegramAuth() {
 }
 
 export function isWebApp(returnInitData = false) {
-    const initData = window.Telegram?.WebApp?.initData;
+    if (typeof window === 'undefined') {
+        return returnInitData ? null : false;
+    }
 
+    const initData = window?.Telegram?.WebApp?.initData;
     return returnInitData ? initData : !!initData;
 }
