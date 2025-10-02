@@ -16,7 +16,7 @@ onMounted(() => {
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredEvent = e;
-        setTimeout(() => showPrompt.value = true, 10000);
+        setTimeout(() => showPrompt.value = true, 1000);
     });
 });
 
