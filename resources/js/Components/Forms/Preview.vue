@@ -3,6 +3,7 @@ import { computed, ref } from 'vue';
 import ArrowUpDown from '@/Components/Icons/ArrowUpDown.vue';
 
 const props = defineProps({
+    id: { type: String, default: null },
     image: { type: Object, required: true },
     preview: { type: Object, required: true, default: '/images/noimage.jpg' },
     labelClass: { type: String, default: 'bg-cover' },
@@ -38,7 +39,7 @@ const endInteraction = (event) => {
     if (isDragging.value) {
         isDragging.value = false;
     } else if (clickTimer) {
-        const input = document.getElementById(props.label);
+        const input = document.getElementById(props.id || props.label);
         input.click();
     }
     clearTimeout(clickTimer);
@@ -48,7 +49,6 @@ const endInteraction = (event) => {
 const dragImage = (event) => {
 
     if (!isDragging.value) return;
-
     const rect = event.currentTarget.getBoundingClientRect();
     const x = ((event.clientX - rect.left) / rect.width) * 100;
     const y = ((event.clientY - rect.top) / rect.height) * 100;
@@ -80,7 +80,7 @@ const previewStyle = computed(() => {
         @mouseup="endInteraction"
         @mouseleave="endInteraction"
     >
-        <input type="file" hidden accept="image/*" :id="label" @change="changePreview">
+        <input type="file" hidden accept="image/*" :id="id || label" @change="changePreview">
         <label
             :class="[
                 'absolute h-full w-full z-10 flex h-inherit min-h-60 w-inherit items-center justify-center border-dashed border-2 border-graydark2 cursor-pointer rounded-md bg-no-repeat bg-center bg-contain rounded-10 mx-auto',
