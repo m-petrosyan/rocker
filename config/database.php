@@ -62,13 +62,13 @@ return [
             ]) : [],
         ],
 
-        'external' => [
+        'remote' => [
             'driver' => 'mysql',
-            'host' => env('EXT_DB_HOST', ''),
-            'port' => env('EXT_DB_PORT', ''),
-            'database' => env('EXT_DB_DATABASE', ''),
-            'username' => env('EXT_DB_USERNAME', ''),
-            'password' => env('EXT_DB_PASSWORD', ''),
+            'host' => env('REMOTE_DB_HOST', ''),
+            'port' => env('REMOTE_DB_PORT', '3306'),
+            'database' => env('REMOTE_DB_DATABASE', ''),
+            'username' => env('REMOTE_DB_USERNAME', ''),
+            'password' => env('REMOTE_DB_PASSWORD', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',

@@ -39,14 +39,15 @@ class EventRepository
 //            ->orderBy('start_date');
 //    }
 
-    public static function eventsList($limit = 50): LengthAwarePaginator
+    public static function eventsList($limit = 50, $page = 1, $past = false): LengthAwarePaginator
     {
         return Event::query()
             ->with(['user.roles', 'status'])
-            ->where('start_date', '>=', now())
-            ->whereHas('status', fn($query) => $query->where('status', EventStatusEnum::ACCEPTED->value))
+            ->when(!$past, fn($query) => $query->where('start_date', '>=', now()))
+            ->when($past, fn($query) => $query->where('start_date', '<', now()))
+//            ->whereHas('status', fn($query) => $query->where('status', EventStatusEnum::ACCEPTED->value))
             ->orderBy('start_date')
-            ->paginate($limit);
+            ->paginate($limit, ['*'], 'page', $page);
     }
 
     public static function userEvents()

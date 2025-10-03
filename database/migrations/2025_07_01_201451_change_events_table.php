@@ -1,7 +1,6 @@
 <?php
 
 use App\Enums\CountyEnum;
-use App\Enums\EventTypeEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -24,7 +23,7 @@ return new class extends Migration {
             $table->string('genre')->nullable()->index();
             $table->string('location');
             $table->json('cordinates')->nullable();
-            $table->smallInteger('type')->unsigned()->default(EventTypeEnum::CONCERTS_EVENTS->value);
+            $table->smallInteger('type')->unsigned()->default(1);
             $table->date('start_date')->nullable()->index();
             $table->time('start_time')->nullable();
         });

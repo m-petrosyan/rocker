@@ -33,8 +33,8 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     protected $fillable = [
         'google_id',
         'name',
-        'info',
         'username',
+        'info',
         'email',
         'password',
         'email_verified_at',
