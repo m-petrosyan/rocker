@@ -56,15 +56,20 @@ const deleteBand = (id) => {
                 :key="band.id"
                 class="flex flex-col items-center p-4">
                 <div class="relative aspect-square w-full overflow-hidden rounded-lg bg-black">
-                    <img v-if="band.logo.thumb && band.logo.thumb.trim()"
-                         :src="band.logo?.svg ?? band.logo.thumb"
-                         class="w-full h-full object-cover object-top"
-                         :alt="band.name"
-                         @error="$event.target.src = band.logo.original" />
-                    <img v-else-if="band.logo.original"
-                         :src="band.logo.original"
-                         class="w-full h-full object-cover object-top"
-                         alt="Loading" />
+                    <img
+                        v-if="band.logo.thumb && band.logo.thumb.trim()"
+                        :src="band.logo?.svg ?? band.logo.thumb"
+                        class="w-full h-full object-contain [object-fit:cover] [aspect-ratio:1/1] [&[width&gt;height]]:object-contain [&[height&gt;width]]:object-cover object-center"
+                        :alt="band.name"
+                        @error="$event.target.src = band.logo.original"
+                    />
+                    <img
+                        v-else-if="band.logo.original"
+                        :src="band.logo.original"
+                        class="w-full h-full object-contain [object-fit:cover] [aspect-ratio:1/1] [&[width&gt;height]]:object-contain [&[height&gt;width]]:object-cover object-center"
+                        alt="Loading"
+                    />
+
                     <div v-if="owner || isAdmin"
                          class="absolute inset-0 flex flex-col justify-between p-1 bg-blackTransparent2">
                         <div class="flex justify-end gap-y-2">
@@ -84,6 +89,7 @@ const deleteBand = (id) => {
                         </div>
                     </div>
                 </div>
+
 
                 <div class="p-2">
                     <p class="text-lg font-semibold text-pretty">
