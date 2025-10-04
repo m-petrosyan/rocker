@@ -3,62 +3,42 @@ import Multiselect from 'vue-multiselect';
 import { ref, watch } from 'vue';
 
 const props = defineProps({
-    text: {
-        type: String,
-        default: 'Select'
-    },
-    multiple: {
-        type: Boolean,
-        default: false
-    },
-    modelValue: {
-        type: Array || String,
-        default: () => []
-    },
-    options: {
-        type: Array,
-        default: () => []
-    },
-    disabled: {
-        type: Boolean,
-        default: false
-    }
+    text: { type: String, default: 'Select' },
+    multiple: { type: Boolean, default: false },
+    modelValue: { type: [Array, Object, String, null], default: () => [] },
+    options: { type: Array, default: () => [] },
+    disabled: { type: Boolean, default: false }
 });
 
-const emits = defineEmits(['update:modelValue']);
+const emits = defineEmits(['update:modelValue', 'addOption']);
 
-const selected = ref(props.modelValue);
-if (selected.value) {
-    selected.value = typeof props.modelValue === 'string' ? { name: props.modelValue } : props.modelValue;
-
-}
+const selected = ref(props.multiple ? [...props.modelValue] : props.modelValue);
 
 const removeItem = (item) => {
-    if (Array.isArray(selected.value)) {
+    if (props.multiple) {
         selected.value = selected.value.filter((v) => v.name !== item.name);
-
     } else {
         selected.value = null;
     }
 };
 
 const addTag = (name) => {
-    const tag = {
-        name: name
-    };
-    props.options.push(tag);
-    selected.value.push(tag);
+    const tag = { name };
+    emits('addOption', tag);
+    if (props.multiple) {
+        selected.value = [...selected.value, tag];
+    } else {
+        selected.value = tag;
+    }
 };
 
-watch(() => selected.value, (newValue) => {
-    emits('update:modelValue', newValue);
-});
+watch(selected, (val) => emits('update:modelValue', val), { deep: true });
 </script>
 
 <template>
     <div>
         <multiselect
-            :disabled
+            :disabled="disabled"
             id="option-tags"
             v-model="selected"
             :options="options"
@@ -76,7 +56,8 @@ watch(() => selected.value, (newValue) => {
               @click="removeItem(option)"
               class="multiselect__tag-icon"
               type="button"
-              aria-label="Remove">
+              aria-label="Remove"
+          >
             ×
           </button>
         </span>
@@ -144,12 +125,12 @@ watch(() => selected.value, (newValue) => {
                     display: block;
                 }
 
-                &[aria-selected="true"]:hover {
+                &[aria-selected='true']:hover {
                     background-color: theme('colors.orange');
                     color: white;
                 }
 
-                &:hover:not([aria-selected="true"]) {
+                &:hover:not([aria-selected='true']) {
                     background-color: theme('colors.green');
                     color: white;
                 }
