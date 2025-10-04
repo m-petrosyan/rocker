@@ -55,18 +55,23 @@ const deleteBand = (id) => {
                 :href="route('bands.show', band.slug)"
                 :key="band.id"
                 class="flex flex-col items-center p-4">
-                <div class="relative h-64 w-full rounded-lg bg-black">
-                    <img v-if="band.logo.thumb && band.logo.thumb.trim()"
-                         :src="band.logo?.svg ?? band.logo.thumb"
-                         class="object-contain w-full h-full"
-                         :alt="band.name"
-                         @error="$event.target.src = band.logo.original" />
-                    <img v-else-if="band.logo.original"
-                         :src="band.logo.original"
-                         class="object-contain w-full h-full"
-                         alt="Loading" />
+                <div class="relative aspect-square w-full overflow-hidden rounded-lg bg-black">
+                    <img
+                        v-if="band.logo.thumb && band.logo.thumb.trim()"
+                        :src="band.logo?.svg ?? band.logo.thumb"
+                        class="w-full h-full object-contain [object-fit:cover] [aspect-ratio:1/1] [&[width&gt;height]]:object-contain [&[height&gt;width]]:object-cover object-center"
+                        :alt="band.name"
+                        @error="$event.target.src = band.logo.original"
+                    />
+                    <img
+                        v-else-if="band.logo.original"
+                        :src="band.logo.original"
+                        class="w-full h-full object-contain [object-fit:cover] [aspect-ratio:1/1] [&[width&gt;height]]:object-contain [&[height&gt;width]]:object-cover object-center"
+                        alt="Loading"
+                    />
+
                     <div v-if="owner || isAdmin"
-                         class="absolute bottom-0 w-full h-full flex flex-col justify-between  p-1 bg-blackTransparent2">
+                         class="absolute inset-0 flex flex-col justify-between p-1 bg-blackTransparent2">
                         <div class="flex justify-end gap-y-2">
                             <div class="flex gap-x-2 items-center">
                                 <EyesIcon />
@@ -84,6 +89,8 @@ const deleteBand = (id) => {
                         </div>
                     </div>
                 </div>
+
+
                 <div class="p-2">
                     <p class="text-lg font-semibold text-pretty">
                         {{ band.name.length > 40 ? band.name.slice(0, 40) + '...' : band.name }}</p>
