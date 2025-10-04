@@ -90,24 +90,30 @@ const createBand = () => {
                             v-model:preview="form.cover_file"
                         />
                     </div>
-                    <div class="flex md:flex-row flex-col w-full gap-2">
-                        <Preview
-                            label="logo (300px x 300px Square)"
-                            classes="bg-contain"
-                            class="min-h-96 md:w-1/2 w-full"
-                            labelClass="h-full"
-                            :image="form.logo?.svg ?? form.logo?.large"
-                            v-model:preview="form.logo_file"
-                        />
-                        <div class="flex flex-col gap-2 md:w-1/2 w-full">
+                    <div class="flex md:flex-row flex-col w-full gap-4">
+                        <div class="w-full h-full md:w-1/3">
+                            <Preview
+                                label="logo (300px x 300px Square)"
+                                classes="bg-contain aspect-square"
+                                class="w-full h-full rounded-lg overflow-hidden"
+                                labelClass="h-full"
+                                :image="form.logo?.svg ?? form.logo?.large"
+                                v-model:preview="form.logo_file"
+                            />
+                        </div>
+                        <div class="flex flex-col gap-2 md:w-2/3 w-full">
                             <Multiselect
                                 v-tooltip="'If the group name is already in the list, please select from the list'"
                                 v-model="form.name" :options="bandsList" text="Name"
+                                class="w-2/3"
                                 :disabled="band" />
                             <Multiselect
                                 v-tooltip="'You can choose from the list or add if there is no list'"
-                                v-model="form.genres" :options="genres" text="Genres" multiple />
-                            <AddLinks maxLinks="3" v-model:data="form.links" tooltip="Add your social networks" />
+                                v-model="form.genres" :options="genres" text="Genres" multiple
+                                class="w-2/3" />
+                            <AddLinks maxLinks="3"
+                                      v-model:data="form.links"
+                                      tooltip="Add your social networks" />
                             <div class="text-gray">
                                 <b>Note :</b>
                                 <p class="text-orange">A mandatory requirement for adding a band is that it must have
