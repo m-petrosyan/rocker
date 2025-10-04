@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Http;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\SitemapGenerator;
 use Spatie\Sitemap\Tags\Url;
+use Illuminate\Support\Facades\Log;
 
 class SitemapCommand extends Command
 {
@@ -17,41 +18,43 @@ class SitemapCommand extends Command
 
     public function handle(): void
     {
-        $this->info('Generating sitemap...');
+        try {
+            $this->info('Generating sitemap...');
 
-        // Generate base sitemap
-        $sitemap = SitemapGenerator::create(config('app.url'))
-            ->setConcurrency(10)
-            ->hasCrawled(function (Url $url) {
-                $exclude = ['login', 'register', 'forgot-password', 'profile'];
-                $firstSegment = $url->segment(1) ?? '';
-                if (in_array($firstSegment, $exclude)) {
-                    return null;
-                }
+            // Generate base sitemap
+            $sitemap = SitemapGenerator::create(config('app.url'))
+                ->setConcurrency(10)
+                ->hasCrawled(function (Url $url) {
+                    $exclude = ['login', 'register', 'forgot-password', 'profile'];
+                    $firstSegment = $url->segment(1) ?? '';
+                    if (in_array($firstSegment, $exclude)) {
+                        return null;
+                    }
+                    return $url;
+                })
+                ->getSitemap();
 
-                return $url;
-            })
-            ->getSitemap();
+            // Add events from API
+            $eventsAdded = $this->addEventsToSitemap($sitemap);
 
-        // Add events from API and check if sitemap should be written
-        if (!$this->addEventsToSitemap($sitemap)) {
-            $this->warn('Sitemap generation skipped due to API failure.');
-            $chat = UserBot::where('chat_id', config('telegraph.webhook.chat_id'))->firstOrFail();
-            $chat->message("⚠️ Sitemap generation skipped!")->send();
+            if (!$eventsAdded) {
+                $this->warn('Sitemap generation skipped due to API failure.');
+                $this->notifyTelegram("⚠️ Sitemap generation skipped due to API failure.");
+            } else {
+                // Write sitemap only if events successfully fetched
+                $sitemap->writeToFile(public_path('sitemap.xml'));
+                $this->info('Sitemap generated successfully!');
+            }
 
-            return;
+        } catch (\Throwable $e) {
+            Log::error('Sitemap cron fatal error: '.$e->getMessage());
+            $this->notifyTelegram("⚠️ Sitemap fatal error: ".$e->getMessage());
         }
-
-        // Write the sitemap only if events are successfully fetched
-        $sitemap->writeToFile(public_path('sitemap.xml'));
-
-        $this->info('Sitemap generated successfully!');
     }
 
     private function addEventsToSitemap(Sitemap $sitemap): bool
     {
         $this->info('Fetching all events from API...');
-
         $params = [
             'limit' => 50000,
             'page' => 1,
@@ -81,7 +84,6 @@ class SitemapCommand extends Command
 
                 if (empty($data['data'])) {
                     $this->warn('No events found in API response');
-
                     return false;
                 }
 
@@ -102,27 +104,34 @@ class SitemapCommand extends Command
 
                 return true;
             } catch (RequestException $e) {
-                $this->error("HTTP error: ".$e->getMessage());
+                Log::error("HTTP error while fetching events: ".$e->getMessage());
                 $retryCount++;
-                if ($retryCount < $maxRetries) {
-                    $this->info("Retrying in 5 seconds...");
-                    sleep(5);
-                }
-                continue;
-            } catch (\Exception $e) {
-                $this->error("Error fetching events from API: ".$e->getMessage());
+                sleep(5);
+            } catch (\Throwable $e) {
+                Log::error("Error fetching events from API: ".$e->getMessage());
                 $retryCount++;
-                if ($retryCount < $maxRetries) {
-                    $this->info("Retrying in 5 seconds...");
-                    sleep(5);
-                }
+                sleep(5);
             }
         }
 
         $this->error("Failed to fetch events after {$maxRetries} attempts. Sitemap creation skipped.");
-        $chat = UserBot::where('chat_id', config('telegraph.webhook.chat_id'))->firstOrFail();
-        $chat->message("⚠️ Sitemaps error, failed to fetch events after {$maxRetries} attempts")->send();
+        $this->notifyTelegram("⚠️ Sitemaps error, failed to fetch events after {$maxRetries} attempts");
 
         return false;
+    }
+
+    /**
+     * Notify Telegram if chat exists, safely.
+     */
+    private function notifyTelegram(string $message): void
+    {
+        try {
+            $chat = UserBot::where('chat_id', config('telegraph.webhook.chat_id'))->first();
+            if ($chat) {
+                $chat->message($message)->send();
+            }
+        } catch (\Throwable $e) {
+            Log::error("Failed to send Telegram message: ".$e->getMessage());
+        }
     }
 }
