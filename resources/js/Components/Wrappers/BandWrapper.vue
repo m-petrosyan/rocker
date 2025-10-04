@@ -55,33 +55,29 @@ const deleteBand = (id) => {
                 :href="route('bands.show', band.slug)"
                 :key="band.id"
                 class="flex flex-col items-center p-4">
-                <div class="relative h-64 w-full rounded-lg bg-black bg-cover"
-                     :style="{ backgroundImage: `url(${band.logo.thumb})` }">
-
-                    <div class="absolute inset-0 z-0 brightness-50 backdrop-blur-md"></div>
-
+                <div class="relative aspect-square w-full rounded-lg bg-black">
                     <img v-if="band.logo.thumb && band.logo.thumb.trim()"
                          :src="band.logo?.svg ?? band.logo.thumb"
-                         class="absolute z-10 h-full w-full  object-contain w-full h-full z-10"
+                         class="object-contain w-full h-full"
                          :alt="band.name"
                          @error="$event.target.src = band.logo.original" />
                     <img v-else-if="band.logo.original"
                          :src="band.logo.original"
-                         class="absolute z-10 h-full w-full  object-contain w-full h-full z-10"
+                         class="object-contain w-full h-full"
                          alt="Loading" />
                     <div v-if="owner || isAdmin"
-                         class="z-20 absolute bottom-0 w-full h-full flex flex-col justify-between  p-1 bg-blackTransparent2">
+                         class="absolute bottom-0 w-full h-full flex flex-col justify-between  p-1 bg-blackTransparent2">
                         <div class="flex justify-end gap-y-2">
                             <div class="flex gap-x-2 items-center">
                                 <EyesIcon />
-                                <p v-tooltip="'Views'">{{ band.allViews }}</p>
+                                <p tooltip="Views">{{ band.allViews }}</p>
                             </div>
                         </div>
-                        <div class="flex justify-between z-20">
-                            <NavLink v-tooltip="'Edit'" :href="route('profile.bands.edit', band.id)">
+                        <div class="flex justify-between">
+                            <NavLink tooltip="Edit" :href="route('profile.bands.edit', band.id)">
                                 <EditIcon />
                             </NavLink>
-                            <button v-tooltip="'Delete'" @click.prevent="deleteBand(band.id)"
+                            <button tooltip="Delete" @click.prevent="deleteBand(band.id)"
                                     class="text-red-500 hover:text-red-700">
                                 <DeleteIcon />
                             </button>
