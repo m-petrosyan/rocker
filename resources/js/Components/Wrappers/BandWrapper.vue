@@ -58,12 +58,12 @@ const deleteBand = (id) => {
                 <div class="relative aspect-square w-full overflow-hidden rounded-lg bg-black">
                     <img v-if="band.logo.thumb && band.logo.thumb.trim()"
                          :src="band.logo?.svg ?? band.logo.thumb"
-                         class="object-cover w-full h-full"
+                         class="w-full h-full object-cover object-top"
                          :alt="band.name"
                          @error="$event.target.src = band.logo.original" />
                     <img v-else-if="band.logo.original"
                          :src="band.logo.original"
-                         class="object-cover w-full h-full"
+                         class="w-full h-full object-cover object-top"
                          alt="Loading" />
                     <div v-if="owner || isAdmin"
                          class="absolute inset-0 flex flex-col justify-between p-1 bg-blackTransparent2">
@@ -84,6 +84,7 @@ const deleteBand = (id) => {
                         </div>
                     </div>
                 </div>
+
                 <div class="p-2">
                     <p class="text-lg font-semibold text-pretty">
                         {{ band.name.length > 40 ? band.name.slice(0, 40) + '...' : band.name }}</p>
