@@ -31,6 +31,7 @@ class EventController extends Controller
 
     public function store(EventCreateRequest $request): RedirectResponse
     {
+        dd($request->validated());
         $this->eventService->store($request->validated());
 
 //        session()->flash('message', $response['message']);

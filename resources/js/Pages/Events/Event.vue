@@ -38,7 +38,7 @@ const type = props.event && props.event.type === 2 ? 'concert' : 'event';
             <div class="absolute inset-0 z-0 brightness-50 backdrop-blur-md"></div>
             <img
                 :src="event.poster.large"
-                :alt="event.title"
+                :alt="event.title + ' '+ removePostalCode(event.location) "
                 class="absolute z-10 h-96 w-full object-contain object-center"
             />
             <div

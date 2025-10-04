@@ -96,6 +96,11 @@ class Event extends Model implements Viewable, HasMedia
         return $value ? Carbon::parse($value)->format('H:i') : null;
     }
 
+    public function notifications(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'event_messages')->withPivot('message_id');
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
