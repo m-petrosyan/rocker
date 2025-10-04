@@ -59,14 +59,14 @@ const deleteBand = (id) => {
                     <img
                         v-if="band.logo.thumb && band.logo.thumb.trim()"
                         :src="band.logo?.svg ?? band.logo.thumb"
-                        class="w-full h-full object-contain [object-fit:cover] [aspect-ratio:1/1] [&[width&gt;height]]:object-contain [&[height&gt;width]]:object-cover object-center"
+                        class="smart-image"
                         :alt="band.name"
                         @error="$event.target.src = band.logo.original"
                     />
                     <img
                         v-else-if="band.logo.original"
                         :src="band.logo.original"
-                        class="w-full h-full object-contain [object-fit:cover] [aspect-ratio:1/1] [&[width&gt;height]]:object-contain [&[height&gt;width]]:object-cover object-center"
+                        class="smart-image"
                         alt="Loading"
                     />
 
@@ -116,3 +116,17 @@ const deleteBand = (id) => {
         </div>
     </div>
 </template>
+<style scoped>
+/* в твоём файле CSS, например resources/css/app.css */
+.smart-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+.smart-image.tall {
+    object-fit: cover; /* если изображение слишком высокое */
+}
+
+</style>
