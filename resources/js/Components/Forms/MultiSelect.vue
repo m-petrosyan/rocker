@@ -10,21 +10,20 @@ const props = defineProps({
     disabled: { type: Boolean, default: false }
 });
 
-const emits = defineEmits(['update:modelValue', 'addOption']);
+const emits = defineEmits(['update:modelValue']);
 
-const selected = ref(props.multiple ? [...props.modelValue] : props.modelValue);
+const selected = ref(props.multiple ? [...props.modelValue] : props.modelValue ? [{ name: props.modelValue }] : []);
 
 const removeItem = (item) => {
     if (props.multiple) {
         selected.value = selected.value.filter((v) => v.name !== item.name);
     } else {
-        selected.value = null;
+        selected.value = [...props.modelValue];
     }
 };
 
 const addTag = (name) => {
     const tag = { name };
-    emits('addOption', tag);
     if (props.multiple) {
         selected.value = [...selected.value, tag];
     } else {
@@ -50,17 +49,17 @@ watch(selected, (val) => emits('update:modelValue', val), { deep: true });
             label="name"
         >
             <template v-slot:tag="{ option }">
-        <span class="multiselect__tag">
-          <span>{{ option.name }}</span>
-          <button
-              @click="removeItem(option)"
-              class="multiselect__tag-icon"
-              type="button"
-              aria-label="Remove"
-          >
-            ×
-          </button>
-        </span>
+                <span class="multiselect__tag">
+                  <span>{{ option.name }}</span>
+                  <button
+                      @click="removeItem(option)"
+                      class="multiselect__tag-icon"
+                      type="button"
+                      aria-label="Remove"
+                  >
+                    ×
+                  </button>
+                </span>
             </template>
         </multiselect>
     </div>
