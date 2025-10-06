@@ -22,7 +22,7 @@ const props = defineProps({
 
 
 const data = reactive({
-  lang: props.blog?.title['en'] ? 'en' : props.blog?.title['am'] ? 'am' : 'ru',
+  lang: props.blog?.title ? props.blog?.title['en'] ? 'en' : props.blog?.title['am'] ? 'am' : 'ru' : 'en',
   author: false,
   cover: null,
   preview: props.blog?.images_url ? [...props.blog.images_url] : []
