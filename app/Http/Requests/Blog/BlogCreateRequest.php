@@ -55,10 +55,6 @@ class BlogCreateRequest extends FormRequest
     public function withValidator(Validator $validator): void
     {
         $validator->after(function ($validator) {
-            $title = $this->input('title', []);
-            $description = $this->input('description', []);
-            $content = $this->input('content', []);
-
             $isContentEmpty = function ($value) {
                 $cleaned = preg_replace('/\s+/u', '', strip_tags($value ?? ''));
 
@@ -68,99 +64,116 @@ class BlogCreateRequest extends FormRequest
             $hasPdfFile = !empty($this->file('pdf_file')) || !empty($this->file('pdf')) ||
                 !empty($this->input('pdf_file')) || !empty($this->input('pdf'));
 
-            if (!$hasPdfFile && (!empty($title['en']) || !empty($description['en']) || !$isContentEmpty(
-                        $content['en']
-                    ))) {
-                if (empty($title['en'])) {
-                    $validator->errors()->add(
-                        'title.en',
-                        'English title is required when any English field is provided.'
-                    );
+            if (!$hasPdfFile) {
+                // Проверка для английского языка
+                if (!empty($this->input('title.en')) || !empty($this->input('description.en')) || !$isContentEmpty(
+                        $this->input('content.en')
+                    )) {
+                    if (empty($this->input('title.en'))) {
+                        $validator->errors()->add(
+                            'title.en',
+                            'English title is required when any English field is provided.'
+                        );
+                    }
+                    if (empty($this->input('description.en'))) {
+                        $validator->errors()->add(
+                            'description.en',
+                            'English description is required when any English field is provided.'
+                        );
+                    }
+                    $contentEn = $this->input('content.en');
+                    if ($isContentEmpty($contentEn)) {
+                        $validator->errors()->add(
+                            'content.en',
+                            'English content is required when any English field is provided.'
+                        );
+                    } elseif (strlen(trim(strip_tags($contentEn))) < 50) {
+                        $validator->errors()->add(
+                            'content.en',
+                            'English content must contain at least 50 characters excluding HTML tags.'
+                        );
+                    }
                 }
-                if (empty($description['en'])) {
-                    $validator->errors()->add(
-                        'description.en',
-                        'English description is required when any English field is provided.'
-                    );
-                }
-                if ($isContentEmpty($content['en'])) {
-                    $validator->errors()->add(
-                        'content.en',
-                        'English content is required when any English field is provided.'
-                    );
-                } elseif (strlen(trim(strip_tags($content['en']))) < 50) {
-                    $validator->errors()->add(
-                        'content.en',
-                        'English content must contain at least 50 characters excluding HTML tags.'
-                    );
-                }
-            }
 
-            // Проверка для армянского языка
-            if (!$hasPdfFile && (!empty($title['am']) || !empty($description['am']) || !$isContentEmpty(
-                        $content['am']
-                    ))) {
-                if (empty($title['am'])) {
-                    $validator->errors()->add(
-                        'title.am',
-                        'Armenian title is required when any Armenian field is provided.'
-                    );
+                // Проверка для армянского языка
+                if (!empty($this->input('title.am')) || !empty($this->input('description.am')) || !$isContentEmpty(
+                        $this->input('content.am')
+                    )) {
+                    if (empty($this->input('title.am'))) {
+                        $validator->errors()->add(
+                            'title.am',
+                            'Armenian title is required when any Armenian field is provided.'
+                        );
+                    }
+                    if (empty($this->input('description.am'))) {
+                        $validator->errors()->add(
+                            'description.am',
+                            'Armenian description is required when any Armenian field is provided.'
+                        );
+                    }
+                    $contentAm = $this->input('content.am');
+                    if ($isContentEmpty($contentAm)) {
+                        $validator->errors()->add(
+                            'content.am',
+                            'Armenian content is required and cannot consist only of HTML tags (e.g., <p><br></p> or <p></p>) when any Armenian field is provided.'
+                        );
+                    } elseif (strlen(trim(strip_tags($contentAm))) < 50) {
+                        $validator->errors()->add(
+                            'content.am',
+                            'Armenian content must contain at least 50 characters excluding HTML tags.'
+                        );
+                    }
                 }
-                if (empty($description['am'])) {
-                    $validator->errors()->add(
-                        'description.am',
-                        'Armenian description is required when any Armenian field is provided.'
-                    );
-                }
-                if ($isContentEmpty($content['am'])) {
-                    $validator->errors()->add(
-                        'content.am',
-                        'Armenian content is required and cannot consist only of HTML tags (e.g., <p><br></p> or <p></p>) when any Armenian field is provided.'
-                    );
-                } elseif (strlen(trim(strip_tags($content['am']))) < 50) {
-                    $validator->errors()->add(
-                        'content.am',
-                        'Armenian content must contain at least 50 characters excluding HTML tags.'
-                    );
-                }
-            }
 
-            // Проверка для русского языка
-            if (!$hasPdfFile && (!empty($title['ru']) || !empty($description['ru']) || !$isContentEmpty(
-                        $content['ru']
-                    ))) {
-                if (empty($title['ru'])) {
-                    $validator->errors()->add(
-                        'title.ru',
-                        'Russian title is required when any Russian field is provided.'
-                    );
+                // Проверка для русского языка
+                if (!empty($this->input('title.ru')) || !empty($this->input('description.ru')) || !$isContentEmpty(
+                        $this->input('content.ru')
+                    )) {
+                    if (empty($this->input('title.ru'))) {
+                        $validator->errors()->add(
+                            'title.ru',
+                            'Russian title is required when any Russian field is provided.'
+                        );
+                    }
+                    if (empty($this->input('description.ru'))) {
+                        $validator->errors()->add(
+                            'description.ru',
+                            'Russian description is required when any Russian field is provided.'
+                        );
+                    }
+                    $contentRu = $this->input('content.ru');
+                    if ($isContentEmpty($contentRu)) {
+                        $validator->errors()->add(
+                            'content.ru',
+                            'Russian content is required when any Russian field is provided.'
+                        );
+                    } elseif (strlen(trim(strip_tags($contentRu))) < 50) {
+                        $validator->errors()->add(
+                            'content.ru',
+                            'Russian content must contain at least 50 characters excluding HTML tags.'
+                        );
+                    }
                 }
-                if (empty($description['ru'])) {
-                    $validator->errors()->add(
-                        'description.ru',
-                        'Russian description is required when any Russian field is provided.'
-                    );
-                }
-                if ($isContentEmpty($content['ru'])) {
-                    $validator->errors()->add(
-                        'content.ru',
-                        'Russian content is required when any Russian field is provided.'
-                    );
-                } elseif (strlen(trim(strip_tags($content['ru']))) < 50) {
-                    $validator->errors()->add(
-                        'content.ru',
-                        'Russian content must contain at least 50 characters excluding HTML tags.'
-                    );
-                }
-            }
 
-            if ((empty($title['en']) && empty($description['en']) && $isContentEmpty($content['en'])) &&
-                (empty($title['am']) && empty($description['am']) && $isContentEmpty($content['am'])) &&
-                (empty($title['ru']) && empty($description['ru']) && $isContentEmpty($content['ru']))) {
-                $validator->errors()->add(
-                    'title',
-                    'At least one language (English, Armenian or Russian) must have title, description, and content provided.'
-                );
+                // Общая проверка: хотя бы один язык заполнен
+                $allEmpty = (empty($this->input('title.en')) && empty(
+                        $this->input(
+                            'description.en'
+                        )
+                        ) && $isContentEmpty($this->input('content.en'))) &&
+                    (empty($this->input('title.am')) && empty($this->input('description.am')) && $isContentEmpty(
+                            $this->input('content.am')
+                        )) &&
+                    (empty($this->input('title.ru')) && empty($this->input('description.ru')) && $isContentEmpty(
+                            $this->input('content.ru')
+                        ));
+
+                if ($allEmpty) {
+                    $validator->errors()->add(
+                        'title',
+                        'At least one language (English, Armenian or Russian) must have title, description, and content provided.'
+                    );
+                }
             }
         });
     }
