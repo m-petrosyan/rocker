@@ -28,12 +28,15 @@ class BlogCreateRequest extends FormRequest
             'title' => ['required', 'array'],
             'title.en' => ['nullable', 'string', 'min:5'],
             'title.am' => ['nullable', 'string', 'min:5'],
+            'title.ru' => ['nullable', 'string', 'min:5'],
             'description' => ['required', 'array'],
             'description.en' => ['nullable', 'string', 'min:20'],
             'description.am' => ['nullable', 'string', 'min:20'],
+            'description.ru' => ['nullable', 'string', 'min:20'],
             'content' => ['required', 'array'],
             'content.en' => ['nullable', 'string'],
             'content.am' => ['nullable', 'string'],
+            'content.ru' => ['nullable', 'string'],
             'cover_file' => ['required', 'image', 'mimes:jpeg,jpg,webp,png', 'max:15000'],
             'bands' => ['array'],
             'bands.*.name' => ['required', 'string', 'max:255'],
@@ -93,7 +96,7 @@ class BlogCreateRequest extends FormRequest
                 }
             }
 
-// Проверка для армянского языка
+            // Проверка для армянского языка
             if (!$hasPdfFile && (!empty($title['am']) || !empty($description['am']) || !$isContentEmpty(
                         $content['am']
                     ))) {
@@ -122,11 +125,41 @@ class BlogCreateRequest extends FormRequest
                 }
             }
 
+            // Проверка для русского языка
+            if (!$hasPdfFile && (!empty($title['ru']) || !empty($description['ru']) || !$isContentEmpty(
+                        $content['ru']
+                    ))) {
+                if (empty($title['ru'])) {
+                    $validator->errors()->add(
+                        'title.ru',
+                        'Russian title is required when any Russian field is provided.'
+                    );
+                }
+                if (empty($description['ru'])) {
+                    $validator->errors()->add(
+                        'description.ru',
+                        'Russian description is required when any Russian field is provided.'
+                    );
+                }
+                if ($isContentEmpty($content['ru'])) {
+                    $validator->errors()->add(
+                        'content.ru',
+                        'Russian content is required when any Russian field is provided.'
+                    );
+                } elseif (strlen(trim(strip_tags($content['ru']))) < 50) {
+                    $validator->errors()->add(
+                        'content.ru',
+                        'Russian content must contain at least 50 characters excluding HTML tags.'
+                    );
+                }
+            }
+
             if ((empty($title['en']) && empty($description['en']) && $isContentEmpty($content['en'])) &&
-                (empty($title['am']) && empty($description['am']) && $isContentEmpty($content['am']))) {
+                (empty($title['am']) && empty($description['am']) && $isContentEmpty($content['am'])) &&
+                (empty($title['ru']) && empty($description['ru']) && $isContentEmpty($content['ru']))) {
                 $validator->errors()->add(
                     'title',
-                    'At least one language (English or Armenian) must have title, description, and content provided.'
+                    'At least one language (English, Armenian or Russian) must have title, description, and content provided.'
                 );
             }
         });

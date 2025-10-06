@@ -15,7 +15,9 @@ class BlogService
     {
         $blog = auth()->user()->blogs()->create($attributes);
 
-        $blog->slug = Str::slug($attributes['title']['en'] ?? $attributes['title']['am']);
+        $blog->slug = Str::slug(
+            $attributes['title']['en'] ?? $attributes['title']['am'] ?? $attributes['title']['ru']
+        );
         $blog->save();
 
         if (isset($attributes['cover_file'])) {
@@ -37,7 +39,7 @@ class BlogService
         $blog->update($attributes);
 
         $this->addSyncBand($blog, $attributes);
-    
+
         if (isset($attributes['pdf_file'])) {
             $blog->clearMediaCollection('pdf');
             $this->addImage($blog, $attributes['pdf_file'], 'pdf');

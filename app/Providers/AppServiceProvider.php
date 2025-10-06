@@ -23,6 +23,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Vite::prefetch(concurrency: 3);
         Model::preventLazyLoading(!$this->app->isProduction());
-//        \URL::forceScheme('https'); // only for web app
+        if (config('app.env') === 'local') {
+            \URL::forceScheme('https'); // only for web app
+        }
     }
 }
