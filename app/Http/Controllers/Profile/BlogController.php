@@ -27,7 +27,7 @@ class BlogController extends Controller
     public function create(): Response
     {
         return Inertia::render('Profile/Blogs/BlogCreateEdit', [
-            'bandsList' => BandRepository::withoutPage(),
+            'bandsList' => BandRepository::bandNamesList(),
         ]);
     }
 
