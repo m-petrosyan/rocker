@@ -22,7 +22,7 @@ const props = defineProps({
 
 
 const data = reactive({
-  lang: props.blog?.title['am'] ? 'am' : 'en',
+  lang: props.blog?.title['en'] ? 'en' : props.blog?.title['am'] ? 'am' : 'ru',
   author: false,
   cover: null,
   preview: props.blog?.images_url ? [...props.blog.images_url] : []
@@ -97,6 +97,7 @@ const createBlog = () => {
               <RadioSwichButton
                 class="w-2/6"
                 v-model:selectedOption="data.lang"
+                :selectedOption="data.lang"
                 :options="langs"
               />
             </div>
