@@ -24,7 +24,7 @@ class BandRepository
             ->paginate($limit, ['id', 'name', 'slug']);
     }
 
-    public static function bandNamesList(bool $createdFirst = false): array
+    public static function bandNamesList(bool $createdFirst = true): array
     {
         return Band::query()
             ->when($createdFirst, fn($query) => $query->orderByDesc('user_id'))
