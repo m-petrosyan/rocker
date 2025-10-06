@@ -43,11 +43,21 @@ class EventNotificationJob implements ShouldQueue
         $users = $this->usersList($this->event);
 //        info(json_encode($this->event->poster['large']));
         foreach ($users as $user) {
-            $user->chat
+            $msg = $user->chat
                 ->photo($this->event->poster['thumb'])
                 ->html($content)
                 ->keyboard(Keyboard::make()->buttons($buttons))
                 ->send();
+
+//            Log::info('msg', ['msg' => $msg, 'id' => $msg->telegraphMessageId()]);
+//            dd($msg, $msg->telegraphMessageId());
+            $this->event->notifications()->syncWithoutDetaching([
+                $user->id => [
+                    'message_id' => $msg->telegraphMessageId(),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+            ]);
         }
     }
 }

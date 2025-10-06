@@ -49,12 +49,12 @@ const deleteBand = (id) => {
 <template>
     <div class="mt-10">
         <h3 v-if="title" class="text-center">{{ title }}</h3>
-        <div class="mt-10 grid gap-y-10 md:grid-cols-2 lg:grid-cols-4">
+        <div class="mt-10 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
             <NavLink
                 v-for="band in bands"
                 :href="route('bands.show', band.slug)"
                 :key="band.id"
-                class="flex flex-col items-center p-4">
+                class="flex flex-col items-center">
                 <div class="relative aspect-square w-full overflow-hidden rounded-lg bg-black">
                     <img
                         v-if="band.logo.thumb && band.logo.thumb.trim()"
