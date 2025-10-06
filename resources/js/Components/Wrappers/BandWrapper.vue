@@ -47,72 +47,72 @@ const deleteBand = (id) => {
 </script>
 
 <template>
-    <div class="mt-10">
-        <h3 v-if="title" class="text-center">{{ title }}</h3>
-        <div class="mt-10 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
-            <NavLink
-                v-for="band in bands"
-                :href="route('bands.show', band.slug)"
-                :key="band.id"
-                class="flex flex-col items-center">
-                <div class="relative aspect-square w-full overflow-hidden rounded-lg bg-black">
-                    <img
-                        v-if="band.logo.thumb && band.logo.thumb.trim()"
-                        :src="band.logo?.svg ?? band.logo.thumb"
-                        class="w-full h-full object-contain [object-fit:cover] [aspect-ratio:1/1] [&[width&gt;height]]:object-contain [&[height&gt;width]]:object-cover object-center"
-                        :alt="band.name"
-                        @error="$event.target.src = band.logo.original"
-                    />
-                    <img
-                        v-else-if="band.logo.original"
-                        :src="band.logo.original"
-                        class="w-full h-full object-contain [object-fit:cover] [aspect-ratio:1/1] [&[width&gt;height]]:object-contain [&[height&gt;width]]:object-cover object-center"
-                        alt="Loading"
-                    />
+  <div class="mt-10">
+    <h3 v-if="title" class="text-center">{{ title }}</h3>
+    <div class="mt-10 grid gap-y-10 md:grid-cols-2 lg:grid-cols-4">
+      <NavLink
+        v-for="band in bands"
+        :href="route('bands.show', band.slug)"
+        :key="band.id"
+        class="flex flex-col items-center p-4">
+        <div class="relative aspect-square w-full rounded-lg bg-black">
+          <img
+            v-if="band.logo.thumb && band.logo.thumb.trim()"
+            :src="band.logo?.svg ?? band.logo.thumb"
+            class="w-full h-full object-contain [object-fit:cover] [aspect-ratio:1/1] [&[width&gt;height]]:object-contain [&[height&gt;width]]:object-cover object-center"
+            :alt="band.name"
+            @error="$event.target.src = band.logo.original"
+          />
+          <img
+            v-else-if="band.logo.original"
+            :src="band.logo.original"
+            class="w-full h-full object-contain [object-fit:cover] [aspect-ratio:1/1] [&[width&gt;height]]:object-contain [&[height&gt;width]]:object-cover object-center"
+            alt="Loading"
+          />
 
-                    <div v-if="owner || isAdmin"
-                         class="absolute inset-0 flex flex-col justify-between p-1 bg-blackTransparent2">
-                        <div class="flex justify-end gap-y-2">
-                            <div class="flex gap-x-2 items-center">
-                                <EyesIcon />
-                                <p tooltip="Views">{{ band.allViews }}</p>
-                            </div>
-                        </div>
-                        <div class="flex justify-between">
-                            <NavLink tooltip="Edit" :href="route('profile.bands.edit', band.id)">
-                                <EditIcon />
-                            </NavLink>
-                            <button tooltip="Delete" @click.prevent="deleteBand(band.id)"
-                                    class="text-red-500 hover:text-red-700">
-                                <DeleteIcon />
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="p-2">
-                    <p class="text-lg font-semibold text-pretty">
-                        {{ band.name.length > 40 ? band.name.slice(0, 40) + '...' : band.name }}</p>
-                </div>
-            </NavLink>
-            <NavLink
-                v-if="add"
-                :href="route('profile.bands.create')"
-                class="flex min-h-64 items-center gap-2 border-2 border-dashed border-graydark2 p-4 hover:border-orange hover:bg-graydark2"
-            >
-                <div class="mx-auto flex w-32 flex-col items-center gap-y-4 rounded-lg">
-                    <h2 class="text-3xl">+</h2>
-                    <h3>Add band</h3>
-                </div>
-            </NavLink>
+          <div v-if="owner || isAdmin"
+               class="absolute inset-0 flex flex-col justify-between p-1 bg-blackTransparent2">
+            <div class="flex justify-end gap-y-2">
+              <div class="flex gap-x-2 items-center">
+                <EyesIcon />
+                <p v-tooltip="'Views'">{{ band.allViews }}</p>
+              </div>
+            </div>
+            <div class="flex justify-between">
+              <NavLink v-tooltip="'Edit'" :href="route('profile.bands.edit', band.id)">
+                <EditIcon />
+              </NavLink>
+              <button v-tooltip="'Delete'" @click.prevent="deleteBand(band.id)"
+                      class="text-red-500 hover:text-red-700">
+                <DeleteIcon />
+              </button>
+            </div>
+          </div>
         </div>
-        <div v-if="more"
-             class="col-span-full text-center py-4">
-            <NavLink :href="route('bands.index')" label="Bands list"
-                     class="text-orange font-bold">
-                Discover more bands
-            </NavLink>
+
+
+        <div class="p-2">
+          <p class="text-lg font-semibold text-pretty">
+            {{ band.name.length > 40 ? band.name.slice(0, 40) + '...' : band.name }}</p>
         </div>
+      </NavLink>
+      <NavLink
+        v-if="add"
+        :href="route('profile.bands.create')"
+        class="flex min-h-64 items-center gap-2 border-2 border-dashed border-graydark2 p-4 hover:border-orange hover:bg-graydark2"
+      >
+        <div class="mx-auto flex w-32 flex-col items-center gap-y-4 rounded-lg">
+          <h2 class="text-3xl">+</h2>
+          <h3>Add band</h3>
+        </div>
+      </NavLink>
     </div>
+    <div v-if="more"
+         class="col-span-full text-center py-4">
+      <NavLink :href="route('bands.index')" label="Bands list"
+               class="text-orange font-bold">
+        Discover more bands
+      </NavLink>
+    </div>
+  </div>
 </template>

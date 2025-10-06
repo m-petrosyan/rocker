@@ -27,7 +27,7 @@ class BlogController extends Controller
     public function create(): Response
     {
         return Inertia::render('Profile/Blogs/BlogCreateEdit', [
-            'bandsList' => BandRepository::withoutPage(),
+            'bandsList' => BandRepository::bandNamesList(),
         ]);
     }
 
@@ -52,7 +52,7 @@ class BlogController extends Controller
 
         return Inertia::render('Profile/Blogs/BlogCreateEdit', [
             'blog' => $blog->load('bands', 'user'),
-            'bandsList' => BandRepository::withoutPage(),
+            'bandsList' => BandRepository::bandNamesList(),
         ]);
     }
 
