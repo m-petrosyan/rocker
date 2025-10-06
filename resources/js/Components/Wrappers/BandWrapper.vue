@@ -6,76 +6,78 @@ import EditIcon from '@/Components/Icons/EditIcon.vue';
 import EyesIcon from '@/Components/Icons/EyesIcon.vue';
 
 defineProps({
-    bands: {
-        type: Object,
-        required: true
-    },
-    title: {
-        type: String,
-        default: ''
-    },
-    user: {
-        type: Boolean,
-        default: false
-    },
-    owner: {
-        type: Boolean,
-        default: false
-    },
-    isAdmin: {
-        type: Boolean,
-        default: false
-    },
-    add: {
-        type: Boolean,
-        default: false
-    },
-    more: {
-        type: Boolean,
-        default: false
-    }
+  bands: {
+    type: Object,
+    required: true
+  },
+  title: {
+    type: String,
+    default: ''
+  },
+  user: {
+    type: Boolean,
+    default: false
+  },
+  owner: {
+    type: Boolean,
+    default: false
+  },
+  isAdmin: {
+    type: Boolean,
+    default: false
+  },
+  add: {
+    type: Boolean,
+    default: false
+  },
+  more: {
+    type: Boolean,
+    default: false
+  }
 });
 
 const deleteBand = (id) => {
-    if (confirm('Are you sure you want to delete this band?')) {
-        router.delete(route('profile.bands.destroy', id), {
-            preserveState: false,
-            preserveScroll: true
-        });
-    }
+  if (confirm('Are you sure you want to delete this band?')) {
+    router.delete(route('profile.bands.destroy', id), {
+      preserveState: false,
+      preserveScroll: true
+    });
+  }
 };
 </script>
 
 <template>
   <div class="mt-10">
     <h3 v-if="title" class="text-center">{{ title }}</h3>
-    <div class="mt-10 grid gap-y-10 md:grid-cols-2 lg:grid-cols-4">
+    <div class="mt-10 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
       <NavLink
         v-for="band in bands"
         :href="route('bands.show', band.slug)"
         :key="band.id"
-        class="flex flex-col items-center p-4">
-        <div class="relative aspect-square w-full rounded-lg bg-black">
-          <img
-            v-if="band.logo.thumb && band.logo.thumb.trim()"
-            :src="band.logo?.svg ?? band.logo.thumb"
-            class="w-full h-full object-contain [object-fit:cover] [aspect-ratio:1/1] [&[width&gt;height]]:object-contain [&[height&gt;width]]:object-cover object-center"
-            :alt="band.name"
-            @error="$event.target.src = band.logo.original"
-          />
-          <img
-            v-else-if="band.logo.original"
-            :src="band.logo.original"
-            class="w-full h-full object-contain [object-fit:cover] [aspect-ratio:1/1] [&[width&gt;height]]:object-contain [&[height&gt;width]]:object-cover object-center"
-            alt="Loading"
-          />
+        class="flex flex-col items-center">
+        <div class="relative aspect-square w-full bg-black">
+          <div class="h-full w-full bg-black rounded-lg rounded-xl overflow-hidden">
+            <img
+              v-if="band.logo.thumb && band.logo.thumb.trim()"
+              :src="band.logo?.svg ?? band.logo.thumb"
+              class="w-full h-full object-contain [object-fit:cover] [aspect-ratio:1/1] [&[width&gt;height]]:object-contain [&[height&gt;width]]:object-cover object-center"
+              :alt="band.name"
+              @error="$event.target.src = band.logo.original"
+            />
+            <img
+              v-else-if="band.logo.original"
+              :src="band.logo.original"
+              class="w-full h-full object-contain [object-fit:cover] [aspect-ratio:1/1] [&[width&gt;height]]:object-contain [&[height&gt;width]]:object-cover object-center"
+              alt="Loading"
+            />
+          </div>
 
           <div v-if="owner || isAdmin"
                class="absolute inset-0 flex flex-col justify-between p-1 bg-blackTransparent2">
             <div class="flex justify-end gap-y-2">
-              <div class="flex gap-x-2 items-center">
+              <div tooltip="Views" class="flex gap-x-2 items-center">
                 <EyesIcon />
-                <p v-tooltip="'Views'">{{ band.allViews }}</p>
+                <p>{{ band.allViews }}</p>
               </div>
             </div>
             <div class="flex justify-between">
