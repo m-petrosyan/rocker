@@ -61,9 +61,7 @@ class EventRepository
 
         return auth()->user()?->events()
             ->with('status')
-            ->whereHas('status', function ($query) {
-                $query->where('status', '!=', EventStatusEnum::DELETED->value);
-            })
+            ->whereRelation('status', 'status', '!=', EventStatusEnum::DELETED->value)
             ->orderBy('start_date')
             ->paginate();
     }
