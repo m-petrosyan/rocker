@@ -15,52 +15,53 @@ import tooltipPlugin from '@/Plugins/tooltipPlugin.js';
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js');
-    });
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js');
+  });
 }
+axios.defaults.withCredentials = true;
 
 createInertiaApp({
-    title: (title) => `${title} - ${appName}`,
-    resolve: (name) =>
-        resolvePageComponent(
-            `./Pages/${name}.vue`,
-            import.meta.glob('./Pages/**/*.vue')
-        ),
-    setup({ el, App, props, plugin }) {
-        const app = createApp({ render: () => h(App, props) })
-            .use(plugin)
-            .use(PrimeVue)
-            .use(ZiggyVue, Ziggy)
-            .use(VueGtag, {
-                property: {
-                    id: 'G-FJN078W8B8',
-                    params: {
-                        app_name: appName,
-                        app_version: '1.0.0'
-                    }
-                }
-            })
-
-            .use(tooltipPlugin);
-        app.config.globalProperties.$route = ziggyRoute;
-        app.component('PwaLoader', PreloaderPwa);
-
-        app.config.globalProperties.$isPWA =
-            window.matchMedia('(display-mode: standalone)').matches ||
-            window.navigator.standalone;
-
-        app.mount(el);
-
-        if (app.config.globalProperties.$isPWA) {
-            app.$gtag.event('pwa_launch', {
-                app_mode: 'standalone',
-                platform: navigator.platform
-            });
+  title: (title) => `${title} - ${appName}`,
+  resolve: (name) =>
+    resolvePageComponent(
+      `./Pages/${name}.vue`,
+      import.meta.glob('./Pages/**/*.vue')
+    ),
+  setup({ el, App, props, plugin }) {
+    const app = createApp({ render: () => h(App, props) })
+      .use(plugin)
+      .use(PrimeVue)
+      .use(ZiggyVue, Ziggy)
+      .use(VueGtag, {
+        property: {
+          id: 'G-FJN078W8B8',
+          params: {
+            app_name: appName,
+            app_version: '1.0.0'
+          }
         }
-    },
-    progress: {
-        color: '#FF5722'
+      })
+
+      .use(tooltipPlugin);
+    app.config.globalProperties.$route = ziggyRoute;
+    app.component('PwaLoader', PreloaderPwa);
+
+    app.config.globalProperties.$isPWA =
+      window.matchMedia('(display-mode: standalone)').matches ||
+      window.navigator.standalone;
+
+    app.mount(el);
+
+    if (app.config.globalProperties.$isPWA) {
+      app.$gtag.event('pwa_launch', {
+        app_mode: 'standalone',
+        platform: navigator.platform
+      });
     }
+  },
+  progress: {
+    color: '#FF5722'
+  }
 });
 // useTelegramAuth();

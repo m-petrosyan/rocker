@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum CountyEnum: string
+enum CountryEnum: string
 {
     use EnumFunctions;
 

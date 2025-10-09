@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Profile;
 
+use App\Enums\CityEnum;
+use App\Enums\CountryEnum;
+use App\Enums\EventGenreEnum;
 use App\Http\Requests\Profile\ProfileImageUpdateRequest;
 use App\Http\Requests\User\UserUpdateRequest;
 use App\Models\User;
@@ -11,6 +14,7 @@ use App\Repositories\EventRepository;
 use App\Repositories\GalleryReoisitory;
 use App\Services\UserService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -52,11 +56,15 @@ class ProfileController
         ]);
     }
 
-    public function edit(): Response
+    public function edit(Request $request): Response
     {
         return Inertia::render('Profile/Settings/Settings', [
-            'user' => auth()->user()->load('links'),
+            'user' => auth()->user()->load('links', 'settings'),
             'owner' => true,
+            'countries' => CountryEnum::getKeysValues(),
+            'cities' => CityEnum::getKeysValues(options: $request->country ?? auth()->user()->settings->country),
+            'genres' => EventGenreEnum::getKeysValues(),
+
         ]);
     }
 

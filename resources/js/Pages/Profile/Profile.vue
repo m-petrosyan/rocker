@@ -14,99 +14,99 @@ import { getHostname } from '@/Helpers/urlHelper.js';
 import { isWebApp } from '@/Helpers/setAppUser.js';
 
 defineProps({
-    user: {
-        type: Object,
-        required: true
-    },
-    galleries: {
-        type: Object,
-        required: false
-    },
-    events: {
-        type: Object,
-        required: false
-    },
-    bands: {
-        type: Object,
-        required: false
-    },
-    blogs: {
-        type: Object,
-        required: false
-    },
-    owner: {
-        type: Boolean,
-        required: true
-    },
-    auth: {
-        object: true
-    },
-    url: {
-        type: String,
-        required: true
-    }
+  user: {
+    type: Object,
+    required: true
+  },
+  galleries: {
+    type: Object,
+    required: false
+  },
+  events: {
+    type: Object,
+    required: false
+  },
+  bands: {
+    type: Object,
+    required: false
+  },
+  blogs: {
+    type: Object,
+    required: false
+  },
+  owner: {
+    type: Boolean,
+    required: true
+  },
+  auth: {
+    object: true
+  },
+  url: {
+    type: String,
+    required: true
+  }
 });
 
 const webApp = isWebApp();
 </script>
 
 <template>
-    <ProfileLayout :meta="{title: user.name, image: user?.image?.thumb}">
-        <div>
-            <UserInfo :url="url" :user :owner />
-            <Logout v-if="!isWebApp" :owner />
-            <NavLink v-if="['admin','modarator','organizer'].includes(auth.role) && owner"
-                     :href="route('profile.dashboard')"
-                     class="absolute top-0 left-0 z-20 flex bg-black bg-opacity-20">
-                <div tooltip="Dashboard">
-                    <AnalyticsIcon class="text-white" />
-                </div>
-            </NavLink>
-            <!--            <div class="mx-auto mt-32 p-2 w-full md:w-2/6 text-center">-->
-            <!--                <small class="block text-sm text-gray">-->
-            <!--                    "Creative professional based in Kyiv, passionate about-->
-            <!--                    building meaningful projects and bringing ideas to life.-->
-            <!--                    Focused on quality, collaboration, and continuous-->
-            <!--                    growth."-->
-            <!--                </small>-->
-            <!--                <div class="mt-5 flex flex-col">-->
-            <!--                    <a href="mailto:example@gmail.com">example@gmail.com</a>-->
-            <!--                    <a href="https://www.facebook.com/groups/286409629705239/">-->
-            <!--                        facebook.com/groups/286409629705239/-->
-            <!--                    </a>-->
-            <!--                </div>-->
-            <!--            </div>-->
-            <div class="mt-56 md:mt-48">
-                <div class="w-2/3 mx-auto">
-                    <p class="text-center text-pretty">{{ user.info }}</p>
-                    <div v-if="user.links.length"
-                         class="flex items-center md:flex-col gap-x-5 font-bold text-gray p-3">
-                        <a v-for="link in user.links" :key="link.id" :href="link.url"
-                           target="_blank">{{ getHostname(link.url)
-                            }}</a>
-                    </div>
-                </div>
-                <SuccessMessages success class="w-1/3 mx-auto" :message="$page.props.flash.success" timeout="10000" />
-                <ProfileActions v-if="owner" class="mx-auto w-full" />
-                <GalleryWrapper v-if="galleries.data?.length" profile :galleries="galleries.data" :owner
-                                :isAdmin="auth.isAdmin"
-                                title="User galleries" />
-                <EventWrapper
-                    v-if="events.data?.length && (owner || ['admin','modarator','organizer'].includes(auth.role))"
-                    :events="events.data" :owner
-                    profile
-                    :isAdmin="auth.isAdmin" title="User events" />
-                <BandWrapper
-                    v-if="bands.data?.length && (owner || ['admin','modarator','organizer'].includes(auth.role))"
-                    :bands="bands.data" :owner
-                    :isAdmin="auth.isAdmin"
-                    title="User bands" />
-                <BlogWrapper
-                    v-if="blogs.data?.length && (owner || ['admin','modarator','organizer'].includes(auth.role))"
-                    :blogs="blogs.data" :owner
-                    :isAdmin="auth.isAdmin"
-                    title="User blogs" blogs="" />
-            </div>
+  <ProfileLayout :meta="{title: user.name, image: user?.image?.thumb}">
+    <div>
+      <UserInfo :url="url" :user :owner />
+      <Logout v-if="!webApp" :owner />
+      <NavLink v-if="['admin','modarator','organizer'].includes(auth.role) && owner"
+               :href="route('profile.dashboard')"
+               class="absolute top-0 left-0 z-20 flex bg-black bg-opacity-20">
+        <div tooltip="Dashboard">
+          <AnalyticsIcon class="text-white" />
         </div>
-    </ProfileLayout>
+      </NavLink>
+      <!--            <div class="mx-auto mt-32 p-2 w-full md:w-2/6 text-center">-->
+      <!--                <small class="block text-sm text-gray">-->
+      <!--                    "Creative professional based in Kyiv, passionate about-->
+      <!--                    building meaningful projects and bringing ideas to life.-->
+      <!--                    Focused on quality, collaboration, and continuous-->
+      <!--                    growth."-->
+      <!--                </small>-->
+      <!--                <div class="mt-5 flex flex-col">-->
+      <!--                    <a href="mailto:example@gmail.com">example@gmail.com</a>-->
+      <!--                    <a href="https://www.facebook.com/groups/286409629705239/">-->
+      <!--                        facebook.com/groups/286409629705239/-->
+      <!--                    </a>-->
+      <!--                </div>-->
+      <!--            </div>-->
+      <div class="mt-56 md:mt-48">
+        <div class="w-2/3 mx-auto">
+          <p class="text-center text-pretty">{{ user.info }}</p>
+          <div v-if="user.links.length"
+               class="flex items-center md:flex-col gap-x-5 font-bold text-gray p-3">
+            <a v-for="link in user.links" :key="link.id" :href="link.url"
+               target="_blank">{{ getHostname(link.url)
+              }}</a>
+          </div>
+        </div>
+        <SuccessMessages success class="w-1/3 mx-auto" :message="$page.props.flash.success" timeout="10000" />
+        <ProfileActions v-if="owner" class="mx-auto w-full" />
+        <GalleryWrapper v-if="galleries.data?.length" profile :galleries="galleries.data" :owner
+                        :isAdmin="auth.isAdmin"
+                        title="User galleries" />
+        <EventWrapper
+          v-if="events.data?.length && (owner || ['admin','modarator','organizer'].includes(auth.role))"
+          :events="events.data" :owner
+          profile
+          :isAdmin="auth.isAdmin" title="User events" />
+        <BandWrapper
+          v-if="bands.data?.length && (owner || ['admin','modarator','organizer'].includes(auth.role))"
+          :bands="bands.data" :owner
+          :isAdmin="auth.isAdmin"
+          title="User bands" />
+        <BlogWrapper
+          v-if="blogs.data?.length && (owner || ['admin','modarator','organizer'].includes(auth.role))"
+          :blogs="blogs.data" :owner
+          :isAdmin="auth.isAdmin"
+          title="User blogs" blogs="" />
+      </div>
+    </div>
+  </ProfileLayout>
 </template>

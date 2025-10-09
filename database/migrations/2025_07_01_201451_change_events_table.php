@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\CountyEnum;
+use App\Enums\CountryEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->text('link')->nullable();
             $table->text('ticket')->nullable();
             $table->string('price')->nullable();
-            $table->string('country')->default(CountyEnum::ARMENIA->value)->after('content')->index();
+            $table->string('country')->default(CountryEnum::ARMENIA->value)->after('content')->index();
             $table->string('city')->index()->default('all')->after('country');
             $table->string('genre')->nullable()->index();
             $table->string('location');

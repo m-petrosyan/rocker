@@ -2,6 +2,10 @@
 
 namespace App\Http\Requests\User;
 
+use App\Enums\CityEnum;
+use App\Enums\CountryEnum;
+use App\Enums\EventGenreEnum;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
@@ -19,7 +23,7 @@ class UserUpdateRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array|string>
      */
     public function rules(): array
     {
@@ -38,6 +42,10 @@ class UserUpdateRequest extends FormRequest
             'info' => ['nullable', 'string', 'max:500'],
             'links' => ['nullable', 'array'],
             'links.*.url' => ['required', 'url'],
+            'country' => ['nullable', Rule::in(CountryEnum::getValues())],
+            'city' => ['nullable', Rule::in(CityEnum::getValues())],
+            'genre' => ['nullable', Rule::in(EventGenreEnum::getValues())],
+            'events_notifications' => ['nullable', 'boolean'],
         ];
     }
 }
