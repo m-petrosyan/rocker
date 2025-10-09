@@ -29,8 +29,8 @@ class EventService
 
     public function destroy($event): void
     {
-        $event->clearMediaCollection('poster');
-
-        $event->delete();
+        $event->status()->first()->update(['status' => 'deleted']);
+//        $event->delete();
+//        $event->clearMediaCollection('poster');
     }
 }

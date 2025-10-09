@@ -17,7 +17,7 @@ class UserRegisterService
 
         $user->createToken('auth_token')->plainTextToken;
     }
-
+ 
     public function login(): string
     {
         $user = auth()->user();

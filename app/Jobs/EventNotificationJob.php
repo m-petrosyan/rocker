@@ -3,26 +3,21 @@
 namespace App\Jobs;
 
 use App\Traits\EventFormatingTrait;
-use App\Traits\UsersBotNotificationTrait;
 use DefStudio\Telegraph\Keyboard\Keyboard;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Support\Facades\Log;
 
 class EventNotificationJob implements ShouldQueue
 {
-    use Queueable, EventFormatingTrait, UsersBotNotificationTrait;
+    use Queueable, EventFormatingTrait;
 
-    protected object $event;
-    protected object $user;
-    protected object $content;
-    protected array $buttons;
 
     /**
      * Create a new job instance.
      */
-    public function __construct($event)
+    public function __construct(protected object $event, protected object $user)
     {
-        $this->event = $event;
     }
 
     /**
@@ -30,34 +25,25 @@ class EventNotificationJob implements ShouldQueue
      */
     public function handle(): void
     {
-//        $msg = $this->send_events_list($this->event, $this->content, $this->buttons, $this->user);
-
-//        $this->event->notifications()->syncWithoutDetaching([
-//            $this->user->id => ['message_id' => $msg->telegraphMessageId()],
-//        ]);
-//        sleep(3);
         $content = $this->getEventContent($this->event);
 
         $buttons = $this->getButtons($this->event);
 
-        $users = $this->usersList($this->event);
-//        info(json_encode($this->event->poster['large']));
-        foreach ($users as $user) {
-            $msg = $user->chat
-                ->photo($this->event->poster['thumb'])
-                ->html($content)
-                ->keyboard(Keyboard::make()->buttons($buttons))
-                ->send();
+        $msg = $this->user->chat
+            ->photo($this->event->poster['thumb'])
+            ->html($content)
+            ->keyboard(Keyboard::make()->buttons($buttons))
+            ->send();
 
-//            Log::info('msg', ['msg' => $msg, 'id' => $msg->telegraphMessageId()]);
-//            dd($msg, $msg->telegraphMessageId());
-            $this->event->notifications()->syncWithoutDetaching([
-                $user->id => [
-                    'message_id' => $msg->telegraphMessageId(),
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-            ]);
-        }
+        Log::info($msg->telegraphMessageId());
+        
+        $this->event->notifications()->syncWithoutDetaching([
+            $this->user->chat->id => [
+                'user_id' => $this->user->id,
+                'message_id' => $msg->telegraphMessageId(),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
     }
 }

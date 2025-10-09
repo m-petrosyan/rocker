@@ -98,7 +98,7 @@ class Event extends Model implements Viewable, HasMedia
 
     public function notifications(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'event_messages')->withPivot('message_id');
+        return $this->belongsToMany(User::class, 'event_messages')->withPivot(['user_id', 'message_id']);
     }
 
     public function user(): BelongsTo
@@ -129,7 +129,8 @@ class Event extends Model implements Viewable, HasMedia
             ->quality(80)
             ->sharpen(7)
             ->optimize()
-            ->format('webp');
+            ->format('webp')
+            ->nonQueued();
 
         $this->addMediaConversion('large')
             ->width(1280)

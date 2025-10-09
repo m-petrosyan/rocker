@@ -19,7 +19,7 @@ trait TelegramEventsHandler
         auth()->user()->chat->action(ChatActions::TYPING)->send();
 
         if (!auth()->user()->settings->country) {
-            $this->chat->message(trans('messages.indicate_country'))->send();
+//            $this->chat->message(trans('messages.indicate_country'))->send();
 
             $this->get_countries();
         } else {
@@ -50,7 +50,7 @@ trait TelegramEventsHandler
 
         $event = Event::findOrFail($eventId);
 
-        dispatch(new EventNotificationJob($event));
+        dispatch(new EventNotificationJob($event, auth()->user()));
     }
 
     public function favorite_events(): void

@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Enums\EventStatusEnum;
+use App\Jobs\DeleteMessagesJob;
 use App\Models\Event;
 use App\Notifications\NewCreationNotification;
 use Illuminate\Support\Facades\Gate;
@@ -25,4 +26,6 @@ class EventObserver
                 ->notify(new NewCreationNotification($event));
         }
     }
+
+
 }

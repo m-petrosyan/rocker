@@ -21,8 +21,7 @@ class UserService
                 'events_notifications' => $attributes['events_notifications'],
             ]
         );
-
-
+ 
         $this->updateLinks($user, $attributes['links'] ?? []);
     }
 }
