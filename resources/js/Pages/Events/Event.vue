@@ -1,5 +1,4 @@
-<script setup>
-import GuestLayout from '@/Layouts/GuestLayout.vue';
+<script setup>import GuestLayout from '@/Layouts/GuestLayout.vue';
 import moment from 'moment-timezone';
 import GoogleMap from '@/Components/Maps/GoogleMap.vue';
 import GoogleCalendar from '@/Components/Socials/GoogleCalendar.vue';
@@ -11,7 +10,7 @@ import SocialShare from '@/Components/Socials/SocialShare.vue';
 import { removePostalCode } from '@/Helpers/adressFormatHelper.js';
 import { fullUrl } from '@/Helpers/urlHelper.js';
 import EventRequestForm from '@/Components/Forms/EventRequestForm.vue';
-
+import BandTags from '@/Components/Tags/BandTags.vue';
 
 const url = fullUrl();
 // console.log(page.url);
@@ -107,7 +106,10 @@ const type = props.event && props.event.type === 2 ? 'concert' : 'event';
       <p>genre: {{ event.genre }}</p>
       <p>type: {{ type }}</p>
     </div>
-    <!--        <BandTags class="mx-auto w-fit my-10" :bands="event.bands" />-->
+    <div class="mt-4" v-if="event.bands">
+      <h4 class="text-center">Bands</h4>
+      <BandTags class="mx-auto w-fit my-2" :bands="event.bands" />
+    </div>
     <pre class="mt-8 text-pretty text-center">{{ event.content }}</pre>
     <p class="text-center text-orange">{{ removePostalCode(event.location) }}</p>
     <GoogleMap class="mt-5" v-if="event.cordinates" :cordinates="event.cordinates" />

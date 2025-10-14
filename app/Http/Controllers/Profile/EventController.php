@@ -49,10 +49,10 @@ class EventController extends Controller
         $this->authorize('update', $event);
 
         $this->eventService->update($request->validated(), $event);
-//        return Inertia::render('Events/Event', [
-//            'event' => $response->json()['data'],
-//        ]);
-//        bot.rocker.loc
+
+        session()->flash('message', 'The event has been updated.');
+
+        return redirect()->route('profile.index');
     }
 
 

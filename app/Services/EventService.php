@@ -15,11 +15,15 @@ class EventService
         if (isset($attributes['poster_file'])) {
             $this->addImage($event, $attributes['poster_file'], 'poster');
         }
+
+        $this->addSyncBand($event, $attributes);
     }
 
     public function update($attributes, $event): void
     {
         $event->update($attributes);
+
+        $this->addSyncBand($event, $attributes);
 
         if (isset($attributes['poster_file'])) {
             $event->clearMediaCollection('poster');
