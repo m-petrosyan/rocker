@@ -41,11 +41,16 @@ class EventRepository
 
     public static function eventsList($limit = 50, $page = 1, $past = false): LengthAwarePaginator
     {
+        $country = auth()?->user()->settings->country ?? 'am';
+
         return Event::query()
+            ->whereRelation('status', 'status', EventStatusEnum::ACCEPTED->value)
+            ->where(function ($query) use ($country) {
+                $query->whereIn('country', $country === 'all' ? ['am', 'ge'] : [$country]);
+            })
             ->with(['user.roles', 'status'])
             ->when(!$past, fn($query) => $query->where('start_date', '>=', now()))
             ->when($past, fn($query) => $query->where('start_date', '<', now()))
-//            ->whereHas('status', fn($query) => $query->where('status', EventStatusEnum::ACCEPTED->value))
             ->orderBy('start_date')
             ->paginate($limit, ['*'], 'page', $page);
     }
