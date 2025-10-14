@@ -6,7 +6,6 @@ use App\Traits\EventFormatingTrait;
 use DefStudio\Telegraph\Keyboard\Keyboard;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
-use Illuminate\Support\Facades\Log;
 
 class EventNotificationJob implements ShouldQueue
 {
@@ -35,15 +34,19 @@ class EventNotificationJob implements ShouldQueue
             ->keyboard(Keyboard::make()->buttons($buttons))
             ->send();
 
-        Log::info($msg->telegraphMessageId());
-        
-        $this->event->notifications()->syncWithoutDetaching([
-            $this->user->chat->id => [
-                'user_id' => $this->user->id,
-                'message_id' => $msg->telegraphMessageId(),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
+        $messageId = $msg?->telegraphMessageId();
+
+        if ($messageId) {
+            $this->event->notifications()->syncWithoutDetaching([
+                $this->user->chat->id => [
+                    'user_id' => $this->user->id,
+                    'message_id' => $messageId,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+            ]);
+        } else {
+            \Log::warning('Telegram message not sent for user '.$this->user->id);
+        }
     }
 }

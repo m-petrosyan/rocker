@@ -18,6 +18,7 @@ class EventStatusObserver
 
     public function created(EventStatus $eventStatus): void
     {
+//        dd(Gate::allows('full-access'));
         if (Gate::allows('full-access')) {
             $users = $this->usersList($eventStatus->event);
 

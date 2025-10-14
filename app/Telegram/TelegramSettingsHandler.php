@@ -33,7 +33,7 @@ trait TelegramSettingsHandler
         ];
 
         foreach (trans('settings.countries') as $icon => $value) {
-            $checked = auth()->user()->settings->country === $value ? ' ☑️' : '';
+            $checked = auth()->user()->settings?->country === $value ? ' ☑️' : '';
 
             array_unshift(
                 $buttons,
@@ -76,10 +76,11 @@ trait TelegramSettingsHandler
 
     public function update_settings($key, $value): void
     {
-        auth()->user()->settings()->update([$key => $value]);
+        auth()->user()->settings()->updateOrCreate([], [$key => $value]);
 
         if ($key === 'country') {
             if ($value === 'all') {
+                auth()->user()->settings()->update(['city' => 'all']);
                 $this->settings();
                 $this->reply("Saved");
             } else {
