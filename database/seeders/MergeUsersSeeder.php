@@ -85,7 +85,7 @@ class MergeUsersSeeder extends Seeder
                                 'location' => $event['location'] ?? null,
                                 'cordinates' => $event['cordinates'] ?? null,
                                 'type' => $event['type'] ?? null,
-                                'start_date' => $event['start_date'] ?? null,
+                                'start_date' => $event['start_date_full'] ?? null,
                                 'start_time' => $event['start_time'] ?? null,
                                 'notify_count' => $event['notify_count'] ?? 0,
                                 'created_at' => $event['created_at'] ?? now(),

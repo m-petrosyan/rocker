@@ -157,7 +157,7 @@ const selectedCountry = computed(() => form.country === 'am' ? 'Armenia' : form.
           <span
             class="text-md absolute right-0 top-0 px-1"
             :class="
-                            form.content?.length >= 730
+                            form.content?.length >= 750
                                 ? 'bg-red text-white'
                                 : 'text-gray'">
                         {{ form.content?.length }}

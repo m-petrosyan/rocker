@@ -4,30 +4,44 @@ import EventIcon from '@/Components/Icons/EventIcon.vue';
 import BandIcon from '@/Components/Icons/BandIcon.vue';
 import GalleryIcon from '@/Components/Icons/GalleryIcon.vue';
 import BlogIcon from '@/Components/Icons/BlogIcon.vue';
+import { onMounted, ref } from 'vue';
 
-const menu = [
+const props = defineProps({
+  full: {
+    type: Boolean,
+    default: true
+  }
+});
+
+const menu = ref([
   {
     name: 'Add event',
     route: 'profile.events.create',
     icon: EventIcon
-  },
-  {
-    name: 'Add band',
-    route: 'profile.bands.create',
-    icon: BandIcon
-  },
-  {
-    name: 'Add gallery',
-    route: 'profile.galleries.create',
-    icon: GalleryIcon
-  },
-
-  {
-    name: 'Add blog',
-    route: 'profile.blogs.create',
-    icon: BlogIcon
   }
-];
+]);
+
+onMounted(() => {
+  if (props.full) {
+    menu.value.push(
+      {
+        name: 'Add band',
+        route: 'profile.bands.create',
+        icon: BandIcon
+      },
+      {
+        name: 'Add gallery',
+        route: 'profile.galleries.create',
+        icon: GalleryIcon
+      },
+      {
+        name: 'Add blog',
+        route: 'profile.blogs.create',
+        icon: BlogIcon
+      }
+    );
+  }
+});
 </script>
 
 <template>

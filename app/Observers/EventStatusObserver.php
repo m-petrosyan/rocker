@@ -46,6 +46,10 @@ class EventStatusObserver
             foreach ($users as $user) {
                 dispatch(new EventNotificationJob($eventStatus->event, $user));
             }
+        } elseif ($eventStatus->isDirty('status') && $eventStatus->status === EventStatusEnum::REJECTED->value) {
+            $eventStatus->event->user->chat
+                ->message("❌ Request to add event rejected, reason: $eventStatus->reason")
+                ->send();
         } elseif ($eventStatus->isDirty('status') && $eventStatus->status === EventStatusEnum::DELETED->value) {
             $users = $eventStatus->event->notifications()->withPivot('event_id', 'user_id', 'message_id')->get();
 
