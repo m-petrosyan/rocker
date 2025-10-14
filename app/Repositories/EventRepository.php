@@ -50,6 +50,14 @@ class EventRepository
             ->paginate($limit, ['*'], 'page', $page);
     }
 
+    public static function requestList($limit = 50, $page = 1): LengthAwarePaginator
+    {
+        return Event::query()->whereRelation('status', 'status', EventStatusEnum::PENDING->value)
+            ->with('user', 'status')
+            ->orderBy('created_at')
+            ->paginate($limit, ['*'], 'page', $page);
+    }
+
     public static function userEvents()
     {
 //        dd(1);return $user ? $user->events()

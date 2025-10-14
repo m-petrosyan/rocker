@@ -36,6 +36,10 @@ defineProps({
   profile: {
     type: Boolean,
     default: false
+  },
+  request: {
+    type: Boolean,
+    default: false
   }
 });
 
@@ -58,7 +62,7 @@ const deleteEvent = (id) => {
         class="h-[600px] md:h-[400px]"
       >
         <NavLink
-          :href="route('events.show', event?.event_id ?? event.id)"
+          :href="route(request ? 'profile.event.requests' : 'events.show', event.id)"
           class="relative h-full w-full block"
           :style="{ backgroundImage: `url(${event.poster.thumb})` }"
         >
@@ -129,7 +133,7 @@ const deleteEvent = (id) => {
         </NavLink>
       </div>
       <NavLink
-        v-if="add"
+        v-if="add  && !request"
         :href="route('profile.events.create')"
         class="flex h-[600px] items-center gap-2 border-2 border-dashed border-graydark2 p-4 hover:border-orange hover:bg-graydark2 md:h-[400px]"
       >

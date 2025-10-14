@@ -26,6 +26,4 @@ class EventObserver
                 ->notify(new NewCreationNotification($event));
         }
     }
-
-
 }

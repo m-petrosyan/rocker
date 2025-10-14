@@ -6,7 +6,10 @@ use App\Enums\EventStatusEnum;
 use App\Jobs\EventNotificationDeleteJob;
 use App\Jobs\EventNotificationJob;
 use App\Models\EventStatus;
+use App\Models\User;
 use App\Traits\UsersBotNotificationTrait;
+use DefStudio\Telegraph\Keyboard\Button;
+use DefStudio\Telegraph\Keyboard\Keyboard;
 use Illuminate\Support\Facades\Gate;
 
 class EventStatusObserver
@@ -20,6 +23,18 @@ class EventStatusObserver
 
             foreach ($users as $user) {
                 dispatch(new EventNotificationJob($eventStatus->event, $user));
+            }
+        } else {
+            $moderators = User::role(['moderator', 'admin'])->get();
+            foreach ($moderators as $user) {
+                $user->chat
+                    ->message('🎉 new event request')
+                    ->keyboard(
+                        Keyboard::make()->buttons([
+                            Button::make('Event link')->url(route('profile.event.requests', $eventStatus->event->id)),
+                        ])
+                    )
+                    ->send();
             }
         }
     }

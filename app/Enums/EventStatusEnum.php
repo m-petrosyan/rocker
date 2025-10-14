@@ -8,6 +8,6 @@ enum EventStatusEnum: string
 
     case PENDING = 'pending';
     case ACCEPTED = 'accepted';
-    case DECLINED = 'declined';
+    case REJECTED = 'rejected';
     case DELETED = 'deleted';
 }

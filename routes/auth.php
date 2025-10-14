@@ -8,18 +8,20 @@ use App\Http\Controllers\Profile\BandController;
 use App\Http\Controllers\Profile\BlogController;
 use App\Http\Controllers\Profile\DashboardController;
 use App\Http\Controllers\Profile\EventController;
+use App\Http\Controllers\Profile\EventRequestController;
 use App\Http\Controllers\Profile\GalleryController;
 use App\Http\Controllers\Profile\MediaController;
 use App\Http\Controllers\Profile\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth', 'email.verified.if.present', 'role:admin|moderator|organizer'])->as('profile.')->prefix(
-    'profile'
-)->group(
-    function () {
+Route::middleware(['auth', 'email.verified.if.present', 'role:admin|moderator|organizer'])
+    ->as('profile.')->prefix('profile')->group(function () {
         Route::get('dashboard', DashboardController::class)->name('dashboard');
+        Route::get('event/requests', [EventRequestController::class, 'index'])->name('events.requests');
+        Route::get('event/{event}/requests', [EventRequestController::class, 'show'])->name('event.requests');
+        Route::put('event/{event}/requests', [EventRequestController::class, 'update'])->name('event.request.update');
     }
-);
+    );
 
 
 Route::middleware(['auth', 'email.verified.if.present'])->as('profile.')->prefix('profile')->group(function () {

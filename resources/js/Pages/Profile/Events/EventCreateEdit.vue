@@ -76,23 +76,6 @@ const form = useForm(
 );
 
 const submitEvent = () => {
-  // form.post(
-  //     route(
-  //         props.event?.id ? 'profile.events.update' : 'profile.events.store',
-  //         props.event?.id
-  //     ),
-  //     {
-  //
-  //         onError: () => {
-  //             window.scrollTo({
-  //                 top: 0,
-  //                 behavior: 'smooth'
-  //             });
-  //         },
-  //         preserveScroll: true
-  //     }
-  // );
-
 
   form.post(route(form.id ? 'profile.events.update' : 'profile.events.store', form.id), {
     preserveScroll: false
