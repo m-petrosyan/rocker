@@ -17,12 +17,14 @@ class UserBotObserver
 
         while ($attempt <= $maxAttempts) {
             $data = $userBot->memberInfo($userBot->chat_id)->user()->toArray();
-            Log::info('user create', $data);
+
             $data['name'] = $data['first_name'].' '.$data['last_name'];
 
-            try {
-//                unset($data['username']);
+            if (User::where('username', $data['username'])->exists()) {
+                $data['username'] = $data['username'].'_'.strtolower(uniqid());
+            }
 
+            try {
                 $user = User::query()->create(Arr::only($data, ['username', 'name']))->assignRole('user');
             } catch (\Exception $e) {
                 Log::error(
@@ -38,7 +40,6 @@ class UserBotObserver
                 } else {
                     Log::error('Ошибка обновления userBot', ['user_id' => $user->id, 'attempt' => $attempt]);
                 }
-
                 break;
             } else {
                 if ($attempt === $maxAttempts) {

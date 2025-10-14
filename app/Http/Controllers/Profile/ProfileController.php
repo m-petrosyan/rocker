@@ -62,7 +62,7 @@ class ProfileController
             'user' => auth()->user()->load('links', 'settings'),
             'owner' => true,
             'countries' => CountryEnum::getKeysValues(),
-            'cities' => CityEnum::getKeysValues(options: $request->country ?? auth()->user()->settings->country),
+            'cities' => CityEnum::getKeysValues(options: $request->country ?? auth()->user()->settings?->country),
             'genres' => EventGenreEnum::getKeysValues(),
 
         ]);

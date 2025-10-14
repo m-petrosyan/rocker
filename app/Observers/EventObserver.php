@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Enums\EventStatusEnum;
-use App\Jobs\DeleteMessagesJob;
 use App\Models\Event;
 use App\Notifications\NewCreationNotification;
 use Illuminate\Support\Facades\Gate;
@@ -11,6 +10,25 @@ use Illuminate\Support\Facades\Notification;
 
 class EventObserver
 {
+
+    public function creating(Event $event): void
+    {
+        $cities = ['yerevan', 'tbilisi', 'gyumri', 'batumi', 'dilijan', 'kutaisi'];
+
+        $lowercaseText = strtolower($event['location']);
+
+        $eventCity = 'all';
+
+        foreach ($cities as $city) {
+            if (str_contains($lowercaseText, $city)) {
+                $eventCity = $city;
+                break;
+            }
+        }
+
+        $event->city = $eventCity;
+    }
+
     public function created(Event $event): void
     {
         $event->status()->create(

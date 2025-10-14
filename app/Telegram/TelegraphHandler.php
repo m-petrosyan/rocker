@@ -38,7 +38,6 @@ class TelegraphHandler extends WebhookHandler
         }
     }
 
-
     public function start(): void
     {
         $this->reply("🤘");

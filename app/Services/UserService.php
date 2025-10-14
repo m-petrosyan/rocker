@@ -12,16 +12,18 @@ class UserService
     {
         $user = auth()->user();
         $user->update(array_filter($attributes) + ['info' => $attributes['info']]);
-        $user->settings->update(
+
+        $user->settings()->updateOrCreate(
+            ['user_id' => $user->id],
             array_filter($attributes) + [
-                'info' => $attributes['info'],
-                'city' => $attributes['city'],
-                'country' => $attributes['country'],
-                'genre' => $attributes['genre'],
-                'events_notifications' => $attributes['events_notifications'],
+                'info' => $attributes['info'] ?? null,
+                'city' => $attributes['city'] ?? null,
+                'country' => $attributes['country'] ?? null,
+                'genre' => $attributes['genre'] ?? null,
+                'events_notifications' => $attributes['events_notifications'] ?? false,
             ]
         );
- 
+
         $this->updateLinks($user, $attributes['links'] ?? []);
     }
 }
