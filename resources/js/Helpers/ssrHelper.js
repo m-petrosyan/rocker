@@ -1,3 +1,7 @@
-export function isSSR() {
-    return typeof window === 'undefined';
+export let isSSR;
+
+export function checkSSR() {
+  isSSR = typeof window === 'undefined';
 }
+
+checkSSR();

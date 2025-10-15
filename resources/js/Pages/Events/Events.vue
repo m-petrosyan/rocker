@@ -3,6 +3,7 @@ import GuestLayout from '@/Layouts/GuestLayout.vue';
 import EventWrapper from '@/Components/Wrappers/EventWrapper.vue';
 import Pagination from '@/Components/Elemtns/Pagination.vue';
 import NavLink from '@/Components/NavLink.vue';
+import { isSSR } from '@/Helpers/ssrHelper.js';
 
 defineProps({
   events: {
@@ -17,7 +18,7 @@ defineProps({
   }
 });
 
-const eventRequest = typeof window !== 'undefined' ? route().current('profile.events.requests') : null;
+const eventRequest = !isSSR ? route().current('profile.events.requests') : null;
 </script>
 
 <template>
