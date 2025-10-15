@@ -48,7 +48,7 @@ class EventStatusObserver
                 dispatch(new EventNotificationJob($eventStatus->event, $user));
             }
         } elseif ($eventStatus->isDirty('status') && $eventStatus->status === EventStatusEnum::REJECTED->value) {
-            $eventStatus->event->user->chat
+            $eventStatus->event->user?->chat
                 ->message("❌ Request to add event rejected, reason: $eventStatus->reason")
                 ->send();
         } elseif ($eventStatus->isDirty('status') && $eventStatus->status === EventStatusEnum::DELETED->value) {
