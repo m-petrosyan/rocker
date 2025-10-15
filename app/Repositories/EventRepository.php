@@ -51,7 +51,7 @@ class EventRepository
             ->with(['user.roles', 'status'])
             ->when(!$past, fn($query) => $query->where('start_date', '>=', now()))
             ->when($past, fn($query) => $query->where('start_date', '<', now()))
-            ->orderBy('start_date')
+            ->orderBy('start_date', $past ? 'desc' : 'asc')
             ->paginate($limit, ['*'], 'page', $page);
     }
 
