@@ -2,12 +2,12 @@
 
 use App\Models\UserBot;
 
-if (data_get(request()->input('message'), 'from.id')) {
-    $userBot = UserBot::query()->where('chat_id', data_get(request()->input('message'), 'from.id'))->first();
+$userId = data_get(request()->input('callback_query'), 'from.id') ?? data_get(request()->input('message'), 'from.id');
+
+if ($userId) {
+    $userBot = UserBot::query()->where('chat_id', $userId)->first();
+
     if ($userBot) {
         auth()->loginUsingId($userBot->user?->id);
     }
 }
-//Log::info(1, [data_get(request()->input('message'), 'from.id')]);
-//Log::info(2, [$this->chat->user]);
-

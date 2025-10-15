@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use App\Repositories\EventRepository;
 use App\Services\EventService;
 use Inertia\Inertia;
@@ -20,23 +21,22 @@ class EventController extends Controller
         ]);
     }
 
-    public function show($eventId): Response
+    public function show(Event $event): Response
     {
+        views($event)->record();
+
         $url = url()->current();
 
-        $event = EventRepository::get($eventId);
-
-
         return Inertia::render('Events/Event', [
-            'event' => $event,
-            'notify_count' => $event['notify_count'] ?? null,
-            'views' => $event['views'] ?? null,
+            'event' => $event->load(['views', 'bands']),
             'url' => $url,
         ]);
     }
 
     public function past()
     {
+//        dd(request()->query('page', 1));
+
         return Inertia::render('Events/Events', [
             'events' => EventRepository::eventsList(limit: 52, page: request()->query('page', 1), past: true),
             'isPast' => true,

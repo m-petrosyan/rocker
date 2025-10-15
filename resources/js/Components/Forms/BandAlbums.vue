@@ -94,7 +94,8 @@ const getSpotifyId = (album) => {
             <div v-for="(album, index) in albums" :key="album.id || index">
                 <div v-if="canEdit">
                     <Preview
-                        :label="`album-cover-${album.id || 'new'}-${index}`"
+                        :id="'album-cover-' + (album.id || 'new') + '-' + index"
+                        label="album-cover"
                         classes="bg-cover"
                         class="min-h-96 w-full"
                         labelClass="h-full"

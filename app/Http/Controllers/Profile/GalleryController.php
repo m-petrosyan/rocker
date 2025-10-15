@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Profile;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Gallery\GalleryCreateRequest;
 use App\Http\Requests\Gallery\GalleryUpdateRequest;
 use App\Models\Gallery;
@@ -12,7 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class GalleryController
+class GalleryController extends Controller
 {
     use AuthorizesRequests;
 

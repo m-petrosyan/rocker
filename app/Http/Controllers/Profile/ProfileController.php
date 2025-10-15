@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers\Profile;
 
+use App\Enums\CityEnum;
+use App\Enums\CountryEnum;
+use App\Enums\EventGenreEnum;
 use App\Http\Requests\Profile\ProfileImageUpdateRequest;
 use App\Http\Requests\User\UserUpdateRequest;
 use App\Models\User;
 use App\Repositories\BandRepository;
 use App\Repositories\BlogRepository;
+use App\Repositories\EventRepository;
 use App\Repositories\GalleryReoisitory;
 use App\Services\UserService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -41,21 +46,25 @@ class ProfileController
 
 
         return Inertia::render('Profile/Profile', [
-            'user' => $user->load('links'),
+            'user' => $user->load('links', 'settings'),
             'owner' => $owner,
             'url' => $owner ? route('profile.show', ['username' => $user->username]) : null,
             'galleries' => GalleryReoisitory::userGallery($user),
-            'events' => ['data' => []],
+            'events' => EventRepository::userEvents(),
             'bands' => BandRepository::userBands($user),
             'blogs' => BlogRepository::userBlogs($user),
         ]);
     }
 
-    public function edit(): Response
+    public function edit(Request $request): Response
     {
         return Inertia::render('Profile/Settings/Settings', [
-            'user' => auth()->user()->load('links'),
+            'user' => auth()->user()->load('links', 'settings'),
             'owner' => true,
+            'countries' => CountryEnum::getKeysValues(),
+            'cities' => CityEnum::getKeysValues(options: $request->country ?? auth()->user()->settings?->country),
+            'genres' => EventGenreEnum::getKeysValues(),
+
         ]);
     }
 

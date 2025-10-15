@@ -21,7 +21,7 @@ const lang = ref(getUrlQuery('lang') ?? props.blog.title['en'] ? 'en' : props.bl
 const setLang = (language) => {
   lang.value = language;
 
-  if (typeof window !== 'undefined') {
+  if (typeof window !== 'undefined') { //use urlhelper getQuery
     const url = new URL(window.location.href);
     url.searchParams.set('lang', language);
     window.history.pushState({}, '', url);

@@ -10,6 +10,7 @@ class UserSettings extends Model
         'user_id',
         'country',
         'city',
+        'genre',
         'language_code',
         'events_notifications',
         'events_concerts',

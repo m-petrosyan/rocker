@@ -10,8 +10,6 @@ use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\PwaInstallController;
-use App\Models\UserBot;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 require_once __DIR__.'/guest.php';
@@ -21,11 +19,6 @@ Route::get('/test', function () {
     return Inertia::render('Test');
 });
 
-
-Route::post('/telegram/auth', function (Request $request) {
-//    dd($request->input('id'));
-    auth()->loginUsingId(UserBot::query()->where('chat_id', $request->input('id'))->first()->user?->id);
-});
 
 Route::get('/', HomeController::class)->name('home');
 Route::get('events/past', [EventController::class, 'past'])->name('events.past');

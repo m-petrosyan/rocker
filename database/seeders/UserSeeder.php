@@ -13,7 +13,7 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         if (app()->environment('local')) {
-            User::query()->firstOrCreate(
+            $user = User::query()->firstOrCreate(
                 ['email' => 'john@gmail.com'],
                 [
                     'email' => 'john@gmail.com',
@@ -23,6 +23,17 @@ class UserSeeder extends Seeder
                     'password' => '12345678',
                 ]
             )->assignRole('admin');
+
+            $user->settings()->firstOrCreate(
+                [],
+                [
+                    'info' => 'owner of the site',
+                    'city' => 'all',
+                    'country' => 'all',
+                    'genre' => 'all',
+                    'events_notifications' => 1,
+                ]
+            );
         }
     }
 }

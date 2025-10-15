@@ -2,119 +2,97 @@
 
 namespace App\Repositories;
 
+use App\Enums\EventStatusEnum;
 use App\Models\Event;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class EventRepository
 {
-    public static function userEvents($events = null)
+
+//    public static function eventsList($limit = 51, $page = 1, $past = false, $country = 'am')
+//    {
+//        $params = [
+//            'limit' => $limit,
+//            'page' => $page,
+//            'past' => $past,
+//        ];
+//
+//
+//        return Event::where(['still_relevant' => true])
+//            ->when(!$country, function ($query, $country) {
+//                if (auth()->user()->settings->country === 'all') {
+//                    $query->whereIn('country', ['am', 'ge']);
+//                } else {
+//                    $query->where('country', auth()->user()->settings->country);
+//                }
+//            }, function ($query) use ($country) {
+//                if ($country === 'all') {
+//                    $query->whereIn('country', ['am', 'ge']);
+//                } else {
+//                    $query->where('country', $country);
+//                }
+//            })
+//            ->with('user')
+//            ->whereHas('confirm', function ($query) {
+//                $query->where('confirmed', true);
+//            })
+//            ->orderBy('start_date');
+//    }
+
+    public static function eventsList($limit = 50, $page = 1, $past = false): LengthAwarePaginator
     {
-        $ids = $events?->pluck('event_id')->toArray();
+        $country = auth()?->user()->settings->country ?? 'am';
 
-        $params['ids'] = $ids;
-
-        $data = self::request($params);
-
-
-        if (!empty($data['data'])) {
-            $apiEventIds = collect($data['data'])->pluck('id')->toArray();
-            $eventModels = Event::query()->whereIn('event_id', $apiEventIds)->get()->keyBy('event_id');
-
-            $data['data'] = collect($data['data'])->map(function ($apiEvent) use ($eventModels) {
-                $eventModel = $eventModels->get($apiEvent['id']);
-                if ($eventModel) {
-                    $apiEvent = array_merge($apiEvent, $eventModel->toArray());
-                }
-
-                return $apiEvent;
-            })->toArray();
-        }
-
-        return $data;
+        return Event::query()
+            ->whereRelation('status', 'status', EventStatusEnum::ACCEPTED->value)
+            ->where(function ($query) use ($country) {
+                $query->whereIn('country', $country === 'all' ? ['am', 'ge'] : [$country]);
+            })
+            ->with(['user.roles', 'status'])
+            ->when(!$past, fn($query) => $query->where('start_date', '>=', now()))
+            ->when($past, fn($query) => $query->where('start_date', '<', now()))
+            ->orderBy('start_date', $past ? 'desc' : 'asc')
+            ->paginate($limit, ['*'], 'page', $page);
     }
 
-    public static function eventsList($limit = 51, $page = 1, $past = false)
+    public static function requestList($limit = 50, $page = 1): LengthAwarePaginator
     {
-        $params = [
-            'limit' => $limit,
-            'page' => $page,
-            'past' => $past,
-        ];
-
-        return self::request($params, true);
+        return Event::query()->whereRelation('status', 'status', EventStatusEnum::PENDING->value)
+            ->with('user', 'status')
+            ->orderBy('created_at')
+            ->paginate($limit, ['*'], 'page', $page);
     }
 
-
-    public static function request($params = [], $cache = false)
+    public static function userEvents()
     {
-        try {
-            $response = Http::throw()->get('https://bot.rocker.am/api/event', $params);
-            $data = $response->json();
-            if ($cache) {
-                Cache::put('events', $data, now()->addHour(2));
-            }
-        } catch (\Exception $e) {
-            if (Cache::has('events') && $cache) {
-                $data = Cache::get('events');
-            } else {
-                $data = ['data' => [], 'error' => $e->getMessage()];
-            }
-        }
+//        dd(1);return $user ? $user->events()
+//    ->with('status')
+//    ->orderBy('start_date')
+//    ->append('status_name')
+//    ->paginate()
+//    : collect();
 
-        return $data;
+        return auth()->user()?->events()
+            ->with('status')
+            ->whereRelation('status', 'status', '!=', EventStatusEnum::DELETED->value)
+            ->orderBy('start_date')
+            ->paginate();
     }
 
-
-    public static function get($eventId)
-    {
-        // Выполняем запрос к API
-        $response = Http::get('https://bot.rocker.am/api/event/'.$eventId);
-
-        // Проверяем, успешен ли запрос
-        if (!$response->ok()) {
-            return null;
-        }
-
-        // Получаем JSON-ответ
-        $json = $response->json();
-
-
-//        // Проверяем, является ли ответ массивом и содержит ли ключ 'data'
-//        if (!is_array($json) || !isset($json['data'])) {
-//            return null;
-//        }
-
-
-//        $event = Event::query()->where('event_id', $eventId)->first()?->load('bands', 'views');
-////        dump(1);
-//        // Если локальное событие найдено, объединяем данные и фиксируем просмотр
-//        if ($event) {
-//            dd(1);
-//            $json['data'] = array_merge($json['data'], $event->toArray());
-//            views($event)->record();
-//        }
-//        dd($json['data']);
-
-        // Возвращаем объединённые данные
-        return $json['data'];
-    }
+//    public static function eventsList($limit = 50)
+//    {
+//        return Event::where('start_date', '>=', now())
+//            ->with('user')
+////            ->whereHas('confirm', function ($query) {
+////                $query->where('confirmed', true);
+////            })
+//            ->orderBy('start_date')
+//            ->paginate($limit);
+//    }
 
 
     public static function count(): mixed
     {
-        try {
-            $response = Http::throw()->get('https://bot.rocker.am/api/events_count');
-            $data = $response->json();
-            Cache::put('events_count', $data, now()->addHour(2));
-        } catch (\Exception $e) {
-            if (Cache::has('events')) {
-                $data = Cache::get('events_count');
-            } else {
-                $data = ['data' => [], 'error' => $e->getMessage()];
-            }
-        }
-
-        return $data;
+        return Event::count();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Profile;
 
+use App\Models\PwaInstall;
 use App\Repositories\BandRepository;
 use App\Repositories\BlogRepository;
 use App\Repositories\EventRepository;
@@ -17,11 +18,13 @@ class DashboardController
         return Inertia::render('Profile/Dashboard/Dashboard', [
             'users' => UserRepository::usersList(),
             'statistics' => [
-                'users' => UserRepository::count(),
+                'users_web' => UserRepository::count(),
+                'users_bot' => UserRepository::count(true),
                 'events' => EventRepository::count(),
                 'galleries' => GalleryReoisitory::count(),
                 'bands' => BandRepository::count(),
                 'blogs' => BlogRepository::count(),
+                'pwa' => PwaInstall::count(),
             ],
         ]);
     }

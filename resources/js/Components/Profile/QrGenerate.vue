@@ -35,7 +35,7 @@ const showQr = ref(false);
                 @click="showQr = !showQr"
                 class="absolute bottom-0 right-0 bg-black bg-opacity-50"
             >
-                <div v-tooltip="'Profile qr'">
+                <div tooltip="Profile qr">
                     <QrIcon />
                 </div>
             </button>

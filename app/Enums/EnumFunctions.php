@@ -52,7 +52,7 @@ trait EnumFunctions
         return $keys;
     }
 
-    public static function getByKey(string $key): CountyEnum|RoleEnum|LanguageEnum|EventTypeEnum|EventFormatEnum|null
+    public static function getByKey(string $key): CountryEnum|EventTypeEnum|null
     {
         foreach (self::cases() as $enum) {
             if ($enum->name === $key) {

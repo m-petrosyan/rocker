@@ -41,7 +41,6 @@ class HandleInertiaRequests extends Middleware
             ? $url.'?page='.$page
             : $url;
 
-//        dd($canonical);
 
         return [
             ...parent::share($request),

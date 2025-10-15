@@ -25,16 +25,16 @@ class EventCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'poster_file' => ['required', 'image', 'mimetypes:image/jpeg,image/jpg,image/webp,image/png', 'max:4000'],
+            'poster_file' => ['required', 'image', 'mimes:jpeg,jpg,webp,png', 'max:4000'],
             'title' => ['required', 'string', 'min:3', 'max:55'],
-            'content' => ['required', 'string', 'min:10', 'max:730'],
+            'content' => ['required', 'string', 'min:10', 'max:750'],
             'type' => ['required', Rule::in([1, 2, 3])],
             'country' => ['required', Rule::in(['am', 'ge'])],
             'location' => ['required', 'string', 'min:5', 'max:255'],
             'cordinates' => ['nullable', 'array'],
             'cordinates.*' => ['required', 'numeric'],
             'genre' => ['required', Rule::in(['rock', 'metal', 'all'])],
-            'price' => ['nullable', 'string', 'max:30'],
+            'price' => ['nullable', 'string', 'max:15'],
             'link' => ['nullable', 'url', 'max:1000'],
             'ticket' => ['nullable', 'url', 'max:1000'],
             'start_date' => ['required', 'date', 'after_or_equal:today'],

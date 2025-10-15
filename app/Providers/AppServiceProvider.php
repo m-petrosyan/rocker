@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Vite::prefetch(concurrency: 3);
         Model::preventLazyLoading(!$this->app->isProduction());
-        if (config('app.env') === 'local') {
+        if (config('app.env') === 'local' && config('app.url') !== 'http://rocker.loc') {
             \URL::forceScheme('https'); // only for web app
         }
     }

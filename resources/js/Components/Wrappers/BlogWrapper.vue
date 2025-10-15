@@ -54,16 +54,18 @@ const deleteBlog = (id) => {
         :href="route('blogs.show', blog.slug)"
         :key="blog.id"
         class="flex flex-col items-center p-4">
-        <div class="relative h-64 w-full rounded-lg overflow-hidden bg-black">
-          <img v-if="blog.cover.thumb && blog.cover.thumb.trim()"
-               :src="blog.cover.thumb"
-               class="object-cover w-full h-full"
-               alt="Loading"
-               @error="$event.target.src = blog.cover.original" />
-          <img v-else-if="blog.cover.original"
-               :src="blog.cover.original"
-               class="object-cover w-full h-full"
-               alt="Loading" />
+        <div class="relative h-64 w-full rounded-lg bg-black">
+          <div class="h-full w-full bg-black rounded-lg rounded-xl overflow-hidden">
+            <img v-if="blog.cover.thumb && blog.cover.thumb.trim()"
+                 :src="blog.cover.thumb"
+                 class="object-cover w-full h-full"
+                 alt="Loading"
+                 @error="$event.target.src = blog.cover.original" />
+            <img v-else-if="blog.cover.original"
+                 :src="blog.cover.original"
+                 class="object-cover w-full h-full"
+                 alt="Loading" />
+          </div>
           <div v-if="owner || isAdmin"
                class="absolute bottom-0 w-full h-full flex flex-col justify-end  p-1 bg-blackTransparent2">
             <div class="flex justify-between">

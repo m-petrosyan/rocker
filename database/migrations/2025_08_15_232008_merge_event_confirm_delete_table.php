@@ -1,0 +1,44 @@
+<?php
+
+use App\Enums\EventStatusEnum;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::dropIfExists('event_deletes');
+        Schema::rename('event_confirms', 'event_status');
+        Schema::table('event_status', function (Blueprint $table) {
+            $table->renameColumn('confirmed', 'status');
+            $table->string('status')
+                ->default(EventStatusEnum::PENDING->value)
+                ->index()
+                ->change();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::create('event_deletes', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('event_id')->constrained()->cascadeOnDelete();
+            $table->string('reason')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::table('event_status', function (Blueprint $table) {
+            $table->renameColumn('status', 'confirmed');
+        });
+
+        Schema::rename('event_status', 'event_confirms');
+    }
+};

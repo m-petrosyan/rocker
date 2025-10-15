@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\LastActivityMiddleware;
 use App\Models\Bot;
 use App\Models\UserBot;
 use App\Telegram\TelegraphHandler;
@@ -18,6 +19,7 @@ return [
      */
     'default_parse_mode' => Telegraph::PARSE_HTML,
 
+
     'webhook' => [
         /*
          * Sets the webhook URL that will be exposed by the server,
@@ -35,7 +37,7 @@ return [
         /*
          * Middleware to be applied to the webhook route
          */
-        'middleware' => [],
+        'middleware' => [LastActivityMiddleware::class],
 
         /*
          * Sets a custom domain when registering a webhook. This will allow a local telegram bot api server
@@ -113,13 +115,6 @@ return [
     'configs' => [
         'token' => env('TELEGRAM_BOT_TOKEN'),
         'name' => env('TELEGRAM_BOT_NAME'),
-    ],
-
-    'menu' => [
-        'menu' => 'menu.menu',
-        'events_list' => 'menu.events_list',
-        'favorite_events' => 'menu.favorite_events',
-        'settings' => 'menu.settings',
     ],
 
     /*
