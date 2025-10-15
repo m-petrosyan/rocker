@@ -67,6 +67,7 @@ defineProps({
           <div>
             <p>{{ user.name }}</p>
             <p>last acivity</p>
+            <small>{{ user.last_activity }}</small>
           </div>
           <div class="mt-4 flex gap-4">
             <div class="flex flex-col">
