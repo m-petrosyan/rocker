@@ -43,7 +43,6 @@ const eventRequest = route().current('profile.events.requests');
       Here are the event requests.
     </h3>
     <EventWrapper :events="events.data" v-bind:add="!isPast" :request="eventRequest" />
-    <Pagination :links="events.links" />
     <template v-if="!eventRequest">
       <NavLink
         v-if="!isPast"
@@ -51,6 +50,7 @@ const eventRequest = route().current('profile.events.requests');
         class="flex flex-col items-center p-4">
         Past events
       </NavLink>
+      <Pagination v-else :links="events.links" />
       <p class="px-4 pt-10 text-gray text-pretty">
         Check listings for dates, venues, and band details.
         Use this guide to revisit standout performances in the archive or plan your next night out at a live show.
