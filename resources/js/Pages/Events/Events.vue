@@ -17,7 +17,7 @@ defineProps({
   }
 });
 
-const eventRequest = route().current('profile.events.requests');
+const eventRequest = typeof window !== 'undefined' ? route().current('profile.events.requests') : null;
 </script>
 
 <template>
