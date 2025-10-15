@@ -56,3 +56,9 @@ enum types change to string
 rollback steps
 
 ```
+
+> sql import
+
+```
+mysql -u root -p rocker < mysql-rocker.sql
+```
