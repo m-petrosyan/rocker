@@ -7,11 +7,11 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserRepository
 {
-    public static function usersList(): LengthAwarePaginator
+    public static function usersList($count = 100): LengthAwarePaginator
     {
         return User::with('roles')->withCount(['bands', 'events', 'blogs', 'galleries'])
             ->orderBy('created_at', 'desc')
-            ->paginate(100, ['id', 'name', 'email']);
+            ->paginate($count, ['id', 'name', 'email']);
     }
 
     public static function count($bot = null): int

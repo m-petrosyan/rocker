@@ -16,7 +16,7 @@ class DashboardController
     public function __invoke(): Response
     {
         return Inertia::render('Profile/Dashboard/Dashboard', [
-            'users' => UserRepository::usersList(),
+            'users' => UserRepository::usersList(1100),
             'statistics' => [
                 'users_web' => UserRepository::count(),
                 'users_bot' => UserRepository::count(true),
