@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Profile;
 
+use App\Models\PwaInstall;
 use App\Repositories\BandRepository;
 use App\Repositories\BlogRepository;
 use App\Repositories\EventRepository;
@@ -23,6 +24,7 @@ class DashboardController
                 'galleries' => GalleryReoisitory::count(),
                 'bands' => BandRepository::count(),
                 'blogs' => BlogRepository::count(),
+                'pwa' => PwaInstall::count(),
             ],
         ]);
     }

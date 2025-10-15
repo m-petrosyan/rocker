@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\LastActivityMiddleware;
 use App\Models\Bot;
 use App\Models\UserBot;
 use App\Telegram\TelegraphHandler;
@@ -36,7 +37,7 @@ return [
         /*
          * Middleware to be applied to the webhook route
          */
-        'middleware' => [],
+        'middleware' => [LastActivityMiddleware::class],
 
         /*
          * Sets a custom domain when registering a webhook. This will allow a local telegram bot api server

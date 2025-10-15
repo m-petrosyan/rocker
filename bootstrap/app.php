@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\EnsureEmailVerifiedIfPresent;
 use App\Http\Middleware\HandleInertiaRequests;
+use App\Http\Middleware\LastActivityMiddleware;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -24,6 +25,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
+            LastActivityMiddleware::class,
         ]);
         $middleware->alias([
             'email.verified.if.present' => EnsureEmailVerifiedIfPresent::class,
