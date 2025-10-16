@@ -16,6 +16,7 @@ const pwamenu = webApp
       if (user.value?.settings?.country === 'ge') {
         return item.name !== 'Bands' && item.name !== 'Galleries' && item.name !== 'Bot';
       }
+      return item.name !== 'Bot';
     })
     .map(item => {
       if (item.name === 'Home') {
