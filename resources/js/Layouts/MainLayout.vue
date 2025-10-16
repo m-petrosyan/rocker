@@ -14,6 +14,8 @@ const props = defineProps({
 });
 
 const page = usePage();
+const user = computed(() => page.props.auth?.user);
+
 const defaultTitle = 'Rocker.am';
 const defaultDescription =
   'Discover Armenian rock and metal bands, concerts, news, and the underground music scene in Armenia.';
@@ -35,6 +37,7 @@ onMounted(() => {
     window.matchMedia('(display-mode: standalone)').matches ||
     window.navigator.standalone === true;
 });
+
 </script>
 
 <template>
@@ -51,13 +54,9 @@ onMounted(() => {
   </Head>
 
   <FleshNotification />
-
   <PreloaderPwa v-if="isPWA" />
-
   <slot />
-
   <Footer />
-  <Preloader v-if="webApp" />
-
+  <Preloader v-if="webApp && !page" />
   <PwaNavbar v-if="isPWA || webApp" />
 </template>
