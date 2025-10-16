@@ -26,7 +26,7 @@ class EventStatusObserver
                 dispatch(new EventNotificationJob($eventStatus->event, $user));
             }
         } else {
-            $moderators = User::role(['moderator', 'admin'])->get();
+            $moderators = User::role(['moderator', 'admin'])->whereHas('chat')->get();
             foreach ($moderators as $user) {
                 $user->chat
                     ->message('🎉 new event request')
