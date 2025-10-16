@@ -4,9 +4,7 @@ namespace App\Observers;
 
 use App\Enums\EventStatusEnum;
 use App\Models\Event;
-use App\Notifications\NewCreationNotification;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Notification;
 
 class EventObserver
 {
@@ -39,9 +37,9 @@ class EventObserver
             ]
         );
 
-        if (config('app.env') === 'production') {
-            Notification::route('mail', config('mail.admin.address'))
-                ->notify(new NewCreationNotification($event));
-        }
+//        if (config('app.env') === 'production') {
+//            Notification::route('mail', config('mail.admin.address'))
+//                ->notify(new NewCreationNotification($event));
+//        }
     }
 }
