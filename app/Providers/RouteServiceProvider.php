@@ -22,6 +22,6 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         // 👇 подключаем Telegraph-маршруты
-        $this->loadRoutesFrom(base_path('routes/telegraph.php'));
+//        $this->loadRoutesFrom(base_path('routes/telegraph.php'));
     }
 }
