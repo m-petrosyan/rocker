@@ -8,7 +8,7 @@ trait UsersBotNotificationTrait
 {
     public function usersList($event, $count = false)
     {
-        $query = User::has('chat')
+        $query = User::whereHas('chat')
             ->whereHas('settings', function ($query) use ($event) {
                 $query->where('events_notifications', true)
                     // Проверяем страну (всегда)
