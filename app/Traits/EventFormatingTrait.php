@@ -94,6 +94,12 @@ trait EventFormatingTrait
                 ->url(route('events.show', $event->id));
         }
 
+        if ($event->cordinates) {
+            $buttons[] = Button::make('Get map')->action('get_location')
+                ->param('latitude', substr($event->cordinates['latitude'], 0, 10))
+                ->param('longitude', substr($event->cordinates['longitude'], 0, 10));
+        }
+
         return $buttons;
     }
 }
