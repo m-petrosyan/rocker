@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
             RolePermissionSeeder::class,
             TelegraphBotSeeder::class,
             UserSeeder::class,
-            MergeUsersSeeder::class,
+//            MergeUsersSeeder::class,
         ]);
     }
 }

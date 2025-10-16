@@ -11,10 +11,10 @@ import PreloaderPwa from '@/Components/Preloader/PreloaderPwa.vue';
 import { isWebApp } from '@/Helpers/setAppUser.js';
 
 const props = defineProps({
-    meta: {
-        type: Object,
-        required: false
-    }
+  meta: {
+    type: Object,
+    required: false
+  }
 });
 
 const defaultTitle = 'Rocker.am';
@@ -23,51 +23,51 @@ const defaultKeywords = 'Armenian, Rock,Rock Armenia, Music, Metal, Yerevan, Arm
 const page = usePage();
 
 const cleanDescription = computed(() => {
-    const raw = props.meta?.description ?? defaultDescription;
-    const text = raw.replace(/<[^>]*>/g, '');
-    const shortened = text.slice(0, 150);
-    return shortened.slice(0, shortened.lastIndexOf(' ')) || shortened;
+  const raw = props.meta?.description ?? defaultDescription;
+  const text = raw.replace(/<[^>]*>/g, '');
+  const shortened = text.slice(0, 150);
+  return shortened.slice(0, shortened.lastIndexOf(' ')) || shortened;
 });
 
 const isPWA = ref(false);
 
 onMounted(() => {
-    isPWA.value = window.matchMedia('(display-mode: standalone)').matches ||
-        window.navigator.standalone === true;
+  isPWA.value = window.matchMedia('(display-mode: standalone)').matches ||
+    window.navigator.standalone === true;
 });
 const webApp = isWebApp();
 </script>
 
 <template>
-    <Head :title="meta?.title ?? defaultTitle">
-        <meta name="description" :content="cleanDescription" />
-        <meta name="og:description" :content="cleanDescription" />
-        <meta name="og:title" :content="meta?.title ?? defaultTitle" />
-        <meta name="keywords" :content="meta?.keywords ?? defaultKeywords" />
-        <meta name="og:image" :content="meta?.image ?? defaultImg" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" :content="meta?.image ?? defaultImg" />
-        <meta name="author" :content="meta?.author ?? 'rocker.am'" />
-        <meta name="robots" content="index, follow">
-        <link rel="canonical" :href="$page.props.canonical" />
-    </Head>
-    <PreloaderPwa v-if="isPWA" />
-    <FleshNotification />
-    <section class="text-white pt-6 sm:pt-0 mb-20">
-        <MainNavbar v-if="!isPWA && !webApp" />
-        <header class="mt-10 text-gray">
-            <h1 v-if="$slots.h1" class="text-center">
-                <slot name="h1" />
-            </h1>
-            <h2 v-if="$slots.header" class="text-center">
-                <slot name="header" />
-            </h2>
-        </header>
-        <main class="my-20 max-w-screen-sm md:max-w-screen-xl mx-auto">
-            <slot />
-        </main>
-        <PWAinstall />
-    </section>
-    <Footer />
-    <PwaNavbar v-if="isPWA || webApp" />
+  <Head :title="meta?.title ?? defaultTitle">
+    <meta name="description" :content="cleanDescription" />
+    <meta name="og:description" :content="cleanDescription" />
+    <meta name="og:title" :content="meta?.title ?? defaultTitle" />
+    <meta name="keywords" :content="meta?.keywords ?? defaultKeywords" />
+    <meta name="og:image" :content="meta?.image ?? defaultImg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" :content="meta?.image ?? defaultImg" />
+    <meta name="author" :content="meta?.author ?? 'rocker.am'" />
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" :href="$page.props.canonical" />
+  </Head>
+  <PreloaderPwa v-if="isPWA" />
+  <FleshNotification />
+  <section class="text-white pt-6 sm:pt-0 mb-20">
+    <MainNavbar v-if="!isPWA && !webApp" />
+    <header class="mt-10 text-gray">
+      <h1 v-if="$slots.h1" class="text-center">
+        <slot name="h1" />
+      </h1>
+      <h2 v-if="$slots.header" class="text-center">
+        <slot name="header" />
+      </h2>
+    </header>
+    <main class="my-20 max-w-screen-sm md:max-w-screen-xl mx-auto">
+      <slot />
+    </main>
+    <PWAinstall />
+  </section>
+  <Footer />
+  <PwaNavbar />
 </template>

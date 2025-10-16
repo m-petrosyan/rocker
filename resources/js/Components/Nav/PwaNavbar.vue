@@ -2,39 +2,35 @@
 import { Link, usePage } from '@inertiajs/vue3';
 import menu from '@/Constants/menu.js';
 import ProfileIcon from '@/Components/Icons/ProfileIcon.vue';
-import { isWebApp } from '@/Helpers/setAppUser.js';
 import { computed } from 'vue';
+import { isWebApp } from '@/Helpers/setAppUser.js';
 
 const page = usePage();
 const user = computed(() => page.props.auth?.user);
-
 const webApp = isWebApp();
+
 
 const pwamenu = webApp
   ? menu
     .filter(item => {
-      // удаляем 'Bot', а для грузинских пользователей — ещё и 'Bands' и 'Galleries'
-      if (user.settings?.country === 'ge') {
-        return item.name !== 'Bands' && item.name !== 'Galleries';
+      if (user.value?.settings?.country === 'ge') {
+        return item.name !== 'Bands' && item.name !== 'Galleries' && item.name !== 'Bot';
       }
-      return item.name !== 'Bot';
     })
     .map(item => {
-      if (item.name !== 'Home') {
+      if (item.name === 'Home') {
         return { ...item, url: 'profile.events.create' };
       }
       return item;
     })
   : menu;
-
-
 </script>
 
 <template>
   <div
     class="z-50 sticky bottom-0 w-full bg-pwaNavbg">
-    {{ user }}
-    <div class="flex items-center gap-x-2 mx-auto w-fit pt-2 text-gray text-sm tracking-widest uppercase">
+    <div
+      class="flex items-center  gap-x-2 mx-auto w-full justify-between md:w-fit pt-2 text-gray text-sm tracking-widest uppercase">
       <component
         v-for="item in pwamenu"
         :key="item.name"
