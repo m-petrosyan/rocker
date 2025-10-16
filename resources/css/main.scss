@@ -1,57 +1,60 @@
 @use "vars.css";
 
 @font-face {
-    font-family: 'Helvetica';
-    src: url('/fonts/Helvetica.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'Helvetica';
+  src: url('/fonts/Helvetica.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'Helvetica';
-    src: url('/fonts/Helvetica-Bold.ttf') format('truetype');
-    font-weight: bold;
-    font-style: normal;
+  font-family: 'Helvetica';
+  src: url('/fonts/Helvetica-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
 }
 
 * {
-    font-family: 'Helvetica', Arial, sans-serif;
+  font-family: 'Helvetica', Arial, sans-serif;
 }
 
 body {
-    background-color: #101010;
+  background-color: #101010;
 
-    #app {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        min-height: 100vh;
-    }
+  #app {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+  }
 }
 
 h1 {
-    font-size: 32px;
-    font-weight: bold;
-    display: none;
+  font-size: 32px;
+  font-weight: bold;
+  display: none;
 }
 
 h2 {
-    font-size: 28px;
-    font-weight: bold;
+  padding-inline: 10px;
+  font-size: 28px;
+  font-weight: bold;
 }
 
 h3 {
-    font-size: 22px;
-    font-weight: bold;
+  padding-inline: 10px;
+  font-size: 22px;
+  font-weight: bold;
 }
 
 h4 {
-    font-size: 18px;
-    font-weight: bold;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 p {
-    font-size: 16px;
+  padding-inline: 10px;
+  font-size: 16px;
 }
 
 a {
@@ -59,47 +62,47 @@ a {
 }
 
 .profile {
-    input, textarea {
-        border: none;
-        background-color: theme('colors.graydark2') !important;
+  input, textarea {
+    border: none;
+    background-color: theme('colors.graydark2') !important;
 
-        &::placeholder {
-            color: gray
-        }
-
-        &:disabled {
-            color: theme('colors.graydarker');
-        }
+    &::placeholder {
+      color: gray
     }
 
-    select {
-        margin-top: 0;
-        background-color: theme('colors.graydark2') !important;
-        border: none;
+    &:disabled {
+      color: theme('colors.graydarker');
     }
+  }
+
+  select {
+    margin-top: 0;
+    background-color: theme('colors.graydark2') !important;
+    border: none;
+  }
 }
 
 button:disabled {
-    opacity: 0.5;
+  opacity: 0.5;
 }
 
 
 .tooltip {
-    transition: all 0.2s;
+  transition: all 0.2s;
 }
 
 .tooltip-top {
-    transform: translateY(-5px);
+  transform: translateY(-5px);
 }
 
 .tooltip-bottom {
-    transform: translateY(5px);
+  transform: translateY(5px);
 }
 
 .tooltip-left {
-    transform: translateX(-5px);
+  transform: translateX(-5px);
 }
 
 .tooltip-right {
-    transform: translateX(5px);
+  transform: translateX(5px);
 }

@@ -12,7 +12,7 @@ const webApp = isWebApp();
     <section class="text-white pt-6 sm:pt-0 mb-20">
       <MainNavbar v-if="!webApp" />
 
-      <header class="mt-10 text-gray text-center">
+      <header class="text-gray text-center">
         <h1 v-if="$slots.h1">
           <slot name="h1" />
         </h1>
@@ -21,7 +21,7 @@ const webApp = isWebApp();
         </h2>
       </header>
 
-      <main class="my-20 max-w-screen-sm md:max-w-screen-xl mx-auto">
+      <main class="md:my-20 max-w-screen-sm md:max-w-screen-xl mx-auto">
         <slot />
       </main>
       <PWAinstall />
