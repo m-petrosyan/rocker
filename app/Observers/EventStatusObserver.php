@@ -43,6 +43,8 @@ class EventStatusObserver
             $eventStatus->event->user?->chat
                 ->message("Thank you! The event has been added and will be sent to {$usersCount} ")
                 ->send();
+
+            $eventStatus->event->update(['notify_count' => $usersCount]);
         }
     }
 
