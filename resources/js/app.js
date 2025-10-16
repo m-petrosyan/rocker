@@ -11,7 +11,6 @@ import VueGtag from 'vue-gtag-next';
 import PrimeVue from 'primevue/config';
 import PreloaderPwa from '@/Components/Preloader/PreloaderPwa.vue';
 import tooltipPlugin from '@/Plugins/tooltipPlugin.js';
-import { useTelegramAuth } from '@/Helpers/setAppUser.js';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -65,4 +64,4 @@ createInertiaApp({
     color: '#FF5722'
   }
 });
-useTelegramAuth();
+// useTelegramAuth();
