@@ -106,7 +106,7 @@ const type = props.event && props.event.type === 2 ? 'concert' : 'event';
       <p>genre: {{ event.genre }}</p>
       <p>type: {{ type }}</p>
     </div>
-    <div class="mt-4" v-if="event.bands">
+    <div class="mt-4" v-if="event.bands?.length">
       <h4 class="text-center">Bands</h4>
       <BandTags class="mx-auto w-fit my-2" :bands="event.bands" />
     </div>
