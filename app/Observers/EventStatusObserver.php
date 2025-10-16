@@ -37,6 +37,12 @@ class EventStatusObserver
                     )
                     ->send();
             }
+
+            $usersCount = $this->usersList($eventStatus->event, true);
+
+            $eventStatus->event->user?->chat
+                ->message("Thank you, the event has been added and was sent to $usersCount people.")
+                ->send();
         }
     }
 
