@@ -92,8 +92,8 @@ const webApp = isWebApp();
                         :isAdmin="auth.isAdmin"
                         title="User galleries" />
         <EventWrapper
-          v-if="events.data?.length && (owner || ['admin','modarator','organizer'].includes(auth.role))"
-          :events="events.data" :owner
+          v-if="events?.data?.length && (owner || ['admin','modarator','organizer'].includes(auth.role))"
+          :events="events?.data" :owner
           profile
           :isAdmin="auth.isAdmin" title="User events" />
         <BandWrapper
