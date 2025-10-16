@@ -50,7 +50,7 @@ trait TelegramEventsHandler
 
         $event = Event::findOrFail($eventId);
 
-        dispatch(new EventNotificationJob($event, auth()->user()));
+        dispatch(new EventNotificationJob($event, auth()->user()->load('chat')));
     }
 
     public function favorite_events(): void
