@@ -7,6 +7,7 @@ import PreloaderPwa from '@/Components/Preloader/PreloaderPwa.vue';
 import { computed, onMounted, ref } from 'vue';
 import { isWebApp } from '@/Helpers/setAppUser.js';
 import defaultImg from '/public/screenshots/desktop-screenshot.png';
+import Preloader from '@/Components/Icons/Preloader.vue';
 
 const props = defineProps({
   meta: Object
@@ -56,6 +57,6 @@ onMounted(() => {
   <PreloaderPwa v-if="isPWA" />
   <slot />
   <Footer />
-  <!--  <Preloader v-if="webApp && !page" />-->
+  <Preloader v-if="webApp && !page" />
   <PwaNavbar v-if="isPWA || webApp" />
 </template>
