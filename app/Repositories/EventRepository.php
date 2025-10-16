@@ -48,7 +48,7 @@ class EventRepository
             ->where(function ($query) use ($country) {
                 $query->whereIn('country', $country === 'all' ? ['am', 'ge'] : [$country]);
             })
-            ->with(['user.roles', 'status'])
+            ->with(['status'])
             ->when(!$past, fn($query) => $query->where('start_date', '>=', now()))
             ->when($past, fn($query) => $query->where('start_date', '<', now()))
             ->orderBy('start_date', $past ? 'desc' : 'asc')
