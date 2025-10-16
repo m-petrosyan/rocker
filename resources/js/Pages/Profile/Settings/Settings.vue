@@ -203,7 +203,7 @@ const event_notify = [
       </div>
 
       <PrimaryButton
-        class="ms-4"
+        class="mt-10"
         :class="{ 'opacity-25': form.processing }"
         :disabled="form.processing">
         {{ 'Update' }}
