@@ -157,7 +157,7 @@ const event_notify = [
           </button>
         </div>
 
-        <div class="flex flex-col gap-y-6 mx-auto w-1/3">
+        <div class="flex flex-col gap-y-6 mx-auto w-full md:w-1/3">
           <h4 class="text-center my-4">Bot notifications</h4>
 
           <div>
