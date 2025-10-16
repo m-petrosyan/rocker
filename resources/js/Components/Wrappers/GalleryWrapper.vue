@@ -121,7 +121,7 @@ const deleteGallery = (id) => {
       >
         <div class="mx-auto flex w-32 flex-col items-center gap-y-4 rounded-lg">
           <h2 class="text-3xl">+</h2>
-          <h3>Add gallery</h3>
+          <h3 class="text-nowrap">Add gallery</h3>
         </div>
       </NavLink>
     </div>
