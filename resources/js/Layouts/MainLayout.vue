@@ -5,9 +5,8 @@ import Footer from '@/Components/Footer/Footer.vue';
 import PwaNavbar from '@/Components/Nav/PwaNavbar.vue';
 import PreloaderPwa from '@/Components/Preloader/PreloaderPwa.vue';
 import { computed, onMounted, ref } from 'vue';
-import { isWebApp } from '@/Helpers/setAppUser.js';
+// import { isWebApp } from '@/Helpers/setAppUser.js';
 import defaultImg from '/public/screenshots/desktop-screenshot.png';
-import Preloader from '@/Components/Icons/Preloader.vue';
 
 const props = defineProps({
   meta: Object
@@ -30,7 +29,7 @@ const cleanDescription = computed(() => {
 });
 
 const isPWA = ref(false);
-const webApp = isWebApp();
+// const webApp = isWebApp();
 
 onMounted(() => {
   isPWA.value =
@@ -57,6 +56,6 @@ onMounted(() => {
   <PreloaderPwa v-if="isPWA" />
   <slot />
   <Footer />
-  <Preloader v-if="webApp && !page" />
+  <!--  <Preloader v-if="webApp && !page" />-->
   <PwaNavbar v-if="isPWA || webApp" />
 </template>
