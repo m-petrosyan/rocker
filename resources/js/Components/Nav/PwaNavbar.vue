@@ -33,7 +33,6 @@ const pwamenu = computed(() => {
 <template>
   <div
     class="z-50 sticky bottom-0 w-full bg-pwaNavbg">
-    {{ user.name }}
     <div
       class="flex items-center  gap-x-2 mx-auto w-full justify-between md:w-fit pt-2 text-gray text-sm tracking-widest uppercase">
       <component
