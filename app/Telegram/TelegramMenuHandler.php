@@ -5,14 +5,11 @@ namespace App\Telegram;
 use DefStudio\Telegraph\Keyboard\Button;
 use DefStudio\Telegraph\Keyboard\Keyboard;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Log;
 
 trait TelegramMenuHandler
 {
     public function menu(): void
     {
-        Log::info('menu', [$this->chat]);
-
         $buttons = [
             Button::make(trans('menu.add_event'))->webApp(route('profile.events.create')),
             Button::make(trans('menu.events_list'))->action('events_list'),

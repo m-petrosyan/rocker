@@ -12,11 +12,13 @@ class TelegraphBotSeeder extends Seeder
      */
     public function run(): void
     {
-        Bot::query()->firstOrCreate(
-            ['name' => 'RockerBotDev'],
-            [
-                'token' => env('TELEGRAPH_BOT_TOKEN', '7025055899:AAHF-aCp5_LnBXqANcq6tUuFrMky3IvU2VI'),
-            ]
-        );
+        if (app()->environment('local')) {
+            Bot::query()->firstOrCreate(
+                ['name' => 'RockerBotDev'],
+                [
+                    'token' => env('TELEGRAPH_BOT_TOKEN', '7025055899:AAHF-aCp5_LnBXqANcq6tUuFrMky3IvU2VI'),
+                ]
+            );
+        }
     }
 }
