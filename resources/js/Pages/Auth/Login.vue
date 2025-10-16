@@ -8,7 +8,6 @@ import { Link, useForm } from '@inertiajs/vue3';
 import AuthLayouth from '@/Layouts/AuthLayouth.vue';
 import GoogleLogin from '@/Components/Forms/GoogleLogin.vue';
 import { isWebApp } from '@/Helpers/setAppUser.js';
-import Preloader from '@/Components/Icons/Preloader.vue';
 
 defineProps({
   canResetPassword: {
@@ -99,7 +98,6 @@ const webApp = isWebApp();
         </div>
       </form>
     </template>
-    <Preloader v-else />
     <template v-if="!webApp" #underslot>
       <div class="flex justify-center gap-x-2 mt-10">
         <p> Don't Have an Account?</p>
