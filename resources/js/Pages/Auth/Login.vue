@@ -7,8 +7,6 @@ import TextInput from '@/Components/Forms/TextInput.vue';
 import { Link, useForm } from '@inertiajs/vue3';
 import AuthLayouth from '@/Layouts/AuthLayouth.vue';
 import GoogleLogin from '@/Components/Forms/GoogleLogin.vue';
-import { isWebApp } from '@/Helpers/setAppUser.js';
-import Preloader from '@/Components/Icons/Preloader.vue';
 
 defineProps({
   canResetPassword: {
@@ -31,12 +29,12 @@ const submit = () => {
   });
 };
 
-const webApp = isWebApp();
+
 </script>
 
 <template>
   <AuthLayouth title="Log in">
-    <template v-if="!webApp">
+    <template>
       <div v-if="status" class="text-green-600 mb-4 text-sm font-medium">
         {{ status }}
       </div>
@@ -99,8 +97,7 @@ const webApp = isWebApp();
         </div>
       </form>
     </template>
-    <Preloader v-else />
-    <template v-if="!webApp" #underslot>
+    <template #underslot>
       <div class="flex justify-center gap-x-2 mt-10">
         <p> Don't Have an Account?</p>
         <Link class="font-bold text-orange" :href="route('register')">

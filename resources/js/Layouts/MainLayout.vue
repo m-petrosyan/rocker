@@ -7,6 +7,7 @@ import PreloaderPwa from '@/Components/Preloader/PreloaderPwa.vue';
 import { computed, onMounted, ref } from 'vue';
 import { isWebApp } from '@/Helpers/setAppUser.js';
 import defaultImg from '/public/screenshots/desktop-screenshot.png';
+import Preloader from '@/Components/Icons/Preloader.vue';
 
 const props = defineProps({
   meta: Object
@@ -37,7 +38,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- SEO -->
   <Head :title="meta?.title ?? defaultTitle">
     <meta name="description" :content="cleanDescription" />
     <meta name="og:description" :content="cleanDescription" />
@@ -50,18 +50,14 @@ onMounted(() => {
     <link rel="canonical" :href="$page.props.canonical" />
   </Head>
 
-  <!-- Notifications -->
   <FleshNotification />
 
-  <!-- Preloader -->
   <PreloaderPwa v-if="isPWA" />
 
-  <!-- Основной контент -->
   <slot />
 
-  <!-- Footer -->
   <Footer />
+  <Preloader v-if="webApp" />
 
-  <!-- Навбар PWA -->
   <PwaNavbar v-if="isPWA || webApp" />
 </template>

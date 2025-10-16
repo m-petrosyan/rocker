@@ -7,15 +7,17 @@ import { isWebApp } from '@/Helpers/setAppUser.js';
 const webApp = isWebApp();
 
 defineProps({
-  meta: Object
+  title: {
+    type: String,
+    default: 'Auth | Rocker.am'
+  }
 });
 </script>
 
 <template>
-  <MainLayout v-bind="$props">
+  <MainLayout :meta="{ title }">
     <section class="text-white pt-6 sm:pt-0 mb-20">
       <MainNavbar v-if="!webApp" />
-
       <main
         class="mt-20 sm:mx-auto w-full sm:w-8/12 md:w-4/12 md:max-w-[500px]
                rounded-lg bg-graydark2 p-6"
