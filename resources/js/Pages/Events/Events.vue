@@ -41,7 +41,12 @@ const eventRequest = !isSSR ? route().current('profile.events.requests') : null;
       in Yerevan and beyond, collected in one place for quick discovery.
     </p>
     <h3 v-else class="text-red text-center">
-      Here are the event requests.
+      <span v-if="events.data.length">
+              Here are the event requests.
+      </span>
+      <span v-else>
+              No event requests yet.
+      </span>
     </h3>
     <EventWrapper :events="events.data" v-bind:add="!isPast" :request="eventRequest" />
     <template v-if="!eventRequest">
