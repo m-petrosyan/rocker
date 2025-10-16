@@ -30,7 +30,7 @@ class MergeUsersSeeder extends Seeder
                             6
                         ).$item['id']);
 
-                    if ($item['id'] > 1010) {
+                    if ($item['id'] > 1034) {
                         dump($item['username']);
 
                         $user = User::create(
