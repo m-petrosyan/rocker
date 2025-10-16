@@ -59,7 +59,7 @@ class ProfileController
     public function edit(Request $request): Response
     {
         return Inertia::render('Profile/Settings/Settings', [
-            'user' => auth()->user()->load('links', 'settings'),
+            'user' => auth()->user()->load('links', 'settings', 'chat'),
             'owner' => true,
             'countries' => CountryEnum::getKeysValues(),
             'cities' => CityEnum::getKeysValues(options: $request->country ?? auth()->user()->settings?->country),
