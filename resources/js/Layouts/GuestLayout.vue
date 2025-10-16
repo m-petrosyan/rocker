@@ -1,73 +1,30 @@
 <script setup>
-import { Head, usePage } from '@inertiajs/vue3';
-import PWAinstall from '@/Components/PWAinstall.vue';
-import Footer from '@/Components/Footer/Footer.vue';
-import FleshNotification from '@/Components/Messages/FleshNotification.vue';
-import defaultImg from '/public/screenshots/desktop-screenshot.png';
-import { computed, onMounted, ref } from 'vue';
+import MainLayout from './MainLayout.vue';
 import MainNavbar from '@/Components/Nav/MainNavbar.vue';
-import PwaNavbar from '@/Components/Nav/PwaNavbar.vue';
-import PreloaderPwa from '@/Components/Preloader/PreloaderPwa.vue';
+import PWAinstall from '@/Components/PWAinstall.vue';
 import { isWebApp } from '@/Helpers/setAppUser.js';
 
-const props = defineProps({
-  meta: {
-    type: Object,
-    required: false
-  }
-});
-
-const defaultTitle = 'Rocker.am';
-const defaultDescription = 'Discover Armenian rock and metal bands, concerts, news, and the underground music scene in Armenia.';
-const defaultKeywords = 'Armenian, Rock,Rock Armenia, Music, Metal, Yerevan, Armenia, Heavy Metal, Punk, Alternative, Gothic, Progressive Rock, Doom Metal, Armenian Bands, Armenian Rock Bands, Armenian Metal Bands, Rock Concerts Armenia, Metal Concerts Armenia, Armenian Rock Scene, Underground Rock Armenia, Rock Festivals Armenia';
-const page = usePage();
-
-const cleanDescription = computed(() => {
-  const raw = props.meta?.description ?? defaultDescription;
-  const text = raw.replace(/<[^>]*>/g, '');
-  const shortened = text.slice(0, 150);
-  return shortened.slice(0, shortened.lastIndexOf(' ')) || shortened;
-});
-
-const isPWA = ref(false);
-
-onMounted(() => {
-  isPWA.value = window.matchMedia('(display-mode: standalone)').matches ||
-    window.navigator.standalone === true;
-});
 const webApp = isWebApp();
 </script>
 
 <template>
-  <Head :title="meta?.title ?? defaultTitle">
-    <meta name="description" :content="cleanDescription" />
-    <meta name="og:description" :content="cleanDescription" />
-    <meta name="og:title" :content="meta?.title ?? defaultTitle" />
-    <meta name="keywords" :content="meta?.keywords ?? defaultKeywords" />
-    <meta name="og:image" :content="meta?.image ?? defaultImg" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" :content="meta?.image ?? defaultImg" />
-    <meta name="author" :content="meta?.author ?? 'rocker.am'" />
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" :href="$page.props.canonical" />
-  </Head>
-  <PreloaderPwa v-if="isPWA" />
-  <FleshNotification />
-  <section class="text-white pt-6 sm:pt-0 mb-20">
-    <MainNavbar v-if="!isPWA && !webApp" />
-    <header class="mt-10 text-gray">
-      <h1 v-if="$slots.h1" class="text-center">
-        <slot name="h1" />
-      </h1>
-      <h2 v-if="$slots.header" class="text-center">
-        <slot name="header" />
-      </h2>
-    </header>
-    <main class="my-20 max-w-screen-sm md:max-w-screen-xl mx-auto">
-      <slot />
-    </main>
-    <PWAinstall />
-  </section>
-  <Footer />
-  <PwaNavbar />
+  <MainLayout>
+    <section class="text-white pt-6 sm:pt-0 mb-20">
+      <MainNavbar v-if="!webApp" />
+
+      <header class="mt-10 text-gray text-center">
+        <h1 v-if="$slots.h1">
+          <slot name="h1" />
+        </h1>
+        <h2 v-if="$slots.header">
+          <slot name="header" />
+        </h2>
+      </header>
+
+      <main class="my-20 max-w-screen-sm md:max-w-screen-xl mx-auto">
+        <slot />
+      </main>
+      <PWAinstall />
+    </section>
+  </MainLayout>
 </template>
