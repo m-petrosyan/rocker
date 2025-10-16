@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class LastActivityMiddleware
@@ -24,7 +23,7 @@ class LastActivityMiddleware
 
         $user = auth()->user();
 
-        Log::info('last activity: '.$user);
+//        Log::info('last activity: '.$user);
 
         if ($user && (!$user->last_activity || ($user->last_activity && now()->subMinutes('2')->gte(
                         $user->last_activity

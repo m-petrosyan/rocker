@@ -89,7 +89,7 @@ trait EventFormatingTrait
         if (!empty($event->ticket)) {
             $buttons[] = Button::make('Tickets')->url($event->ticket);
         }
-
+        Log::info('bbbb---');
         if ($event->country === 'am') {
             $buttons[] = Button::make('Rocker link')
                 ->url(route('events.show', $event->id));
