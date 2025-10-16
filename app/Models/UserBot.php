@@ -13,6 +13,8 @@ class UserBot extends TelegraphChat
         'user_id',
     ];
 
+    protected $with = ['user'];
+
     public function bot(): BelongsTo
     {
         return $this->belongsTo(Bot::class);
