@@ -9,14 +9,14 @@ const webApp = isWebApp();
 
 <template>
   <MainLayout>
-    <section class="text-white pt-6 sm:pt-0 mb-20">
+    <section class="text-white md:pt-6 sm:pt-0 mb-20">
       <MainNavbar v-if="!webApp" />
 
       <header class="mt-10 text-gray text-center">
         <h1 v-if="$slots.h1">
           <slot name="h1" />
         </h1>
-        <h2 v-if="$slots.header">
+        <h2 class="mb-10" v-if="$slots.header">
           <slot name="header" />
         </h2>
       </header>

@@ -19,7 +19,7 @@ const webApp = isWebApp();
       </header>
 
       <main
-        class="profile relative my-28 bg-graydark py-2 sm:px-6 lg:p-4 md:px-0 max-w-screen-sm md:max-w-screen-xl mx-auto"
+        class="profile relative my-12 md:my-28 bg-graydark py-2 sm:px-6 lg:p-4 md:px-0 max-w-screen-sm md:max-w-screen-xl mx-auto"
       >
         <ErrorMessages :messages="$page.props.errors" />
         <slot />
