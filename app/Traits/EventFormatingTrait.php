@@ -5,6 +5,7 @@ namespace App\Traits;
 use App\Enums\EventGenreEnum;
 use App\Enums\EventTypeEnum;
 use DefStudio\Telegraph\Keyboard\Button;
+use Illuminate\Support\Facades\Log;
 
 
 trait EventFormatingTrait
@@ -95,6 +96,7 @@ trait EventFormatingTrait
         }
 
         if ($event->cordinates) {
+            Log::info('Event coordinates: '.json_encode($event->cordinates));
             $buttons[] = Button::make('Get map')->action('get_location')
                 ->param('latitude', substr($event->cordinates['latitude'], 0, 10))
                 ->param('longitude', substr($event->cordinates['longitude'], 0, 10));
