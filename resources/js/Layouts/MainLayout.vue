@@ -5,7 +5,7 @@ import Footer from '@/Components/Footer/Footer.vue';
 import PwaNavbar from '@/Components/Nav/PwaNavbar.vue';
 import PreloaderPwa from '@/Components/Preloader/PreloaderPwa.vue';
 import { computed, onMounted, ref } from 'vue';
-// import { isWebApp } from '@/Helpers/setAppUser.js';
+import { isWebApp } from '@/Helpers/setAppUser.js';
 import defaultImg from '/public/screenshots/desktop-screenshot.png';
 
 const props = defineProps({
@@ -29,7 +29,7 @@ const cleanDescription = computed(() => {
 });
 
 const isPWA = ref(false);
-// const webApp = isWebApp();
+const webApp = isWebApp();
 
 onMounted(() => {
   isPWA.value =
