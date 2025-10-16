@@ -66,7 +66,7 @@ const deleteEvent = (id) => {
           class="relative h-full w-full block"
           :style="{ backgroundImage: `url(${event.poster.thumb})` }"
         >
-          <div v-if="owner && (['pending','declined'].includes(event.status_name))"
+          <div v-if="owner && (['pending','rejected'].includes(event.status_name))"
                class="absolute w-full text-center h-full content-center bg-blackTransparent2"
                :class="event.status_name === 'pending' ? 'z-20' : 'z-30'">
             <div class="bg-blackTransparent2">
