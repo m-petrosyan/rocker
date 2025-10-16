@@ -170,7 +170,6 @@ const event_notify = [
               :options="countries" />
           </div>
           <div>
-
             <div class="flex items-center justify-center gap-2 font-bold">
               <h5 class="text-center py-2">City</h5>
               <LocationIcon />

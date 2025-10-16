@@ -37,15 +37,9 @@ class EventStatusObserver
                     )
                     ->send();
             }
-
-            $usersCount = $this->usersList($eventStatus->event, true);
-
-            $eventStatus->event->user?->chat
-                ->message("Thank you! The event has been added and will be sent to {$usersCount} ")
-                ->send();
-
-            $eventStatus->event->update(['notify_count' => $usersCount]);
         }
+
+        $eventStatus->event->update(['notify_count' => $usersCount]);
     }
 
     public function updated(EventStatus $eventStatus): void
@@ -55,6 +49,12 @@ class EventStatusObserver
             foreach ($users as $user) {
                 dispatch(new EventNotificationJob($eventStatus->event, $user));
             }
+
+            $usersCount = $this->usersList($eventStatus->event, true);
+
+            $eventStatus->event->user?->chat
+                ->message("Thank you! The event has been added and will be sent to {$usersCount} ")
+                ->send();
         } elseif ($eventStatus->isDirty('status') && $eventStatus->status === EventStatusEnum::REJECTED->value) {
             $eventStatus->event->user?->chat
                 ->message("❌ Request to add event rejected, reason: $eventStatus->reason")
