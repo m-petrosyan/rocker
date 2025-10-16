@@ -9,7 +9,6 @@ const page = usePage();
 const user = computed(() => page.props.auth?.user);
 const webApp = isWebApp();
 
-
 const pwamenu = computed(() => {
   if (!webApp) {
     return menu;
