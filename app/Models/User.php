@@ -56,7 +56,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         'image',
     ];
 
-    protected $with = ['settings', 'chat'];
+//    protected $with = ['settings', 'chat'];
 
     /**
      * Get the attributes that should be cast.
