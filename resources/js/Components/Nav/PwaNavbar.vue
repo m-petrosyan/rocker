@@ -10,8 +10,12 @@ const user = computed(() => page.props.auth?.user);
 const webApp = isWebApp();
 
 
-const pwamenu = webApp
-  ? menu
+const pwamenu = computed(() => {
+  if (!webApp) {
+    return menu;
+  }
+
+  return menu
     .filter(item => {
       if (user.value?.settings?.country === 'ge') {
         return item.name !== 'Bands' && item.name !== 'Galleries' && item.name !== 'Bot';
@@ -23,8 +27,8 @@ const pwamenu = webApp
         return { ...item, url: 'profile.events.create' };
       }
       return item;
-    })
-  : menu;
+    });
+});
 </script>
 
 <template>

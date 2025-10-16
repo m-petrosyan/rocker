@@ -20,7 +20,7 @@ defineProps({
             description: 'Browse Armenian rock and metal concert galleries with photos from live shows, festivals, and underground events in Yerevan and across Armenia.',
             keywords: 'Armenian rock and metal concert galleries, including photos from live shows, festivals, underground events, and music photography in Yerevan and across Armenia. ' + galleries.data.map(gallery => gallery.title).join(', ')
         }">
-    <template #header> Events</template>
+    <template #header> Galleries</template>
     <template #h1> Photo Galleries of Armenian Rock & Metal Concerts</template>
     <GalleryWrapper :galleries="galleries.data" :isAdmin="auth.isAdmin" user add />
   </GuestLayout>

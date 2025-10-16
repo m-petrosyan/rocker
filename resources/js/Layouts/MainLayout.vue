@@ -58,5 +58,5 @@ onMounted(() => {
   <slot />
   <Footer />
   <Preloader v-if="webApp && !page" />
-  <PwaNavbar v-if="isPWA || webApp" />
+  <PwaNavbar />
 </template>
