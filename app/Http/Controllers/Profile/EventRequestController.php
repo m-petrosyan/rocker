@@ -27,6 +27,8 @@ class EventRequestController
 
     public function update(Event $event, NewEventRequest $request)
     {
-        $event->status()->first()->update($request->validated());
+        $event->status()->first()->update(array_merge(['user_id' => auth()->id()], $request->validated()));
+
+        return redirect()->route('profile.events.requests');
     }
 }
