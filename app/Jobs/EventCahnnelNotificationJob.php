@@ -83,13 +83,13 @@ class EventCahnnelNotificationJob implements ShouldQueue
                 ->chat($channel);
         }
 
-        Log::info($event->poster['thumb'] ?? $event->poster);
-        $photoUrl = $event->poster['thumb'] ?? $event->poster;
-        $telegraph
-            ->photo($photoUrl)
-            ->html($content)
-            ->keyboard($keyboard)
-            ->send();
+        Log::info($event->poster['thumb']);
+//        $photoUrl = $event->poster['thumb'] ?? $event->poster;
+//        $telegraph
+//            ->photo($photoUrl)
+//            ->html($content)
+//            ->keyboard($keyboard)
+//            ->send();
     }
 
     private function set_city(Event $event): string
