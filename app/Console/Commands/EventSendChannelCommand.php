@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\EventCahnnelNotification;
+use App\Jobs\EventCahnnelNotificationJob;
 use App\Models\Event;
 use Illuminate\Console\Command;
 
@@ -25,12 +25,12 @@ class EventSendChannelCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         $id = $this->ask('Event id');
         $event = Event::findOrFail($id);
 
 
-        dispatch(new EventCahnnelNotification($event));
+        dispatch(new EventCahnnelNotificationJob($event));
     }
 }
