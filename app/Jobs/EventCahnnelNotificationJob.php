@@ -82,7 +82,8 @@ class EventCahnnelNotificationJob implements ShouldQueue
             $telegraph = $telegraph
                 ->chat($channel);
         }
-
+        Log::info($event);
+        Log::info('----');
         Log::info($event->poster['thumb']);
 //        $photoUrl = $event->poster['thumb'] ?? $event->poster;
 //        $telegraph
