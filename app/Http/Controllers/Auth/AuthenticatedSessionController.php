@@ -68,8 +68,7 @@ class AuthenticatedSessionController extends Controller
         if ($userBot && $userBot->user) {
             auth()->loginUsingId($userBot->user->id);
             $request->session()->regenerate();
-            Log::info('Redirecting to intended URL: '.$url);
-
+ 
 //            return response()->json([
 //                'redirect' => session()->pull('url.intended', route('home')),
 //            ]);
