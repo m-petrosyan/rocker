@@ -3,7 +3,8 @@
 namespace App\Observers;
 
 use App\Enums\EventStatusEnum;
-use App\Jobs\EventCahnnelNotification;
+use App\Jobs\EventCahnnelNotificationJob;
+use App\Jobs\EventChannelNotification;
 use App\Jobs\EventNotificationDeleteJob;
 use App\Jobs\EventNotificationJob;
 use App\Models\EventStatus;
@@ -27,7 +28,7 @@ class EventStatusObserver
                 dispatch(new EventNotificationJob($eventStatus->event, $user));
             }
 
-            dispatch(new EventCahnnelNotification($eventStatus->event));
+            dispatch(new EventCahnnelNotificationJob($eventStatus->event));
         } else {
             $moderators = User::role(['moderator', 'admin'])->whereHas('chat')->get();
             foreach ($moderators as $user) {
@@ -58,7 +59,7 @@ class EventStatusObserver
                 ->message("Thank you! The event has been added and will be sent to {$usersCount} 🤘 people.")
                 ->send();
 
-            dispatch(new EventCahnnelNotification($eventStatus->event));
+            dispatch(new EventCahnnelNotificationJob($eventStatus->event));
         } elseif ($eventStatus->isDirty('status') && $eventStatus->status === EventStatusEnum::REJECTED->value) {
             $eventStatus->event->user?->chat
                 ->message("❌ Request to add event rejected, reason: $eventStatus->reason")

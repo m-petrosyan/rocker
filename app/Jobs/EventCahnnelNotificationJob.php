@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Event;
+use App\Traits\EventFormatingTrait;
 use DefStudio\Telegraph\Facades\Telegraph;
 use DefStudio\Telegraph\Keyboard\Button;
 use DefStudio\Telegraph\Keyboard\Keyboard;
@@ -11,11 +12,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 
-class EventCahnnelNotification implements ShouldQueue
+class EventCahnnelNotificationJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, EventFormatingTrait;
 
     public Event $event;
 
@@ -65,24 +65,17 @@ class EventCahnnelNotification implements ShouldQueue
 
         $content = $this->getEventContent($event);
 
-        try {
-            $telegraph = Telegraph::bot(config('telegraph.configs.token'))
-                ->chat($channel)
-                ->photo($event->poster)
-                ->html($content)
-                ->keyboard($keyboard);
+        $telegraph = Telegraph::bot(config('telegraph.configs.token'))
+            ->chat($channel)
+            ->photo($event->poster)
+            ->html($content)
+            ->keyboard($keyboard);
 
-            if ($thread_id !== null) {
-                $telegraph->withData('message_thread_id', $thread_id);
-            }
-
-            $telegraph->send();
-        } catch (\Throwable $e) {
-            Log::error('Telegram send error', [
-                'event_id' => $event->id,
-                'message' => $e->getMessage(),
-            ]);
+        if ($thread_id !== null) {
+            $telegraph->withData('message_thread_id', $thread_id);
         }
+
+        $telegraph->send();
     }
 
     private function set_city(Event $event): string
@@ -90,12 +83,5 @@ class EventCahnnelNotification implements ShouldQueue
         $default = $event->country === 'am' ? 'yerevan' : 'tbilisi';
 
         return strtolower($event->city ?? $default);
-    }
-
-    private function getEventContent(Event $event): string
-    {
-        return '<b>'.htmlspecialchars($event->title).'</b>'.
-            "\n".htmlspecialchars($event->description ?? '').
-            "\n<i>Дата: ".htmlspecialchars($event->date ?? '').'</i>';
     }
 }
