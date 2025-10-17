@@ -2,7 +2,6 @@
 
 namespace App\Telegram;
 
-use App\Events\EventNotification;
 use App\Jobs\EventNotificationJob;
 use App\Models\Event;
 use App\Repositories\EventRepository;
@@ -78,4 +77,10 @@ trait TelegramEventsHandler
         }
     }
 
+    public function get_location(): void
+    {
+        $this->chat->action(ChatActions::FIND_LOCATION)->send();
+
+        $this->chat->location($this->data->get('latitude'), $this->data->get('longitude'))->send();
+    }
 }
