@@ -41,10 +41,12 @@ class TelegraphHandler extends WebhookHandler
     public function start(): void
     {
         $this->reply("🤘");
-
+        Log::info(111);
         $this->chat->action(ChatActions::TYPING)->send();
+        Log::info(222);
 
         $this->reply("👋 Welcome to Rocker Bot!");
+        Log::info(333);
 
 //        auth()->loginUsingId($this->chat->user->id);
 
