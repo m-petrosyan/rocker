@@ -32,13 +32,13 @@ trait TelegramSettingsHandler
         $buttons = [
             Button::make('back')->action('settings'),
         ];
-        Log::info('countries');
+        Log::info('countries1');
         foreach (trans('settings.countries') as $icon => $value) {
             Log::info('auth37', [auth()->user()]);
             $checked = auth()?->user()?->settings?->country === $value ? ' ☑️' : '';
 //            $checked = auth()->user()?->load(['settings', 'chat'])->settings?->country === $value ? ' ☑️' : '';
 
-            Log::info('78744');
+            Log::info('countries2');
 
             array_unshift(
                 $buttons,
@@ -46,6 +46,7 @@ trait TelegramSettingsHandler
                     ->param('key', 'country')->param('value', $value)
             );
         }
+        Log::info('countries3');
 
         $lastMessageId = $this->prepareMessageParams($this->chat->chat_id, $this->message?->id());
 
