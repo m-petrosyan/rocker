@@ -3,6 +3,7 @@ import ProfileLayout from '@/Layouts/ProfileLayout.vue';
 import NavLink from '@/Components/NavLink.vue';
 import BotIcon from '@/Components/Icons/BotIcon.vue';
 import WebSiteIcon from '@/Components/Icons/WebSiteIcon.vue';
+import Pagination from '@/Components/Elemtns/Pagination.vue';
 
 defineProps({
   users: {
@@ -90,5 +91,6 @@ defineProps({
         </div>
       </NavLink>
     </div>
+    <Pagination :links="users?.links" />
   </ProfileLayout>
 </template>
