@@ -12,5 +12,6 @@ if ($userId) {
     if ($userBot) {
         \Illuminate\Support\Facades\Log::info('$userBot', [$userBot->user?->id]);
         auth()->loginUsingId($userBot->user?->id);
+        \Illuminate\Support\Facades\Log::info('auth()->id()', ['auth_id' => auth()->id()]);
     }
 }
