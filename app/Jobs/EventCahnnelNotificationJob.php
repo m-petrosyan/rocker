@@ -82,15 +82,16 @@ class EventCahnnelNotificationJob implements ShouldQueue
             $telegraph = $telegraph
                 ->chat($channel);
         }
+
         Log::info($event);
         Log::info('----');
         Log::info($event->poster['thumb']);
-//        $photoUrl = $event->poster['thumb'] ?? $event->poster;
-//        $telegraph
-//            ->photo($photoUrl)
-//            ->html($content)
-//            ->keyboard($keyboard)
-//            ->send();
+
+        $telegraph
+            ->photo($event->poster['thumb'])
+            ->html($content)
+            ->keyboard($keyboard)
+            ->send();
     }
 
     private function set_city(Event $event): string
