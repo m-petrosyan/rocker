@@ -35,7 +35,7 @@ trait TelegramSettingsHandler
         Log::info('countries');
         foreach (trans('settings.countries') as $icon => $value) {
             Log::info('auth37', [auth()->user()]);
-            $checked = auth()->user()?->settings?->country === $value ? ' ☑️' : '';
+            $checked = auth()?->user()?->settings?->country === $value ? ' ☑️' : '';
 //            $checked = auth()->user()?->load(['settings', 'chat'])->settings?->country === $value ? ' ☑️' : '';
 
             Log::info('78744');
