@@ -7,7 +7,7 @@ import TextInput from '@/Components/Forms/TextInput.vue';
 import { Link, useForm } from '@inertiajs/vue3';
 import AuthLayouth from '@/Layouts/AuthLayouth.vue';
 import GoogleLogin from '@/Components/Forms/GoogleLogin.vue';
-import { isWebApp } from '@/Helpers/setAppUser.js';
+import { isWebApp, useTelegramAuth } from '@/Helpers/setAppUser.js';
 
 defineProps({
   canResetPassword: {
@@ -29,6 +29,8 @@ const submit = () => {
     onFinish: () => form.reset('password')
   });
 };
+
+useTelegramAuth(true);
 
 const webApp = isWebApp();
 </script>

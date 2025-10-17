@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { router } from '@inertiajs/vue3';
 
-export function useTelegramAuth() {
+export function useTelegramAuth(redirect = false) {
   const initData = isWebApp(true);
   if (initData) {
     const params = new URLSearchParams(initData);
@@ -9,10 +10,10 @@ export function useTelegramAuth() {
       const user = JSON.parse(decodeURIComponent(userParam));
       axios.post('/telegram/auth', { id: user.id })
         .then(res => {
-          // if (res.data?.redirect) {
-          //     const url = new URL(res.data.redirect, window.location.origin);
-          //     router.visit(url.pathname + url.search);
-          // }
+          if (redirect && res.data?.redirect) {
+            const url = new URL(res.data.redirect, window.location.origin);
+            router.visit(url.pathname + url.search);
+          }
         });
     }
   }
