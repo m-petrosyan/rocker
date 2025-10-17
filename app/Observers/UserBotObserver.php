@@ -18,14 +18,16 @@ class UserBotObserver
         while ($attempt <= $maxAttempts) {
             $data = $userBot->memberInfo($userBot->chat_id)->user()->toArray();
 
-            $data['name'] = $data['first_name'].' '.$data['last_name'];
 
+            $data['name'] = $data['first_name'].' '.$data['last_name'];
+            Log::info('data', [$data]);
             if (User::where('username', $data['username'])->exists()) {
                 $data['username'] = $data['username'].'_'.strtolower(uniqid());
             }
 
             try {
                 $user = User::query()->create(Arr::only($data, ['username', 'name']))->assignRole('user');
+                Log::info('create user', ['user_id' => $user->id, 'attempt' => $attempt]);
             } catch (\Exception $e) {
                 Log::error(
                     'Ошибка создания пользователя',
