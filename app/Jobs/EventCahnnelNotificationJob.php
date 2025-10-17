@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Models\Event;
 use App\Traits\EventFormatingTrait;
+use DefStudio\Telegraph\Facades\Telegraph;
 use DefStudio\Telegraph\Keyboard\Button;
 use DefStudio\Telegraph\Keyboard\Keyboard;
 use Illuminate\Bus\Queueable;
@@ -18,10 +19,12 @@ class EventCahnnelNotificationJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, EventFormatingTrait;
 
     public Event $event;
+    public string $mode;
 
-    public function __construct(Event $event)
+    public function __construct(Event $event, string $mode = 'real')
     {
         $this->event = $event;
+        $this->mode = $mode;
     }
 
     public function handle(): void
@@ -47,27 +50,29 @@ class EventCahnnelNotificationJob implements ShouldQueue
         $channel = null;
         $thread_id = null;
 
-        if ($event->country === 'am') {
-            if ($city === 'gyumri') {
-                $channel = '-1001935369399';
-            } else {
-                $channel = '-1001583147579';
-                $thread_id = 97732;
-            }
+        if ($this->mode === 'testing') {
+            $channel = '-1002493394276';
         } else {
-            if ($city === 'batumi') {
-                $channel = '-1001855943000';
+            if ($event->country === 'am') {
+                if ($city === 'gyumri') {
+                    $channel = '-1001935369399';
+                } else {
+                    $channel = '-1001583147579';
+                    $thread_id = 97732;
+                }
             } else {
-                $channel = '-1001681397226';
-                $thread_id = 1139;
+                if ($city === 'batumi') {
+                    $channel = '-1001855943000';
+                } else {
+                    $channel = '-1001681397226';
+                    $thread_id = 1139;
+                }
             }
         }
 
-
         $content = $this->getEventContent($event);
 
-        $telegraph = $this->telegram
-            ->bot(config('telegraph.configs.token'));
+        $telegraph = Telegraph::bot(config('telegraph.configs.token'));
 
         if ($thread_id !== null) {
             $telegraph = $telegraph
@@ -77,11 +82,14 @@ class EventCahnnelNotificationJob implements ShouldQueue
             $telegraph = $telegraph
                 ->chat($channel);
         }
-        Log::info($event->poster['thumb']);
+
+        Log::info($event->poster['thumb'] ?? $event->poster);
+        $photoUrl = $event->poster['thumb'] ?? $event->poster;
         $telegraph
-            ->photo($event->poster['thumb'])
+            ->photo($photoUrl)
             ->html($content)
-            ->keyboard($keyboard)->send();
+            ->keyboard($keyboard)
+            ->send();
     }
 
     private function set_city(Event $event): string
