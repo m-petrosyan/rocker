@@ -94,6 +94,8 @@ trait EventFormatingTrait
             $buttons[] = Button::make('Rocker link')
                 ->url(route('events.show', $event->id));
         }
+
+        Log::info('cordinates---', [$event->cordinates]);
 //        Log::info('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa---');
 //        if ($event->cordinates) {
 //            Log::info('Event coordinates: '.json_encode($event->cordinates));
