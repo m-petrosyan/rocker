@@ -10,7 +10,7 @@ if ($userId) {
     $userBot = UserBot::query()->where('chat_id', $userId)->first();
     \Illuminate\Support\Facades\Log::info('$userBot', [$userBot]);
     if ($userBot) {
-        \Illuminate\Support\Facades\Log::info('$userBot', $userBot->user?->id);
+        \Illuminate\Support\Facades\Log::info('$userBot', [$userBot->user?->id]);
         auth()->loginUsingId($userBot->user?->id);
     }
 }
