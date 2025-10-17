@@ -4,8 +4,8 @@ import FleshNotification from '@/Components/Messages/FleshNotification.vue';
 import Footer from '@/Components/Footer/Footer.vue';
 import PwaNavbar from '@/Components/Nav/PwaNavbar.vue';
 import PreloaderPwa from '@/Components/Preloader/PreloaderPwa.vue';
-import { computed, onMounted, ref } from 'vue';
-import { isWebApp } from '@/Helpers/setAppUser.js';
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
+import { isWebApp, useTelegramAuth } from '@/Helpers/setAppUser.js';
 import defaultImg from '/public/screenshots/desktop-screenshot.png';
 import Preloader from '@/Components/Icons/Preloader.vue';
 
@@ -31,6 +31,11 @@ const cleanDescription = computed(() => {
 
 const isPWA = ref(false);
 const webApp = isWebApp();
+
+
+onBeforeUnmount(() => {
+  useTelegramAuth();
+});
 
 onMounted(() => {
   isPWA.value =
