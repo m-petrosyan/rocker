@@ -12,7 +12,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 
 class EventCahnnelNotificationJob implements ShouldQueue
 {
@@ -84,10 +83,6 @@ class EventCahnnelNotificationJob implements ShouldQueue
             $telegraph = $telegraph
                 ->chat($channel);
         }
-
-        Log::info($event);
-        Log::info('----');
-        Log::info($event->poster['thumb']);
 
         $telegraph
             ->photo($event->poster['thumb'])
