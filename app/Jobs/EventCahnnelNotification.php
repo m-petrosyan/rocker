@@ -62,6 +62,7 @@ class EventCahnnelNotification implements ShouldQueue
                 $thread_id = 1139;
             }
         }
+
         $content = $this->getEventContent($event);
 
         try {
@@ -70,7 +71,6 @@ class EventCahnnelNotification implements ShouldQueue
                 ->photo($event->poster)
                 ->html($content)
                 ->keyboard($keyboard);
-
 
             if ($thread_id !== null) {
                 $telegraph->withData('message_thread_id', $thread_id);
@@ -87,6 +87,15 @@ class EventCahnnelNotification implements ShouldQueue
 
     private function set_city(Event $event): string
     {
-        return strtolower($event->city ?? 'yerevan');
+        $default = $event->country === 'am' ? 'yerevan' : 'tbilisi';
+
+        return strtolower($event->city ?? $default);
+    }
+
+    private function getEventContent(Event $event): string
+    {
+        return '<b>'.htmlspecialchars($event->title).'</b>'.
+            "\n".htmlspecialchars($event->description ?? '').
+            "\n<i>Дата: ".htmlspecialchars($event->date ?? '').'</i>';
     }
 }
