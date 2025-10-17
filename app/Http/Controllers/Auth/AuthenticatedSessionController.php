@@ -61,6 +61,11 @@ class AuthenticatedSessionController extends Controller
 
     public function tgWebAuth(Request $request)
     {
+        $intended = $request->input('intended');
+        if ($intended && !session()->has('url.intended')) {
+            session()->flash('url.intended', $intended); // Сохрани, если не установлен
+        }
+
         $userBot = UserBot::query()
             ->where('chat_id', $request->input('id'))
             ->first();
@@ -68,10 +73,6 @@ class AuthenticatedSessionController extends Controller
         if ($userBot && $userBot->user) {
             auth()->loginUsingId($userBot->user->id);
             $request->session()->regenerate();
- 
-//            return response()->json([
-//                'redirect' => session()->pull('url.intended', route('home')),
-//            ]);
 
             return response()->json([
                 'redirect' => tap(session()->pull('url.intended', route('home')), function ($url) {

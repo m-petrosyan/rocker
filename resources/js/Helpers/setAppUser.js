@@ -8,7 +8,11 @@ export function useTelegramAuth(redirect = false) {
     const userParam = params.get('user');
     if (userParam) {
       const user = JSON.parse(decodeURIComponent(userParam));
-      axios.post('/telegram/auth', { id: user.id })
+      const intended = window.location.pathname + window.location.search; // Добавь это
+      axios.post('/telegram/auth', {
+        id: user.id,
+        intended: intended  // Отправь intended
+      })
         .then(res => {
           if (redirect && res.data?.redirect) {
             const url = new URL(res.data.redirect, window.location.origin);
