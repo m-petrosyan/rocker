@@ -4,7 +4,6 @@ namespace App\Jobs;
 
 use App\Models\Event;
 use App\Traits\EventFormatingTrait;
-use DefStudio\Telegraph\Facades\Telegraph;
 use DefStudio\Telegraph\Keyboard\Button;
 use DefStudio\Telegraph\Keyboard\Keyboard;
 use Illuminate\Bus\Queueable;
@@ -63,19 +62,25 @@ class EventCahnnelNotificationJob implements ShouldQueue
             }
         }
 
+
         $content = $this->getEventContent($event);
 
-        $telegraph = Telegraph::bot(config('telegraph.configs.token'))
-            ->chat($channel)
-            ->photo($event->poster['thumb'])
-            ->html($content)
-            ->keyboard($keyboard);
+        $telegraph = $this->telegram
+            ->bot(config('telegraph.configs.token'));
 
         if ($thread_id !== null) {
-            $telegraph->withData('message_thread_id', $thread_id);
+            $telegraph = $telegraph
+                ->chat($channel)
+                ->withData('message_thread_id', $thread_id);
+        } else {
+            $telegraph = $telegraph
+                ->chat($channel);
         }
 
-        $telegraph->send();
+        $telegraph
+            ->photo($event->poster['thumb'])
+            ->html($content)
+            ->keyboard($keyboard)->send();
     }
 
     private function set_city(Event $event): string
