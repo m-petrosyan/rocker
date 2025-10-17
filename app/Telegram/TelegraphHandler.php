@@ -46,7 +46,7 @@ class TelegraphHandler extends WebhookHandler
 
         $this->reply("👋 Welcome to Rocker Bot!");
 
-        auth()->loginUsingId($this->chat->user->id);
+//        auth()->loginUsingId($this->chat->user->id);
 
         $this->get_countries();
     }
