@@ -13,6 +13,7 @@ class UserRepository
         return User::with('roles')
             ->withCount(['bands', 'events', 'blogs', 'galleries'])
             ->orderByRaw('EXISTS(SELECT 1 FROM user_bots WHERE user_bots.user_id = users.id)')
+            ->orderBy('created_at', 'desc')
             ->paginate($count);
 
 
