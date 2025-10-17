@@ -65,7 +65,7 @@ class EventCahnnelNotification implements ShouldQueue
         $content = $this->getEventContent($event);
 
         try {
-            $telegraph = Telegraph::bot('YOUR_BOT_TOKEN')
+            $telegraph = Telegraph::bot(config('telegraph.configs.token'))
                 ->chat($channel)
                 ->photo($event->poster)
                 ->html($content)
