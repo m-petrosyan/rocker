@@ -67,7 +67,7 @@ class EventCahnnelNotificationJob implements ShouldQueue
 
         $telegraph = Telegraph::bot(config('telegraph.configs.token'))
             ->chat($channel)
-            ->photo($event->poster)
+            ->photo($event->poster['thumb'])
             ->html($content)
             ->keyboard($keyboard);
 
