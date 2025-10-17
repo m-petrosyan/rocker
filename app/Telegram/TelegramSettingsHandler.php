@@ -3,6 +3,7 @@
 namespace App\Telegram;
 
 use DefStudio\Telegraph\Keyboard\Button;
+use Illuminate\Support\Facades\Log;
 
 
 trait TelegramSettingsHandler
@@ -31,9 +32,10 @@ trait TelegramSettingsHandler
         $buttons = [
             Button::make('back')->action('settings'),
         ];
-
+        Log::info('countries');
         foreach (trans('settings.countries') as $icon => $value) {
             $checked = auth()->user()->load(['settings', 'chat'])->settings?->country === $value ? ' ☑️' : '';
+            Log::info('78744');
 
             array_unshift(
                 $buttons,
