@@ -94,13 +94,13 @@ trait EventFormatingTrait
             $buttons[] = Button::make('Rocker link')
                 ->url(route('events.show', $event->id));
         }
-        Log::info('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa---');
-        if ($event->cordinates) {
-            Log::info('Event coordinates: '.json_encode($event->cordinates));
-            $buttons[] = Button::make('Get map')->action('get_location')
-                ->param('latitude', substr($event->cordinates['latitude'], 0, 10))
-                ->param('longitude', substr($event->cordinates['longitude'], 0, 10));
-        }
+//        Log::info('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa---');
+//        if ($event->cordinates) {
+//            Log::info('Event coordinates: '.json_encode($event->cordinates));
+//            $buttons[] = Button::make('Get map')->action('get_location')
+//                ->param('latitude', substr($event->cordinates['latitude'], 0, 10))
+//                ->param('longitude', substr($event->cordinates['longitude'], 0, 10));
+//        }
 
         return $buttons;
     }
