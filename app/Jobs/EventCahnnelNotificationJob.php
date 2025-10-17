@@ -34,17 +34,6 @@ class EventCahnnelNotificationJob implements ShouldQueue
         $keyboard = Keyboard::make();
         $buttons = [];
 
-        if (!empty($event->link)) {
-            $buttons[] = Button::make('Event link')->url($event->link);
-        }
-
-        if (!empty($event->ticket)) {
-            $buttons[] = Button::make('Tickets')->url($event->ticket);
-        }
-
-        if (!empty($buttons)) {
-            $keyboard->buttons($buttons);
-        }
 
         $city = $this->set_city($event);
         $channel = null;
@@ -60,6 +49,7 @@ class EventCahnnelNotificationJob implements ShouldQueue
                     $channel = '-1001583147579';
                     $thread_id = 97732;
                 }
+                $buttons[] = Button::make('Rocker link')->url(route('events.show', $event->id));
             } else {
                 if ($city === 'batumi') {
                     $channel = '-1001855943000';
@@ -68,6 +58,18 @@ class EventCahnnelNotificationJob implements ShouldQueue
                     $thread_id = 1139;
                 }
             }
+        }
+
+        if (!empty($event->link)) {
+            $buttons[] = Button::make('Event link')->url($event->link);
+        }
+
+        if (!empty($event->ticket)) {
+            $buttons[] = Button::make('Tickets')->url($event->ticket);
+        }
+
+        if (!empty($buttons)) {
+            $keyboard->buttons($buttons);
         }
 
         $content = $this->getEventContent($event);
