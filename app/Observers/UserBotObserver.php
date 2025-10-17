@@ -38,7 +38,7 @@ class UserBotObserver
 
             if ($user) {
                 if ($userBot->update(['user_id' => $user->id])) {
-                    $user->settings()->create(['language_code' => $data['language_code']]);
+                    $user->settings()->create(['language_code' => $data['language_code'], 'genre' => 'all']);
                 } else {
                     Log::error('Ошибка обновления userBot', ['user_id' => $user->id, 'attempt' => $attempt]);
                 }
