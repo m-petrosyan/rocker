@@ -10,9 +10,12 @@ class UserRepository
 {
     public static function usersList($count = 100): LengthAwarePaginator
     {
-        return User::with('roles')->withCount(['bands', 'events', 'blogs', 'galleries'])
-            ->orderBy('created_at', 'desc')
-            ->paginate($count, ['id', 'name', 'email']);
+        return User::with('roles')
+            ->withCount(['bands', 'events', 'blogs', 'galleries'])
+            ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+            ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
+            ->orderBy('roles.id', 'asc')
+            ->paginate($count);
 
 
 //        return User::query()
