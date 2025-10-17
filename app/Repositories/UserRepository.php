@@ -14,6 +14,7 @@ class UserRepository
             ->withCount(['bands', 'events', 'blogs', 'galleries'])
             ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
             ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
+            ->orderByRaw('EXISTS(SELECT 1 FROM user_bots WHERE user_bots.user_id = users.id) DESC')
             ->orderBy('roles.id', 'asc')
             ->paginate($count);
 
