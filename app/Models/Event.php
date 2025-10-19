@@ -140,6 +140,7 @@ class Event extends Model implements Viewable, HasMedia
         $this->addMediaConversion('large')
             ->width(1280)
             ->quality(90)
-            ->format('webp');
+            ->format('webp')
+            ->nonQueued();
     }
 }
