@@ -57,7 +57,6 @@ const pwamenu = computed(() => {
       <Link
         :href="$page.props.auth.user ? route('profile.index') : route('login')"
         class="p-2 top-2 right-2"
-        :class="{'absolute' : !webApp}"
       >
         <ProfileIcon />
       </Link>
