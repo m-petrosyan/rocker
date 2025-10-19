@@ -29,6 +29,8 @@ class EventStatusObserver
             }
 
             dispatch(new EventCahnnelNotificationJob($eventStatus->event));
+
+            $eventStatus->event->refreshNotifyCount($this->usersList($eventStatus->event, true));
         } else {
             $moderators = User::role(['moderator', 'admin'])->whereHas('chat')->get();
             foreach ($moderators as $user) {
@@ -52,14 +54,15 @@ class EventStatusObserver
                 dispatch(new EventNotificationJob($eventStatus->event, $user));
             }
 
+            dispatch(new EventCahnnelNotificationJob($eventStatus->event));
+
             $usersCount = $this->usersList($eventStatus->event, true);
-            $eventStatus->event->update(['notify_count' => $usersCount]);
+
+            $eventStatus->event->refreshNotifyCount($usersCount);
 
             $eventStatus->event->user?->chat
                 ->message("Thank you! The event has been added and will be sent to {$usersCount} 🤘 people.")
                 ->send();
-
-            dispatch(new EventCahnnelNotificationJob($eventStatus->event));
         } elseif ($eventStatus->isDirty('status') && $eventStatus->status === EventStatusEnum::REJECTED->value) {
             $eventStatus->event->user?->chat
                 ->message("❌ Request to add event rejected, reason: $eventStatus->reason")

@@ -5,7 +5,6 @@ namespace App\Traits;
 use App\Enums\EventGenreEnum;
 use App\Enums\EventTypeEnum;
 use DefStudio\Telegraph\Keyboard\Button;
-use Illuminate\Support\Facades\Log;
 
 
 trait EventFormatingTrait
@@ -89,7 +88,7 @@ trait EventFormatingTrait
         if (!empty($event->ticket)) {
             $buttons[] = Button::make('Tickets')->url($event->ticket);
         }
-        Log::info('bbbb---');
+
         if ($event->country === 'am') {
             $buttons[] = Button::make('Rocker link')
                 ->url(route('events.show', $event->id));

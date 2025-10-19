@@ -64,6 +64,11 @@ class Event extends Model implements Viewable, HasMedia
         'updated_at',
     ];
 
+    public function refreshNotifyCount($count): void
+    {
+        $this->update(['notify_count' => $count]);
+    }
+
     public function getStatusNameAttribute(): string
     {
         return strtolower(EventStatusEnum::from($this->status?->status)->name);
