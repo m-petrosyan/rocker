@@ -34,7 +34,7 @@ class EventCreateRequest extends FormRequest
             'cordinates' => ['nullable', 'array'],
             'cordinates.*' => ['required', 'numeric'],
             'genre' => ['required', Rule::in(['rock', 'metal', 'all'])],
-            'price' => ['nullable', 'string', 'max:15'],
+            'price' => ['nullable', 'string', 'max:20'],
             'link' => ['nullable', 'url', 'max:1000'],
             'ticket' => ['nullable', 'url', 'max:1000'],
             'start_date' => ['required', 'date', 'after_or_equal:today'],
@@ -55,7 +55,7 @@ class EventCreateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'poster_file.mimetypes' => 'Файл должен быть в формате JPEG, JPG, WEBP или PNG. GIF не поддерживается.',
+//            'poster_file.mimetypes' => 'Файл должен быть в формате JPEG, JPG, WEBP или PNG. GIF не поддерживается.',
         ];
     }
 }
