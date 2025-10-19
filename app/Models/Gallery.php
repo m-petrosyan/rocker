@@ -106,7 +106,8 @@ class Gallery extends Model implements Viewable, HasMedia
             ->quality(80)
             ->sharpen(7)
             ->optimize()
-            ->format('webp');
+            ->format('webp')
+            ->nonQueued();
 
         $this->addMediaConversion('large')
             ->height(900)
