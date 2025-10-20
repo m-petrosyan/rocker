@@ -60,5 +60,5 @@ rollback steps
 > sql import
 
 ```
-mysql -u root -p rocker < mysql-rocker.sql
+mysql -u root -p rocker < db-dumps/mysql-rocker.sql
 ```
