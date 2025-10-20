@@ -3,7 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Models\Event;
+use App\Models\EventStatus;
 use App\Models\User;
+use App\Models\UserSettings;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
@@ -41,15 +43,13 @@ class MargeUsersCommand extends Command
             Event::where('user_id', $secondaryUser->id)
                 ->update(['user_id' => $primaryUser->id]);
 
+            UserSettings::where('user_id', $secondaryUser->id)
+                ->update(['user_id' => $primaryUser->id]);
+
+            EventStatus::where('user_id', $secondaryUser->id)
+                ->update(['user_id' => $primaryUser->id]);
+
             DB::table('user_bots')
-                ->where('user_id', $secondaryUser->id)
-                ->update(['user_id' => $primaryUser->id]);
-
-            DB::table('user_settings')
-                ->where('user_id', $secondaryUser->id)
-                ->update(['user_id' => $primaryUser->id]);
-
-            DB::table('event_status')
                 ->where('user_id', $secondaryUser->id)
                 ->update(['user_id' => $primaryUser->id]);
 
