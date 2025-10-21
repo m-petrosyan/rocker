@@ -8,6 +8,7 @@ import TextEditor from '@/Components/Forms/TextEditor.vue';
 import Multiselect from '@/Components/Forms/MultiSelect.vue';
 import RadioSwichButton from '@/Components/Forms/RadioSwichButton.vue';
 import PDFViewer from '@/Components/Tools/PDFViewer.vue';
+import ErrorMessages from '@/Components/Messages/ErrorMessages.vue';
 
 const props = defineProps({
   blog: {
@@ -75,7 +76,8 @@ const createBlog = () => {
 
 <template>
   <ProfileLayout :meta="{title: 'Blog create'}">
-    <form @submit.prevent="createBlog" class="flex flex-col gap-y-2">
+    <ErrorMessages :messages="$page.props.errors" />
+    <form @submit.prevent="createBlog" class="flex flex-col gap-y-2 mt-4">
       <div class="flex flex-col gap-4">
         <div class="flex md:flex-row flex-col w-full gap-2">
           <Preview

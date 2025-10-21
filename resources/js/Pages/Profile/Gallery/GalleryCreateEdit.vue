@@ -9,6 +9,7 @@ import ProfileLayout from '@/Layouts/ProfileLayout.vue';
 import GoogleAutocomplate from '@/Components/Maps/GoogleAutocomplate.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SuccessMessages from '@/Components/Messages/SuccessMessages.vue';
+import ErrorMessages from '@/Components/Messages/ErrorMessages.vue';
 
 const props = defineProps({
   gallery: {
@@ -105,7 +106,8 @@ const submitGallery = () => {
           page</a></b> if they cover the entire event. Photo credits are always included, and image quality is
           never reduced or cropped.
         </SuccessMessages>
-        <div class="flex flex-col-reverse md:flex-row gap-4">
+        <ErrorMessages :messages="$page.props.errors" />
+        <div class="flex flex-col-reverse md:flex-row gap-4 mt-4">
           <div class="w-full md:w-1/2">
             <DatePicker
               :flow="['calendar']"

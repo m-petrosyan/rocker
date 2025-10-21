@@ -11,6 +11,7 @@ use App\Http\Controllers\Profile\EventController;
 use App\Http\Controllers\Profile\EventRequestController;
 use App\Http\Controllers\Profile\GalleryController;
 use App\Http\Controllers\Profile\MediaController;
+use App\Http\Controllers\Profile\MergeProfilesController;
 use App\Http\Controllers\Profile\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,8 +21,7 @@ Route::middleware(['auth', 'email.verified.if.present', 'role:admin|moderator|or
         Route::get('event/requests', [EventRequestController::class, 'index'])->name('events.requests');
         Route::get('event/{event}/requests', [EventRequestController::class, 'show'])->name('event.requests');
         Route::put('event/{event}/requests', [EventRequestController::class, 'update'])->name('event.request.update');
-    }
-    );
+    });
 
 
 Route::middleware(['auth', 'email.verified.if.present'])->as('profile.')->prefix('profile')->group(function () {
@@ -36,6 +36,8 @@ Route::middleware(['auth', 'email.verified.if.present'])->as('profile.')->prefix
     Route::post('image', [ProfileController::class, 'updateImage'])->name('media.update');
     Route::post('media', [MediaController::class, 'store'])->name('media.store');
     Route::delete('media/{media}', [MediaController::class, 'destroy'])->name('media.destroy');
+    Route::post('merge/code', [MergeProfilesController::class, 'getCode'])->name('merge.code');
+    Route::post('merge', [MergeProfilesController::class, 'mergeBot'])->name('merge.bot');
 });
 
 Route::middleware('auth')->group(function () {

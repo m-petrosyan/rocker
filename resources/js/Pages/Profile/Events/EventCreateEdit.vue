@@ -9,6 +9,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import ProfileLayout from '@/Layouts/ProfileLayout.vue';
 import SuccessMessages from '@/Components/Messages/SuccessMessages.vue';
 import MultiSelect from '@/Components/Forms/MultiSelect.vue';
+import ErrorMessages from '@/Components/Messages/ErrorMessages.vue';
 
 const props = defineProps({
   event: {
@@ -98,7 +99,8 @@ const selectedCountry = computed(() => form.country === 'am' ? 'Armenia' : form.
           <a href="https://t.me/gyumrimetal" target="_blank">Rock Metal Gyumri</a>
         </div>
       </SuccessMessages>
-      <form @submit.prevent="submitEvent" class="flex flex-col gap-y-2">
+      <ErrorMessages :messages="$page.props.errors" />
+      <form @submit.prevent="submitEvent" class="flex flex-col gap-y-2 mt-4">
         <div class="flex flex-col md:flex-row gap-4">
           <div class="w-full md:w-1/2">
             <Preview

@@ -10,6 +10,8 @@ import LocationIcon from '@/Components/Icons/LocationIcon.vue';
 import NotificationIcon from '@/Components/Icons/NotificationIcon.vue';
 import MusicIcon from '@/Components/Icons/MusicIcon.vue';
 import { watch } from 'vue';
+import MergeAccounts from '@/Components/Profile/MergeAccounts.vue';
+import ErrorMessages from '@/Components/Messages/ErrorMessages.vue';
 
 const props = defineProps({
   user: {
@@ -85,6 +87,7 @@ const event_notify = [
     name: 'disable'
   }
 ];
+
 </script>
 
 <template>
@@ -92,8 +95,9 @@ const event_notify = [
     <form @submit.prevent="submitSettings" class="px-4 md:px-0">
       <Logout owner />
       <UserInfo :user :owner />
-      <div class="mt-48">
-        <div class="flex flex-col-reverse md:flex-row gap-4">
+      <div class="mt-40">
+        <ErrorMessages :messages="$page.props.errors" />
+        <div class="flex flex-col-reverse md:flex-row gap-4 mt-4">
                     <textarea
                       class="w-full md:w-4/6 mx-auto"
                       type="text"
@@ -157,6 +161,7 @@ const event_notify = [
           </button>
         </div>
 
+
         <div v-if="user.chat" class="flex flex-col gap-y-6 mx-auto w-full md:w-1/3">
           <h4 class="text-center my-4">Bot notifications</h4>
 
@@ -199,6 +204,8 @@ const event_notify = [
               :options="event_notify" />
           </div>
         </div>
+
+        <MergeAccounts :user />
       </div>
 
       <PrimaryButton

@@ -76,6 +76,11 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         return $this->hasOne(UserBot::class);
     }
 
+    public function mergeCode(): HasOne
+    {
+        return $this->hasOne(BotMergeCode::class);
+    }
+
     public function isAdmin(): bool
     {
         return $this->hasRole('admin');
