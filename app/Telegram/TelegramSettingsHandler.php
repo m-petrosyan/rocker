@@ -17,6 +17,7 @@ trait TelegramSettingsHandler
             Button::make(trans('settings.country'))->action('get_countries'),
             Button::make(trans('settings.city'))->action('get_cities'),
             Button::make(trans('settings.genre'))->action('get_genres'),
+            Button::make(trans('settings.notify_of_new_events'))->action('get_notifications'),
             Button::make('back')->action('menu'),
         ];
 
@@ -98,9 +99,34 @@ trait TelegramSettingsHandler
                     ->param('key', 'city')->param('value', $value)
             );
         }
+
         $lastMessageId = $this->prepareMessageParams($this->chat->chat_id, $this->message?->id());
 
         $this->sendMessageWithButton(trans('messages.indicate_city'), $buttons, $lastMessageId);
+    }
+
+
+    public function get_notifications(): void
+    {
+        $buttons = [
+            Button::make('back')->action('settings'),
+        ];
+
+        $userNotify = auth()->user()->settings->events_notifications;
+
+        foreach ([['text' => '✅ enable', 'value' => 1], ['text' => '❌ disable', 'value' => 0]] as $value) {
+            $checked = $userNotify === $value['value'] ? ' ☑️' : '';
+            array_unshift(
+                $buttons,
+                Button::make($value['text'].$checked)->action('update_settings')
+                    ->param('key', 'events_notifications')
+                    ->param('value', $value['value'])
+            );
+        }
+
+        $lastMessageId = $this->prepareMessageParams($this->chat->chat_id, $this->message?->id());
+
+        $this->sendMessageWithButton(trans('messages.settings'), $buttons, $lastMessageId);
     }
 
     public function update_settings($key, $value): void
