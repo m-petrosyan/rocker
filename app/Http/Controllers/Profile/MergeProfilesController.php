@@ -41,6 +41,10 @@ class MergeProfilesController extends Controller
                 ->where('user_id', $secondaryUser->id)
                 ->update(['user_id' => $primaryUser->id]);
 
+            DB::table('event_status')
+                ->where('user_id', $secondaryUser->id)
+                ->update(['user_id' => $primaryUser->id]);
+
             $primaryUser->last_activity = collect([
                 $primaryUser->last_activity,
                 $secondaryUser->last_activity,
@@ -57,7 +61,7 @@ class MergeProfilesController extends Controller
                 $primaryUser->updated_at,
                 $secondaryUser->updated_at,
             ])->filter()->min();
-            
+
             $exists = User::where('username', $secondaryUser->username)->exists();
             if (!$exists) {
                 $primaryUser->username = $secondaryUser->username;
