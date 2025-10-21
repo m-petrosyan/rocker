@@ -205,7 +205,7 @@ const event_notify = [
           </div>
         </div>
 
-        <MergeAccounts :user />
+        <MergeAccounts v-if="user.settings?.country !== 'ge'" :user />
       </div>
 
       <PrimaryButton
