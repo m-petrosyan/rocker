@@ -111,16 +111,19 @@ trait TelegramSettingsHandler
             if ($value === 'all') {
                 auth()->user()->settings()->update(['city' => 'all']);
                 $this->settings();
-                $this->reply("Saved");
             } else {
                 $this->get_cities($value);
             }
         } elseif ($key === 'city') {
-            $this->reply("Saved");
             $this->menu();
             sleep(2);
             $this->chat->message(trans('messages.change_city'))->send();
+        } else {
+            auth()->user()->settings()->update([$key => $value]);
+            $this->settings();
         }
+
+        $this->reply("Saved");
     }
 
     public function add_to_favorite(int $eventId): void
