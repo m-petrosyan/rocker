@@ -8,65 +8,65 @@ import { getUrlQuery } from '@/Helpers/urlHelper.js';
 import AuthLayouth from '@/Layouts/AuthLayouth.vue';
 
 defineProps({
-    status: {
-        type: String
-    }
+  status: {
+    type: String
+  }
 });
 
 const form = useForm({
-    code: getUrlQuery('code')
+  code: getUrlQuery('code')
 });
 
 const submit = () => {
-    form.post(route('verification.send'));
+  form.post(route('verification.send'));
 };
 
 onMounted(() => {
-    if (form.code) {
-        verify();
-    } else {
-        // submit();
-    }
+  if (form.code) {
+    verify();
+  } else {
+    // submit();
+  }
 });
 
 const verify = async () => {
-    form.post(route('verification.verify'));
+  form.post(route('verification.verify'));
 };
 </script>
 
 <template>
-    <AuthLayouth title="Email Verification">
-        <h4 class="text-md  mb-4">
-            Thanks for signing up! Before getting started, could you verify
-            your email address by clicking on the link we just emailed to
-            you? If you didn't receive the email, we will gladly send you
-            another.
-        </h4>
-        <SuccessMessages :message="status" />
-        <form @submit.prevent="verify">
-            <TextInput
-                type="text"
-                class="mt-1 block w-full"
-                v-model="form.code"
-                required
-                autofocus
-            />
-            <PrimaryButton
-                :class="{ 'opacity-25': form.processing }"
-                :disabled="form.processing"
-            >
-                Verify
-            </PrimaryButton>
-        </form>
-        <form @submit.prevent="submit">
-            <div class="mt-4 flex items-center justify-between">
-                <PrimaryButton
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                >
-                    Resend Verification Email
-                </PrimaryButton>
-            </div>
-        </form>
-    </AuthLayouth>
+  <AuthLayouth title="Email Verification">
+    <p class="text-md  mb-4">
+      Thanks for signing up! Before getting started, could you verify
+      your email address by clicking on the link we just emailed to
+      you? If you didn't receive the email, we will gladly send you
+      another.
+    </p>
+    <SuccessMessages :message="status" />
+    <form @submit.prevent="verify">
+      <TextInput
+        type="text"
+        class="mt-1 block w-full"
+        v-model="form.code"
+        required
+        autofocus
+      />
+      <PrimaryButton
+        :class="{ 'opacity-25': form.processing }"
+        :disabled="form.processing"
+      >
+        Verify
+      </PrimaryButton>
+    </form>
+    <form @submit.prevent="submit">
+      <div class="mt-4 flex items-center justify-between">
+        <PrimaryButton
+          :class="{ 'opacity-25': form.processing }"
+          :disabled="form.processing"
+        >
+          Resend Verification Email
+        </PrimaryButton>
+      </div>
+    </form>
+  </AuthLayouth>
 </template>
