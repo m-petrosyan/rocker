@@ -63,7 +63,7 @@ trait TelegramSettingsHandler
         ];
 
         foreach (EventGenreEnum::getValues() as $value) {
-            $checked = auth()->user()->settings->settings->genre === $value ? ' ☑️' : '';
+            $checked = auth()->user()->settings->genre === $value ? ' ☑️' : '';
             array_unshift(
                 $buttons,
                 Button::make(trans("genres.$value").$checked)->action('update_settings')
@@ -81,9 +81,9 @@ trait TelegramSettingsHandler
     {
         $country = $country ?? auth()->user()->settings->country;
 
-//        if (!$country) {
-//            $this->get_countries();
-//        }
+        if (!$country) {
+            $this->get_countries();
+        }
 
         $buttons = [
             Button::make('back')->action('settings'),
