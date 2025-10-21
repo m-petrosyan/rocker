@@ -2,6 +2,8 @@
 
 namespace App\Telegram;
 
+use App\Enums\EventGenreEnum;
+use App\Enums\GenreEnum;
 use DefStudio\Telegraph\Keyboard\Button;
 use Illuminate\Support\Facades\Log;
 
@@ -14,6 +16,7 @@ trait TelegramSettingsHandler
         $buttons = [
             Button::make(trans('settings.country'))->action('get_countries'),
             Button::make(trans('settings.city'))->action('get_cities'),
+            Button::make(trans('settings.genre'))->action('get_genres'),
             Button::make('back')->action('menu'),
         ];
 
@@ -36,7 +39,6 @@ trait TelegramSettingsHandler
         foreach (trans('settings.countries') as $icon => $value) {
             Log::info('auth37', [auth()->user()]);
             $checked = auth()?->user()?->settings?->country === $value ? ' ☑️' : '';
-//            $checked = auth()->user()?->load(['settings', 'chat'])->settings?->country === $value ? ' ☑️' : '';
 
             Log::info('countries2');
 
@@ -51,6 +53,27 @@ trait TelegramSettingsHandler
         $lastMessageId = $this->prepareMessageParams($this->chat->chat_id, $this->message?->id());
 
         $this->sendMessageWithButton(trans('messages.indicate_country'), $buttons, $lastMessageId);
+    }
+
+
+    public function getGenres(): void
+    {
+        $buttons = [
+            Button::make('back')->action('settings'),
+        ];
+
+        foreach (EventGenreEnum::getValues() as $value) {
+            $checked = auth()->user()->settings->settings->genre === $value ? ' ☑️' : '';
+            array_unshift(
+                $buttons,
+                Button::make(trans("genres.$value").$checked)->action('update_settings')
+                    ->param('key', 'genre')->param('value', $value)
+            );
+        }
+
+        $lastMessageId = $this->prepareMessageParams($this->chat->chat_id, $this->message?->id());
+
+        $this->sendMessageWithButton(trans('messages.indicate_genre'), $buttons, $lastMessageId);
     }
 
 
