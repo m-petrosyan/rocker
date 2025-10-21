@@ -56,7 +56,7 @@ trait TelegramSettingsHandler
     }
 
 
-    public function getGenres(): void
+    public function get_genres(): void
     {
         $buttons = [
             Button::make('back')->action('settings'),
