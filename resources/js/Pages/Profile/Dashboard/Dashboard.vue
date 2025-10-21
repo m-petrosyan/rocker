@@ -4,6 +4,7 @@ import NavLink from '@/Components/NavLink.vue';
 import BotIcon from '@/Components/Icons/BotIcon.vue';
 import WebSiteIcon from '@/Components/Icons/WebSiteIcon.vue';
 import Pagination from '@/Components/Elemtns/Pagination.vue';
+import { formatDateTime } from '@/Helpers/dateFormatHelper.js';
 
 defineProps({
   users: {
@@ -67,8 +68,9 @@ defineProps({
         <div>
           <div>
             <p>{{ user.name }}</p>
-            <p>last acivity</p>
-            <small>{{ user.last_activity }}</small>
+            <small
+              tooltip="last acivity">{{ user.last_activity ? formatDateTime(user.last_activity, 'DD/MM/YY HH:mm') : 'No activity yet'
+              }}</small>
           </div>
           <div class="mt-4 flex gap-4">
             <div class="flex flex-col">

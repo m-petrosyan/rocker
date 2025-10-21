@@ -65,6 +65,7 @@ class Gallery extends Model implements Viewable, HasMedia
         return $cover
             ? [
                 'thumb' => $cover->getUrl('thumb'),
+                'large' => $cover->getUrl('large'),
                 'original' => $cover->getUrl(),
             ]
             : [

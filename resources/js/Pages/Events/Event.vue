@@ -11,6 +11,7 @@ import { removePostalCode } from '@/Helpers/adressFormatHelper.js';
 import { fullUrl } from '@/Helpers/urlHelper.js';
 import EventRequestForm from '@/Components/Forms/EventRequestForm.vue';
 import BandTags from '@/Components/Tags/BandTags.vue';
+import { formatDateTime } from '@/Helpers/dateFormatHelper.js';
 
 const url = fullUrl();
 // console.log(page.url);
@@ -52,20 +53,8 @@ const type = props.event && props.event.type === 2 ? 'concert' : 'event';
       <div
         class="absolute inset-0 z-20 flex h-28 w-28 flex-col items-center justify-center bg-orange text-xl"
       >
-        <p class="text-4xl font-bold">
-          {{
-            moment(event.start_date_short, 'DD.MM.YY')
-              .format('D')
-              .toUpperCase()
-          }}
-        </p>
-        <p>
-          {{
-            moment(event.start_date_short, 'DD.MM.YY')
-              .format('MMMM')
-              .toUpperCase()
-          }}
-        </p>
+        <p class="text-4xl font-bold">{{ formatDateTime(event.start_date, 'D') }}</p>
+        <p>{{ formatDateTime(event.start_date, 'MMMM').toUpperCase() }}</p>
         <small>{{ event.start_time }}</small>
       </div>
       <div

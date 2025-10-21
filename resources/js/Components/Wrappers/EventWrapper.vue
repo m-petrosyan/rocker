@@ -1,5 +1,4 @@
 <script setup>
-import moment from 'moment-timezone';
 import NavLink from '@/Components/NavLink.vue';
 import NotifyBotIcon from '@/Components/Icons/NotifyBotIcon.vue';
 import EyesIcon from '@/Components/Icons/EyesIcon.vue';
@@ -7,6 +6,7 @@ import { router } from '@inertiajs/vue3';
 import EditIcon from '@/Components/Icons/EditIcon.vue';
 import DeleteIcon from '@/Components/Icons/DeleteIcon.vue';
 import { removePostalCode } from '@/Helpers/adressFormatHelper.js';
+import { formatDateTime } from '@/Helpers/dateFormatHelper.js';
 
 defineProps({
   events: {
@@ -89,10 +89,10 @@ const deleteEvent = (id) => {
             <div class="h-28 w-full flex  justify-between">
               <div class="w-28 h-full flex flex-col items-center justify-center bg-orange text-xl">
                 <p class="text-4xl font-bold">
-                  {{ moment(event.start_date_short, 'DD.MM.YY').format('D').toUpperCase() }}
+                  {{ formatDateTime(event.start_date, 'D') }}
                 </p>
                 <p>
-                  {{ moment(event.start_date_short, 'DD.MM.YY').format('MMMM').toUpperCase() }}
+                  {{ formatDateTime(event.start_date, 'MMMM').toUpperCase() }}
                 </p>
                 <small>{{ event.start_time }}</small>
               </div>
