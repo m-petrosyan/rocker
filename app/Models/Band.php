@@ -45,7 +45,7 @@ class Band extends Model implements Viewable, HasMedia
 
     public function blogs()
     {
-        return $this->hasMany(Blog::class);
+        return $this->belongsToMany(Blog::class);
     }
 
     public function albums(): HasMany
