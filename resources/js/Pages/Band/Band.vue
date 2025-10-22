@@ -7,6 +7,7 @@ import ImageWrapper from '@/Components/Wrappers/ImageWrapper.vue';
 import { getHostname } from '@/Helpers/urlHelper.js';
 import EventWrapper from '@/Components/Wrappers/EventWrapper.vue';
 import BandAlbums from '@/Components/Forms/BandAlbums.vue';
+import BlogWrapper from '@/Components/Wrappers/BlogWrapper.vue';
 
 defineProps({
   band: {
@@ -61,6 +62,7 @@ defineProps({
     <BandAlbums v-if="band?.albums" :albums="band.albums" />
     <EventWrapper v-if="band.events.length" class="mt-20" :events="band.events" title="Upcoming events" />
     <GalleryWrapper v-if="band?.galleries.length" :galleries="band.galleries" title="Galleries" user />
+    <BlogWrapper :blogs="band.blogs" class="mt-20" title="Articles about the group" />
   </GuestLayout>
 </template>
 
