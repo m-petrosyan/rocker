@@ -20,10 +20,10 @@ defineProps({
   <ProfileLayout>
     <h2 class="text-center">Statistic</h2>
     <div class="mt-10">
-      <div class="flex gap-4 items-center justify-center">
-        <div class="text-center bg-black p-6 rounded-lg shadow-lg">
+      <div class="flex flex-wrap lg:flex-nowrap gap-4 items-center justify-center">
+        <div class="text-center bg-black p-6 rounded-lg w-1/4">
           <p>Users</p>
-          <div class="flex gap-x-4">
+          <div class="flex flex-wrap gap-x-4">
             <div tooltip="Website users" class="flex items-center gap-x-2">
               <WebSiteIcon />
               <h2>{{ statistics.users_web }}</h2>
@@ -35,23 +35,23 @@ defineProps({
             </div>
           </div>
         </div>
-        <div class="text-center bg-black p-6 rounded-lg shadow-lg">
+        <div class="text-center bg-black p-6 rounded-lg w-1/4">
           <p>Events</p>
           <h2>{{ statistics.events }}</h2>
         </div>
-        <div class="text-center bg-black p-6 rounded-lg shadow-lg">
+        <div class="text-center bg-black p-6 rounded-lg w-1/4">
           <p>Bands</p>
           <h2>{{ statistics.bands }}</h2>
         </div>
-        <div class="text-center bg-black p-6 rounded-lg shadow-lg">
+        <div class="text-center bg-black p-6 rounded-lg w-1/4">
           <p>Galleries</p>
           <h2>{{ statistics.galleries }}</h2>
         </div>
-        <div class="text-center bg-black p-6 rounded-lg shadow-lg">
+        <div class="text-center bg-black p-6 rounded-lg w-1/4">
           <p>Blogs</p>
           <h2>{{ statistics.blogs }}</h2>
         </div>
-        <div class="text-center bg-black p-6 rounded-lg shadow-lg">
+        <div class="text-center bg-black p-6 rounded-lg w-1/4">
           <p>PWA install</p>
           <h2>{{ statistics.pwa }}</h2>
         </div>
@@ -59,7 +59,7 @@ defineProps({
     </div>
     <h2 class="mt-10 text-center">Users</h2>
     <div
-      class="mt-10 grid md:grid-cols-2 md:gap-4 lg:grid-cols-4 auto-rows-[600px] md:auto-rows-[400px] gap-4">
+      class="mt-10 grid md:grid-cols-2 gap-x-10 gap-y-20 lg:grid-cols-4 ">
       <NavLink :href="route('profile.show', user.username)" v-for="user in users.data"
                class="text-center flex flex-col items-center gap-4" href="">
         <div :style="{ backgroundImage: `url(${user.image?.thumb ?? '/images/user.jpg'})` }"

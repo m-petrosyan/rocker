@@ -5,6 +5,7 @@ namespace App\Telegram;
 use App\Enums\EventGenreEnum;
 use App\Enums\GenreEnum;
 use DefStudio\Telegraph\Keyboard\Button;
+use DefStudio\Telegraph\Keyboard\Keyboard;
 use Illuminate\Support\Facades\Log;
 
 
@@ -30,6 +31,23 @@ trait TelegramSettingsHandler
         );
     }
 
+
+    public function test()
+    {
+        $this->chat->message('test message')
+            ->keyboard(
+                Keyboard::make()
+                    ->row([
+                        Button::make('Delete')->action('delete')->param('id', '42'),
+                        Button::make('Dismiss')->action('dismiss')->param('id', '42'),
+                        Button::make('Dismiss')->action('dismiss')->param('id', '42'),
+                    ])
+                    ->row([
+                        Button::make('open')->url('https://test.it'),
+                    ])
+            )
+            ->send();
+    }
 
     public function get_countries(): void
     {
