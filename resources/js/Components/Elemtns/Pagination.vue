@@ -14,7 +14,7 @@ const getPageQuery = (url) => {
 </script>
 
 <template>
-  <div class="flex justify-center gap-2 mt-6">
+  <div class="flex flex-wrap justify-center gap-2 mt-6">
     <template v-for="(link, i) in links" :key="i">
       <Link
         v-if="link.url"
