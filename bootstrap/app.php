@@ -25,12 +25,12 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             HandleInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
-            LastActivityMiddleware::class,
         ]);
         $middleware->alias([
             'email.verified.if.present' => EnsureEmailVerifiedIfPresent::class,
             'role' => RoleMiddleware::class,
             'permission' => PermissionMiddleware::class,
+            'activity' => LastActivityMiddleware::class,
         ]);
     })
     ->withSchedule(function (Schedule $schedule) {

@@ -15,7 +15,7 @@ use App\Http\Controllers\Profile\MergeProfilesController;
 use App\Http\Controllers\Profile\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['auth', 'email.verified.if.present', 'role:admin|moderator|organizer'])
+Route::middleware(['auth', 'email.verified.if.present', 'role:admin|moderator|organizer', 'activity'])
     ->as('profile.')->prefix('profile')->group(function () {
         Route::get('dashboard', DashboardController::class)->name('dashboard');
         Route::get('event/requests', [EventRequestController::class, 'index'])->name('events.requests');
@@ -24,21 +24,23 @@ Route::middleware(['auth', 'email.verified.if.present', 'role:admin|moderator|or
     });
 
 
-Route::middleware(['auth', 'email.verified.if.present'])->as('profile.')->prefix('profile')->group(function () {
-    Route::get('/', [ProfileController::class, 'index'])->name('index');
-    Route::get('settings', [ProfileController::class, 'edit'])->name('edit');
-    Route::put('settings', [ProfileController::class, 'update'])->name('update');
-    Route::resource('events', EventController::class)->except('show');
-    Route::resource('galleries', GalleryController::class)->except('show');
-    Route::resource('bands', BandController::class)->except('show');
-    Route::delete('bands/album/{album}/delete', [BandController::class, 'albumDestroy'])->name('album.delete');
-    Route::resource('blogs', BlogController::class)->except('show');
-    Route::post('image', [ProfileController::class, 'updateImage'])->name('media.update');
-    Route::post('media', [MediaController::class, 'store'])->name('media.store');
-    Route::delete('media/{media}', [MediaController::class, 'destroy'])->name('media.destroy');
-    Route::post('merge/code', [MergeProfilesController::class, 'getCode'])->name('merge.code');
-    Route::post('merge', [MergeProfilesController::class, 'mergeBot'])->name('merge.bot');
-});
+Route::middleware(['auth', 'email.verified.if.present', 'activity'])->as('profile.')->prefix('profile')->group(
+    function () {
+        Route::get('/', [ProfileController::class, 'index'])->name('index');
+        Route::get('settings', [ProfileController::class, 'edit'])->name('edit');
+        Route::put('settings', [ProfileController::class, 'update'])->name('update');
+        Route::resource('events', EventController::class)->except('show');
+        Route::resource('galleries', GalleryController::class)->except('show');
+        Route::resource('bands', BandController::class)->except('show');
+        Route::delete('bands/album/{album}/delete', [BandController::class, 'albumDestroy'])->name('album.delete');
+        Route::resource('blogs', BlogController::class)->except('show');
+        Route::post('image', [ProfileController::class, 'updateImage'])->name('media.update');
+        Route::post('media', [MediaController::class, 'store'])->name('media.store');
+        Route::delete('media/{media}', [MediaController::class, 'destroy'])->name('media.destroy');
+        Route::post('merge/code', [MergeProfilesController::class, 'getCode'])->name('merge.code');
+        Route::post('merge', [MergeProfilesController::class, 'mergeBot'])->name('merge.bot');
+    }
+);
 
 Route::middleware('auth')->group(function () {
     Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
