@@ -44,7 +44,7 @@ const webApp = isWebApp();
       in Yerevan and beyond, collected in one place for quick discovery.
     </p>
     <h3 v-else class="text-red text-center">
-      <span v-if="events.data.length">
+      <span v-if="events.data.length && !webApp">
               Here are the event requests.
       </span>
       <span v-else>
