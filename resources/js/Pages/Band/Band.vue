@@ -62,7 +62,7 @@ defineProps({
     <BandAlbums v-if="band?.albums" :albums="band.albums" />
     <EventWrapper v-if="band.events.length" class="mt-20" :events="band.events" title="Upcoming events" />
     <GalleryWrapper v-if="band?.galleries.length" :galleries="band.galleries" title="Galleries" user />
-    <BlogWrapper :blogs="band.blogs" class="mt-20" title="Articles about the group" />
+    <BlogWrapper :blogs="band.blogs.length" class="mt-20" title="Articles about the group" />
   </GuestLayout>
 </template>
 
