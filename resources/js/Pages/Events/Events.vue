@@ -4,6 +4,7 @@ import EventWrapper from '@/Components/Wrappers/EventWrapper.vue';
 import Pagination from '@/Components/Elemtns/Pagination.vue';
 import NavLink from '@/Components/NavLink.vue';
 import { isSSR } from '@/Helpers/ssrHelper.js';
+import { isWebApp } from '@/Helpers/setAppUser.js';
 
 defineProps({
   events: {
@@ -19,6 +20,8 @@ defineProps({
 });
 
 const eventRequest = !isSSR ? route().current('profile.events.requests') : null;
+
+const webApp = isWebApp();
 </script>
 
 <template>
@@ -27,13 +30,13 @@ const eventRequest = !isSSR ? route().current('profile.events.requests') : null;
         keywords: 'armenian rock events, armenian metal events, armenian rock concerts, armenian metal concerts, armenian rock festivals, armenian metal festivals, yerevan rock events, yerevan metal concerts, yerevan rock concerts, yerevan metal concerts, armenian live rock, armenian live metal, armenian concert events, armenian rock events calendar, armenian metal events calendar, armenian music events, armenian underground concerts, armenian underground music events, armenian concert announcements, armenian rock show announcements, armenian metal show announcements, armenian rock gigs, armenian metal gigs, armenian live music shows, yerevan concert events' + events.data.map(event => event.title).join(', '),
         description: 'Discover upcoming and past Armenian rock and metal concerts and events in Yerevan and beyond. Stay updated with the latest live music happenings in the Armenian rock and metal scene.' }">
     <template #header> Events</template>
-    <template #h1>
+    <template v-if="!webApp" #h1>
       {{ isPast
       ? 'Past Armenian Rock & Metal Concerts and Events Archive'
       : 'Upcoming Armenian Rock & Metal Concerts and Events'
       }}
     </template>
-    <p v-if="!eventRequest" class="text-gray text-pretty">
+    <p v-if="!eventRequest && !webApp" class="text-gray text-pretty">
       Armenian rock and metal concerts are a vibrant part of the local scene.
       This page features
       {{ isPast ? 'past Armenian rock & metal concerts and events' : 'upcoming Armenian rock & metal concerts and events'
@@ -49,7 +52,7 @@ const eventRequest = !isSSR ? route().current('profile.events.requests') : null;
       </span>
     </h3>
     <EventWrapper :events="events.data" v-bind:add="!isPast" :request="eventRequest" />
-    <template v-if="!eventRequest">
+    <template v-if="!eventRequest && !webApp">
       <NavLink
         v-if="!isPast"
         :href="route('events.past',  { page: 1 })"

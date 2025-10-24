@@ -14,19 +14,13 @@ const pwamenu = computed(() => {
   //   return menu;
   // }
 
-  return menu
+  return (menu ?? [])
     .filter(item => {
-      if (user.value?.settings?.country === 'ge') {
-        return item.name !== 'Bands' && item.name !== 'Galleries' && item.name !== 'Bot';
-      }
-      return item.name !== 'Bot';
+      const country = user.value?.settings?.country;
+      const excluded = country === 'ge' ? ['Bands', 'Galleries', 'Bot'] : ['Bot'];
+      return !excluded.includes(item.name);
     })
-    .map(item => {
-      if (item.name === 'Home') {
-        return { ...item, url: 'profile.events.create' };
-      }
-      return item;
-    });
+    .map(item => item.name === 'Home' ? { ...item, url: 'profile.events.create' } : item);
 });
 </script>
 

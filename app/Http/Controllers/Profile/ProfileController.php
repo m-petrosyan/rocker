@@ -26,24 +26,15 @@ class ProfileController
 
     public function index(): Response
     {
-        if (!request()->route('username')) {
-//            dd(1);
-            $user = auth()?->user();
-            $owner = true;
-            if (!$user) {
-                abort(404);
-            }
-        } else {
-//            dd(3);
-            $user = User::query()->where('username', request()->route('username'))->first();
-            $owner = false;
-            if ($user) {
-                $owner = !request()->route('username') || auth()?->user()?->username === request()->route('username');
-            } else {
-                abort(404);
-            }
-        }
+        $requestedUsername = request()->route('username');
 
+        if ($requestedUsername) {
+            $user = User::where('username', $requestedUsername)->firstOrFail();
+            $owner = auth()?->user()?->username === $requestedUsername;
+        } else {
+            $user = auth()->user() ?? abort(404);
+            $owner = true;
+        }
 
         return Inertia::render('Profile/Profile', [
             'user' => $user->load('links', 'settings'),
