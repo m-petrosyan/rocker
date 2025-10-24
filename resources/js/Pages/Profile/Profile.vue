@@ -86,7 +86,7 @@ const webApp = isWebApp();
               }}</a>
           </div>
         </div>
-        <SuccessMessages success class="w-1/3 mx-auto" :message="$page.props.flash.success" timeout="10000" />
+        <SuccessMessages success class="w-full md:w-1/3 mx-auto" :message="$page.props.flash.success" timeout="10000" />
         <ProfileActions v-if="owner" class="mx-auto w-full" :full="auth.user.settings?.country !== 'ge'" />
         <GalleryWrapper v-if="galleries.data?.length" profile :galleries="galleries.data" :owner
                         :isAdmin="auth.isAdmin"
