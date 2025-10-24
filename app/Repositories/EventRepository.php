@@ -8,37 +8,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class EventRepository
 {
-
-//    public static function eventsList($limit = 51, $page = 1, $past = false, $country = 'am')
-//    {
-//        $params = [
-//            'limit' => $limit,
-//            'page' => $page,
-//            'past' => $past,
-//        ];
-//
-//
-//        return Event::where(['still_relevant' => true])
-//            ->when(!$country, function ($query, $country) {
-//                if (auth()->user()->settings->country === 'all') {
-//                    $query->whereIn('country', ['am', 'ge']);
-//                } else {
-//                    $query->where('country', auth()->user()->settings->country);
-//                }
-//            }, function ($query) use ($country) {
-//                if ($country === 'all') {
-//                    $query->whereIn('country', ['am', 'ge']);
-//                } else {
-//                    $query->where('country', $country);
-//                }
-//            })
-//            ->with('user')
-//            ->whereHas('confirm', function ($query) {
-//                $query->where('confirmed', true);
-//            })
-//            ->orderBy('start_date');
-//    }
-
     public static function eventsList($limit = 50, $page = 1, $past = false): LengthAwarePaginator
     {
         $country = auth()?->user()->settings->country ?? 'am';
@@ -63,34 +32,15 @@ class EventRepository
             ->paginate($limit, ['*'], 'page', $page);
     }
 
-    public static function userEvents()
+    public static function userEvents(object $user): LengthAwarePaginator
     {
-//        dd(1);return $user ? $user->events()
-//    ->with('status')
-//    ->orderBy('start_date')
-//    ->append('status_name')
-//    ->paginate()
-//    : collect();
-
-        return auth()->user()?->events()
+        return $user?->events()
             ->with('status')
             ->when(fn($query) => $query->where('start_date', '>=', now()))
             ->whereRelation('status', 'status', '!=', EventStatusEnum::DELETED->value)
             ->orderBy('start_date')
             ->paginate();
     }
-
-//    public static function eventsList($limit = 50)
-//    {
-//        return Event::where('start_date', '>=', now())
-//            ->with('user')
-////            ->whereHas('confirm', function ($query) {
-////                $query->where('confirmed', true);
-////            })
-//            ->orderBy('start_date')
-//            ->paginate($limit);
-//    }
-
 
     public static function count(): mixed
     {

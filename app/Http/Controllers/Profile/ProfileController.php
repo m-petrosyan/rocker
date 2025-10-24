@@ -50,7 +50,7 @@ class ProfileController
             'owner' => $owner,
             'url' => $owner ? route('profile.show', ['username' => $user->username]) : null,
             'galleries' => GalleryReoisitory::userGallery($user),
-            'events' => EventRepository::userEvents(),
+            'events' => EventRepository::userEvents($user),
             'bands' => BandRepository::userBands($user),
             'blogs' => BlogRepository::userBlogs($user),
         ]);
