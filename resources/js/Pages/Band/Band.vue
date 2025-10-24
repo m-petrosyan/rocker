@@ -4,7 +4,7 @@ import SocialShare from '@/Components/Socials/SocialShare.vue';
 import GalleryWrapper from '@/Components/Wrappers/GalleryWrapper.vue';
 import GenresTags from '@/Components/Tags/GenresTags.vue';
 import ImageWrapper from '@/Components/Wrappers/ImageWrapper.vue';
-import { getHostname } from '@/Helpers/urlHelper.js';
+import { fullUrl, getHostname } from '@/Helpers/urlHelper.js';
 import EventWrapper from '@/Components/Wrappers/EventWrapper.vue';
 import BandAlbums from '@/Components/Forms/BandAlbums.vue';
 import BlogWrapper from '@/Components/Wrappers/BlogWrapper.vue';
@@ -13,16 +13,10 @@ defineProps({
   band: {
     type: Object,
     required: true
-  },
-  url: {
-    type: String,
-    required: true
-  },
-  events: {
-    type: Object,
-    required: true
   }
 });
+
+const url = fullUrl();
 </script>
 
 <template>

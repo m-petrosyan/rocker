@@ -25,7 +25,6 @@ class BlogController extends Controller
 
         return Inertia::render('Blog/Blog', [
             'blog' => $blog->load('user', 'bands'),
-            'url' => url()->current(),
         ]);
     }
 }

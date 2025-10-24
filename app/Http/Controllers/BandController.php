@@ -29,8 +29,6 @@ class BandController extends Controller
 
         return Inertia::render('Band/Band', [
             'band' => $band->load('genres', 'galleries.user', 'links', 'albums', 'events', 'blogs'),
-            'events' => $band->events,
-            'url' => url()->current(),
         ]);
     }
 }

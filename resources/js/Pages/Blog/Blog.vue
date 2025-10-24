@@ -3,16 +3,13 @@ import GuestLayout from '@/Layouts/GuestLayout.vue';
 import BandTags from '@/Components/Tags/BandTags.vue';
 import NavLink from '@/Components/NavLink.vue';
 import { ref } from 'vue';
-import { getUrlQuery } from '@/Helpers/urlHelper.js';
+import { fullUrl, getUrlQuery } from '@/Helpers/urlHelper.js';
 import SocialShare from '@/Components/Socials/SocialShare.vue';
 import PDFViewer from '@/Components/Tools/PDFViewer.vue';
 
 const props = defineProps({
   blog: {
     type: Object
-  },
-  url: {
-    type: String
   }
 });
 
@@ -28,7 +25,7 @@ const setLang = (language) => {
   }
 };
 
-
+const url = fullUrl();
 </script>
 
 <template>

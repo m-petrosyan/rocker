@@ -14,7 +14,6 @@ import BandTags from '@/Components/Tags/BandTags.vue';
 import { formatDateTime } from '@/Helpers/dateFormatHelper.js';
 
 const url = fullUrl();
-// console.log(page.url);
 
 const props = defineProps({
   event: {
@@ -30,9 +29,6 @@ const props = defineProps({
     type: Boolean,
     default: false
   }
-  // url: {
-  //   type: String
-  // }
 });
 
 const type = props.event && props.event.type === 2 ? 'concert' : 'event';
