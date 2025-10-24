@@ -70,7 +70,7 @@ trait EventFormatingTrait
     private function appendBotSignature(string $content): string
     {
         $maxContentLength = 800;
-        $botSignature = "\n\n🤘 Metal Events (AM/GE) — t.me/RockMetalEventsbot";
+        $botSignature = "\n\n🤘 Rock Events (AM/GE) — t.me/RockMetalEventsbot";
 
         return mb_strlen($content, 'UTF-8') >= $maxContentLength ? $content : $content.$botSignature;
     }
