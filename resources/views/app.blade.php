@@ -13,12 +13,12 @@
     {{--    <link rel="canonical" href="{{ url()->current() }}" />--}}
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script type="application/ld+json">
-        {
-                  "@context": "https://schema.org",
-          "@type": "WebSite",
-          "url": "{{ url('/') }}",
-          "name": "Rocker"
-        }
+        {!! json_encode([
+          "@context" => "https://schema.org",
+          "@type"    => "WebSite",
+          "url"      => url('/'),
+          "name"     => "Rocker"
+        ], JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE) !!}
     </script>
     @routes
     @vite([
