@@ -13,14 +13,12 @@
     {{--    <link rel="canonical" href="{{ url()->current() }}" />--}}
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script type="application/ld+json">
-    @verbatim
-            {
-              "@context": "https://schema.org",
-      "@type": "WebSite",
-      "url": "{{ url('/') }}",
-      "name": "Rocker"
-    }
-        @endverbatim
+        {
+                  "@context": "https://schema.org",
+          "@type": "WebSite",
+          "url": "{{ url('/') }}",
+          "name": "Rocker"
+        }
     </script>
     @routes
     @vite([
