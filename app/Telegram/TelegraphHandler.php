@@ -82,8 +82,9 @@ class TelegraphHandler extends WebhookHandler
         }
 
         Cache::store('redis')->put($cacheKey, $currentMessageId, 432000);
-
-        $this->chat->deleteMessage($lastMessageId)->send();
+        if ($lastMessageId) {
+            $this->chat->deleteMessage($lastMessageId)->send();
+        }
 
         return null;
     }
