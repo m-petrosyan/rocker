@@ -57,7 +57,7 @@ onMounted(() => {
   <FleshNotification />
   <PreloaderPwa v-if="isPWA" />
   <slot />
-  <Footer />
+  <Footer v-if="!webApp" />
   <Preloader v-if="webApp && !page" />
   <PwaNavbar v-if="isPWA || webApp" />
 </template>
