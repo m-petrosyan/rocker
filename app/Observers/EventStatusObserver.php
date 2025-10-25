@@ -33,6 +33,7 @@ class EventStatusObserver
             $eventStatus->event->refreshNotifyCount($this->usersList($eventStatus->event, true));
         } else {
             $moderators = User::role(['moderator', 'admin'])->whereHas('chat')->get();
+
             foreach ($moderators as $user) {
                 $user->chat
                     ->message('🎉 new event request')
@@ -45,6 +46,10 @@ class EventStatusObserver
                     )
                     ->send();
             }
+
+            $eventStatus->event->user?->chat
+                ->message("✅ Your event request has been sent for review. You will be notified once it is processed.")
+                ->send();
         }
     }
 
