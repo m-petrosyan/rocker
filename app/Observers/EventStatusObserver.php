@@ -38,7 +38,9 @@ class EventStatusObserver
                     ->message('🎉 new event request')
                     ->keyboard(
                         Keyboard::make()->buttons([
-                            Button::make('Event link')->url(route('profile.event.requests', $eventStatus->event->id)),
+                            Button::make('Event link')->webApp(
+                                route('profile.event.requests', $eventStatus->event->id)
+                            ),
                         ])
                     )
                     ->send();
