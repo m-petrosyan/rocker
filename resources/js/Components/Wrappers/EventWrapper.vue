@@ -63,7 +63,7 @@ const deleteEvent = (id) => {
       >
         <NavLink
           :href="route(request ? 'profile.event.requests' : 'events.show', event.id)"
-          class="relative h-full w-full block"
+          class="relative h-full w-full block bg-cover"
           :style="{ backgroundImage: `url(${event.poster.thumb})` }"
         >
           <div v-if="owner && (['pending','rejected'].includes(event.status_name))"
