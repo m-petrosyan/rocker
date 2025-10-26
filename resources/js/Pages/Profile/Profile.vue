@@ -12,6 +12,7 @@ import NavLink from '@/Components/NavLink.vue';
 import AnalyticsIcon from '@/Components/Icons/AnalyticsIcon.vue';
 import { getHostname } from '@/Helpers/urlHelper.js';
 import { isWebApp } from '@/Helpers/setAppUser.js';
+import EventIcon from '@/Components/Icons/EventIcon.vue';
 
 defineProps({
   user: {
@@ -38,12 +39,13 @@ defineProps({
     type: Boolean,
     required: true
   },
+  eventRequests: {
+    type: [Number, null],
+    required: false,
+    default: false
+  },
   auth: {
     object: true
-  },
-  url: {
-    type: String,
-    required: true
   }
 });
 
@@ -53,32 +55,38 @@ const webApp = isWebApp();
 <template>
   <ProfileLayout :meta="{title: user.name, image: user?.image?.thumb}">
     <div>
-      <UserInfo :url="url" :user :owner />
-      <Logout v-if="!webApp" :owner />
-      <NavLink v-if="['admin','modarator','organizer'].includes(auth.role) && owner"
-               :href="route('profile.dashboard')"
-               class="absolute top-0 left-0 z-20 flex bg-black bg-opacity-20">
-        <div tooltip="Dashboard">
-          <AnalyticsIcon class="text-white" />
+      <UserInfo :user :owner />
+      <div class="flex justify-between">
+        <NavLink v-if="['admin','modarator','organizer'].includes(auth.role) && owner"
+                 :href="route('profile.dashboard')"
+                 class=" flex bg-black bg-opacity-20">
+          <div tooltip="Dashboard">
+            <AnalyticsIcon class="text-white" />
+          </div>
+        </NavLink>
+        <div class="flex flex-col items-end gap-y-4">
+          <NavLink v-if="eventRequests"
+                   :href="route('profile.events.requests')"
+                   class="relative">
+            <div tooltip="Dashboard">
+              <EventIcon class="text-white" />
+              <span
+                class="absolute -top-2 -left-2 bg-orange text-white text-xs font-semibold w-6 h-6 flex items-center justify-center rounded-full">
+                {{ eventRequests }}
+              </span>
+            </div>
+          </NavLink>
+          <Logout v-if="!webApp" :owner />
         </div>
-      </NavLink>
-      <!--            <div class="mx-auto mt-32 p-2 w-full md:w-2/6 text-center">-->
-      <!--                <small class="block text-sm text-gray">-->
-      <!--                    "Creative professional based in Kyiv, passionate about-->
-      <!--                    building meaningful projects and bringing ideas to life.-->
-      <!--                    Focused on quality, collaboration, and continuous-->
-      <!--                    growth."-->
-      <!--                </small>-->
-      <!--                <div class="mt-5 flex flex-col">-->
-      <!--                    <a href="mailto:example@gmail.com">example@gmail.com</a>-->
-      <!--                    <a href="https://www.facebook.com/groups/286409629705239/">-->
-      <!--                        facebook.com/groups/286409629705239/-->
-      <!--                    </a>-->
-      <!--                </div>-->
-      <!--            </div>-->
-      <div class="mt-56 md:mt-48">
+      </div>
+      <div class="mx-auto mt-20 p-2 w-full md:w-2/6 text-center">
+        <h3 class="text-gray-900 p-6">
+          {{ user.name }}
+        </h3>
+        <small class="block text-sm text-gray">
+          {{ user.info }}
+        </small>
         <div class="w-2/3 mx-auto">
-          <p class="text-center text-pretty">{{ user.info }}</p>
           <div v-if="user.links.length"
                class="flex items-center md:flex-col gap-x-5 font-bold text-gray p-3">
             <a v-for="link in user.links" :key="link.id" :href="link.url"
@@ -86,6 +94,8 @@ const webApp = isWebApp();
               }}</a>
           </div>
         </div>
+      </div>
+      <div class="mt-56 md:mt-48">
         <SuccessMessages success class="w-full md:w-1/3 mx-auto" :message="$page.props.flash.success" timeout="10000" />
         <ProfileActions v-if="owner" class="mx-auto w-full" :full="auth.user.settings?.country !== 'ge'" />
         <GalleryWrapper v-if="galleries.data?.length" profile :galleries="galleries.data" :owner

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Profile;
 use App\Enums\CityEnum;
 use App\Enums\CountryEnum;
 use App\Enums\EventGenreEnum;
+use App\Enums\EventStatusEnum;
 use App\Http\Requests\Profile\ProfileImageUpdateRequest;
 use App\Http\Requests\User\UserUpdateRequest;
 use App\Models\User;
@@ -15,6 +16,7 @@ use App\Repositories\GalleryReoisitory;
 use App\Services\UserService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -39,11 +41,13 @@ class ProfileController
         return Inertia::render('Profile/Profile', [
             'user' => $user->load('links', 'settings'),
             'owner' => $owner,
-            'url' => $owner ? route('profile.show', ['username' => $user->username]) : null,
             'galleries' => GalleryReoisitory::userGallery($user),
             'events' => EventRepository::userEvents($user),
             'bands' => BandRepository::userBands($user),
             'blogs' => BlogRepository::userBlogs($user),
+            'eventRequests' => Gate::allows('full-access') ? EventRepository::count(
+                EventStatusEnum::PENDING->value
+            ) : null,
         ]);
     }
 
