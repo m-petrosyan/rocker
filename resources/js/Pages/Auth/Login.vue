@@ -100,7 +100,6 @@ const webApp = isWebApp();
         </div>
       </form>
     </template>
-    <!--    <Preloader v-if="webApp" />-->
     <template v-if="!webApp" #underslot>
       <div class="flex justify-center gap-x-2 mt-10">
         <p> Don't Have an Account?</p>
