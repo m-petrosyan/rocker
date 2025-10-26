@@ -78,7 +78,8 @@ const deleteEvent = (id) => {
               </h2>
               <small v-if="event.status_name === 'pending' ">
                 Your event request has been sent for review. <br />
-                You will be notified once it is processed.
+                You will be notified once it is processed.<br />
+                <span class="text-orange">You can also edit your event while it’s under review.</span>
               </small>
               <small v-if="event.status_text" class="p-2 mt-2">
                 Reason: {{ event.status_text }}</small>
