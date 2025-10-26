@@ -80,8 +80,8 @@ const deleteEvent = (id) => {
                 Your event request has been sent for review. <br />
                 You will be notified once it is processed.
               </small>
-              <p v-if="event.status_text" class="p-2 mt-2">Reason:
-                {{ event.status_text }}</p>
+              <small v-if="event.status_text" class="p-2 mt-2">
+                Reason: {{ event.status_text }}</small>
             </div>
           </div>
           <div class="absolute inset-0 z-0 brightness-50 backdrop-blur-md"></div>
