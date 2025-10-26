@@ -74,12 +74,12 @@ const deleteEvent = (id) => {
               <h2 class="capitalize flex gap-2 justify-center items-center"
                   :class="event.status_name === 'pending' ? 'text-green' : 'text-red'">
                 {{ event.status_name }}
-                <ProcessIcon v-if="event.status_name === 'pending' " />
+                <ProcessIcon color="#4caf50" v-if="event.status_name === 'pending' " />
               </h2>
               <small v-if="event.status_name === 'pending' ">
                 Your event request has been sent for review. <br />
                 You will be notified once it is processed.<br />
-                <span class="text-orange">You can also edit your event while it’s under review.</span>
+                <b class="text-orange">You can also edit your event while it’s under review.</b>
               </small>
               <small v-if="event.status_text" class="p-2 mt-2">
                 Reason: {{ event.status_text }}</small>
