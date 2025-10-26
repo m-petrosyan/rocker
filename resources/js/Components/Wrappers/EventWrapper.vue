@@ -7,6 +7,7 @@ import EditIcon from '@/Components/Icons/EditIcon.vue';
 import DeleteIcon from '@/Components/Icons/DeleteIcon.vue';
 import { removePostalCode } from '@/Helpers/adressFormatHelper.js';
 import { formatDateTime } from '@/Helpers/dateFormatHelper.js';
+import ProcessIcon from '@/Components/Icons/ProcessIcon.vue';
 
 defineProps({
   events: {
@@ -70,10 +71,15 @@ const deleteEvent = (id) => {
                class="absolute w-full text-center h-full content-center bg-blackTransparent2"
                :class="event.status_name === 'pending' ? 'z-20' : 'z-30'">
             <div class="bg-blackTransparent2">
-              <h2 class="capitalize"
+              <h2 class="capitalize flex gap-2 justify-center items-center"
                   :class="event.status_name === 'pending' ? 'text-green' : 'text-red'">
                 {{ event.status_name }}
+                <ProcessIcon v-if="event.status_name === 'pending' " />
               </h2>
+              <small v-if="event.status_name === 'pending' ">
+                Your event request has been sent for review. <br />
+                You will be notified once it is processed.
+              </small>
               <p v-if="event.status_text" class="p-2 mt-2">Reason:
                 {{ event.status_text }}</p>
             </div>
