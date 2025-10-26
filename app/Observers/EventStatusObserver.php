@@ -46,9 +46,9 @@ class EventStatusObserver
                     )
                     ->send();
             }
-
+            
             $eventStatus->event->user?->chat
-                ->message("✅ Your event request has been sent for review. You will be notified once it is processed.")
+                ?->message("✅ Your event request has been sent for review. You will be notified once it is processed.")
                 ->send();
         }
     }
@@ -68,11 +68,11 @@ class EventStatusObserver
             $eventStatus->event->refreshNotifyCount($usersCount);
 
             $eventStatus->event->user?->chat
-                ->message("Thank you! The event has been added and will be sent to {$usersCount} 🤘 people.")
+                ?->message("Thank you! The event has been added and will be sent to {$usersCount} 🤘 people.")
                 ->send();
         } elseif ($eventStatus->isDirty('status') && $eventStatus->status === EventStatusEnum::REJECTED->value) {
             $eventStatus->event->user?->chat
-                ->message("❌ Request to add event rejected, reason: $eventStatus->reason")
+                ?->message("❌ Request to add event rejected, reason: $eventStatus->reason")
                 ->send();
         } elseif ($eventStatus->isDirty('status') && $eventStatus->status === EventStatusEnum::DELETED->value) {
             $users = $eventStatus->event->notifications()->withPivot('event_id', 'user_id', 'message_id')->get();
