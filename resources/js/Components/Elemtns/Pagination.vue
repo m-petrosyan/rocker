@@ -27,11 +27,6 @@ const getPageQuery = (url) => {
         ]"
         v-html="link.label"
       />
-      <span
-        v-else
-        class="px-3 py-1 text-gray-400"
-        v-html="link.label"
-      />
     </template>
   </div>
 </template>
