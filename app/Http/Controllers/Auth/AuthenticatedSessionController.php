@@ -62,8 +62,8 @@ class AuthenticatedSessionController extends Controller
     public function tgWebAuth(Request $request)
     {
         $intended = $request->input('intended');
-        if ($intended && !session()->has('url.intended')) {
-            session()->flash('url.intended', $intended); // Сохрани, если не установлен
+        if (!session()->has('url.intended')) {
+            session()->put('url.intended', route('home')); // Игнорируем input, если прямой заход
         }
 
         $userBot = UserBot::query()
