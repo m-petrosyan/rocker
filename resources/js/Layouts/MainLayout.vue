@@ -58,6 +58,6 @@ onMounted(() => {
   <PreloaderPwa v-if="isPWA" />
   <slot />
   <Footer v-if="!webApp" />
-  <Preloader v-if="webApp && !page" />
+  <Preloader v-if="webApp && !user" />
   <PwaNavbar v-if="isPWA || webApp" />
 </template>
