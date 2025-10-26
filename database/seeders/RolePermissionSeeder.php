@@ -20,10 +20,10 @@ class RolePermissionSeeder extends Seeder
             'moderator' => [
                 'all',
             ],
+            'user' => [
+            ],
             'organizer' => [
                 'all',
-            ],
-            'user' => [
             ],
         ];
         foreach ($permissions as $roleName => $perms) {

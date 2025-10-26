@@ -64,11 +64,12 @@ const webApp = isWebApp();
             <AnalyticsIcon class="text-white" />
           </div>
         </NavLink>
+        <span v-else />
         <div class="flex flex-col items-end gap-y-4">
           <NavLink v-if="eventRequests"
                    :href="route('profile.events.requests')"
                    class="relative">
-            <div tooltip="Dashboard">
+            <div tooltip="Event Requests">
               <EventIcon class="text-white" />
               <span
                 class="absolute -top-2 -left-2 bg-orange text-white text-xs font-semibold w-6 h-6 flex items-center justify-center rounded-full">
