@@ -96,7 +96,7 @@ const webApp = isWebApp();
           </div>
         </div>
       </div>
-      <div class="mt-56 md:mt-48">
+      <div class="mt-20">
         <SuccessMessages success class="w-full md:w-1/3 mx-auto" :message="$page.props.flash.success" timeout="10000" />
         <ProfileActions v-if="owner" class="mx-auto w-full" :full="auth.user.settings?.country !== 'ge'" />
         <GalleryWrapper v-if="galleries.data?.length" profile :galleries="galleries.data" :owner
@@ -106,7 +106,8 @@ const webApp = isWebApp();
           v-if="events?.data?.length && (owner || ['admin','modarator','organizer'].includes(auth.role))"
           :events="events?.data" :owner
           profile
-          :isAdmin="auth.isAdmin" title="User events" />
+          :isAdmin="auth.isAdmin" title="User events"
+          class="mt-20" />
         <BandWrapper
           v-if="bands.data?.length && (owner || ['admin','modarator','organizer'].includes(auth.role))"
           :bands="bands.data" :owner
