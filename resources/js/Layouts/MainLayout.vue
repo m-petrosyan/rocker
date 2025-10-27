@@ -5,7 +5,7 @@ import Footer from '@/Components/Footer/Footer.vue';
 import PwaNavbar from '@/Components/Nav/PwaNavbar.vue';
 import PreloaderPwa from '@/Components/Preloader/PreloaderPwa.vue';
 import { computed, onMounted, ref } from 'vue';
-import { isWebApp } from '@/Helpers/setAppUser.js';
+import { isWebApp, useTelegramAuth } from '@/Helpers/setAppUser.js';
 import defaultImg from '/public/screenshots/desktop-screenshot.png';
 import Preloader from '@/Components/Icons/Preloader.vue';
 
@@ -39,6 +39,7 @@ onMounted(() => {
     window.navigator.standalone === true;
 });
 
+useTelegramAuth();
 </script>
 
 <template>
@@ -58,7 +59,6 @@ onMounted(() => {
   <PreloaderPwa v-if="isPWA" />
   <slot />
   <Footer v-if="!webApp" />
-  {{ user }}
   <Preloader v-if="webApp && !user" />
   <PwaNavbar v-if="isPWA || webApp" />
 </template>
