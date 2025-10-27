@@ -34,19 +34,72 @@ trait TelegramSettingsHandler
 
     public function test()
     {
-        $this->chat->message('test message')
+        $this->chat
+            ->html(
+                'Smash the floor at the Philharmonia!
+
+Why stay at home on a Saturday when you can let loose with the wildest
+#metal bands in town?
+
+Rocking the underground in November are:
+▪️ PERFECT LEGACY
+▪️ SELARDI
+▪️ AZHIROCK - joining us from Iran
+
+Make it loud under one of the oldest buildings in the city!
+November 22 (Saturday), 20:00
+Armenian State Philharmonia: Ground Floor (2 Abovyan Str)
+Tickets:
+3000 AMD (early bird)
+5000 AMD (doors)
+
+🎉 Rock/Metal Events Bot Calendar in Armenia/Georgia: t.me/RockMetalEventsbot
+Why stay at home on a Saturday when you can let loose with the wildest
+#metal bands in town?
+
+Rocking the underground in November are:
+▪️ PERFECT LEGACY
+▪️ SELARDI
+▪️ AZHIROCK - joining us from Iran
+
+Make it loud under one of the oldest buildings in the city!
+November 22 (Saturday), 20:00
+Armenian State Philharmonia: Ground Floor (2 Abovyan Str)
+Tickets:
+3000 AMD (early bird)
+5000 AMD (doors)
+
+Tickets:
+3000 AMD (early bird)
+5000 AMD (doors)Tickets:
+3000 AMD (early bird)
+5000 AMD (doors)Tickets:
+3000 AMD (early bird)
+5000 AMD (doors)
+'
+            )
             ->keyboard(
-                Keyboard::make()
-                    ->row([
-                        Button::make('Delete')->action('delete')->param('id', '42'),
-                        Button::make('Dismiss')->action('dismiss')->param('id', '42'),
-                        Button::make('Dismiss')->action('dismiss')->param('id', '42'),
-                    ])
-                    ->row([
-                        Button::make('open')->url('https://test.it'),
-                    ])
+                Keyboard::make()->buttons([
+                    Button::make('Delete')->action('delete')->param('id', '42'),
+                    Button::make('Delete')->action('delete')->param('id', '42'),
+                    Button::make('Delete')->action('delete')->param('id', '42'),
+                ])
             )
             ->send();
+
+//        $this->chat->message('test message')
+//            ->keyboard(
+//                Keyboard::make()
+//                    ->row([
+//                        Button::make('Delete')->action('delete')->param('id', '42'),
+//                        Button::make('Dismiss')->action('dismiss')->param('id', '42'),
+//                        Button::make('Dismiss')->action('dismiss')->param('id', '42'),
+//                    ])
+//                    ->row([
+//                        Button::make('open')->url('https://test.it'),
+//                    ])
+//            )
+//            ->send();
     }
 
     public function get_countries(): void
