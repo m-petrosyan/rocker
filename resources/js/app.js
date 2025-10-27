@@ -9,7 +9,7 @@ import { createApp, h } from 'vue';
 import { route as ziggyRoute, ZiggyVue } from '../../vendor/tightenco/ziggy';
 import VueGtag from 'vue-gtag-next';
 import PrimeVue from 'primevue/config';
-import PreloaderPwa from '@/Components/Preloader/PreloaderPwa.vue';
+// import PreloaderPwa from '@/Components/Preloader/PreloaderPwa.vue';
 import tooltipPlugin from '@/Plugins/tooltipPlugin.js';
 import { useTelegramAuth } from '@/Helpers/setAppUser.js';
 
@@ -20,6 +20,9 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js');
   });
 }
+
+useTelegramAuth();
+
 axios.defaults.withCredentials = true;
 
 createInertiaApp({
@@ -46,7 +49,7 @@ createInertiaApp({
 
       .use(tooltipPlugin);
     app.config.globalProperties.$route = ziggyRoute;
-    app.component('PwaLoader', PreloaderPwa);
+    // app.component('PwaLoader', PreloaderPwa);
 
     app.config.globalProperties.$isPWA =
       window.matchMedia('(display-mode: standalone)').matches ||
@@ -65,4 +68,3 @@ createInertiaApp({
     color: '#FF5722'
   }
 });
-useTelegramAuth();

@@ -14,7 +14,7 @@ export function useTelegramAuth(redirect = false) {
         intended: intended
       })
         .then(res => {
-          if (res.data?.redirect) {
+          if (redirect && res.data?.redirect) {
             const url = new URL(res.data.redirect, window.location.origin);
             router.visit(url.pathname + url.search);
           }
