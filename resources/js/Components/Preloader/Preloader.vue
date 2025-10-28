@@ -18,7 +18,6 @@ onMounted(() => {
 });
 </script>
 
-
 <template>
-  <PreloaderIcon />
+  <PreloaderIcon v-if="visible" />
 </template>
