@@ -20,9 +20,9 @@ class UserBotObserver
 
 
             $data['name'] = $data['first_name'].' '.$data['last_name'];
-            Log::info('data', [$data]);
-            if (User::where('username', $data['username'])->exists()) {
-                $data['username'] = $data['username'].'_'.strtolower(uniqid());
+//            Log::info('data', [$data]);
+            if (empty($data['username']) || User::where('username', $data['username'])->exists()) {
+                $data['username'] = $data['username'].'_bot_'.strtolower(uniqid());
             }
 
             try {
