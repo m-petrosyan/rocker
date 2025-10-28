@@ -63,7 +63,11 @@ defineProps({
       <NavLink :href="route('profile.show', user.username)" v-for="user in users.data"
                class="text-center flex flex-col items-center gap-4" href="">
         <div :style="{ backgroundImage: `url(${user.image?.thumb ?? '/images/user.jpg'})` }"
-             class="h-48 w-48 bg-no-repeat bg-contain bg-cover rounded-full">
+             class="relative h-48 w-48 bg-no-repeat bg-contain bg-cover rounded-full overflow-hidden">
+          <div class="absolute w-full bottom-0 p-2 flex gap-4 justify-center items-center bg-blackTransparent">
+            <BotIcon v-if="user.chat_count" />
+            <WebSiteIcon v-if="user.email" />
+          </div>
         </div>
         <div>
           <div>
