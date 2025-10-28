@@ -10,6 +10,7 @@ import { route as ziggyRoute, ZiggyVue } from '../../vendor/tightenco/ziggy';
 import VueGtag from 'vue-gtag-next';
 import PrimeVue from 'primevue/config';
 import tooltipPlugin from '@/Plugins/tooltipPlugin.js';
+import { useTelegramAuth } from '@/Helpers/setAppUser.js';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -18,6 +19,8 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js');
   });
 }
+
+useTelegramAuth();
 
 axios.defaults.withCredentials = true;
 
