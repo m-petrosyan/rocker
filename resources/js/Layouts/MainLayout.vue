@@ -3,6 +3,7 @@ import { Head, usePage } from '@inertiajs/vue3';
 import FleshNotification from '@/Components/Messages/FleshNotification.vue';
 import Footer from '@/Components/Footer/Footer.vue';
 import PwaNavbar from '@/Components/Nav/PwaNavbar.vue';
+import PreloaderPwa from '@/Components/Preloader/PreloaderPwa.vue';
 import { computed, onMounted, ref } from 'vue';
 import { isWebApp } from '@/Helpers/setAppUser.js';
 import defaultImg from '/public/screenshots/desktop-screenshot.png';
@@ -55,9 +56,9 @@ onMounted(() => {
   </Head>
 
   <FleshNotification />
-  <!--  <PreloaderPwa v-if="isPWA" />-->
+  <PreloaderPwa v-if="isPWA" />
   <slot />
-  <Footer v-if="!webApp || isPWA" />
-  <Preloader v-if="webApp" />
+  <Footer v-if="!webApp" />
+  <Preloader v-if="(webApp && !user)  || isPWA" />
   <PwaNavbar v-if="isPWA || webApp" />
 </template>
