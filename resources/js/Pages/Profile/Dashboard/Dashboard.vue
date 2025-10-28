@@ -5,6 +5,9 @@ import BotIcon from '@/Components/Icons/BotIcon.vue';
 import WebSiteIcon from '@/Components/Icons/WebSiteIcon.vue';
 import Pagination from '@/Components/Elemtns/Pagination.vue';
 import { formatDateTime } from '@/Helpers/dateFormatHelper.js';
+import BandIcon from '@/Components/Icons/BandIcon.vue';
+import EventIcon from '@/Components/Icons/EventIcon.vue';
+import GalleryIcon from '@/Components/Icons/GalleryIcon.vue';
 
 defineProps({
   users: {
@@ -76,23 +79,23 @@ defineProps({
               tooltip="last acivity">{{ user.last_activity ? formatDateTime(user.last_activity, 'DD/MM/YY HH:mm') : 'No activity yet'
               }}</small>
           </div>
-          <div class="mt-4 flex gap-4">
-            <div class="flex flex-col">
-              <b>{{ user.bands_count }}</b>
-              <p>Bands</p>
-            </div>
+          <div class="mt-2 flex gap-4">
             <div class="flex flex-col">
               <b>{{ user.events_count }}</b>
-              <p>Events</p>
+              <EventIcon />
             </div>
             <div class="flex flex-col">
+              <b>{{ user.bands_count }}</b>
+              <BandIcon />
+            </div>
+            <div class="flex flex-col ">
               <b>{{ user.galleries_count }}</b>
-              <p>Gallery</p>
+              <GalleryIcon />
             </div>
-            <div class="flex flex-col">
-              <b>{{ user.blogs_count }}</b>
-              <p>Blog</p>
-            </div>
+            <!--            <div class="flex flex-col">-->
+            <!--              <b>{{ user.blogs_count }}</b>-->
+            <!--              <p>Blog</p>-->
+            <!--            </div>-->
           </div>
         </div>
       </NavLink>
