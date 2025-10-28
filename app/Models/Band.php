@@ -70,7 +70,8 @@ class Band extends Model implements Viewable, HasMedia
 
     public function events(): BelongsToMany
     {
-        return $this->belongsToMany(Event::class);
+        return $this->belongsToMany(Event::class)
+            ->whereDate('date', '>=', today());
     }
 
     public function setNameAttribute($value): void
