@@ -20,7 +20,7 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-useTelegramAuth();
+useTelegramAuth(true);
 
 axios.defaults.withCredentials = true;
 
