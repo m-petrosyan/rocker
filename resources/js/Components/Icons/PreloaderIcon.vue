@@ -24,7 +24,7 @@
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    border: 1px solid #ff5722; // можно заменить на var(--tw-text-opacity) если хочешь tailwind цвет
+    border: 1px solid theme('colors.orange');
     position: absolute;
     top: 6px;
     left: 0;
@@ -44,17 +44,17 @@
 
     &:nth-child(2) {
       border-width: 2px;
-      left: 0px;
-      top: -12px; // -4 * 3
-      width: 36px; // 12 * 3
+      left: 0;
+      top: -12px;
+      width: 36px;
       height: 36px;
     }
 
     &:nth-child(3) {
       border-width: 2px;
-      left: -3px; // -1 * 3
-      top: 9px; // 3 * 3
-      width: 54px; // 18 * 3
+      left: -3px;
+      top: 9px;
+      width: 54px;
       height: 54px;
     }
 
@@ -62,15 +62,15 @@
       border-width: 3px;
       left: -3px;
       top: -12px;
-      width: 69px; // 23 * 3
+      width: 69px;
       height: 69px;
     }
 
     &:nth-child(5) {
       border-width: 3px;
       left: -3px;
-      top: 12px; // 4 * 3
-      width: 93px; // 31 * 3
+      top: 12px;
+      width: 93px;
       height: 93px;
     }
 
