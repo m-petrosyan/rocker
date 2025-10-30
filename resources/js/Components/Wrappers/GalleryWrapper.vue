@@ -5,6 +5,7 @@ import DeleteIcon from '@/Components/Icons/DeleteIcon.vue';
 import EditIcon from '@/Components/Icons/EditIcon.vue';
 import EyesIcon from '@/Components/Icons/EyesIcon.vue';
 import { isSSR } from '@/Helpers/ssrHelper.js';
+import { formatDateTime } from '@/Helpers/dateFormatHelper.js';
 
 defineProps({
   galleries: {
@@ -78,7 +79,7 @@ const deleteGallery = (id) => {
             {{ gallery.total_mb }} MB
           </div>
           <div class="absolute right-0 bottom-8 px-1 bg-orange">
-            {{ gallery.date }}
+            {{ formatDateTime(gallery.date, 'DD.MM.YY') }}
           </div>
           <a v-if="gallery.user"
              :href="route('profile.show', gallery.user.username)"

@@ -2,19 +2,19 @@
 
 namespace App\Models;
 
+use App\Traits\MediaTrait;
 use App\Traits\ViewsTrait;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Gallery extends Model implements Viewable, HasMedia
 {
-    use InteractsWithMedia, ViewsTrait;
+    use InteractsWithMedia, ViewsTrait, MediaTrait;
 
     protected $fillable = [
         'user_id',
@@ -26,10 +26,7 @@ class Gallery extends Model implements Viewable, HasMedia
     ];
 
     protected $appends = [
-        'views',
-        'allViews',
         'total_mb',
-        'images_url',
         'cover_img',
     ];
 
@@ -46,11 +43,6 @@ class Gallery extends Model implements Viewable, HasMedia
     public function bands(): BelongsToMany
     {
         return $this->belongsToMany(Band::class);
-    }
-
-    public function getVenueAttribute(): BelongsTo
-    {
-        return $this->venue();
     }
 
     public function venue(): BelongsTo
@@ -76,12 +68,8 @@ class Gallery extends Model implements Viewable, HasMedia
             ];
     }
 
-    public function media(): MorphMany
-    {
-        return $this->morphMany(Media::class, 'model');
-    }
 
-    public function getImagesUrlAttribute(): array
+    public function imagesUrl(): array
     {
         $mediaItems = $this->getMedia('images');
 
@@ -97,7 +85,6 @@ class Gallery extends Model implements Viewable, HasMedia
     {
         return round($this->getMedia('images')->sum('size') / 1024 / 1024);
     }
-
 
     public function registerMediaConversions(?Media $media = null): void
     {

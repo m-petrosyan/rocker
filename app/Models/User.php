@@ -49,14 +49,15 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     protected $hidden = [
         'password',
         'remember_token',
+        'media',
     ];
 
     public $appends = [
         'role',
         'image',
     ];
-
-    protected $with = ['settings'];
+    
+//    protected $with = ['settings'];
 
     /**
      * Get the attributes that should be cast.

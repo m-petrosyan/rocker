@@ -28,8 +28,6 @@ trait MediaTrait
             }
         }
 
-//        dump($result);
-
         return $result;
     }
 }

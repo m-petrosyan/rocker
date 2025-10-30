@@ -41,7 +41,7 @@ class ProfileController
         return Inertia::render('Profile/Profile', [
             'user' => $user->load('links', 'settings'),
             'owner' => $owner,
-            'galleries' => GalleryReoisitory::userGallery($user),
+            'galleries' => GalleryReoisitory::userGallery($user, ['views', 'allViews']),
             'events' => EventRepository::userEvents($user),
             'bands' => BandRepository::userBands($user),
             'blogs' => BlogRepository::userBlogs($user),

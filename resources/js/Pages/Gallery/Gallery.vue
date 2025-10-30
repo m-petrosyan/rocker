@@ -1,19 +1,17 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
-import ImageWrapper from '@/Components/Wrappers/ImageWrapper.vue';
 import NavLink from '@/Components/NavLink.vue';
 import { computed } from 'vue';
 import LocationIcon from '@/Components/Icons/LocationIcon.vue';
 import CalendarIcon from '@/Components/Icons/CalendarIcon.vue';
 import BandTags from '@/Components/Tags/BandTags.vue';
 import { removePostalCode } from '@/Helpers/adressFormatHelper.js';
+import { fullUrl } from '@/Helpers/urlHelper.js';
+import ImageWrapper from '@/Components/Wrappers/ImageWrapper.vue';
 
 const props = defineProps({
   gallery: {
     type: Object
-  },
-  url: {
-    type: String
   }
 });
 
@@ -22,7 +20,7 @@ const venueName = computed(() => {
 });
 
 const description = 'by ' + props.gallery.user.name + '. ' + (props.gallery.description || 'Discover Armenian rock and metal bands, upcoming concerts, announcements, and photo galleries. Stay updated with the Armenian music scene on Rocker.am.');
-
+const url = fullUrl();
 </script>
 
 <template>

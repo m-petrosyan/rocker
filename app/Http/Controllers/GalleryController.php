@@ -22,11 +22,9 @@ class GalleryController extends Controller
     public function show(Gallery $gallery): Response
     {
         views($gallery)->record();
-        $url = url()->current();
 
         return Inertia::render('Gallery/Gallery', [
             'gallery' => GalleryReoisitory::getGallery($gallery),
-            'url' => $url,
         ]);
     }
 }
