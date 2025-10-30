@@ -63,9 +63,8 @@ class Gallery extends Model implements Viewable, HasMedia
                 ];
             }
         }
-   
 
-//        $firstImage = $this->getImagesUrlAttribute()[0] ?? null;
+        $firstImage = $this->imagesUrl()[0] ?? null;
 
         return [
             'thumb' => $firstImage['thumb'] ?? null,
