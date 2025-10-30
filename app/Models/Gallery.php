@@ -52,20 +52,25 @@ class Gallery extends Model implements Viewable, HasMedia
 
     public function getCoverImgAttribute(): array
     {
-        $cover = Media::query()->find($this->cover);
+        if ($this->cover) {
+            $cover = Media::query()->find($this->cover);
 
-        return $cover
-            ? [
-                'thumb' => $cover->getUrl('thumb'),
-                'large' => $cover->getUrl('large'),
-                'original' => $cover->getUrl(),
-            ]
-            : [
-                'thumb' => isset($this->getImagesUrlAttribute()[0]['thumb'])
-                    ? $this->getImagesUrlAttribute()[0]['thumb'] : null,
-                'original' => isset($this->getImagesUrlAttribute()[0]['original'])
-                    ? $this->getImagesUrlAttribute()[0]['original'] : null,
-            ];
+            if ($cover) {
+                return [
+                    'thumb' => $cover->getUrl('thumb'),
+                    'large' => $cover->getUrl('large'),
+                    'original' => $cover->getUrl(),
+                ];
+            }
+        }
+
+        $firstImage = $this->getImagesUrlAttribute()[0] ?? null;
+
+        return [
+            'thumb' => $firstImage['thumb'] ?? null,
+            'large' => $firstImage['large'] ?? null,
+            'original' => $firstImage['original'] ?? null,
+        ];
     }
 
 
