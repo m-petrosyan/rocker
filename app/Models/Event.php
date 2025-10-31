@@ -4,9 +4,9 @@ namespace App\Models;
 
 use App\Enums\EventStatusEnum;
 use App\Traits\MediaTrait;
-use App\Traits\ViewsTrait;
 use Carbon\Carbon;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
+use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -17,7 +17,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Event extends Model implements Viewable, HasMedia
 {
-    use ViewsTrait, MediaTrait, InteractsWithMedia;
+    use InteractsWithViews, MediaTrait, InteractsWithMedia;
 
     protected $fillable = [
         'title',
@@ -41,8 +41,6 @@ class Event extends Model implements Viewable, HasMedia
     ];
 
     protected $appends = [
-        'views',
-        'allViews',
         'poster',
         'start_date_short',
         'status_name',

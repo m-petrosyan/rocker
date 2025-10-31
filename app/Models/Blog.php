@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\Traits\MediaTrait;
-use App\Traits\ViewsTrait;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
+use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -15,7 +15,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Blog extends Model implements Viewable, HasMedia
 {
-    use ViewsTrait, HasTranslations, MediaTrait, InteractsWithMedia;
+    use InteractsWithViews, HasTranslations, MediaTrait, InteractsWithMedia;
 
     protected $fillable = [
         'user_id',
@@ -29,7 +29,6 @@ class Blog extends Model implements Viewable, HasMedia
     protected $appends = [
         'pdf',
         'cover',
-        'views',
         'bands',
     ];
 

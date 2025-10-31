@@ -10,6 +10,7 @@ class BandRepository
     public static function userBands($user)
     {
         return $user->bands()
+            ->withCount(['views'])
             ->orderBy('created_at', 'desc')
             ->paginate(30);
     }

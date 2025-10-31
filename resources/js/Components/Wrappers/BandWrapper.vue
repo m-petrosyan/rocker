@@ -75,16 +75,16 @@ const deleteBand = (id) => {
           <div v-if="owner || isAdmin"
                class="absolute inset-0 flex flex-col justify-between p-1 bg-blackTransparent2">
             <div class="flex justify-end gap-y-2">
-              <div tooltip="Views" class="flex gap-x-2 items-center">
+              <div tooltip="Views" class="flex items-center">
                 <EyesIcon />
-                <p>{{ band.allViews }}</p>
+                {{ band.views_count }}
               </div>
             </div>
             <div class="flex justify-between">
-              <NavLink v-tooltip="'Edit'" :href="route('profile.bands.edit', band.id)">
+              <NavLink tooltip="Edit" :href="route('profile.bands.edit', band.id)">
                 <EditIcon />
               </NavLink>
-              <button v-tooltip="'Delete'" @click.prevent="deleteBand(band.id)"
+              <button tooltip="Delete" @click.prevent="deleteBand(band.id)"
                       class="text-red-500 hover:text-red-700">
                 <DeleteIcon />
               </button>

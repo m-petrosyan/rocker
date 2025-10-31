@@ -19,15 +19,10 @@ class GalleryReoisitory
 
     public static function userGallery($user, array $appends = [])
     {
-        $galleries = $user->galleries()
+        return $user->galleries()
+            ->withCount(['views'])
             ->orderBy('created_at', 'desc')
             ->paginate(30);
-
-        if (!empty($appends)) {
-            $galleries->through(fn($gallery) => $gallery->append($appends));
-        }
-
-        return $galleries;
     }
 
 

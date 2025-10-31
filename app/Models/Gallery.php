@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\Traits\MediaTrait;
-use App\Traits\ViewsTrait;
 use CyrildeWit\EloquentViewable\Contracts\Viewable;
+use CyrildeWit\EloquentViewable\InteractsWithViews;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -14,7 +14,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Gallery extends Model implements Viewable, HasMedia
 {
-    use InteractsWithMedia, ViewsTrait, MediaTrait;
+    use InteractsWithMedia, InteractsWithViews, MediaTrait;
 
     protected $fillable = [
         'user_id',

@@ -110,10 +110,10 @@ const deleteEvent = (id) => {
                     <NotifyBotIcon />
                     {{ event.notify_count }}
                   </div>
-                  <div v-if="event.allViews" tooltip="Views in rocker"
+                  <div v-if="event.views_count" tooltip="Views in rocker"
                        class="flex items-center gap-2">
                     <EyesIcon />
-                    {{ event.allViews }}
+                    {{ event.views_count }}
                   </div>
                 </div>
               </div>

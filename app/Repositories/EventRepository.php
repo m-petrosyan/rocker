@@ -18,8 +18,8 @@ class EventRepository
                 $query->whereIn('country', $country === 'all' ? ['am', 'ge'] : [$country]);
             })
             ->with(['status'])
-            ->when(!$past, fn($query) => $query->where('start_date', '>=', now()))
-            ->when($past, fn($query) => $query->where('start_date', '<', now()))
+            ->when(!$past, fn($query) => $query->whereDate('start_date', '>=', today()))
+            ->when($past, fn($query) => $query->whereDate('start_date', '<', today()))
             ->orderBy('start_date', $past ? 'desc' : 'asc')
             ->paginate($limit, ['*'], 'page', $page);
     }
@@ -36,7 +36,8 @@ class EventRepository
     {
         return $user?->events()
             ->with('status')
-            ->when(fn($query) => $query->where('start_date', '>=', now()))
+            ->withCount(['views'])
+            ->whereDate('start_date', '>=', today())
             ->whereRelation('status', 'status', '!=', EventStatusEnum::DELETED->value)
             ->orderBy('start_date')
             ->paginate();
