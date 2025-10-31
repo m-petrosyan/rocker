@@ -50,7 +50,6 @@ const deleteGallery = (id) => {
     });
   }
 };
-
 </script>
 
 <template>

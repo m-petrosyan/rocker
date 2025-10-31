@@ -56,6 +56,7 @@ const url = fullUrl();
     <EventWrapper v-if="band.events.length" class="mt-20" :events="band.events" title="Upcoming events" />
     <!--    <GalleryWrapper v-if="band?.galleries.length" :galleries="band.galleries" title="Galleries" user />-->
     <BlogWrapper v-if="band.blogs.length" :blogs="band.blogs" class="mt-20" title="Articles about the group" />
+    <p>...</p>
   </GuestLayout>
 </template>
 
