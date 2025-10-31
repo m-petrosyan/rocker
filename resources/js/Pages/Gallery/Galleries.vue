@@ -21,7 +21,16 @@ defineProps({
             keywords: 'Armenian rock and metal concert galleries, including photos from live shows, festivals, underground events, and music photography in Yerevan and across Armenia. ' + galleries.data.map(gallery => gallery.title).join(', ')
         }">
     <template #header> Galleries</template>
+    <div class="text-gray text-pretty">
+      <h2 class="text-lg font-medium text-gray mb-6">Armenian Rock & Metal Bands</h2>
+      <p>Our galleries feature images from past concerts, festivals, and underground events, showcasing the vibrant
+        atmosphere of the Armenian rock and metal scene.</p>
+    </div>
     <template #h1> Photo Galleries of Armenian Rock & Metal Concerts</template>
     <GalleryWrapper :galleries="galleries.data" :isAdmin="auth.isAdmin" user add />
+    <div class="text-gray text-pretty mt-10">
+      <p>All galleries are published in full resolution, without cropping or quality loss. If selected, photos may also
+        appear on our official Instagram page, always with proper credit to the author.</p>
+    </div>
   </GuestLayout>
 </template>
