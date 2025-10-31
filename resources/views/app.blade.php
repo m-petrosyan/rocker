@@ -12,6 +12,16 @@
     <link rel="icon" type="image/png" href="/favicon.png">
     {{--    <link rel="canonical" href="{{ url()->current() }}" />--}}
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script type="application/ld+json">
+    @verbatim
+            {
+              "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "{{ url('/') }}",
+      "name": "Rocker"
+    }
+        @endverbatim
+    </script>
     @routes
     @vite([
         'resources/js/app.js',
