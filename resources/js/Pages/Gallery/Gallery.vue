@@ -8,6 +8,7 @@ import BandTags from '@/Components/Tags/BandTags.vue';
 import { removePostalCode } from '@/Helpers/adressFormatHelper.js';
 import { fullUrl } from '@/Helpers/urlHelper.js';
 import ImageWrapper from '@/Components/Wrappers/ImageWrapper.vue';
+import { formatDateTime } from '@/Helpers/dateFormatHelper.js';
 
 const props = defineProps({
   gallery: {
@@ -47,7 +48,8 @@ const url = fullUrl();
         </div>
         <div class="flex gap-x-1 bg-graydark2 w-fit px-1 rounded-sm">
           <CalendarIcon />
-          <p>{{ gallery.date }}</p>
+          <p> {{ formatDateTime(gallery.date, 'DD.MM.YY') }}
+          </p>
         </div>
         <BandTags :bands="gallery.bands" />
       </div>
