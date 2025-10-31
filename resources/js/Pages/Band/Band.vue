@@ -1,13 +1,9 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import SocialShare from '@/Components/Socials/SocialShare.vue';
-import GalleryWrapper from '@/Components/Wrappers/GalleryWrapper.vue';
 import GenresTags from '@/Components/Tags/GenresTags.vue';
 import ImageWrapper from '@/Components/Wrappers/ImageWrapper.vue';
 import { fullUrl, getHostname } from '@/Helpers/urlHelper.js';
-import EventWrapper from '@/Components/Wrappers/EventWrapper.vue';
-import BandAlbums from '@/Components/Forms/BandAlbums.vue';
-import BlogWrapper from '@/Components/Wrappers/BlogWrapper.vue';
 
 defineProps({
   band: {
@@ -53,10 +49,10 @@ const url = fullUrl();
     </div>
     <ImageWrapper classes="flex gap-4" :images="band.images_url" :title="band.title" :url />
     <div class="md:w-5/6 mx-auto mt-8 md:p-0 p-3 whitespace-break-spaces" v-html="band.info" />
-    <BandAlbums v-if="band?.albums" :albums="band.albums" />
-    <EventWrapper v-if="band.events.length" class="mt-20" :events="band.events" title="Upcoming events" />
-    <GalleryWrapper v-if="band?.galleries.length" :galleries="band.galleries" title="Galleries" user />
-    <BlogWrapper v-if="band.blogs.length" :blogs="band.blogs" class="mt-20" title="Articles about the group" />
+    <!--    <BandAlbums v-if="band?.albums" :albums="band.albums" />-->
+    <!--    <EventWrapper v-if="band.events.length" class="mt-20" :events="band.events" title="Upcoming events" />-->
+    <!--    <GalleryWrapper v-if="band?.galleries.length" :galleries="band.galleries" title="Galleries" user />-->
+    <!--    <BlogWrapper v-if="band.blogs.length" :blogs="band.blogs" class="mt-20" title="Articles about the group" />-->
   </GuestLayout>
 </template>
 
