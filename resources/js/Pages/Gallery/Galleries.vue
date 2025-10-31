@@ -22,7 +22,7 @@ defineProps({
         }">
     <template #header> Galleries</template>
     <div class="text-gray text-pretty">
-      <h2 class="text-lg font-medium text-gray mb-6">Armenian Rock & Metal Concert Galleries/h2>
+      <h2 class="text-lg font-medium text-gray mb-6">Armenian Rock & Metal Concert Galleries</h2>
       <p>Our galleries feature images from past concerts, festivals, and underground events, showcasing the vibrant
         atmosphere of the Armenian rock and metal scene.</p>
     </div>
