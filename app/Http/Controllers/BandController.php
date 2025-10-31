@@ -25,16 +25,10 @@ class BandController extends Controller
      */
     public function show(Band $band): Response
     {
-        $band->load([
-            'genres',
-            'galleries.user' => fn($q) => $q->limit(5),
-            'links',
-            'albums' => fn($q) => $q->limit(10),
-            'events' => fn($q) => $q->limit(5),
-            'blogs' => fn($q) => $q->latest()->limit(3),
-        ]);
         views($band)->record();
 
-        return Inertia::render('Band/Band', ['band' => $band]);
+        return Inertia::render('Band/Band', [
+            'band' => $band->load('genres', 'galleries.user', 'links', 'albums', 'events', 'blogs'),
+        ]);
     }
 }
