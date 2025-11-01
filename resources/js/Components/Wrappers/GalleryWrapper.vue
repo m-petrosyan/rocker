@@ -62,16 +62,11 @@ const deleteGallery = (id) => {
         class="flex flex-col items-center p-4">
         <div class="relative h-64 w-full bg-black">
           <div class="h-full w-full bg-black rounded-lg rounded-xl overflow-hidden">
-            <img v-if="gallery.cover_img.thumb && gallery.cover_img.thumb.trim()"
-                 :src="gallery.cover_img.thumb"
+            <img :src="gallery.cover_img.thumb"
                  class="object-cover w-full h-full"
                  loading="lazy"
                  :alt="gallery.title"
                  @error="$event.target.src = gallery.cover_img.original" />
-            <img v-else-if="gallery.cover_img.original"
-                 :src="gallery.cover_img.original"
-                 class="object-cover w-full h-full"
-                 alt="Loading" />
           </div>
           <div v-if="isAdmin" class="absolute left-0 top-0 px-1 bg-red">
             {{ gallery.total_mb }} MB
