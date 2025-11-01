@@ -3,8 +3,8 @@ import { ref } from 'vue';
 
 const props = defineProps({
   spotifyId: {
-    type: [String, null],
-    required: true
+    type: String,
+    default: null
   }
 });
 
