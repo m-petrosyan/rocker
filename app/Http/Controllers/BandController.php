@@ -40,5 +40,4 @@ class BandController extends Controller
             ),
         ]);
     }
-    
 }
