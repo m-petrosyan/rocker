@@ -12,7 +12,7 @@ onMounted(() => {
   });
 
   router.on('finish', () => {
-    window.scrollTo({ top: 0 });
+    // window.scrollTo({ top: 0 });
     visible.value = false;
   });
 });
