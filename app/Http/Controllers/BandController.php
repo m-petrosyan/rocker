@@ -28,7 +28,16 @@ class BandController extends Controller
         views($band)->record();
 
         return Inertia::render('Band/Band', [
-            'band' => $band->load('genres', 'galleries.user', 'links', 'albums', 'events', 'blogs'),
+            'band' => $band->load(
+                'genres',
+                'galleries:id,title,user_id,date,cover',
+                'galleries.user',
+                'galleries.media',
+                'links',
+                'albums',
+                'events',
+                'blogs'
+            ),
         ]);
     }
 }
