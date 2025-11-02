@@ -95,8 +95,14 @@ const selectedCountry = computed(() => form.country === 'am' ? 'Armenia' : form.
         <div class="flex flex-wrap items-center gap-x-2 text-pretty">
           <span>The event will also be published in the Telegram bot </span>
           <a href="https://t.me/RockMetalEventsbot" target="_blank">@RockMetalEventsbot</a>
-          <a href="https://t.me/yerevanmetal" target="_blank">Rock Metal Yerevan</a>
-          <a href="https://t.me/gyumrimetal" target="_blank">Rock Metal Gyumri</a>
+          <div v-if="form.country === 'am'" class="flex gap-x-2">
+            <a href="https://t.me/yerevanmetal" target="_blank">Rock Metal Yerevan</a>
+            <a href="https://t.me/gyumrimetal" target="_blank">Rock Metal Gyumri</a>
+          </div>
+          <div v-else class="flex gap-x-2">
+            <a href="https://t.me/tbilisimetal" target="_blank">Rock Metal Tbilisi</a>
+            <a href="https://t.me/batumimetal" target="_blank">Rock Metal Batumi</a>
+          </div>
         </div>
       </SuccessMessages>
       <ErrorMessages :messages="$page.props.errors" />
