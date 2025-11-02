@@ -26,8 +26,8 @@ const props = defineProps({
 });
 
 const types = [
-  { name: 'CONCERT', key: 2 },
-  { name: 'EVENT', key: 3 }
+  { name: 'CONCERT', key: 'concert' },
+  { name: 'EVENT', key: 'event' }
 ];
 
 const genres = [

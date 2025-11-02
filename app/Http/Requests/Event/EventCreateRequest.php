@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Event;
 
+use App\Enums\EventTypeEnum;
 use App\Enums\GenreEnum;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -28,7 +29,7 @@ class EventCreateRequest extends FormRequest
             'poster_file' => ['required', 'image', 'mimes:jpeg,jpg,webp,png', 'max:4000'],
             'title' => ['required', 'string', 'min:3', 'max:55'],
             'content' => ['required', 'string', 'min:10', 'max:750'],
-            'type' => ['required', Rule::in([1, 2, 3])],
+            'type' => ['required', Rule::in(EventTypeEnum::getValues())],
             'country' => ['required', Rule::in(['am', 'ge'])],
             'location' => ['required', 'string', 'min:5', 'max:255'],
             'cordinates' => ['nullable', 'array'],
