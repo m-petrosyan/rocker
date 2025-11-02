@@ -77,6 +77,7 @@ const downloadAllImages = async () => {
   } catch (error) {
     console.error('Error creating ZIP:', error);
   } finally {
+    isLoading.value = false;
     emitter.emit('preloader-toggle', false);
   }
 };
