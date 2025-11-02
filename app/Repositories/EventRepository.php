@@ -43,7 +43,7 @@ class EventRepository
             ->paginate();
     }
 
-    public static function count($status = EventStatusEnum::ACCEPTED->value): mixed
+    public static function count($status = EventStatusEnum::ACCEPTED->value): int
     {
         return Event::query()->whereRelation('status', 'status', '=', $status)
             ->count();
