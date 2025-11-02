@@ -60,15 +60,9 @@ const deleteBand = (id) => {
             <img
               v-if="band.logo.thumb && band.logo.thumb.trim()"
               :src="band.logo?.svg ?? band.logo.thumb"
-              class="w-full h-full object-contain [object-fit:none] [aspect-ratio:1/1] [&[width&gt;height]]:object-contain [&[height&gt;width]]:object-cover object-center"
+              class="w-full h-full object-contain [aspect-ratio:1/1] [&[width&gt;height]]:object-contain [&[height&gt;width]]:object-cover object-center"
               :alt="band.name"
               @error="$event.target.src = band.logo.original"
-            />
-            <img
-              v-else-if="band.logo.original"
-              :src="band.logo.original"
-              class="w-full h-full object-contain [object-fit:none] [aspect-ratio:1/1] [&[width&gt;height]]:object-contain [&[height&gt;width]]:object-cover object-center"
-              alt="Loading"
             />
           </div>
 
