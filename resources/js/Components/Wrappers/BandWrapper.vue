@@ -4,6 +4,7 @@ import NavLink from '@/Components/NavLink.vue';
 import DeleteIcon from '@/Components/Icons/DeleteIcon.vue';
 import EditIcon from '@/Components/Icons/EditIcon.vue';
 import EyesIcon from '@/Components/Icons/EyesIcon.vue';
+import { ref } from 'vue';
 
 defineProps({
   bands: {
@@ -44,6 +45,14 @@ const deleteBand = (id) => {
     });
   }
 };
+
+
+const wideFlags = ref({});
+
+const onImgLoad = (e, id) => {
+  const { naturalWidth, naturalHeight } = e.target;
+  wideFlags.value[id] = naturalWidth > naturalHeight; // true = wide
+};
 </script>
 
 <template>
@@ -59,7 +68,9 @@ const deleteBand = (id) => {
           <div class="h-full w-full bg-black rounded-lg rounded-xl overflow-hidden">
             <img
               :src="band.logo?.svg ?? band.logo.thumb"
-              class="w-full h-full object-contain  [&[width&gt;height]]:object-contain [&[height&gt;width]]:object-cover object-center"
+              @load="e => onImgLoad(e, band.id)"
+              class="w-full h-full object-center"
+              :class="wideFlags[band.id] ? 'object-contain' : 'object-cover'"
               :alt="band.name"
               @error="$event.target.src = band.logo.original"
             />
