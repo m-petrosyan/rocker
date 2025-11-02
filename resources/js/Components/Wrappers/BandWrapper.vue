@@ -58,9 +58,8 @@ const deleteBand = (id) => {
         <div class="relative aspect-square w-full bg-black">
           <div class="h-full w-full bg-black rounded-lg rounded-xl overflow-hidden">
             <img
-              v-if="band.logo.thumb && band.logo.thumb.trim()"
               :src="band.logo?.svg ?? band.logo.thumb"
-              class="w-full h-full object-contain [aspect-ratio:1/1] [&[width&gt;height]]:object-contain [&[height&gt;width]]:object-cover object-center"
+              class="w-full h-full object-contain  [&[width&gt;height]]:object-contain [&[height&gt;width]]:object-cover object-center"
               :alt="band.name"
               @error="$event.target.src = band.logo.original"
             />
