@@ -1,19 +1,26 @@
 <script setup lang="ts">
-
+import halloween from '@/Components/Icons/halloween.gif';
 </script>
 
 <template>
   <div class="fixed inset-0 flex items-center justify-center bg-black/30 z-50">
-    <div class="loader relative w-[297px] h-[297px]">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+    <div class="relative">
+      <div class=" loader relative w-[297px] h-[297px]">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <img
+        :src="halloween"
+        alt="Loading..."
+        class="absolute left-1/2 top-6  w-48 h-48" />
     </div>
   </div>
+
 </template>
 
 <style lang="scss" scoped>
