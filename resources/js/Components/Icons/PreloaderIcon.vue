@@ -17,13 +17,20 @@ import halloween from '@/Components/Icons/halloween.gif';
       <img
         :src="halloween"
         alt="Loading..."
-        class="absolute left-1/2 top-6  w-48 h-48" />
+        class="absolute left-1/2 top-6  w-48 h-48 mask-left" />
     </div>
   </div>
 
 </template>
 
 <style lang="scss" scoped>
+.mask-left {
+  display: block;
+  mask-image: linear-gradient(to right, transparent 0%, #000 50%, #000 0%, transparent 100%);
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+}
+
 .loader {
   animation: rotateAnim 0.4s linear infinite;
 
