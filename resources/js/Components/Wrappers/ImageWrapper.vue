@@ -76,7 +76,7 @@ const downloadAllImages = async () => {
     });
   } catch (error) {
     console.error('Error creating ZIP:', error);
-    alert('Failed to create ZIP file. Check the console for details.');
+  } finally {
     emitter.emit('preloader-toggle', false);
   }
 };
