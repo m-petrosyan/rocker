@@ -104,13 +104,15 @@ const deleteEvent = (id) => {
                 <small>{{ event.start_time }}</small>
               </div>
               <div v-if="(owner || isAdmin ) && event.status_name === 'accepted'">
-                <div class="flex flex-col gap-y-2 bg-blackTransparent2 p-2">
+                <div @click.prevent class="flex flex-col gap-y-2 bg-blackTransparent2 p-2 cursor-default">
                   <div v-if="event.notify_count" tooltip="Sent by bot"
                        class="flex items-center gap-2">
                     <NotifyBotIcon />
                     {{ event.notify_count }}
                   </div>
-                  <div v-if="event.views_count" tooltip="Views in rocker"
+                  <div v-if="event.views_count"
+
+                       tooltip="Views in rocker"
                        class="flex items-center gap-2">
                     <EyesIcon />
                     {{ event.views_count }}

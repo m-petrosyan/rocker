@@ -78,8 +78,8 @@ const onImgLoad = (e, id) => {
 
           <div v-if="owner || isAdmin"
                class="absolute inset-0 flex flex-col justify-between p-1 bg-blackTransparent2">
-            <div class="flex justify-end gap-y-2">
-              <div tooltip="Views" class="flex items-center">
+            <div @click.prevent class="flex justify-end gap-y-2">
+              <div tooltip="Views" class="flex items-center gap-x-2 cursor-default">
                 <EyesIcon />
                 {{ band.views_count }}
               </div>

@@ -83,8 +83,9 @@ const deleteGallery = (id) => {
           <div v-if="(owner || isAdmin) && profile"
                class="absolute bottom-0 w-full h-full flex flex-col justify-between  p-1 bg-blackTransparent2">
             <div class="flex justify-end gap-y-2">
-              <div tooltip="Views"
-                   class="flex gap-x-2 items-center">
+              <div @click.prevent
+                   tooltip="Views"
+                   class="flex gap-x-2 items-center cursor-default">
                 <EyesIcon />
                 <b>{{ gallery.views_count }}</b>
               </div>
