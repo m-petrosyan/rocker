@@ -51,7 +51,7 @@ const wideFlags = ref({});
 
 const onImgLoad = (e, id) => {
   const { naturalWidth, naturalHeight } = e.target;
-  wideFlags.value[id] = naturalWidth > naturalHeight; // true = wide
+  wideFlags.value[id] = naturalWidth > naturalHeight;
 };
 </script>
 
@@ -64,16 +64,19 @@ const onImgLoad = (e, id) => {
         :href="route('bands.show', band.slug)"
         :key="band.id"
         class="flex flex-col items-center">
-        <div class="relative aspect-square w-full bg-black">
-          <div class="h-full w-full bg-black rounded-lg rounded-xl overflow-hidden">
-            <img
-              :src="band.logo?.svg ?? band.logo.thumb"
-              @load="e => onImgLoad(e, band.id)"
-              class="w-full h-full object-center"
-              :class="wideFlags[band.id] ? 'object-contain' : 'object-cover'"
-              :alt="band.name"
-              @error="$event.target.src = band.logo.original"
-            />
+        <div class="relative aspect-square w-full ">
+          <div class="lg:h-[300px] h-full w-full rounded-lg rounded-xl overflow-hidden">
+            <div class="bg-black w-full h-full">
+              <img
+                :src="band.logo?.svg ?? band.logo.thumb"
+                @load="e => onImgLoad(e, band.id)"
+                class="w-full h-full object-center "
+                :class="wideFlags[band.id] ? 'object-contain' : 'object-cover'"
+                :alt="band.name"
+                @error="$event.target.src = band.logo.original"
+              />
+            </div>
+
           </div>
 
           <div v-if="owner || isAdmin"
