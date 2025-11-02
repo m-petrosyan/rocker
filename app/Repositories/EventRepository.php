@@ -37,7 +37,7 @@ class EventRepository
         return $user?->events()
             ->with('status')
             ->withCount(['views'])
-            ->whereDate('start_date', '>=', today())
+            ->whereDate('start_date', '>=', today('Asia/Yerevan'))
             ->whereRelation('status', 'status', '!=', EventStatusEnum::DELETED->value)
             ->orderBy('start_date')
             ->paginate();
