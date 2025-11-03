@@ -107,8 +107,8 @@ const deleteGallery = (id) => {
           </div>
         </div>
         <div class="p-2">
-          <p v-if="isSSR" class="text-lg font-semibold">{{ gallery.title }} by {{ gallery.user?.name }}</p>
-          <p class="text-lg font-semibold">{{ gallery.title }}</p>
+          <p v-if="isSSR">{{ gallery.title }} by {{ gallery.user?.name }}</p>
+          <p v-else class="text-lg font-semibold">{{ gallery.title }}</p>
         </div>
       </NavLink>
       <NavLink
