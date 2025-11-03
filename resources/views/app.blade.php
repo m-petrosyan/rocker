@@ -11,7 +11,6 @@
     <link rel="apple-touch-icon" href="/icons/icon-192.png">
     <link rel="icon" type="image/png" href="/favicon.png">
     <meta name="robots" content="index, follow">
-    {{--    <link rel="canonical" href="{{ url()->current() }}" />--}}
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script type="application/ld+json">
         @verbatim
