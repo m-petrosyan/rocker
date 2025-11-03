@@ -8,126 +8,124 @@ const showBurger = ref(false);
 const webApp = isWebApp();
 
 const bugerMenu = [...menu].sort((a, b) => {
-    if (a.img && !b.img) return -1;
-    if (!a.img && b.img) return 1;
-    return 0;
+  if (a.img && !b.img) return -1;
+  if (!a.img && b.img) return 1;
+  return 0;
 });
 
 
 watch(showBurger, (val) => {
-    if (val) {
-        document.body.classList.add('overflow-hidden');
-    } else {
-        document.body.classList.remove('overflow-hidden');
-    }
+  if (val) {
+    document.body.classList.add('overflow-hidden');
+  } else {
+    document.body.classList.remove('overflow-hidden');
+  }
 });
 
 onBeforeUnmount(() => {
-    if (document.body.classList.contains('overflow-hidden')) {
-        document.body.classList.remove('overflow-hidden');
-    }
+  if (document.body.classList.contains('overflow-hidden')) {
+    document.body.classList.remove('overflow-hidden');
+  }
 });
 
 </script>
 
 <template>
-    <nav
-        class="hidden md:block mx-auto flex items-center gap-x-2 pt-5 text-sm uppercase tracking-widest text-gray">
-        <div class="mx-auto flex w-fit items-center gap-x-2">
+  <nav
+    class="hidden md:block mx-auto flex items-center gap-x-2 pt-5 text-sm uppercase tracking-widest text-gray">
+    <div class="mx-auto flex w-fit items-center gap-x-2">
+      <component
+        v-for="item in menu"
+        :key="item.name"
+        :aria-label="item.name"
+        :is="item.external ? 'a' : Link"
+        :href="item.external ? item.url : route(item.url)"
+        :target="item.external ? '_blank' : null"
+        :rel="item.external ? 'noopener noreferrer' : null"
+        :method="!item.external ? 'get' : undefined"
+        :preserve-scroll="!item.external"
+        class="transition hover:opacity-70"
+      >
+        <component v-if="item.name === 'Home'" :is="item.icon" />
+        <span v-else>{{ item.name }}</span>
+      </component>
+    </div>
+    <div class="absolute top-0 right-2 flex gap-x-4 p-5 uppercase">
+      <template v-if="$page.props.auth?.user">
+        <Link v-if="$page.props.auth?.user?.email_verified_at"
+              :href="route('profile.show', {'username': $page.props.auth.user.username})">
+          Profile
+        </Link>
+        <Link v-else :href="route('verification.notice')">
+          Verification
+        </Link>
+      </template>
+      <template v-else>
+        <Link :href="route('login')">
+          Log In
+        </Link>
+      </template>
+    </div>
+  </nav>
+  <Teleport to="body">
+    <nav class="absolute md:hidden w-full top-0 left-0 "
+         :class="{'bg-blackTransparent z-50 h-lvh' : showBurger}">
+      <div class=" flex justify-end">
+        <button @click="showBurger = !showBurger" data-collapse-toggle="navbar-hamburger" type="button"
+                class="inline-flex items-center justify-center p-2 w-14 h-14 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                aria-controls="navbar-hamburger" aria-expanded="false">
+          <svg v-if="!showBurger" class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+               fill="none"
+               viewBox="0 0 17 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M1 1h15M1 7h15M1 13h15" />
+          </svg>
+          <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" viewBox="0 -960 960 960"
+               fill="#e3e3e3">
+            <path
+              d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+          </svg>
+        </button>
+      </div>
+      <div v-if="showBurger" class="h-full mt-[-40px]">
+        <ul
+          class="w-full h-full flex flex-col justify-center items-center gap-y-4 text-gray text-sm uppercase tracking-widest">
+          <li v-for="item in bugerMenu" :key="item.name">
             <component
-                v-for="item in menu"
-                :key="item.name"
-                :aria-label="item.name"
-                :is="item.external ? 'a' : Link"
-                :href="item.external ? item.url : route(item.url)"
-                :target="item.external ? '_blank' : null"
-                :rel="item.external ? 'noopener noreferrer' : null"
-                :method="!item.external ? 'get' : undefined"
-                :preserve-scroll="!item.external"
-                class="transition hover:opacity-70"
-            >
-                <component v-if="item.name === 'Home'" :is="item.icon" />
-                <span v-else>{{ item.name }}</span>
+              :is="item.external ? 'a' : Link"
+              :href="item.external ? item.url : route(item.url)"
+              :target="item.external ? '_blank' : null"
+              :rel="item.external ? 'noopener noreferrer' : null"
+              :method="!item.external ? 'get' : undefined"
+              :preserve-scroll="!item.external"
+              class="transition hover:opacity-70">
+              <h2 v-if="item.name">{{ item.name }}</h2>
             </component>
-        </div>
-        <div class="absolute top-0 right-2 flex gap-x-4 p-5 uppercase">
-            <template v-if="$page.props.auth?.user?.email_verified_at">
-                <Link :href="route('profile.show', {'username': $page.props.auth.user.username})">
-                    Profile
-                </Link>
-                <!--                <Link-->
-                <!--                    :href="route('logout')"-->
-                <!--                    method="post"-->
-                <!--                    as="button"-->
-                <!--                    class="uppercase">-->
-                <!--                    Log Out-->
-                <!--                </Link>-->
-            </template>
-            <template v-else>
-                <Link :href="route('login')">
-                    Log In
-                </Link>
-            </template>
-        </div>
+          </li>
+          <li v-if="$page.props.auth.user">
+            <Link
+              :href="route('profile.show', {'username': $page.props.auth.user.username})">
+              <h2>Profile</h2>
+            </Link>
+          </li>
+          <li v-if="$page.props.auth.user">
+            <Link
+              v-if="!webApp"
+              :href="route('logout')"
+              method="post"
+              as="button"
+              class="uppercase">
+              <h2> Log Out</h2>
+            </Link>
+          </li>
+          <li v-else>
+            <Link :href="route('login')">
+              <h2> Log In</h2>
+            </Link>
+          </li>
+        </ul>
+      </div>
     </nav>
-    <Teleport to="body">
-        <nav class="absolute md:hidden w-full top-0 left-0 "
-             :class="{'bg-blackTransparent z-50 h-lvh' : showBurger}">
-            <div class=" flex justify-end">
-                <button @click="showBurger = !showBurger" data-collapse-toggle="navbar-hamburger" type="button"
-                        class="inline-flex items-center justify-center p-2 w-14 h-14 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                        aria-controls="navbar-hamburger" aria-expanded="false">
-                    <svg v-if="!showBurger" class="w-8 h-8" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                         fill="none"
-                         viewBox="0 0 17 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M1 1h15M1 7h15M1 13h15" />
-                    </svg>
-                    <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" viewBox="0 -960 960 960"
-                         fill="#e3e3e3">
-                        <path
-                            d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
-                    </svg>
-                </button>
-            </div>
-            <div v-if="showBurger" class="h-full mt-[-40px]">
-                <ul class="w-full h-full flex flex-col justify-center items-center gap-y-4 text-gray text-sm uppercase tracking-widest">
-                    <li v-for="item in bugerMenu" :key="item.name">
-                        <component
-                            :is="item.external ? 'a' : Link"
-                            :href="item.external ? item.url : route(item.url)"
-                            :target="item.external ? '_blank' : null"
-                            :rel="item.external ? 'noopener noreferrer' : null"
-                            :method="!item.external ? 'get' : undefined"
-                            :preserve-scroll="!item.external"
-                            class="transition hover:opacity-70">
-                            <h2 v-if="item.name">{{ item.name }}</h2>
-                        </component>
-                    </li>
-                    <li v-if="$page.props.auth.user">
-                        <Link
-                            :href="route('profile.show', {'username': $page.props.auth.user.username})">
-                            <h2>Profile</h2>
-                        </Link>
-                    </li>
-                    <li v-if="$page.props.auth.user">
-                        <Link
-                            v-if="!webApp"
-                            :href="route('logout')"
-                            method="post"
-                            as="button"
-                            class="uppercase">
-                            <h2> Log Out</h2>
-                        </Link>
-                    </li>
-                    <li v-else>
-                        <Link :href="route('login')">
-                            <h2> Log In</h2>
-                        </Link>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </Teleport>
+  </Teleport>
 </template>
 <style></style>

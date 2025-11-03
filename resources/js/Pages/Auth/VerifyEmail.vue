@@ -36,7 +36,7 @@ const verify = async () => {
 
 <template>
   <AuthLayouth title="Email Verification">
-    <p class="text-md  mb-4">
+    <p class="text-md mb-4 text-green">
       Thanks for signing up! Before getting started, could you verify
       your email address by clicking on the link we just emailed to
       you? If you didn't receive the email, we will gladly send you
