@@ -5,6 +5,7 @@ import DeleteIcon from '@/Components/Icons/DeleteIcon.vue';
 import EditIcon from '@/Components/Icons/EditIcon.vue';
 import EyesIcon from '@/Components/Icons/EyesIcon.vue';
 import { formatDateTime } from '@/Helpers/dateFormatHelper.js';
+import { isSSR } from '@/Helpers/ssrHelper.js';
 
 defineProps({
   galleries: {
@@ -49,6 +50,8 @@ const deleteGallery = (id) => {
     });
   }
 };
+
+
 </script>
 
 <template>
@@ -104,7 +107,7 @@ const deleteGallery = (id) => {
           </div>
         </div>
         <div class="p-2">
-          <!--          <p v-if="isSSR" class="text-lg font-semibold">{{ gallery.title }} by {{ gallery.user?.name }}</p>-->
+          <p v-if="isSSR" class="text-lg font-semibold">{{ gallery.title }} by {{ gallery.user?.name }}</p>
           <p class="text-lg font-semibold">{{ gallery.title }}</p>
         </div>
       </NavLink>
