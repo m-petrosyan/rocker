@@ -6,10 +6,13 @@ use App\Jobs\EventCahnnelNotificationJob;
 use App\Jobs\EventNotificationJob;
 use App\Models\Event;
 use App\Models\User;
+use App\Traits\UsersBotNotificationTrait;
 use Illuminate\Console\Command;
 
 class EventSendCommand extends Command
 {
+    use UsersBotNotificationTrait;
+
     /**
      * The name and signature of the console command.
      *

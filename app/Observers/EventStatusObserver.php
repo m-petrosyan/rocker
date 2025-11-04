@@ -4,7 +4,6 @@ namespace App\Observers;
 
 use App\Enums\EventStatusEnum;
 use App\Jobs\EventCahnnelNotificationJob;
-use App\Jobs\EventChannelNotification;
 use App\Jobs\EventNotificationDeleteJob;
 use App\Jobs\EventNotificationJob;
 use App\Models\EventStatus;
@@ -46,7 +45,7 @@ class EventStatusObserver
                     )
                     ->send();
             }
-            
+
             $eventStatus->event->user?->chat
                 ?->message("✅ Your event request has been sent for review. You will be notified once it is processed.")
                 ->send();
