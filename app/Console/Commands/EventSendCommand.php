@@ -8,6 +8,7 @@ use App\Models\Event;
 use App\Models\User;
 use App\Traits\UsersBotNotificationTrait;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class EventSendCommand extends Command
 {
@@ -35,16 +36,26 @@ class EventSendCommand extends Command
         $id = $this->ask('Event id');
         $event = Event::findOrFail($id);
 
-        $to = $this->choice('Send to', ['user', 'channel']);
+        $to = $this->choice('Send to', ['user', 'all users', 'channel']);
 
-        dd($this->usersList($event)[0]);
+//        dd($this->usersList($event)[0]);
 
         if ($to === 'user') {
             $userId = $this->ask('User id');
             $user = User::findOrFail($userId);
             dispatch(new EventNotificationJob($event, $user));
         } else {
-            dispatch(new EventCahnnelNotificationJob($event));
+            if ($to === 'all users') {
+                $users = $this->usersList($event);
+                foreach ($users as $user) {
+                    dispatch(new EventNotificationJob($event, $user));
+                }
+                Log::info('user '.$users[0]);
+            } else {
+                if ($to === 'channel') {
+                    dispatch(new EventCahnnelNotificationJob($event));
+                }
+            }
         }
     }
 }
