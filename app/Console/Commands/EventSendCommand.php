@@ -34,6 +34,8 @@ class EventSendCommand extends Command
 
         $to = $this->choice('Send to', ['user', 'channel']);
 
+        dd($this->usersList($event));
+
         if ($to === 'user') {
             $userId = $this->ask('User id');
             $user = User::findOrFail($userId);
