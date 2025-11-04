@@ -26,6 +26,6 @@ class BotMessageCommand extends Command
      */
     public function handle(): void
     {
-        User::findOrFail(22)->load('chat')->chat->message('accept')->send();
+        User::findOrFail(1)->load('chat')->chat->message('accept')->send();
     }
 }
