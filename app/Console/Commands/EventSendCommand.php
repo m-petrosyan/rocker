@@ -15,7 +15,7 @@ class EventSendCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'app:event-send-channel-command';
+    protected $signature = 'app:event-send-command';
 
     /**
      * The console command description.
