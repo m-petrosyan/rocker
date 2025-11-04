@@ -25,7 +25,6 @@ defineProps({
     <template #h1> Discover Armenian rock and metal bands</template>
     <BandWrapper :bands="bands.data" user add />
     <div class="text-gray text-pretty mt-10">
-      <h2 class="text-lg mt-6">Band pages</h2>
       <p>Each band page on <strong>Rocker.am</strong> photos, videos, and information about
         upcoming concerts. Stay connected with the Armenian rock scene and follow your favorite groups.</p>
     </div>
