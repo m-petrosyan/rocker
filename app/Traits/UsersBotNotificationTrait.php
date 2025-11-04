@@ -33,7 +33,7 @@ trait UsersBotNotificationTrait
                         });
                     });
             })
-            ->with('chat', 'chat.bot', 'settings');
+            ->with('chat', 'chat', 'settings');
 
         return $count ? $query->count() : $query->get();
     }
