@@ -1,6 +1,5 @@
 <script setup>
 import MainLayout from './MainLayout.vue';
-import MainNavbar from '@/Components/Nav/MainNavbar.vue';
 import PWAinstall from '@/Components/PWAinstall.vue';
 import { isWebApp } from '@/Helpers/setAppUser.js';
 
@@ -10,7 +9,7 @@ const webApp = isWebApp();
 <template>
   <MainLayout>
     <section class="text-white md:pt-6 sm:pt-0 mb-20">
-      <MainNavbar v-if="!webApp" />
+      <!--      <MainNavbar v-if="!webApp" />-->
 
       <header class="mt-10 text-gray text-center">
         <h1 v-if="$slots.h1">

@@ -5,7 +5,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import './bootstrap';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import { createApp, h } from 'vue';
+import { createApp, h, nextTick } from 'vue';
 import { route as ziggyRoute, ZiggyVue } from '../../vendor/tightenco/ziggy';
 import VueGtag from 'vue-gtag-next';
 import PrimeVue from 'primevue/config';
@@ -45,8 +45,13 @@ createInertiaApp({
           }
         }
       })
+      .use(tooltipPlugin)
+      .directive('focus', {
+        mounted(el) {
+          nextTick(() => el.focus());
+        }
+      });
 
-      .use(tooltipPlugin);
     app.config.globalProperties.$route = ziggyRoute;
     // app.component('PwaLoader', PreloaderPwa);
 

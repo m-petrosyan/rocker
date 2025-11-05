@@ -7,6 +7,7 @@ import { computed, onMounted, ref } from 'vue';
 import { isWebApp } from '@/Helpers/setAppUser.js';
 import defaultImg from '/public/screenshots/desktop-screenshot.png';
 import Preloader from '@/Components/Preloader/Preloader.vue';
+import MainNavbar from '@/Components/Nav/MainNavbar.vue';
 
 const props = defineProps({
   meta: Object
@@ -53,9 +54,8 @@ onMounted(() => {
     <meta name="author" :content="meta?.author ?? 'rocker.am'" />
     <link rel="canonical" :href="$page.props.canonical" />
   </Head>
-
+  <MainNavbar v-if="!webApp || !webApp" />
   <FleshNotification />
-  <!--  <PreloaderPwa v-if="isPWA" />-->
   <slot />
   <Footer v-if="!webApp" />
   <Preloader />
