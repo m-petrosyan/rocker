@@ -54,7 +54,7 @@ onMounted(() => {
     <meta name="author" :content="meta?.author ?? 'rocker.am'" />
     <link rel="canonical" :href="$page.props.canonical" />
   </Head>
-  <MainNavbar v-if="!webApp || !webApp" />
+  <MainNavbar v-if="!isPWA || !webApp" />
   <FleshNotification />
   <slot />
   <Footer v-if="!webApp" />
