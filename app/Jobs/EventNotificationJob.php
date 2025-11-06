@@ -26,29 +26,31 @@ class EventNotificationJob implements ShouldQueue
     public function handle(): void
     {
         $content = $this->getEventContent($this->event);
-
         $buttons = $this->getButtons($this->event);
 
-        Log::info($this->event->poster['thumb']);
-        $msg = $this->user->chat
-            ->photo($this->event->poster['thumb'])
-            ->html($content)
-            ->keyboard(Keyboard::make()->buttons($buttons))
-            ->send();
+        try {
+            retry(3, function () use ($content, $buttons) {
+                $msg = $this->user->chat
+                    ->photo($this->event->poster['thumb'])
+                    ->html($content)
+                    ->keyboard(Keyboard::make()->buttons($buttons))
+                    ->send();
 
-        $messageId = $msg?->telegraphMessageId();
+                $messageId = $msg?->telegraphMessageId();
 
-        if ($messageId) {
-            $this->event->notifications()->syncWithoutDetaching([
-                $this->user->chat->id => [
-                    'user_id' => $this->user->id,
-                    'message_id' => $messageId,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ],
-            ]);
-        } else {
-            \Log::warning('Telegram message not sent for user '.$this->user->id);
+                if ($messageId) {
+                    $this->event->notifications()->syncWithoutDetaching([
+                        $this->user->chat->id => [
+                            'user_id' => $this->user->id,
+                            'message_id' => $messageId,
+                        ],
+                    ]);
+                } else {
+                    Log::warning("NO MESSAGE ID user {$this->user->id}");
+                }
+            }, 300);
+        } catch (\Throwable $e) {
+            Log::error("TG send FAIL user={$this->user->id}: {$e->getMessage()}");
         }
     }
 }
