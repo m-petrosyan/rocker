@@ -6,6 +6,7 @@ use App\Traits\EventFormatingTrait;
 use DefStudio\Telegraph\Keyboard\Keyboard;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Support\Facades\Log;
 
 class EventNotificationJob implements ShouldQueue
 {
@@ -28,6 +29,7 @@ class EventNotificationJob implements ShouldQueue
 
         $buttons = $this->getButtons($this->event);
 
+        Log::info($this->event->poster['thumb']);
         $msg = $this->user->chat
             ->photo($this->event->poster['thumb'])
             ->html($content)
