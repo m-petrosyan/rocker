@@ -32,7 +32,7 @@ class EventNotificationJob implements ShouldQueue
         try {
             retry(3, function () use ($content, $buttons) {
                 $msg = $this->user->chat
-                    ->photo($this->event->poster['thumb'])
+                    ->photo($this->event->poster['large'])
                     ->html($content)
                     ->keyboard(Keyboard::make()->buttons($buttons))
                     ->send();
