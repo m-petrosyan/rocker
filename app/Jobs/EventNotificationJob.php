@@ -37,7 +37,7 @@ class EventNotificationJob implements ShouldQueue
                     ->keyboard(Keyboard::make()->buttons($buttons))
                     ->send();
 
-                Log::info('TG RAW', $msg?->toArray() ?? []);
+                Log::info("TG RAW:\n".json_encode($msg?->toArray(), JSON_UNESCAPED_UNICODE));
 
                 $messageId = $msg?->telegraphMessageId();
 
@@ -48,13 +48,13 @@ class EventNotificationJob implements ShouldQueue
                             'message_id' => $messageId,
                         ],
                     ]);
-                    Log::info("TG send OK user {$this->user->id} message {$messageId}");
+                    Log::info("\n TG send OK user {$this->user->id} message {$messageId}");
                 } else {
-                    Log::warning("NO MESSAGE ID user {$this->user->id}");
+                    Log::warning("\n NO MESSAGE ID user {$this->user->id}");
                 }
             }, 300);
         } catch (\Throwable $e) {
-            Log::error("TG send FAIL user={$this->user->id}: {$e->getMessage()}");
+            Log::error("\n TG send FAIL user={$this->user->id}: {$e->getMessage()}");
         }
     }
 }
