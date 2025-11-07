@@ -27,7 +27,8 @@ class EventNotificationJob implements ShouldQueue
     {
         $content = $this->getEventContent($this->event);
         $buttons = $this->getButtons($this->event);
-
+        Log::info('user_chat', [$this->user->chat]);
+        Log::info('event', [$this->event]);
         try {
             retry(3, function () use ($content, $buttons) {
                 $msg = $this->user->chat
