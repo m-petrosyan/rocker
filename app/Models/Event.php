@@ -46,7 +46,6 @@ class Event extends Model implements Viewable, HasMedia
         'status_name',
         'status_text',
         'date_time',
-
     ];
 
     protected $hidden = [

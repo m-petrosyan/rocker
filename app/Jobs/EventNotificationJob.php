@@ -45,6 +45,7 @@ class EventNotificationJob implements ShouldQueue
                             'message_id' => $messageId,
                         ],
                     ]);
+                    Log::info("TG send OK user {$this->user->id} message {$messageId}");
                 } else {
                     Log::warning("NO MESSAGE ID user {$this->user->id}");
                 }
