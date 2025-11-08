@@ -41,7 +41,7 @@ class EventNotificationJob implements ShouldQueue
                     'body' => (string)$msg->getBody(),
                 ]);
 
-
+                Log::info($this->event->poster['large']);
                 $messageId = $msg?->telegraphMessageId();
 
                 if ($messageId) {

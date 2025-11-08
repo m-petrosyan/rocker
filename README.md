@@ -40,21 +40,16 @@ sudo supervisorctl restart laravel-worker-rocker-app:*
 ngrok http http://rocker.loc
 php artisan telegraph:set-webhook
 
+``` bash
+ lnav -t storage/logs/laravel-2025-11-08.log
+ space // last page
+```
 
 > SEO
 
 ```
 64%
 https://www.seobility.net/en/seocheck/check/?url=https%3A%2F%2Frocker.am%2F&mode=standard
-```
-
-> deploy
-
-```
-backup 
-enum types change to string
-rollback steps
-
 ```
 
 > sql import
