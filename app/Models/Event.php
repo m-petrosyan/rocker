@@ -135,8 +135,8 @@ class Event extends Model implements Viewable, HasMedia
             ->format('jpg');
 
         $this->addMediaConversion('large')
-            ->width(800)
-            ->quality(90)
+            ->width(600)
+            ->quality(80)
             ->format('jpg');
     }
 }
