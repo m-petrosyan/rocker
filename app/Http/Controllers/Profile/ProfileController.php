@@ -42,7 +42,7 @@ class ProfileController
             'user' => $user->load('links', 'settings'),
             'owner' => $owner,
             'galleries' => GalleryReoisitory::userGallery($user),
-            'events' => EventRepository::userEvents($user),
+            'events' => EventRepository::userEvents($user, 100),
             'bands' => BandRepository::userBands($user),
             'blogs' => BlogRepository::userBlogs($user),
             'eventRequests' => Gate::allows('full-access') ? EventRepository::count(

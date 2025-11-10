@@ -22,7 +22,7 @@ class EventUpdateRequest extends EventCreateRequest
         return array_merge(
             parent::rules(),
             [
-                'poster_file' => ['nullable', 'image', 'mimes:jpeg,jpg,webp,png', 'max:15000'],
+                'poster_file' => ['nullable', 'image', 'mimes:jpeg,jpg,webp,png', 'max:4000'],
             ]
         );
     }

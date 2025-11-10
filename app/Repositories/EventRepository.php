@@ -32,7 +32,7 @@ class EventRepository
             ->paginate($limit, ['*'], 'page', $page);
     }
 
-    public static function userEvents(object $user): LengthAwarePaginator
+    public static function userEvents(object $user, $count = 20): LengthAwarePaginator
     {
         return $user?->events()
             ->with('status')
@@ -40,7 +40,7 @@ class EventRepository
             ->whereDate('start_date', '>=', today('Asia/Yerevan'))
             ->whereRelation('status', 'status', '!=', EventStatusEnum::DELETED->value)
             ->orderBy('start_date')
-            ->paginate();
+            ->paginate($count);
     }
 
     public static function count($status = EventStatusEnum::ACCEPTED->value): int

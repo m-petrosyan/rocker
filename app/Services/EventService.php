@@ -23,12 +23,12 @@ class EventService
     {
         $event->update($attributes);
 
-        $this->addSyncBand($event, $attributes);
-
         if (isset($attributes['poster_file'])) {
             $event->clearMediaCollection('poster');
             $this->addImage($event, $attributes['poster_file'], 'poster');
         }
+
+        $this->addSyncBand($event, $attributes);
     }
 
     public function destroy($event): void

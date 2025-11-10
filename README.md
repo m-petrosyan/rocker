@@ -5,12 +5,8 @@
 > Run
 
 ```bash
-sudo -u www-data php artisan queue:listen --tries=3 --verbose
-
-
 sudo chmod -R 775 storage bootstrap/cache
 sudo chown -R miqayelubuntupc:www-data storage public
-
 ```
 
 > Local run ssr
@@ -40,9 +36,17 @@ sudo supervisorctl restart laravel-worker-rocker-app:*
 ngrok http http://rocker.loc
 php artisan telegraph:set-webhook
 
+sudo nano /etc/hosts // եթե կորել ա էլի
+127.0.0.1 rocker.loc
+
 ``` bash
+ tail -f storage/logs/laravel-2025-11-10.log
+
  lnav -t storage/logs/laravel-2025-11-08.log
  space // last page
+ 
+ 
+sudo -u www-data php artisan queue:listen --tries=3 --verbose
 ```
 
 > SEO

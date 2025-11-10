@@ -46,12 +46,12 @@ class EventSendCommand extends Command
             if ($to === 'all users') {
                 $users = $this->usersList($event);
                 foreach ($users as $user) {
-                    dispatch(new EventNotificationJob($event, $user));
+                    dispatch(new EventNotificationJob($event->id, $user->id));
                 }
                 Log::info('user '.$users[0]);
             } else {
                 if ($to === 'channel') {
-                    dispatch(new EventCahnnelNotificationJob($event));
+                    dispatch(new EventCahnnelNotificationJob($event->id));
                 }
             }
         }

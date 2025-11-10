@@ -19,15 +19,14 @@ class EventStatusObserver
 
     public function created(EventStatus $eventStatus): void
     {
-//        dd(Gate::allows('full-access'));
         if (Gate::allows('full-access')) {
             $users = $this->usersList($eventStatus->event);
 
             foreach ($users as $user) {
-                dispatch(new EventNotificationJob($eventStatus->event, $user));
+                dispatch(new EventNotificationJob($eventStatus->event->id, $user->id))->delay(now()->addSeconds(5));
             }
 
-            dispatch(new EventCahnnelNotificationJob($eventStatus->event));
+            dispatch(new EventCahnnelNotificationJob($eventStatus->event->id));
 
             $eventStatus->event->refreshNotifyCount($this->usersList($eventStatus->event, true));
         } else {
@@ -60,7 +59,7 @@ class EventStatusObserver
                 dispatch(new EventNotificationJob($eventStatus->event, $user));
             }
 
-            dispatch(new EventCahnnelNotificationJob($eventStatus->event));
+            dispatch(new EventCahnnelNotificationJob($eventStatus->event->id));
 
             $usersCount = $this->usersList($eventStatus->event, true);
 
