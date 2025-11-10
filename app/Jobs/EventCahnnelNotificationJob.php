@@ -20,7 +20,7 @@ class EventCahnnelNotificationJob implements ShouldQueue
     public Event $event;
     public string $mode;
 
-    public function __construct(protected Event $eventId, string $mode = 'real')
+    public function __construct(protected int $eventId, string $mode = 'real')
     {
         $this->mode = $mode;
     }
