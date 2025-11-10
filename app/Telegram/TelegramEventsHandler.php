@@ -3,7 +3,6 @@
 namespace App\Telegram;
 
 use App\Jobs\EventNotificationJob;
-use App\Models\Event;
 use App\Repositories\EventRepository;
 use Carbon\Carbon;
 use DefStudio\Telegraph\Enums\ChatActions;
@@ -47,9 +46,7 @@ trait TelegramEventsHandler
     {
         auth()->user()->chat->action(ChatActions::TYPING)->send();
 
-        $event = Event::findOrFail($eventId);
-
-        dispatch(new EventNotificationJob($event, auth()->user()->load('chat')));
+        dispatch(new EventNotificationJob($eventId, auth()->id()));
     }
 
     public function favorite_events(): void

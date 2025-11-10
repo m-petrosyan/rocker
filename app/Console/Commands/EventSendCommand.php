@@ -41,7 +41,7 @@ class EventSendCommand extends Command
         if ($to === 'user') {
             $userId = $this->ask('User id');
             $user = User::findOrFail($userId);
-            dispatch(new EventNotificationJob($event, $user));
+            dispatch(new EventNotificationJob($event->id, $user->id));
         } else {
             if ($to === 'all users') {
                 $users = $this->usersList($event);

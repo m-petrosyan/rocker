@@ -56,7 +56,7 @@ class EventStatusObserver
         if ($eventStatus->isDirty('status') && $eventStatus->status === EventStatusEnum::ACCEPTED->value) {
             $users = $this->usersList($eventStatus->event);
             foreach ($users as $user) {
-                dispatch(new EventNotificationJob($eventStatus->event, $user));
+                dispatch(new EventNotificationJob($eventStatus->event->id, $user->id));
             }
 
             dispatch(new EventCahnnelNotificationJob($eventStatus->event->id));
