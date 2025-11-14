@@ -47,6 +47,9 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::get('scrap', [FacebookScrapperController::class, 'getEvents'])->name('events.scrap');
+Route::get('privacy', function () {
+    return Inertia::render('Privacy');
+});
 
 Route::fallback(function () {
     return Inertia::render('404');
