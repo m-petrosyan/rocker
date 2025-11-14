@@ -5,6 +5,7 @@ use App\Http\Controllers\BandController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\FacebookScrapperController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\HomeController;
@@ -44,6 +45,8 @@ Route::prefix('auth')->group(function () {
     Route::get('/google', [GoogleAuthController::class, 'redirectToGoogle'])->name('auth.google');
     Route::get('/google/callback', [GoogleAuthController::class, 'handleGoogleCallback']);
 });
+
+Route::get('scrap', [FacebookScrapperController::class, 'getEvents'])->name('events.scrap');
 
 Route::fallback(function () {
     return Inertia::render('404');

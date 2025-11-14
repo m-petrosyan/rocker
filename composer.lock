@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e0bb873f54b19ebdd0da230709e42b28",
+    "content-hash": "5e625eace4f9326034cdbf48eba66631",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -4972,16 +4972,16 @@
         },
         {
             "name": "spatie/browsershot",
-            "version": "5.0.10",
+            "version": "5.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/browsershot.git",
-                "reference": "9e5ae15487b3cdc3eb03318c1c8ac38971f60e58"
+                "reference": "f84d9c332899596d0884922772593a10e3925969"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/browsershot/zipball/9e5ae15487b3cdc3eb03318c1c8ac38971f60e58",
-                "reference": "9e5ae15487b3cdc3eb03318c1c8ac38971f60e58",
+                "url": "https://api.github.com/repos/spatie/browsershot/zipball/f84d9c332899596d0884922772593a10e3925969",
+                "reference": "f84d9c332899596d0884922772593a10e3925969",
                 "shasum": ""
             },
             "require": {
@@ -5028,7 +5028,7 @@
                 "webpage"
             ],
             "support": {
-                "source": "https://github.com/spatie/browsershot/tree/5.0.10"
+                "source": "https://github.com/spatie/browsershot/tree/5.0.11"
             },
             "funding": [
                 {
@@ -5036,7 +5036,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-05-15T07:10:57+00:00"
+            "time": "2025-10-08T07:40:52+00:00"
         },
         {
             "name": "spatie/crawler",
