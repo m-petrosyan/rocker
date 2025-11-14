@@ -179,6 +179,7 @@ class FacebookScrapperController
 
         // Получаем отфильтрованный текст
         $allText = $this->getFilteredText($crawler);
+        $data['location'] = $allText[6] ?? '';
 
         // Полный текст main для парсинга даты (без разбиения)
         $mainText = '';
@@ -304,6 +305,7 @@ class FacebookScrapperController
                     if (isset($allText[$index + 1]) && strlen($allText[$index + 1]) > 5) {
                         $candidate = trim($allText[$index + 1]);
                         if (strlen($candidate) > 10 && !str_contains(strtolower($candidate), 'log in')) {
+                            dd(trim($allText[$index + 1]));
                             $data['location'] = $candidate;
                             break;
                         }
@@ -316,22 +318,22 @@ class FacebookScrapperController
         }
 
         // Паттерны адресов
-        if (empty($data['location'])) {
-            foreach ($allText as $text) {
-                $lowerText = strtolower($text);
-                if ((!str_contains($lowerText, 'log in') &&
-                        !str_contains($lowerText, 'facebook') &&
-                        !str_contains($lowerText, 'forgot')) &&
-                    (preg_match(
-                            '/(?:\d+\s+(?:Street|St\.?|Avenue|Ave\.?|Road|Rd\.?|Boulevard|Blvd\.?)|at\s+[A-Z][a-z]+.*)/i',
-                            $text
-                        ) ||
-                        preg_match('/^[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*,\s*[A-Z][a-z]+/u', $text))) {
-                    $data['location'] = trim($text);
-                    break;
-                }
-            }
-        }
+//        if (empty($data['location'])) {
+//            foreach ($allText as $text) {
+//                $lowerText = strtolower($text);
+//                if ((!str_contains($lowerText, 'log in') &&
+//                        !str_contains($lowerText, 'facebook') &&
+//                        !str_contains($lowerText, 'forgot')) &&
+//                    (preg_match(
+//                            '/(?:\d+\s+(?:Street|St\.?|Avenue|Ave\.?|Road|Rd\.?|Boulevard|Blvd\.?)|at\s+[A-Z][a-z]+.*)/i',
+//                            $text
+//                        ) ||
+//                        preg_match('/^[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*,\s*[A-Z][a-z]+/u', $text))) {
+//                    $data['location'] = trim($text);
+//                    break;
+//                }
+//            }
+//        }
 
         // Цена - разные форматы
         foreach ($allText as $text) {
@@ -424,6 +426,8 @@ class FacebookScrapperController
                 !str_contains($lower, 'privacy') &&
                 !str_contains($lower, 'terms');
         });
+
+//        dd(array_values(array_unique($allText))[6]);
 
         return array_values(array_unique($allText));
     }
