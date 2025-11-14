@@ -6,7 +6,7 @@ import GuestLayout from '@/Layouts/GuestLayout.vue';
 <template>
   <GuestLayout title="Privacy Policy">
     <h1>Privacy Policy</h1>
-    <p><strong>Effective Date: November 14, 2024</strong></p>
+    <p><strong>Effective Date: March 26, 2024</strong></p>
     <p>We respect your privacy and strive to protect your personal data. This policy explains how we collect, use, and
       safeguard information on our site, including data from public Facebook sources (events).</p>
 
@@ -45,10 +45,5 @@ import GuestLayout from '@/Layouts/GuestLayout.vue';
 
     <h2>5. Policy Changes</h2>
     <p>We may update this policy. Current version always here. Last update: November 14, 2024.</p>
-
-    <footer>
-      <p>&copy; 2025 Your Site. All rights reserved. | <a href="/privacy">Privacy Policy</a> | <a href="/terms">Terms of
-        Service</a></p>
-    </footer>
   </GuestLayout>
 </template>
