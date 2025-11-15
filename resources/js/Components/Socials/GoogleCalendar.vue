@@ -33,7 +33,6 @@ const addToGoogleCalendar = () => {
 </script>
 
 <template>
-  {{ date }}
   <button @click="addToGoogleCalendar">
     <GoogleCalendarIcon class="saturate-50 hover:saturate-100" />
   </button>

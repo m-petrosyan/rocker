@@ -101,10 +101,10 @@ const type = props.event && props.event.type === 2 ? 'concert' : 'event';
     <p class="text-center text-orange">{{ removePostalCode(event.location) }}</p>
     <GoogleMap class="mt-5" v-if="event.cordinates" :cordinates="event.cordinates" />
     <NavLink v-if="$page.props.auth?.isAdmin"
-             :href="route('profile.show', event.user.username )"
+             :href="route('profile.show', event.user?.username )"
              class="mt-4">
       <UserIcon />
-      {{ event.user.username }}
+      {{ event.user?.username }}
     </NavLink>
     <EventRequestForm v-if="request" :event />
   </GuestLayout>
