@@ -28,7 +28,7 @@ class EventController extends Controller
         $url = url()->current();
 
         return Inertia::render('Events/Event', [
-            'event' => $event->load(['views', 'bands']),
+            'event' => $event->load(['views', 'bands', 'user:id,username']),
             'url' => $url,
         ]);
     }
