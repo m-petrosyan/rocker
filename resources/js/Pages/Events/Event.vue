@@ -12,6 +12,8 @@ import { fullUrl } from '@/Helpers/urlHelper.js';
 import EventRequestForm from '@/Components/Forms/EventRequestForm.vue';
 import BandTags from '@/Components/Tags/BandTags.vue';
 import { formatDateTime } from '@/Helpers/dateFormatHelper.js';
+import NavLink from '@/Components/NavLink.vue';
+import UserIcon from '@/Components/Icons/UserIcon.vue';
 
 const url = fullUrl();
 
@@ -98,6 +100,12 @@ const type = props.event && props.event.type === 2 ? 'concert' : 'event';
     <pre class="mt-8 text-pretty text-center">{{ event.content }}</pre>
     <p class="text-center text-orange">{{ removePostalCode(event.location) }}</p>
     <GoogleMap class="mt-5" v-if="event.cordinates" :cordinates="event.cordinates" />
+    <NavLink v-if="$page.props.auth?.isAdmin"
+             :href="route('profile.show', event.user.username )"
+             class="mt-4">
+      <UserIcon />
+      {{ event.user.username }}
+    </NavLink>
     <EventRequestForm v-if="request" :event />
   </GuestLayout>
 </template>

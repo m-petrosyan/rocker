@@ -46,7 +46,7 @@ sudo nano /etc/hosts // եթե կորել ա էլի
  space // last page
  
  
-  sudo -u www-data php artisan horizon
+sudo -u www-data php artisan horizon
 
 sudo -u www-data php artisan queue:listen --tries=3 --verbose
 ```
