@@ -36,7 +36,7 @@ sudo supervisorctl restart laravel-worker-rocker-app:*
 ngrok http http://rocker.loc
 php artisan telegraph:set-webhook
 
-sudo nano /etc/hosts // եթե կորել ա էլի
+// եթե կորել ա էլի
 127.0.0.1 rocker.loc
 
 ``` bash

@@ -120,9 +120,9 @@ const selectedCountry = computed(() => form.country === 'am' ? 'Armenia' : form.
             />
           </div>
           <div class="flex w-full md:w-1/2 flex-col gap-y-2">
-            <RadioSwichButton v-if="['admin', 'moderator','organizer'].includes(auth.role)"
-                              v-model:selectedOption="form.country"
-                              :options="countries"
+            <RadioSwichButton
+              v-model:selectedOption="form.country"
+              :options="countries"
             />
             <input
               type="text"
