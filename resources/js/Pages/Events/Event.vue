@@ -100,7 +100,7 @@ const type = props.event && props.event.type === 2 ? 'concert' : 'event';
     <pre class="mt-8 text-pretty text-center">{{ event.content }}</pre>
     <p class="text-center text-orange">{{ removePostalCode(event.location) }}</p>
     <GoogleMap class="mt-5" v-if="event.cordinates" :cordinates="event.cordinates" />
-    <NavLink v-if="$page.props.auth?.isAdmin"
+    <NavLink v-if="$page.props.auth?.isAdmin && event.user?.username"
              :href="route('profile.show', event.user?.username )"
              class="mt-4">
       <UserIcon />
