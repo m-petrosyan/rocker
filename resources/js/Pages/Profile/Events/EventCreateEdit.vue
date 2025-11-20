@@ -138,7 +138,7 @@ const selectedCountry = computed(() => form.country === 'am' ? 'Armenia' : form.
               :options="genres"
             />
             <GoogleAutocomplate :form :selectedCountry />
-            <MultiSelect v-if="form.country === 'am'"
+            <MultiSelect v-if="form.country === 'am' "
                          tooltip="If the band is registered on rocker.am, the event will be visible on their page."
                          v-model="form.bands"
                          :options="bandsList"
