@@ -27,22 +27,22 @@ class EventCreateRequest extends FormRequest
     {
         return [
             'poster_file' => ['required', 'image', 'mimes:jpeg,jpg,webp,png', 'max:4000'],
-            'title' => ['required', 'string', 'min:3', 'max:55'],
-            'content' => ['required', 'string', 'min:10', 'max:750'],
-            'type' => ['required', Rule::in(EventTypeEnum::getValues())],
             'country' => ['required', Rule::in(['am', 'ge'])],
+            'title' => ['required', 'string', 'min:3', 'max:55'],
+            'type' => ['required', Rule::in(EventTypeEnum::getValues())],
+            'genre' => ['required', Rule::in(['rock', 'metal', 'all'])],
             'location' => ['required', 'string', 'min:5', 'max:255'],
             'cordinates' => ['nullable', 'array'],
             'cordinates.*' => ['required', 'numeric'],
-            'genre' => ['required', Rule::in(['rock', 'metal', 'all'])],
-            'price' => ['nullable', 'string', 'max:20'],
-            'link' => ['nullable', 'url', 'max:1000'],
-            'ticket' => ['nullable', 'url', 'max:1000'],
-            'start_date' => ['required', 'date', 'after_or_equal:today'],
-            'start_time' => ['required', 'date_format:H:i'],
             'bands' => ['array'],
             'bands.*.name' => ['required', 'string', 'max:255'],
             'bands.*.id' => ['nullable', 'integer', 'exists:bands,id'],
+            'start_date' => ['required', 'date', 'after_or_equal:today'],
+            'start_time' => ['required', 'date_format:H:i'],
+            'content' => ['required', 'string', 'min:10', 'max:750'],
+            'price' => ['nullable', 'string', 'max:20'],
+            'link' => ['nullable', 'url', 'max:1000'],
+            'ticket' => ['nullable', 'url', 'max:1000'],
         ];
     }
 
