@@ -61,7 +61,7 @@ const form = useForm(
     : {
       title: '',
       content: '',
-      country: 'am',
+      country: '',
       genre: null,
       type: null,
       location: null,
