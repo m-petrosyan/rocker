@@ -47,6 +47,8 @@ const type = props.event && props.event.type === 2 ? 'concert' : 'event';
         :src="event.poster.large"
         :alt="event.title + ' '+ removePostalCode(event.location) "
         class="absolute z-10 h-96 w-full object-contain object-center"
+        loading="eager"
+        fetchpriority="high"
       />
       <div
         class="absolute inset-0 z-20 flex h-28 w-28 flex-col items-center justify-center bg-orange text-xl"
