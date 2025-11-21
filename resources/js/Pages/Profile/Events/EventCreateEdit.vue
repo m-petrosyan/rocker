@@ -1,5 +1,5 @@
 <script setup>
-import { computed, reactive } from 'vue';
+import { computed, onMounted, reactive } from 'vue';
 import RadioSwichButton from '@/Components/Forms/RadioSwichButton.vue';
 import { useForm } from '@inertiajs/vue3';
 import DatePicker from '@/Components/Forms/DatePicker.vue';
@@ -15,6 +15,9 @@ const props = defineProps({
   event: {
     type: Object,
     required: false
+  },
+  user: {
+    type: Object
   },
   auth: {
     object: true
@@ -76,8 +79,13 @@ const form = useForm(
     }
 );
 
-const submitEvent = () => {
+onMounted(() => {
+  if (props.user.settings.country !== 'all') {
+    form.country = props.user.settings.country;
+  }
+});
 
+const submitEvent = () => {
   form.post(route(form.id ? 'profile.events.update' : 'profile.events.store', form.id), {
     preserveScroll: false
   });

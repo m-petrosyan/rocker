@@ -38,7 +38,7 @@ export default {
         nextTick(() => {
           const elements = document.querySelectorAll('[tooltip]');
           elements.forEach((el) => {
-            console.log(el);
+            // console.log(el);
 
             // Пример дополнительного действия при обновлении
             const tooltipValue = el.getAttribute('tooltip');

@@ -25,6 +25,7 @@ class EventController extends Controller
     {
         return Inertia::render('Profile/Events/EventCreateEdit', [
             'bandsList' => BandRepository::bandNamesList(),
+            'user' => auth()->user()->load('settings'),
         ]);
     }
 
