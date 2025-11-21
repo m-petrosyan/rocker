@@ -20,7 +20,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_KEY }}
           script: |
-            cd /var/www/rocker \
+            cd /var/www/rocker.am \
             && git pull \
             && composer install --no-interaction --prefer-dist --optimize-autoloader \
             && npm ci \
