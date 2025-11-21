@@ -20,10 +20,12 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_KEY }}
           script: |
-            cd /var/www/rocker.am \
-            && git pull \
-            && composer install --no-interaction --prefer-dist --optimize-autoloader \
-            && npm ci \
-            && npm run build \
-            && php artisan migrate --force \
+            export COMPOSER_ALLOW_SUPERUSER=1
+            cd /var/www/rocker.am
+            && git pull
+            && composer install --no-interaction --prefer-dist --optimize-autoloader
+            && npm ci
+            && npm audit fix
+            && npm run build
+            && php artisan migrate --force
             && pm2 restart rocker
