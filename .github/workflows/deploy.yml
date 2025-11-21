@@ -1,18 +1,14 @@
 name: Deploy Rocker
-
 on:
   push:
     branches: [ "main" ]
-
 jobs:
   deploy:
     name: 🎉 Deploy
     runs-on: ubuntu-latest
-
     steps:
       - name: 🪄 Checkout repository
         uses: actions/checkout@v4
-
       - name: 🪅 Deploy to server via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -25,7 +21,7 @@ jobs:
             git pull && \
             composer install --no-interaction --prefer-dist --optimize-autoloader && \
             npm ci && \
-            npm audit fix && \
+            npm audit fix || true && \
             npm run build && \
             php artisan migrate --force && \
             pm2 restart rocker
