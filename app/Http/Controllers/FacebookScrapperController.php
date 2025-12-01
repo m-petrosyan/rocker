@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Spatie\Browsershot\Browsershot;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -14,13 +13,9 @@ class FacebookScrapperController
      *
      * GET /api/facebook-events?url=https://www.facebook.com/ZheshtEvents
      */
-    public function getEvents(Request $request)
+    public function getEvents()
     {
-        $request->validate([
-            'url' => 'required|url',
-        ]);
-
-        $pageUrl = $request->query('url');
+        $pageUrl = 'https://www.facebook.com/ZheshtEvents/events';
 
         try {
             // Получаем список событий
@@ -81,6 +76,8 @@ class FacebookScrapperController
                 }
             }
         });
+
+//        dd($events);
 
         return array_values($events);
     }
