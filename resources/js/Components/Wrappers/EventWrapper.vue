@@ -119,6 +119,9 @@ const deleteEvent = (id) => {
                   </div>
                 </div>
               </div>
+              <div v-else-if="$page.props.auth.user?.settings?.country === 'all'" class="p-2">
+                <img :src="`/icons/${event.country}.png`" alt="flag">
+              </div>
             </div>
             <div
               class="flex flex-col h-20 w-full z-20 items-center justify-between bg-gradient-to-t from-black to-transparent">

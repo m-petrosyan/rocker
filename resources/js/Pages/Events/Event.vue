@@ -1,4 +1,5 @@
-<script setup>import GuestLayout from '@/Layouts/GuestLayout.vue';
+<script setup>
+import GuestLayout from '@/Layouts/GuestLayout.vue';
 import moment from 'moment-timezone';
 import GoogleMap from '@/Components/Maps/GoogleMap.vue';
 import GoogleCalendar from '@/Components/Socials/GoogleCalendar.vue';
