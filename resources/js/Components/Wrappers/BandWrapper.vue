@@ -63,13 +63,13 @@ const onImgLoad = (e, id) => {
         v-for="band in bands"
         :href="route('bands.show', band.slug)"
         :key="band.id"
-        class="band flex flex-col items-center">
+        class="flex flex-col items-center">
         <div class="relative aspect-square w-full ">
           <div class="lg:h-[300px] h-full w-full bg-black  rounded-lg rounded-xl overflow-hidden">
             <img
               :src="band.logo?.svg ?? band.logo.thumb"
               @load="e => onImgLoad(e, band.id)"
-              class="w-full h-full object-center "
+              class="w-full h-full object-center band"
               :class="wideFlags[band.id] ? 'object-contain' : 'object-cover'"
               :alt="band.name"
               @error="$event.target.src = band.logo.original"
@@ -126,6 +126,7 @@ const onImgLoad = (e, id) => {
 <style scoped>
 .band:hover {
   animation: flicker 2s linear both;
+  filter: blur(0px);
 }
 
 @keyframes flicker {
@@ -138,7 +139,6 @@ const onImgLoad = (e, id) => {
   14% {
     opacity: 0;
     -webkit-box-shadow: none;
-    box-shadow: none;
   }
   14.9% {
     opacity: 0;
@@ -150,6 +150,7 @@ const onImgLoad = (e, id) => {
   }
   22.9% {
     opacity: 1;
+    filter: blur(0px);
   }
   23% {
     opacity: 0;
@@ -195,9 +196,11 @@ const onImgLoad = (e, id) => {
   }
   45% {
     opacity: 1;
+    filter: blur(20px);
   }
   50% {
     opacity: 1;
+    filter: blur(0px);
   }
   54.9% {
     opacity: 1;
