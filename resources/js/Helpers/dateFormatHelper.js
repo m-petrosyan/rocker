@@ -22,3 +22,7 @@ export const toIso8601WithEnd = (date, time) => {
 
   return { start: isoStart, end: isoEnd };
 };
+
+export const isPastDate = (dateTime) => {
+  return moment(dateTime).isBefore(moment());
+};

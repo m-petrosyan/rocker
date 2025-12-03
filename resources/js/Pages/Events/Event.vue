@@ -12,7 +12,7 @@ import { removePostalCode } from '@/Helpers/adressFormatHelper.js';
 import { fullUrl } from '@/Helpers/urlHelper.js';
 import EventRequestForm from '@/Components/Forms/EventRequestForm.vue';
 import BandTags from '@/Components/Tags/BandTags.vue';
-import { formatDateTime } from '@/Helpers/dateFormatHelper.js';
+import { formatDateTime, isPastDate } from '@/Helpers/dateFormatHelper.js';
 import NavLink from '@/Components/NavLink.vue';
 import UserIcon from '@/Components/Icons/UserIcon.vue';
 
@@ -35,6 +35,8 @@ const props = defineProps({
 });
 
 const type = props.event && props.event.type === 2 ? 'concert' : 'event';
+
+const isPast = isPastDate(props.event.start_date);
 </script>
 
 <template>
@@ -52,12 +54,15 @@ const type = props.event && props.event.type === 2 ? 'concert' : 'event';
         fetchpriority="high"
       />
       <div
-        class="absolute inset-0 z-20 flex h-28 w-28 flex-col items-center justify-center bg-orange text-xl"
+        class="absolute inset-0 z-20 flex h-28 w-28 flex-col items-center justify-center text-xl"
+        :class="isPast ? 'bg-graydarker':'bg-orange'"
       >
         <p class="text-4xl font-bold">{{ formatDateTime(event.start_date, 'D') }}</p>
         <p>{{ formatDateTime(event.start_date, 'MMMM').toUpperCase() }}</p>
-        <small>{{ event.start_time }}</small>
+        <small v-if="isPast">{{ formatDateTime(event.start_date, 'YYYY') }}</small>
+        <small v-else>{{ event.start_time }}</small>
       </div>
+
       <div
         class="absolute top-0 right-0 z-20 flex bg-black bg-opacity-20">
         <SocialShare :title="event.title" :url />
@@ -86,11 +91,11 @@ const type = props.event && props.event.type === 2 ? 'concert' : 'event';
         </a>
       </div>
     </div>
+
     <h1>
       {{ event.title }} – {{ type }}, {{ moment(event.start_date, 'DD MMMM YYYY').format('DD MMMM YYYY') }},
       {{ removePostalCode(event.location) }}
     </h1>
-
     <h2 class="mt-6 text-center text-2xl">{{ event.title }}</h2>
     <div class="text-center text-red">
       <p>genre: {{ event.genre }}</p>
