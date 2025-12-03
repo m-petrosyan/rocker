@@ -5,16 +5,19 @@ namespace App\Repositories;
 use App\Enums\EventStatusEnum;
 use App\Models\Event;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Log;
 
 class EventRepository
 {
     public static function eventsList($limit = 50, $page = 1, $past = false): LengthAwarePaginator
     {
-        if (app()->has('sitemap_mode') && app('sitemap_mode') === true) {
+        if (app()->bound('sitemap_mode') && app('sitemap_mode') === true) {
             $country = 'all';
         } else {
             $country = auth()?->user()->settings->country ?? 'am';
         }
+
+        Log::info($country);
 
         return Event::query()
             ->whereRelation('status', 'status', EventStatusEnum::ACCEPTED->value)
