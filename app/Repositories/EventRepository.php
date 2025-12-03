@@ -5,7 +5,6 @@ namespace App\Repositories;
 use App\Enums\EventStatusEnum;
 use App\Models\Event;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Log;
 
 class EventRepository
 {
@@ -16,8 +15,6 @@ class EventRepository
         } else {
             $country = auth()?->user()->settings->country ?? 'am';
         }
-
-        Log::info($country);
 
         return Event::query()
             ->whereRelation('status', 'status', EventStatusEnum::ACCEPTED->value)
