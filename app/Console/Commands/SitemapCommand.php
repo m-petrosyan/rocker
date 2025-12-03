@@ -16,6 +16,8 @@ class SitemapCommand extends Command
     public function handle(): void
     {
         try {
+            app()->instance('sitemap_mode', true);
+
             $this->info('Generating sitemap...');
 
             // Генерация основной карты сайта без API-запросов

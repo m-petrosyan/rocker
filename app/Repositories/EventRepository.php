@@ -10,7 +10,11 @@ class EventRepository
 {
     public static function eventsList($limit = 50, $page = 1, $past = false): LengthAwarePaginator
     {
-        $country = auth()?->user()->settings->country ?? 'am';
+        if (app()->has('sitemap_mode') && app('sitemap_mode') === true) {
+            $country = 'all';
+        } else {
+            $country = auth()?->user()->settings->country ?? 'am';
+        }
 
         return Event::query()
             ->whereRelation('status', 'status', EventStatusEnum::ACCEPTED->value)
