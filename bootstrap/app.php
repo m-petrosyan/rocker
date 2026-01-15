@@ -24,6 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->web(append: [
             HandleInertiaRequests::class,
+            \App\Http\Middleware\CheckUserBlocked::class,
             AddLinkHeadersForPreloadedAssets::class,
         ]);
         $middleware->alias([
@@ -31,6 +32,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => RoleMiddleware::class,
             'permission' => PermissionMiddleware::class,
             'activity' => LastActivityMiddleware::class,
+            'blocked' => \App\Http\Middleware\CheckUserBlocked::class,
         ]);
     })
     ->withSchedule(function (Schedule $schedule) {

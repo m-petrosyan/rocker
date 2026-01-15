@@ -55,6 +55,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     public $appends = [
         'role',
         'image',
+        'is_blocked',
     ];
     
 //    protected $with = ['settings'];
@@ -141,6 +142,16 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     {
         return $this->belongsToMany(Event::class, 'event_user_favorites')
             ->withTimestamps();
+    }
+
+    public function blockedRecord(): HasOne
+    {
+        return $this->hasOne(BlockedUser::class);
+    }
+
+    public function getIsBlockedAttribute(): bool
+    {
+        return $this->blockedRecord()->exists();
     }
 
     public function getImageAttribute(): ?array

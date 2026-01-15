@@ -13,6 +13,7 @@ use App\Http\Controllers\Profile\GalleryController;
 use App\Http\Controllers\Profile\MediaController;
 use App\Http\Controllers\Profile\MergeProfilesController;
 use App\Http\Controllers\Profile\ProfileController;
+use App\Http\Controllers\Profile\BlockController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'email.verified.if.present', 'role:admin|moderator|organizer', 'activity'])
@@ -39,6 +40,7 @@ Route::middleware(['auth', 'email.verified.if.present', 'activity'])->as('profil
         Route::delete('media/{media}', [MediaController::class, 'destroy'])->name('media.destroy');
         Route::post('merge/code', [MergeProfilesController::class, 'getCode'])->name('merge.code');
         Route::post('merge', [MergeProfilesController::class, 'mergeBot'])->name('merge.bot');
+        Route::post('user/{user}/block', [BlockController::class, 'store'])->name('user.block');
     }
 );
 

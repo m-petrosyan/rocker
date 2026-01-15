@@ -63,3 +63,6 @@ https://www.seobility.net/en/seocheck/check/?url=https%3A%2F%2Frocker.am%2F&mode
 ```
 mysql -u root -p rocker < db-dumps/mysql-rocker.sql
 ```
+
+local
+sudo service redis-server start
