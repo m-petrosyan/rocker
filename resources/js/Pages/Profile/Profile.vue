@@ -62,18 +62,18 @@ const webApp = isWebApp();
 
 const showBlockModal = ref(false);
 const blockForm = useForm({
-    reason: '',
+  reason: ''
 });
 
 const closeBlockModal = () => {
-    showBlockModal.value = false;
-    blockForm.reset();
+  showBlockModal.value = false;
+  blockForm.reset();
 };
 
 const blockUser = () => {
-    blockForm.post(route('profile.user.block', props.user.id), {
-        onSuccess: () => closeBlockModal(),
-    });
+  blockForm.post(route('profile.user.block', props.user.id), {
+    onSuccess: () => closeBlockModal()
+  });
 };
 
 </script>
@@ -85,15 +85,16 @@ const blockUser = () => {
         BLOCKED
       </div>
 
-       <div v-if="['admin', 'moderator'].includes($page.props.auth.user?.role) && !owner && !user.is_blocked" class="flex justify-end px-4">
-          <DangerButton @click="showBlockModal = true">
-             Block User
-          </DangerButton>
-       </div>
+      <div v-if="['admin', 'moderator'].includes($page.props.auth.user?.role) && !owner && !user.is_blocked"
+           class="flex justify-end px-4">
+        <DangerButton @click="showBlockModal = true">
+          Block User
+        </DangerButton>
+      </div>
 
       <UserInfo :user :owner />
       <div class="flex justify-between">
-        <NavLink v-if="['admin','modarator','organizer'].includes(auth.role) && owner"
+        <NavLink v-if="['admin','moderator','organizer'].includes(auth.role) && owner"
                  :href="route('profile.dashboard')"
                  class=" flex bg-black bg-opacity-20">
           <div tooltip="Dashboard">
@@ -133,24 +134,26 @@ const blockUser = () => {
         </div>
       </div>
       <div class="mt-20">
-        <SuccessMessages success class="w-full md:w-1/3 mx-auto" :message="$page.props.flash.success || $page.props.flash.message" timeout="10000" />
-        <ProfileActions v-if="owner && !user.is_blocked" class="mx-auto w-full" :full="auth.user.settings?.country !== 'ge'" />
+        <SuccessMessages success class="w-full md:w-1/3 mx-auto"
+                         :message="$page.props.flash.success || $page.props.flash.message" timeout="10000" />
+        <ProfileActions v-if="owner && !user.is_blocked" class="mx-auto w-full"
+                        :full="auth.user.settings?.country !== 'ge'" />
         <GalleryWrapper v-if="galleries.data?.length" profile :galleries="galleries.data" :owner
                         :isAdmin="auth.isAdmin"
                         title="User galleries" />
         <EventWrapper
-          v-if="events?.data?.length && (owner || ['admin','modarator','organizer'].includes(auth.role))"
+          v-if="events?.data?.length && (owner || ['admin','moderator','organizer'].includes(auth.role))"
           :events="events?.data" :owner
           profile
           :isAdmin="auth.isAdmin" title="User events"
           class="mt-20" />
         <BandWrapper
-          v-if="bands.data?.length && (owner || ['admin','modarator','organizer'].includes(auth.role))"
+          v-if="bands.data?.length && (owner || ['admin','moderator','organizer'].includes(auth.role))"
           :bands="bands.data" :owner
           :isAdmin="auth.isAdmin"
           title="User bands" />
         <BlogWrapper
-          v-if="blogs.data?.length && (owner || ['admin','modarator','organizer'].includes(auth.role))"
+          v-if="blogs.data?.length && (owner || ['admin','moderator','organizer'].includes(auth.role))"
           :blogs="blogs.data" :owner
           :isAdmin="auth.isAdmin"
           title="User blogs" blogs="" />
@@ -158,36 +161,36 @@ const blockUser = () => {
     </div>
 
     <Modal :show="showBlockModal" @close="closeBlockModal">
-        <div class="p-6 text-white bg-black">
-            <h2 class="text-lg font-medium">
-                Block User
-            </h2>
-            <p class="mt-1 text-sm text-gray-400">
-                Are you sure you want to block this user? They will not be able to login or create content.
-            </p>
-            <div class="mt-6">
-                <InputLabel for="reason" value="Reason" class="text-white" />
-                <TextInput
-                    id="reason"
-                    v-model="blockForm.reason"
-                    type="text"
-                    class="mt-1 block w-full bg-gray-800 text-white border-gray-700"
-                    placeholder="Reason for blocking"
-                />
-                <InputError :message="blockForm.errors.reason" class="mt-2" />
-            </div>
-            <div class="mt-6 flex justify-end">
-                <SecondaryButton @click="closeBlockModal"> Cancel </SecondaryButton>
-                <DangerButton
-                    class="ml-3"
-                    :class="{ 'opacity-25': blockForm.processing }"
-                    :disabled="blockForm.processing"
-                    @click="blockUser"
-                >
-                    Block User
-                </DangerButton>
-            </div>
+      <div class="p-6 text-white bg-black">
+        <h2 class="text-lg font-medium">
+          Block User
+        </h2>
+        <p class="mt-1 text-sm text-gray-400">
+          Are you sure you want to block this user? They will not be able to login or create content.
+        </p>
+        <div class="mt-6">
+          <InputLabel for="reason" value="Reason" class="text-white" />
+          <TextInput
+            id="reason"
+            v-model="blockForm.reason"
+            type="text"
+            class="mt-1 block w-full bg-gray-800 text-white border-gray-700"
+            placeholder="Reason for blocking"
+          />
+          <InputError :message="blockForm.errors.reason" class="mt-2" />
         </div>
+        <div class="mt-6 flex justify-end">
+          <SecondaryButton @click="closeBlockModal"> Cancel</SecondaryButton>
+          <DangerButton
+            class="ml-3"
+            :class="{ 'opacity-25': blockForm.processing }"
+            :disabled="blockForm.processing"
+            @click="blockUser"
+          >
+            Block User
+          </DangerButton>
+        </div>
+      </div>
     </Modal>
   </ProfileLayout>
 </template>
