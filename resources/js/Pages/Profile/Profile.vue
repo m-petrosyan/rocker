@@ -133,6 +133,12 @@ const blockUser = () => {
           </div>
         </div>
       </div>
+      <div v-if="user.is_blocked && ['admin','moderator','organizer'].includes(auth.role)">
+        <div class="mx-auto text-center w-fit">
+          <b class="bg-red text-white p-1">Blocked</b>
+          <p class="mt-5 border border-dashed border-red">Reason: {{ user.blocked_record?.reason }}</p>
+        </div>
+      </div>
       <div class="mt-20">
         <SuccessMessages success class="w-full md:w-1/3 mx-auto"
                          :message="$page.props.flash.success || $page.props.flash.message" timeout="10000" />

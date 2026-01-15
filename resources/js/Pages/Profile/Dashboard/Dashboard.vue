@@ -73,6 +73,7 @@ defineProps({
           </div>
         </div>
         <div>
+          <div v-if="user.is_blocked" class="bg-red text-white">Blocked</div>
           <div>
             <p>{{ user.name }}</p>
             <small
