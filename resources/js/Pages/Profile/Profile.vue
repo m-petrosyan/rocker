@@ -116,7 +116,7 @@ const blockUser = () => {
           <Logout v-if="!webApp" :owner />
         </div>
       </div>
-      <div class="mx-auto p-2 w-full md:w-2/6 text-center">
+      <div class="mx-auto mt-10 p-2 w-full md:w-2/6 text-center">
         <h3 class="text-gray-900 p-6">
           {{ user.name }}
         </h3>
