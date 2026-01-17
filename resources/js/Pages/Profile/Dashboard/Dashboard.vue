@@ -9,6 +9,7 @@ import BandIcon from '@/Components/Icons/BandIcon.vue';
 import EventIcon from '@/Components/Icons/EventIcon.vue';
 import GalleryIcon from '@/Components/Icons/GalleryIcon.vue';
 import StatisticsChart from '@/Components/Elements/StatisticsChart.vue';
+import DiskUsage from '@/Components/Elements/DiskUsage.vue';
 
 defineProps({
   users: {
@@ -63,20 +64,9 @@ defineProps({
           <p>PWA install</p>
           <h2>{{ statistics.pwa }}</h2>
         </div>
-        <div class="text-center bg-black p-6 rounded-lg min-w-[200px]">
-          <p>Disk Usage</p>
-          <div class="flex flex-col gap-1 items-center">
-            <div class="flex gap-2">
-              <span class="opacity-60 text-sm">Free:</span>
-              <span class="font-bold">{{ statistics.disk.free }}</span>
-            </div>
-            <div class="flex gap-2">
-              <span class="opacity-60 text-sm">Project:</span>
-              <span class="font-bold">{{ statistics.disk.project }}</span>
-            </div>
-          </div>
-        </div>
       </div>
+
+      <DiskUsage :disk="statistics.disk" />
 
       <div class="mt-10 grid lg:grid-cols-2 gap-8" v-if="statistics.charts">
         <StatisticsChart

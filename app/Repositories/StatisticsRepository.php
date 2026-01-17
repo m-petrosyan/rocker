@@ -42,6 +42,8 @@ class StatisticsRepository
     {
         $path = base_path();
         $free = disk_free_space($path);
+        $total = disk_total_space($path);
+        $used = $total - $free;
         
         // Calculate project size using shell command for speed, fallback to recursive iterator
         $projectSize = 0;
@@ -58,7 +60,11 @@ class StatisticsRepository
 
         return [
             'free' => self::formatBytes($free),
+            'total' => self::formatBytes($total),
+            'used' => self::formatBytes($used),
             'project' => self::formatBytes($projectSize),
+            'percent_free' => round(($free / $total) * 100, 1),
+            'percent_used' => max(round(($used / $total) * 100, 1), $used > 0 ? 0.1 : 0),
         ];
     }
 
