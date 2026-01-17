@@ -21,7 +21,7 @@ class DashboardController
                 'users_web' => UserRepository::count(),
                 'users_bot' => UserRepository::count(true),
                 'events' => EventRepository::count(),
-                'events_active' => EventRepository::count(true),
+                'events_active' => EventRepository::count(active: true),
                 'galleries' => GalleryReoisitory::count(),
                 'bands' => BandRepository::count(),
                 'blogs' => BlogRepository::count(),
