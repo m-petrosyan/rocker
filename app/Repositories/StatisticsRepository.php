@@ -9,25 +9,25 @@ use Carbon\Carbon;
 
 class StatisticsRepository
 {
-    public static function getUserRegistrationsStats(int $months = 6): array
+    public static function getUserActivityStats(int $months = 6): array
     {
-        return self::getMonthlyStats(User::query(), $months);
+        return self::getMonthlyStats(User::query(), $months, 'last_activity');
     }
 
     public static function getEventCreationStats(int $months = 6): array
     {
-        return self::getMonthlyStats(Event::query(), $months);
+        return self::getMonthlyStats(Event::query(), $months, 'created_at');
     }
 
-    protected static function getMonthlyStats($query, int $months): array
+    protected static function getMonthlyStats($query, int $months, string $column = 'created_at'): array
     {
         $startDate = Carbon::now()->subMonths($months - 1)->startOfMonth();
 
         $stats = $query->select(
-            DB::raw("DATE_FORMAT(created_at, '%Y-%m') as month"),
+            DB::raw("DATE_FORMAT($column, '%Y-%m') as month"),
             DB::raw('count(*) as count')
         )
-            ->where('created_at', '>=', $startDate)
+            ->where($column, '>=', $startDate)
             ->groupBy('month')
             ->orderBy('month')
             ->get()

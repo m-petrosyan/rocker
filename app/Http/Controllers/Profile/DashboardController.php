@@ -27,7 +27,7 @@ class DashboardController
                 'blogs' => BlogRepository::count(),
                 'pwa' => PwaInstall::count(),
                 'charts' => [
-                    'users' => \App\Repositories\StatisticsRepository::getUserRegistrationsStats(12),
+                    'users' => \App\Repositories\StatisticsRepository::getUserActivityStats(12),
                     'events' => \App\Repositories\StatisticsRepository::getEventCreationStats(12),
                 ],
             ],

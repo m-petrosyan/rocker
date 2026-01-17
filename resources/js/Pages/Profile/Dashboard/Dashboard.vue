@@ -8,94 +8,14 @@ import { formatDateTime } from '@/Helpers/dateFormatHelper.js';
 import BandIcon from '@/Components/Icons/BandIcon.vue';
 import EventIcon from '@/Components/Icons/EventIcon.vue';
 import GalleryIcon from '@/Components/Icons/GalleryIcon.vue';
-import { onMounted, ref } from 'vue';
-import { Chart, registerables } from 'chart.js';
+import StatisticsChart from '@/Components/Elements/StatisticsChart.vue';
 
-Chart.register(...registerables);
-
-const props = defineProps({
+defineProps({
   users: {
     type: Object
   },
   statistics: {
     type: Object
-  }
-});
-
-const usersChartCanvas = ref(null);
-const eventsChartCanvas = ref(null);
-
-onMounted(() => {
-  if (props.statistics.charts) {
-    new Chart(usersChartCanvas.value, {
-      type: 'line',
-      data: {
-        labels: props.statistics.charts.users.labels,
-        datasets: [{
-          label: 'New Users',
-          data: props.statistics.charts.users.data,
-          borderColor: '#FF5722',
-          backgroundColor: 'rgba(255, 87, 34, 0.2)',
-          fill: true,
-          tension: 0.4
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            display: false
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: {
-              color: '#fff'
-            }
-          },
-          x: {
-            ticks: {
-              color: '#fff'
-            }
-          }
-        }
-      }
-    });
-
-    new Chart(eventsChartCanvas.value, {
-      type: 'bar',
-      data: {
-        labels: props.statistics.charts.events.labels,
-        datasets: [{
-          label: 'Added Events',
-          data: props.statistics.charts.events.data,
-          backgroundColor: '#4CAF50',
-          borderRadius: 4
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            display: false
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: {
-              color: '#fff'
-            }
-          },
-          x: {
-            ticks: {
-              color: '#fff'
-            }
-          }
-        }
-      }
-    });
   }
 });
 </script>
@@ -145,15 +65,21 @@ onMounted(() => {
         </div>
       </div>
 
-      <div class="mt-10 grid lg:grid-cols-2 gap-8">
-        <div class="bg-black p-6 rounded-lg shadow-lg">
-          <h3 class="text-center mb-4">Registration Activity</h3>
-          <canvas ref="usersChartCanvas"></canvas>
-        </div>
-        <div class="bg-black p-6 rounded-lg shadow-lg">
-          <h3 class="text-center mb-4">Event Activity</h3>
-          <canvas ref="eventsChartCanvas"></canvas>
-        </div>
+      <div class="mt-10 grid lg:grid-cols-2 gap-8" v-if="statistics.charts">
+        <StatisticsChart
+          title="Active users"
+          :labels="statistics.charts.users.labels"
+          :data="statistics.charts.users.data"
+          type="line"
+          color="#FF5722"
+        />
+        <StatisticsChart
+          title="New event"
+          :labels="statistics.charts.events.labels"
+          :data="statistics.charts.events.data"
+          type="bar"
+          color="#4CAF50"
+        />
       </div>
     </div>
     <h2 class="mt-10 text-center">Users</h2>
