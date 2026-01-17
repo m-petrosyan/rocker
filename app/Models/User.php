@@ -57,7 +57,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         'image',
         'is_blocked',
     ];
-    
+
 //    protected $with = ['settings'];
 
     /**
@@ -90,7 +90,11 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
 
     public function getRoleAttribute(): ?string
     {
-        return $this->roles?->pluck('name')->first();
+        if ($this->relationLoaded('roles')) {
+            return $this->roles->pluck('name')->first();
+        }
+
+        return null;
     }
 
     public function links(): MorphMany
