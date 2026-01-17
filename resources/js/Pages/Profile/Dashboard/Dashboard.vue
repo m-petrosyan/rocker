@@ -55,7 +55,7 @@ defineProps({
           <p>Galleries</p>
           <h2>{{ statistics.galleries }}</h2>
         </div>
-        <div class="text-center bg-black p-6 rounded-lg">
+        <div v-if="statistics.blogs" class="text-center bg-black p-6 rounded-lg">
           <p>Blogs</p>
           <h2>{{ statistics.blogs }}</h2>
         </div>
