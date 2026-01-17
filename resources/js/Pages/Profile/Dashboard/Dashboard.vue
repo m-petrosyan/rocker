@@ -74,7 +74,7 @@ defineProps({
           color="#FF5722"
         />
         <StatisticsChart
-          title="New event"
+          title="New events"
           :labels="statistics.charts.events.labels"
           :data="statistics.charts.events.data"
           type="bar"
