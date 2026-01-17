@@ -58,13 +58,23 @@ class StatisticsRepository
             $projectSize = self::getDirectorySize($path);
         }
 
+        $backupPath = storage_path('app/private/Rocker.am');
+        $backupSize = is_dir($backupPath) ? self::getDirectorySize($backupPath) : 0;
+
+        $percentProject = ($projectSize / $total) * 100;
+        $percentBackup = ($backupSize / $total) * 100;
+        $percentUsed = ($used / $total) * 100;
+
         return [
             'free' => self::formatBytes($free),
             'total' => self::formatBytes($total),
             'used' => self::formatBytes($used),
             'project' => self::formatBytes($projectSize),
+            'backups' => self::formatBytes($backupSize),
             'percent_free' => round(($free / $total) * 100, 1),
-            'percent_used' => max(round(($used / $total) * 100, 1), $used > 0 ? 0.1 : 0),
+            'percent_used' => max(round($percentUsed, 1), $used > 0 ? 0.1 : 0),
+            'percent_project' => round($percentProject, 1),
+            'percent_backup' => round($percentBackup, 1),
         ];
     }
 
