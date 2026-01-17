@@ -9,16 +9,14 @@ defineProps({
 
 <template>
   <div class="mt-8 w-full px-4 lg:px-10">
-    <!-- Progress Bar -->
+    <!-- Progress Bar (Single element with gradient to avoid 1px shifts) -->
     <div 
-      class="w-full h-5 bg-green rounded-full overflow-hidden flex shadow-inner cursor-pointer"
+      class="w-full h-5 rounded-full overflow-hidden shadow-inner cursor-pointer"
       :tooltip="`Total: ${disk.total} | Used: ${disk.used} (${disk.percent_used}%) | Free: ${disk.free}`"
+      :style="{ 
+        background: `linear-gradient(to right, #FF5722 ${disk.percent_used}%, #4CAF50 ${disk.percent_used}%)` 
+      }"
     >
-      <div 
-        class="h-full bg-red transition-all duration-500 flex items-center justify-center text-[8px] text-white font-bold" 
-        :style="{ width: `${disk.percent_used}%`, minWidth: disk.percent_used > 0 ? '4px' : '0' }"
-      >
-      </div>
     </div>
 
     <!-- Info Under the Line -->
