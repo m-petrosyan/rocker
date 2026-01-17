@@ -1,7 +1,6 @@
 <script setup>
 import ProfileLayout from '@/Layouts/ProfileLayout.vue';
 import UserInfo from '@/Components/Profile/UserInfo.vue';
-import SuccessMessages from '@/Components/Messages/SuccessMessages.vue';
 import GalleryWrapper from '@/Components/Wrappers/GalleryWrapper.vue';
 import ProfileActions from '@/Components/Profile/ProfileActions.vue';
 import EventWrapper from '@/Components/Wrappers/EventWrapper.vue';
@@ -117,7 +116,7 @@ const blockUser = () => {
           <Logout v-if="!webApp" :owner />
         </div>
       </div>
-      <div class="mx-auto mt-20 p-2 w-full md:w-2/6 text-center">
+      <div class="mx-auto p-2 w-full md:w-2/6 text-center">
         <h3 class="text-gray-900 p-6">
           {{ user.name }}
         </h3>
@@ -140,8 +139,6 @@ const blockUser = () => {
         </div>
       </div>
       <div class="mt-20">
-        <SuccessMessages success class="w-full md:w-1/3 mx-auto"
-                         :message="$page.props.flash.success || $page.props.flash.message" timeout="10000" />
         <ProfileActions v-if="owner && !user.is_blocked" class="mx-auto w-full"
                         :full="auth.user.settings?.country !== 'ge'" />
         <GalleryWrapper v-if="galleries.data?.length" profile :galleries="galleries.data" :owner

@@ -62,13 +62,15 @@ const previewStyle = computed(() => {
            alt="Profile Picture"
            class="mx-auto mt-6 h-32 w-32 rounded-full border-4 border-white object-cover"
       />
-      <NavLink
-        tooltip="Edit Profile"
-        v-if="owner && (route().current('profile.index') || route().current('profile.show'))"
-        :href="route('profile.edit')"
-        class="mx-auto w-fit">
-        <EditIcon />
-      </NavLink>
+      <div class="absolute right-[-18px] bottom-[-10px]">
+        <NavLink
+          tooltip="Edit Profile"
+          v-if="owner && (route().current('profile.index') || route().current('profile.show'))"
+          :href="route('profile.edit')"
+          class="mx-auto w-fit">
+          <EditIcon />
+        </NavLink>
+      </div>
     </div>
   </div>
 </template>
