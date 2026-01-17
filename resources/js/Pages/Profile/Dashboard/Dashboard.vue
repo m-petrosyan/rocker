@@ -99,7 +99,9 @@ defineProps({
           <div>
             <p>{{ user.name }}</p>
             <small
-              tooltip="last acivity">{{ user.last_activity ? formatDateTime(user.last_activity, 'DD/MM/YY HH:mm') : formatDateTime(user.created_at, 'DD/MM/YY HH:mm')
+              tooltip="last acivity"
+              :class="{'opacity-75': !user.last_activity}">
+              {{ user.last_activity ? formatDateTime(user.last_activity, 'DD/MM/YY HH:mm') : formatDateTime(user.created_at, 'DD/MM/YY HH:mm')
               }}</small>
           </div>
           <div class="mt-2 flex gap-4">
