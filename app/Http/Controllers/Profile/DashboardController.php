@@ -31,6 +31,7 @@ class DashboardController
                     'users' => StatisticsRepository::getUserActivityStats(12),
                     'events' => StatisticsRepository::getEventCreationStats(12),
                 ],
+                'disk' => StatisticsRepository::getDiskStats(),
             ],
         ]);
     }
