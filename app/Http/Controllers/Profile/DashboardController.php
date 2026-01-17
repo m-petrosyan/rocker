@@ -21,10 +21,15 @@ class DashboardController
                 'users_web' => UserRepository::count(),
                 'users_bot' => UserRepository::count(true),
                 'events' => EventRepository::count(),
+                'events_active' => EventRepository::count(true),
                 'galleries' => GalleryReoisitory::count(),
                 'bands' => BandRepository::count(),
                 'blogs' => BlogRepository::count(),
                 'pwa' => PwaInstall::count(),
+                'charts' => [
+                    'users' => \App\Repositories\StatisticsRepository::getUserRegistrationsStats(12),
+                    'events' => \App\Repositories\StatisticsRepository::getEventCreationStats(12),
+                ],
             ],
         ]);
     }

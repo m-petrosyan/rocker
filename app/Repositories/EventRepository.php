@@ -47,9 +47,10 @@ class EventRepository
             ->paginate($count);
     }
 
-    public static function count($status = EventStatusEnum::ACCEPTED->value): int
+    public static function count($status = EventStatusEnum::ACCEPTED->value, $active = false): int
     {
         return Event::query()->whereRelation('status', 'status', '=', $status)
+            ->when($active, fn($query) => $query->whereDate('start_date', '>=', today()))
             ->count();
     }
 }

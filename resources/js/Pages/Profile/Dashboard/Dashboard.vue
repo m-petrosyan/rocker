@@ -8,13 +8,94 @@ import { formatDateTime } from '@/Helpers/dateFormatHelper.js';
 import BandIcon from '@/Components/Icons/BandIcon.vue';
 import EventIcon from '@/Components/Icons/EventIcon.vue';
 import GalleryIcon from '@/Components/Icons/GalleryIcon.vue';
+import { onMounted, ref } from 'vue';
+import { Chart, registerables } from 'chart.js';
 
-defineProps({
+Chart.register(...registerables);
+
+const props = defineProps({
   users: {
-    type: Array
+    type: Object
   },
   statistics: {
     type: Object
+  }
+});
+
+const usersChartCanvas = ref(null);
+const eventsChartCanvas = ref(null);
+
+onMounted(() => {
+  if (props.statistics.charts) {
+    new Chart(usersChartCanvas.value, {
+      type: 'line',
+      data: {
+        labels: props.statistics.charts.users.labels,
+        datasets: [{
+          label: 'New Users',
+          data: props.statistics.charts.users.data,
+          borderColor: '#FF5722',
+          backgroundColor: 'rgba(255, 87, 34, 0.2)',
+          fill: true,
+          tension: 0.4
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              color: '#fff'
+            }
+          },
+          x: {
+            ticks: {
+              color: '#fff'
+            }
+          }
+        }
+      }
+    });
+
+    new Chart(eventsChartCanvas.value, {
+      type: 'bar',
+      data: {
+        labels: props.statistics.charts.events.labels,
+        datasets: [{
+          label: 'Added Events',
+          data: props.statistics.charts.events.data,
+          backgroundColor: '#4CAF50',
+          borderRadius: 4
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              color: '#fff'
+            }
+          },
+          x: {
+            ticks: {
+              color: '#fff'
+            }
+          }
+        }
+      }
+    });
   }
 });
 </script>
@@ -40,7 +121,11 @@ defineProps({
         </div>
         <div class="text-center bg-black p-6 rounded-lg">
           <p>Events</p>
-          <h2>{{ statistics.events }}</h2>
+          <div class="flex">
+            <h2 tooltip="all" class="opacity-30">{{ statistics.events }}</h2>
+            <h2>/</h2>
+            <h2 tooltip="active">{{ statistics.events_active }}</h2>
+          </div>
         </div>
         <div class="text-center bg-black p-6 rounded-lg">
           <p>Bands</p>
@@ -57,6 +142,17 @@ defineProps({
         <div class="text-center bg-black p-6 rounded-lg">
           <p>PWA install</p>
           <h2>{{ statistics.pwa }}</h2>
+        </div>
+      </div>
+
+      <div class="mt-10 grid lg:grid-cols-2 gap-8">
+        <div class="bg-black p-6 rounded-lg shadow-lg">
+          <h3 class="text-center mb-4">Registration Activity</h3>
+          <canvas ref="usersChartCanvas"></canvas>
+        </div>
+        <div class="bg-black p-6 rounded-lg shadow-lg">
+          <h3 class="text-center mb-4">Event Activity</h3>
+          <canvas ref="eventsChartCanvas"></canvas>
         </div>
       </div>
     </div>
