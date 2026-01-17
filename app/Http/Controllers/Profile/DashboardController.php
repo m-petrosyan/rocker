@@ -8,6 +8,7 @@ use App\Repositories\BlogRepository;
 use App\Repositories\EventRepository;
 use App\Repositories\GalleryReoisitory;
 use App\Repositories\UserRepository;
+use App\Repositories\StatisticsRepository;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -27,8 +28,8 @@ class DashboardController
                 'blogs' => BlogRepository::count(),
                 'pwa' => PwaInstall::count(),
                 'charts' => [
-                    'users' => \App\Repositories\StatisticsRepository::getUserActivityStats(12),
-                    'events' => \App\Repositories\StatisticsRepository::getEventCreationStats(12),
+                    'users' => StatisticsRepository::getUserActivityStats(12),
+                    'events' => StatisticsRepository::getEventCreationStats(12),
                 ],
             ],
         ]);

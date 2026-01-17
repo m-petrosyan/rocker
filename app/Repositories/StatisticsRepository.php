@@ -4,19 +4,38 @@ namespace App\Repositories;
 
 use App\Models\Event;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class StatisticsRepository
 {
-    public static function getUserActivityStats(int $months = 6): array
-    {
-        return self::getMonthlyStats(User::query(), $months, 'last_activity');
-    }
-
     public static function getEventCreationStats(int $months = 6): array
     {
         return self::getMonthlyStats(Event::query(), $months, 'created_at');
+    }
+
+    public static function getUserActivityStats(int $months = 6): array
+    {
+        $startDate = Carbon::now()->subMonths($months - 1)->startOfMonth();
+
+        $stats = User::select(
+            DB::raw("DATE_FORMAT(COALESCE(last_activity, created_at), '%Y-%m') as month"),
+            DB::raw('count(*) as count')
+        )
+            ->where(function ($query) use ($startDate) {
+                $query->where('last_activity', '>=', $startDate)
+                    ->orWhere(function ($q) use ($startDate) {
+                        $q->whereNull('last_activity')
+                            ->where('created_at', '>=', $startDate);
+                    });
+            })
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get()
+            ->pluck('count', 'month')
+            ->toArray();
+
+        return self::formatStatsData($stats, $months, $startDate);
     }
 
     protected static function getMonthlyStats($query, int $months, string $column = 'created_at'): array
@@ -34,6 +53,11 @@ class StatisticsRepository
             ->pluck('count', 'month')
             ->toArray();
 
+        return self::formatStatsData($stats, $months, $startDate);
+    }
+
+    protected static function formatStatsData(array $stats, int $months, Carbon $startDate): array
+    {
         $labels = [];
         $data = [];
 
