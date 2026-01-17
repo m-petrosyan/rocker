@@ -141,15 +141,15 @@ const blockUser = () => {
       <div class="mt-20">
         <ProfileActions v-if="owner && !user.is_blocked" class="mx-auto w-full"
                         :full="auth.user.settings?.country !== 'ge'" />
-        <GalleryWrapper v-if="galleries.data?.length" profile :galleries="galleries.data" :owner
-                        :isAdmin="auth.isAdmin"
-                        title="User galleries" />
         <EventWrapper
           v-if="events?.data?.length && (owner || ['admin','moderator','organizer'].includes(auth.role))"
           :events="events?.data" :owner
           profile
           :isAdmin="auth.isAdmin" title="User events"
           class="mt-20" />
+        <GalleryWrapper v-if="galleries.data?.length" profile :galleries="galleries.data" :owner
+                        :isAdmin="auth.isAdmin"
+                        title="User galleries" />
         <BandWrapper
           v-if="bands.data?.length && (owner || ['admin','moderator','organizer'].includes(auth.role))"
           :bands="bands.data" :owner
