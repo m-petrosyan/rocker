@@ -116,8 +116,6 @@ const getLink = (item) => {
         </div>
       </div>
 
-      <DiskUsage :disk="statistics.disk" />
-
       <div class="mt-10 grid lg:grid-cols-2 gap-8" v-if="statistics.charts">
         <StatisticsChart
           title="Active users"
@@ -135,6 +133,8 @@ const getLink = (item) => {
         />
       </div>
     </div>
+
+    <DiskUsage :disk="statistics.disk" />
 
     <!-- Фильтры -->
     <div class="mt-20">
@@ -168,63 +168,63 @@ const getLink = (item) => {
         </div>
 
         <div class="flex flex-wrap justify-center items-center gap-6 p-4 bg-white/5 rounded-2xl border border-white/10">
-            <!-- Сортировка (всегда видна) -->
-            <div class="flex items-center gap-2">
-                <span class="text-xs opacity-50 uppercase tracking-wider">Sort:</span>
-                <div class="flex bg-black rounded-lg p-1 border border-white/5">
-                    <button
-                        @click="setSort('newest')"
-                        :class="['px-3 py-1 text-sm rounded-md transition-all', filters.sort === 'newest' ? 'bg-white/10 text-white' : 'text-white/40 hover:text-white']"
-                    >
-                        Newest
-                    </button>
-                    <button
-                        @click="setSort('oldest')"
-                        :class="['px-3 py-1 text-sm rounded-md transition-all', filters.sort === 'oldest' ? 'bg-white/10 text-white' : 'text-white/40 hover:text-white']"
-                    >
-                        Oldest
-                    </button>
-                </div>
-            </div>
-
-            <!-- Разделитель -->
-            <div class="w-px h-6 bg-white/10"></div>
-
-            <!-- Дополнительно для Events -->
-            <div v-if="filters.type === 'events'" class="flex items-center gap-3">
-                <button
-                    @click="togglePast"
-                    :class="['px-4 py-1 text-sm rounded-lg transition-all border flex items-center gap-2', filters.past ? 'bg-orange-600 border-orange-600 text-white' : 'border-white/10 text-white/60 hover:border-orange-600/50']"
-                >
-                    <EventIcon class="w-4 h-4" />
-                    Archive
-                </button>
-            </div>
-
-            <!-- Под-фильтры для пользователей -->
-            <div v-if="filters.type === 'users'" class="flex flex-wrap justify-center gap-3">
+          <!-- Сортировка (всегда видна) -->
+          <div class="flex items-center gap-2">
+            <span class="text-xs opacity-50 uppercase tracking-wider">Sort:</span>
+            <div class="flex bg-black rounded-lg p-1 border border-white/5">
               <button
-                @click="setFilter('blocked')"
-                :class="['px-4 py-1 text-sm rounded-lg transition-all border flex items-center gap-2', filters.filter === 'blocked' ? 'bg-red border-red text-white' : 'border-white/10 text-white/60 hover:border-red/50']"
+                @click="setSort('newest')"
+                :class="['px-3 py-1 text-sm rounded-md transition-all', filters.sort === 'newest' ? 'bg-white/10 text-white' : 'text-white/40 hover:text-white']"
               >
-                <span class="w-2 h-2 rounded-full bg-red"></span>
-                Blocked
+                Newest
               </button>
               <button
-                @click="setFilter('bot')"
-                :class="['px-4 py-1 text-sm rounded-lg transition-all border flex items-center gap-2', filters.filter === 'bot' ? 'bg-blue-600 border-blue-600 text-white' : 'border-white/10 text-white/60 hover:border-blue-600/50']"
+                @click="setSort('oldest')"
+                :class="['px-3 py-1 text-sm rounded-md transition-all', filters.sort === 'oldest' ? 'bg-white/10 text-white' : 'text-white/40 hover:text-white']"
               >
-                <BotIcon class="w-4 h-4" />
-                Bot
-              </button>
-              <button
-                @click="setFilter('web')"
-                :class="['px-4 py-1 text-sm rounded-lg transition-all border flex items-center gap-2', filters.filter === 'web' ? 'bg-green-600 border-green-600 text-white' : 'border-white/10 text-white/60 hover:border-green-600/50']"
-              >
-                <WebSiteIcon class="w-4 h-4" />
-                Web
+                Oldest
               </button>
             </div>
+          </div>
+
+          <!-- Разделитель -->
+          <div class="w-px h-6 bg-white/10"></div>
+
+          <!-- Дополнительно для Events -->
+          <div v-if="filters.type === 'events'" class="flex items-center gap-3">
+            <button
+              @click="togglePast"
+              :class="['px-4 py-1 text-sm rounded-lg transition-all border flex items-center gap-2', filters.past ? 'bg-orange-600 border-orange-600 text-white' : 'border-white/10 text-white/60 hover:border-orange-600/50']"
+            >
+              <EventIcon class="w-4 h-4" />
+              Archive
+            </button>
+          </div>
+
+          <!-- Под-фильтры для пользователей -->
+          <div v-if="filters.type === 'users'" class="flex flex-wrap justify-center gap-3">
+            <button
+              @click="setFilter('blocked')"
+              :class="['px-4 py-1 text-sm rounded-lg transition-all border flex items-center gap-2', filters.filter === 'blocked' ? 'bg-red border-red text-white' : 'border-white/10 text-white/60 hover:border-red/50']"
+            >
+              <span class="w-2 h-2 rounded-full bg-red"></span>
+              Blocked
+            </button>
+            <button
+              @click="setFilter('bot')"
+              :class="['px-4 py-1 text-sm rounded-lg transition-all border flex items-center gap-2', filters.filter === 'bot' ? 'bg-blue-600 border-blue-600 text-white' : 'border-white/10 text-white/60 hover:border-blue-600/50']"
+            >
+              <BotIcon class="w-4 h-4" />
+              Bot
+            </button>
+            <button
+              @click="setFilter('web')"
+              :class="['px-4 py-1 text-sm rounded-lg transition-all border flex items-center gap-2', filters.filter === 'web' ? 'bg-green-600 border-green-600 text-white' : 'border-white/10 text-white/60 hover:border-green-600/50']"
+            >
+              <WebSiteIcon class="w-4 h-4" />
+              Web
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -235,15 +235,21 @@ const getLink = (item) => {
                class="text-center group flex flex-col items-center gap-4">
         <div :style="{ backgroundImage: `url(${getImageUrl(item)})` }"
              class="relative h-48 w-48 bg-no-repeat bg-contain bg-cover rounded-full overflow-hidden transition-transform group-hover:scale-105 shadow-2xl">
-          <div v-if="filters.type === 'users'" class="absolute w-full bottom-0 p-2 flex gap-4 justify-center items-center bg-blackTransparent">
+          <div v-if="filters.type === 'users'"
+               class="absolute w-full bottom-0 p-2 flex gap-4 justify-center items-center bg-blackTransparent">
             <BotIcon v-if="item.chat_count" />
             <WebSiteIcon v-if="item.email" />
           </div>
         </div>
         <div>
-          <div v-if="filters.type === 'users' && item.is_blocked" class="bg-red text-white text-xs px-2 py-0.5 rounded mb-1 inline-block uppercase font-bold tracking-tighter">Blocked</div>
+          <div v-if="filters.type === 'users' && item.is_blocked"
+               class="bg-red text-white text-xs px-2 py-0.5 rounded mb-1 inline-block uppercase font-bold tracking-tighter">
+            Blocked
+          </div>
           <div>
-            <p class="font-bold border-b border-transparent group-hover:border-primary transition-colors inline-block text-lg">{{ getTitle(item) }}</p>
+            <p
+              class="font-bold border-b border-transparent group-hover:border-primary transition-colors inline-block text-lg">
+              {{ getTitle(item) }}</p>
             <div v-if="filters.type === 'users'">
               <small
                 tooltip="last acivity"
@@ -252,7 +258,7 @@ const getLink = (item) => {
                 }}</small>
             </div>
             <div v-else-if="item.date || item.start_date" class="block mt-1">
-                 <small class="opacity-75">{{ formatDateTime(item.date || item.start_date, 'DD/MM/YY') }}</small>
+              <small class="opacity-75">{{ formatDateTime(item.date || item.start_date, 'DD/MM/YY') }}</small>
             </div>
           </div>
           <div v-if="filters.type === 'users'" class="mt-4 flex gap-6 justify-center">
@@ -273,7 +279,7 @@ const getLink = (item) => {
       </NavLink>
     </div>
     <div class="mt-20">
-        <Pagination :links="users?.links" />
+      <Pagination :links="users?.links" />
     </div>
   </ProfileLayout>
 </template>
@@ -282,9 +288,11 @@ const getLink = (item) => {
 .bg-primary {
   background-color: var(--primary-color, #FFD700);
 }
+
 .border-primary {
   border-color: var(--primary-color, #FFD700);
 }
+
 .text-primary {
   color: var(--primary-color, #FFD700);
 }
