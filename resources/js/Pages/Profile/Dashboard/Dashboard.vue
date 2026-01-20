@@ -114,8 +114,6 @@ const getLink = (item) => {
         </div>
       </div>
 
-      <DiskUsage :disk="statistics.disk" />
-
       <div class="mt-10 grid lg:grid-cols-2 gap-8" v-if="statistics.charts">
         <StatisticsChart
           title="Active users"
@@ -134,6 +132,7 @@ const getLink = (item) => {
       </div>
     </div>
 
+    <DiskUsage :disk="statistics.disk" />
     <!-- Фильтры -->
     <div class="mt-20">
       <div class="flex flex-col items-center gap-6">
@@ -198,15 +197,19 @@ const getLink = (item) => {
                class="text-center group flex flex-col items-center gap-4">
         <div :style="{ backgroundImage: `url(${getImageUrl(item)})` }"
              class="relative h-48 w-48 bg-no-repeat bg-contain bg-cover rounded-full overflow-hidden transition-transform group-hover:scale-105">
-          <div v-if="filters.type === 'users'" class="absolute w-full bottom-0 p-2 flex gap-4 justify-center items-center bg-blackTransparent">
+          <div v-if="filters.type === 'users'"
+               class="absolute w-full bottom-0 p-2 flex gap-4 justify-center items-center bg-blackTransparent">
             <BotIcon v-if="item.chat_count" />
             <WebSiteIcon v-if="item.email" />
           </div>
         </div>
         <div>
-          <div v-if="filters.type === 'users' && item.is_blocked" class="bg-red text-white text-xs px-2 py-0.5 rounded mb-1 inline-block">Blocked</div>
+          <div v-if="filters.type === 'users' && item.is_blocked"
+               class="bg-red text-white text-xs px-2 py-0.5 rounded mb-1 inline-block">Blocked
+          </div>
           <div>
-            <p class="font-bold border-b border-transparent group-hover:border-primary transition-colors inline-block">{{ getTitle(item) }}</p>
+            <p class="font-bold border-b border-transparent group-hover:border-primary transition-colors inline-block">
+              {{ getTitle(item) }}</p>
             <div v-if="filters.type === 'users'">
               <small
                 tooltip="last acivity"
@@ -215,7 +218,7 @@ const getLink = (item) => {
                 }}</small>
             </div>
             <div v-else-if="item.date || item.start_date">
-                 <small class="opacity-75">{{ formatDateTime(item.date || item.start_date, 'DD/MM/YY') }}</small>
+              <small class="opacity-75">{{ formatDateTime(item.date || item.start_date, 'DD/MM/YY') }}</small>
             </div>
           </div>
           <div v-if="filters.type === 'users'" class="mt-2 flex gap-4">
@@ -236,7 +239,7 @@ const getLink = (item) => {
       </NavLink>
     </div>
     <div class="mt-20">
-        <Pagination :links="users?.links" />
+      <Pagination :links="users?.links" />
     </div>
   </ProfileLayout>
 </template>
@@ -245,9 +248,11 @@ const getLink = (item) => {
 .bg-primary {
   background-color: var(--primary-color, #FFD700);
 }
+
 .border-primary {
   border-color: var(--primary-color, #FFD700);
 }
+
 .text-primary {
   color: var(--primary-color, #FFD700);
 }
