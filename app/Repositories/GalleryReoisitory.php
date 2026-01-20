@@ -26,11 +26,12 @@ class GalleryReoisitory
     }
 
 
-    public static function galleryList($limit = 50): LengthAwarePaginator
+    public static function galleryList($limit = 50, $sort = 'newest'): LengthAwarePaginator
     {
         return Gallery::query()
             ->with(['user'])
-            ->orderByRaw('ISNULL(date), date DESC, created_at DESC')
+            ->orderBy('date', $sort === 'oldest' ? 'asc' : 'desc')
+            ->orderBy('created_at', $sort === 'oldest' ? 'asc' : 'desc')
             ->paginate($limit);
     }
 

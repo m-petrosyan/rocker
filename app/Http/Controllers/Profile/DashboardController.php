@@ -19,16 +19,18 @@ class DashboardController
     {
         $type = $request->get('type', 'users');
         $filter = $request->get('filter');
+        $sort = $request->get('sort', 'newest');
+        $past = $request->boolean('past', false);
 
         $items = match ($type) {
-            'bands' => BandRepository::bandList(50),
-            'events' => EventRepository::eventsList(50),
-            'galleries' => GalleryReoisitory::galleryList(50),
-            default => UserRepository::usersList(50, $filter),
+            'bands' => BandRepository::bandList(50, $sort),
+            'events' => EventRepository::eventsList(50, 1, $past, $sort),
+            'galleries' => GalleryReoisitory::galleryList(50, $sort),
+            default => UserRepository::usersList(50, $filter, $sort),
         };
 
         return Inertia::render('Profile/Dashboard/Dashboard', [
-            'users' => $items, // Сохраняем имя 'users' для совместимости или переименуем во фронте
+            'users' => $items,
             'statistics' => [
                 'users_web' => UserRepository::count(),
                 'users_bot' => UserRepository::count(true),
@@ -47,6 +49,8 @@ class DashboardController
             'filters' => [
                 'type' => $type,
                 'filter' => $filter,
+                'sort' => $sort,
+                'past' => $past,
             ]
         ]);
     }

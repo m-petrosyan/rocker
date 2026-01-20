@@ -8,7 +8,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class EventRepository
 {
-    public static function eventsList($limit = 50, $page = 1, $past = false): LengthAwarePaginator
+    public static function eventsList($limit = 50, $page = 1, $past = false, $sort = 'newest'): LengthAwarePaginator
     {
         if (app()->bound('sitemap_mode') && app('sitemap_mode') === true) {
             $country = 'all';
@@ -24,7 +24,7 @@ class EventRepository
             ->with(['status'])
             ->when(!$past, fn($query) => $query->whereDate('start_date', '>=', today()))
             ->when($past, fn($query) => $query->whereDate('start_date', '<', today()))
-            ->orderBy('start_date', $past ? 'desc' : 'asc')
+            ->orderBy('start_date', $sort === 'oldest' ? 'asc' : 'desc')
             ->paginate($limit, ['*'], 'page', $page);
     }
 
