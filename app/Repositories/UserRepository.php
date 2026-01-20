@@ -7,10 +7,13 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserRepository
 {
-    public static function usersList($count = 100): LengthAwarePaginator
+    public static function usersList($count = 100, $filter = null): LengthAwarePaginator
     {
         return User::with('roles')
             ->withCount(['bands', 'events', 'blogs', 'galleries', 'chat'])
+            ->when($filter === 'blocked', fn($query) => $query->whereHas('blockedRecord'))
+            ->when($filter === 'bot', fn($query) => $query->whereHas('chat'))
+            ->when($filter === 'web', fn($query) => $query->doesntHave('chat'))
             ->orderByRaw('EXISTS(SELECT 1 FROM user_bots WHERE user_bots.user_id = users.id)')
             ->orderBy('created_at', 'desc')
             ->paginate($count);
