@@ -16,6 +16,15 @@ class EventRepository
             $country = auth()?->user()->settings->country ?? 'am';
         }
 
+        $order = $sort === 'oldest' ? 'asc' : 'desc';
+        
+        // Для предстоящих событий (не архивных) "новые" (newest) логичнее показывать как ближайшие (ASC)
+        if (!$past && $sort === 'newest') {
+            $order = 'asc';
+        } elseif (!$past && $sort === 'oldest') {
+            $order = 'desc';
+        }
+
         return Event::query()
             ->whereRelation('status', 'status', EventStatusEnum::ACCEPTED->value)
             ->where(function ($query) use ($country) {
@@ -24,7 +33,7 @@ class EventRepository
             ->with(['status'])
             ->when(!$past, fn($query) => $query->whereDate('start_date', '>=', today()))
             ->when($past, fn($query) => $query->whereDate('start_date', '<', today()))
-            ->orderBy('start_date', $sort === 'oldest' ? 'asc' : 'desc')
+            ->orderBy('start_date', $order)
             ->paginate($limit, ['*'], 'page', $page);
     }
 

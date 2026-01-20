@@ -30,7 +30,6 @@ class GalleryReoisitory
     {
         return Gallery::query()
             ->with(['user'])
-            ->orderBy('date', $sort === 'oldest' ? 'asc' : 'desc')
             ->orderBy('created_at', $sort === 'oldest' ? 'asc' : 'desc')
             ->paginate($limit);
     }

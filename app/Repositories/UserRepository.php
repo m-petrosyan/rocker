@@ -14,7 +14,6 @@ class UserRepository
             ->when($filter === 'blocked', fn($query) => $query->whereHas('blockedRecord'))
             ->when($filter === 'bot', fn($query) => $query->whereHas('chat'))
             ->when($filter === 'web', fn($query) => $query->doesntHave('chat'))
-            ->orderByRaw('EXISTS(SELECT 1 FROM user_bots WHERE user_bots.user_id = users.id)')
             ->orderBy('created_at', $sort === 'oldest' ? 'asc' : 'desc')
             ->paginate($count);
     }
