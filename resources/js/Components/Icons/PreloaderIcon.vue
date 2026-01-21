@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import halloween from '@/Components/Icons/halloween.gif';
+// import halloween from '@/Components/Icons/halloween.gif';
 </script>
 
 <template>
@@ -14,10 +14,10 @@ import halloween from '@/Components/Icons/halloween.gif';
         <div></div>
         <div></div>
       </div>
-      <img
-        :src="halloween"
-        alt="Loading..."
-        class="absolute left-1/2 top-6  w-48 h-48 mask-left" />
+      <!--      <img-->
+      <!--        :src="halloween"-->
+      <!--        alt="Loading..."-->
+      <!--        class="absolute left-1/2 top-6  w-48 h-48 mask-left" />-->
     </div>
   </div>
 
