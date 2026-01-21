@@ -17,8 +17,7 @@ class EventRepository
         }
 
         $order = $sort === 'oldest' ? 'asc' : 'desc';
-        
-        // Для предстоящих событий (не архивных) "новые" (newest) логичнее показывать как ближайшие (ASC)
+
         if (!$past && $sort === 'newest') {
             $order = 'asc';
         } elseif (!$past && $sort === 'oldest') {

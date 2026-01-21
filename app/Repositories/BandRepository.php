@@ -16,12 +16,16 @@ class BandRepository
     }
 
 
-    public static function bandList($limit = 50, $sort = 'newest'): LengthAwarePaginator
+    public static function bandList(int $limit = 50, string $sort = ''): LengthAwarePaginator
     {
         return Band::query()
             ->whereNotNull('user_id')
             ->whereNotNull('info')
-            ->orderBy('created_at', $sort === 'oldest' ? 'asc' : 'desc')
+            ->when(
+                $sort,
+                fn($query) => $query->orderBy('created_at', $sort === 'oldest' ? 'asc' : 'desc'),
+                fn($query) => $query->inRandomOrder()
+            )
             ->paginate($limit, ['id', 'name', 'slug']);
     }
 
