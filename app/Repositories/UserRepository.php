@@ -9,7 +9,7 @@ class UserRepository
 {
     public static function usersList($count = 100, $filter = null, $sort = 'newest'): LengthAwarePaginator
     {
-        return User::with('roles')
+        return User::with(['roles', 'settings'])
             ->withCount(['bands', 'events', 'blogs', 'galleries', 'chat'])
             ->when($filter === 'blocked', fn($query) => $query->whereHas('blockedRecord'))
             ->when($filter === 'bot', fn($query) => $query->whereHas('chat'))

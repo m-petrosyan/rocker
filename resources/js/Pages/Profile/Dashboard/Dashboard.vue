@@ -236,9 +236,19 @@ const getLink = (item) => {
         <div :style="{ backgroundImage: `url(${getImageUrl(item)})` }"
              class="relative h-48 w-48 bg-no-repeat bg-contain bg-cover rounded-full overflow-hidden transition-transform group-hover:scale-105 shadow-2xl">
           <div v-if="filters.type === 'users'"
-               class="absolute w-full bottom-0 p-2 flex gap-4 justify-center items-center bg-blackTransparent">
-            <BotIcon v-if="item.chat_count" />
-            <WebSiteIcon v-if="item.email" />
+               class="absolute w-full bottom-0 ">
+            <div class="flex justify-end px-4">
+              <img class="h-6" v-if="item?.settings?.country && item?.settings?.country !== 'all'"
+                   :src="`/icons/${item?.settings?.country}.png`" alt="flag">
+              <div v-else-if="item?.settings?.country === 'all'" class="flex imems-center gap-x-2">
+                <img class="h-6" :src="`/icons/am.png`" alt="flag">
+                <img class="h-6" :src="`/icons/ge.png`" alt="flag">
+              </div>
+            </div>
+            <div class=" flex gap-4 justify-center items-center  bg-blackTransparent p-2 ">
+              <BotIcon v-if="item.chat_count" />
+              <WebSiteIcon v-if="item.email" />
+            </div>
           </div>
         </div>
         <div>
@@ -254,7 +264,8 @@ const getLink = (item) => {
               <small
                 tooltip="last acivity"
                 :class="['block mt-1', {'opacity-75': !item.last_activity}]">
-                {{ item.last_activity ? formatDateTime(item.last_activity, 'DD/MM/YY HH:mm') : formatDateTime(item.created_at, 'DD/MM/YY HH:mm')
+                {{ item.last_activity ? formatDateTime(item.last_activity, 'DD/MM/YY HH:mm') :
+                formatDateTime(item.created_at, 'DD/MM/YY HH:mm')
                 }}</small>
             </div>
             <div v-else-if="item.date || item.start_date" class="block mt-1">
