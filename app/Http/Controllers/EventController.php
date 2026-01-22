@@ -17,7 +17,7 @@ class EventController extends Controller
     public function index(): Response
     {
         return Inertia::render('Events/Events', [
-            'events' => EventRepository::eventsList(),
+            'events' => EventRepository::eventsList(filters: request()->only(['country', 'from', 'to'])),
         ]);
     }
 
@@ -38,7 +38,12 @@ class EventController extends Controller
 //        dd(request()->query('page', 1));
 
         return Inertia::render('Events/Events', [
-            'events' => EventRepository::eventsList(limit: 52, page: request()->query('page', 1), past: true),
+            'events' => EventRepository::eventsList(
+                limit: 52,
+                page: request()->query('page', 1),
+                past: true,
+                filters: request()->only(['country', 'from', 'to'])
+            ),
             'isPast' => true,
         ]);
     }
