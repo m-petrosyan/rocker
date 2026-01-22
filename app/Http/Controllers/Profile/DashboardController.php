@@ -45,6 +45,7 @@ class DashboardController
                     'events' => StatisticsRepository::getEventCreationStats(12),
                 ],
                 'disk' => StatisticsRepository::getDiskStats(),
+                'countries' => StatisticsRepository::getUserCountryStats(),
             ],
             'filters' => [
                 'type' => $type,

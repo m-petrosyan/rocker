@@ -9,6 +9,7 @@ import BandIcon from '@/Components/Icons/BandIcon.vue';
 import EventIcon from '@/Components/Icons/EventIcon.vue';
 import GalleryIcon from '@/Components/Icons/GalleryIcon.vue';
 import StatisticsChart from '@/Components/Elements/StatisticsChart.vue';
+import UserCountryStats from '@/Components/Elements/UserCountryStats.vue';
 import DiskUsage from '@/Components/Elements/DiskUsage.vue';
 import { router } from '@inertiajs/vue3';
 
@@ -88,6 +89,7 @@ const getLink = (item) => {
               <BotIcon />
               <h2>{{ statistics.users_bot }}</h2>
             </div>
+            <UserCountryStats :countries="statistics.countries" />
           </div>
         </div>
         <div class="text-center bg-black p-6 rounded-lg">

@@ -2,8 +2,10 @@
 
 namespace App\Repositories;
 
+use App\Enums\CountryEnum;
 use App\Models\Event;
 use App\Models\User;
+use App\Models\UserSettings;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -44,7 +46,7 @@ class StatisticsRepository
         $free = disk_free_space($path);
         $total = disk_total_space($path);
         $used = $total - $free;
-        
+
         // Calculate project size using shell command for speed, fallback to recursive iterator
         $projectSize = 0;
         if (function_exists('shell_exec') && !str_contains(ini_get('disable_functions'), 'shell_exec')) {
@@ -53,7 +55,7 @@ class StatisticsRepository
                 $projectSize = (int)explode("\t", $output)[0];
             }
         }
-        
+
         if ($projectSize === 0) {
             $projectSize = self::getDirectorySize($path);
         }
@@ -81,9 +83,14 @@ class StatisticsRepository
     protected static function getDirectorySize($path): int
     {
         $size = 0;
-        foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS)) as $file) {
+        foreach (
+            new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS)
+            ) as $file
+        ) {
             $size += $file->getSize();
         }
+
         return $size;
     }
 
@@ -95,7 +102,7 @@ class StatisticsRepository
         $pow = min($pow, count($units) - 1);
         $bytes /= (1 << (10 * $pow));
 
-        return round($bytes, $precision) . ' ' . $units[$pow];
+        return round($bytes, $precision).' '.$units[$pow];
     }
 
     protected static function getMonthlyStats($query, int $months, string $column = 'created_at'): array
@@ -130,6 +137,15 @@ class StatisticsRepository
         return [
             'labels' => $labels,
             'data' => $data,
+        ];
+    }
+
+    public static function getUserCountryStats(): array
+    {
+        return [
+            'am' => UserSettings::where('country', CountryEnum::ARMENIA->value)->count(),
+            'ge' => UserSettings::where('country', CountryEnum::GEORGIA->value)->count(),
+            'all' => UserSettings::where('country', CountryEnum::ALL->value)->count(),
         ];
     }
 }
