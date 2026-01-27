@@ -1,15 +1,15 @@
 <?php
 
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
-use App\Http\Controllers\BandController;
-use App\Http\Controllers\BlogController;
-use App\Http\Controllers\CommunityController;
-use App\Http\Controllers\EventController;
-use App\Http\Controllers\GalleryController;
-use App\Http\Controllers\GoogleAuthController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Guest\BandController;
+use App\Http\Controllers\Guest\BlogController;
+use App\Http\Controllers\Guest\CommunityController;
+use App\Http\Controllers\Guest\EventController;
+use App\Http\Controllers\Guest\GalleryController;
+use App\Http\Controllers\Guest\GoogleAuthController;
+use App\Http\Controllers\Guest\HomeController;
+use App\Http\Controllers\Guest\PwaInstallController;
 use App\Http\Controllers\Profile\ProfileController;
-use App\Http\Controllers\PwaInstallController;
 use Inertia\Inertia;
 
 require_once __DIR__.'/guest.php';
