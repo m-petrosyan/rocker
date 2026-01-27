@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Guest;
 
+use App\Http\Controllers\Controller;
 use App\Models\Band;
 use App\Repositories\BandRepository;
 use Inertia\Inertia;
