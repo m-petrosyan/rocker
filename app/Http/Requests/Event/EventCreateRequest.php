@@ -52,11 +52,4 @@ class EventCreateRequest extends FormRequest
             'content' => mb_convert_encoding($this->input('content'), 'UTF-8'),
         ]);
     }
-
-    public function messages(): array
-    {
-        return [
-//            'poster_file.mimetypes' => 'Файл должен быть в формате JPEG, JPG, WEBP или PNG. GIF не поддерживается.',
-        ];
-    }
 }

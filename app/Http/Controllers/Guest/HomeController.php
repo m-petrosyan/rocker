@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Guest;
 
+use App\Http\Controllers\Controller;
 use App\Repositories\BandRepository;
 use App\Repositories\EventRepository;
 use App\Repositories\GalleryReoisitory;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class HomeController
+class HomeController extends Controller
 {
     public function __invoke(): Response
     {

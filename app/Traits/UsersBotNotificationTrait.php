@@ -11,12 +11,10 @@ trait UsersBotNotificationTrait
         $query = User::whereHas('chat')
             ->whereHas('settings', function ($query) use ($event) {
                 $query->where('events_notifications', true)
-                    // Проверяем страну (всегда)
                     ->where(function ($q) use ($event) {
                         $q->where('country', 'all')
                             ->orWhere('country', $event->country);
                     })
-                    // Проверяем город только если страна не all
                     ->where(function ($q) use ($event) {
                         $q->where('country', 'all')
                             ->orWhere(function ($q2) use ($event) {

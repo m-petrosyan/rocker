@@ -170,7 +170,6 @@ const getLink = (item) => {
         </div>
 
         <div class="flex flex-wrap justify-center items-center gap-6 p-4 bg-white/5 rounded-2xl border border-white/10">
-          <!-- Сортировка (всегда видна) -->
           <div class="flex items-center gap-2">
             <span class="text-xs opacity-50 uppercase tracking-wider">Sort:</span>
             <div class="flex bg-black rounded-lg p-1 border border-white/5">

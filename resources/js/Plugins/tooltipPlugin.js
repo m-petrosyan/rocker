@@ -6,7 +6,6 @@ export default {
     // Регистрируем директиву v-tooltip
     app.directive('tooltip', tooltipDirective);
 
-    // Глобальная обработка атрибута tooltip
     const applyTooltip = () => {
       if (typeof window === 'undefined') return; // Защита для SSR
 

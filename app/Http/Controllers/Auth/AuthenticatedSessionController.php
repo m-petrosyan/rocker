@@ -63,7 +63,7 @@ class AuthenticatedSessionController extends Controller
     {
         $intended = $request->input('intended');
         if ($intended && !session()->has('url.intended')) {
-            session()->flash('url.intended', $intended); // Сохрани, если не установлен
+            session()->flash('url.intended', $intended);
         }
 
         $userBot = UserBot::query()

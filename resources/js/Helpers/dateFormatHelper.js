@@ -15,7 +15,7 @@ export const date_time_utc = (date, time) => {
 
 
 export const toIso8601WithEnd = (date, time) => {
-  const guessedTimeZone = moment.tz.guess(); // Определяем локальную временную зону
+  const guessedTimeZone = moment.tz.guess();
   const momentStart = moment.tz(`${date} ${time}`, 'DD.MM.YY HH:mm', guessedTimeZone);
   const isoStart = momentStart.format();
   const isoEnd = momentStart.clone().add(3, 'hours').format();

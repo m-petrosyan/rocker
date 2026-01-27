@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Guest;
 
+use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Repositories\EventRepository;
 use App\Services\EventService;
@@ -25,18 +26,13 @@ class EventController extends Controller
     {
         views($event)->record();
 
-        $url = url()->current();
-
         return Inertia::render('Events/Event', [
             'event' => $event->load(['views', 'bands', 'user:id,username']),
-            'url' => $url,
         ]);
     }
 
     public function past()
     {
-//        dd(request()->query('page', 1));
-
         return Inertia::render('Events/Events', [
             'events' => EventRepository::eventsList(
                 limit: 52,

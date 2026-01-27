@@ -65,7 +65,6 @@ class BlogCreateRequest extends FormRequest
                 !empty($this->input('pdf_file')) || !empty($this->input('pdf'));
 
             if (!$hasPdfFile) {
-                // Проверка для английского языка
                 if (!empty($this->input('title.en')) || !empty($this->input('description.en')) || !$isContentEmpty(
                         $this->input('content.en')
                     )) {
@@ -95,7 +94,6 @@ class BlogCreateRequest extends FormRequest
                     }
                 }
 
-                // Проверка для армянского языка
                 if (!empty($this->input('title.am')) || !empty($this->input('description.am')) || !$isContentEmpty(
                         $this->input('content.am')
                     )) {
@@ -125,7 +123,6 @@ class BlogCreateRequest extends FormRequest
                     }
                 }
 
-                // Проверка для русского языка
                 if (!empty($this->input('title.ru')) || !empty($this->input('description.ru')) || !$isContentEmpty(
                         $this->input('content.ru')
                     )) {
@@ -155,7 +152,6 @@ class BlogCreateRequest extends FormRequest
                     }
                 }
 
-                // Общая проверка: хотя бы один язык заполнен
                 $allEmpty = (empty($this->input('title.en')) && empty(
                         $this->input(
                             'description.en'

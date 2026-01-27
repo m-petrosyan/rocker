@@ -15,15 +15,7 @@ class LastActivityMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-//        if ($request->is('telegraph/*/webhook')) {
-//            Log::info('telegraph/*/webhook');
-//
-//            return $next($request);
-//        }
-
         $user = auth()->user();
-
-//        Log::info('last activity: '.$user);
 
         if ($user && (!$user->last_activity || ($user->last_activity && now()->subMinutes('2')->gte(
                         $user->last_activity

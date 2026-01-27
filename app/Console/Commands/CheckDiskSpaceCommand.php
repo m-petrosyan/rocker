@@ -8,7 +8,7 @@ use Illuminate\Console\Command;
 class CheckDiskSpaceCommand extends Command
 {
     protected $signature = 'disk:check';
-    protected $description = 'Проверяет заполненность диска и отправляет уведомление в Telegram, если занято более 90%';
+    protected $description = 'Check disk space ';
 
     public function handle(): void
     {

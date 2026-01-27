@@ -20,7 +20,6 @@ class SitemapCommand extends Command
         try {
             $this->info('Generating sitemap...');
 
-            // Генерация основной карты сайта без API-запросов
             $sitemap = SitemapGenerator::create(config('app.url'))
                 ->setConcurrency(10)
                 ->hasCrawled(function (Url $url) {
@@ -34,7 +33,6 @@ class SitemapCommand extends Command
                 })
                 ->getSitemap();
 
-            // Сохраняем результат
             $sitemap->writeToFile(public_path('sitemap.xml'));
 
             $this->info('✅ Sitemap generated successfully!');
@@ -44,7 +42,6 @@ class SitemapCommand extends Command
             Log::error($errorMessage);
             $this->error($errorMessage);
 
-            // Уведомляем по Telegram, если бот настроен
             $this->notifyTelegram($errorMessage);
         }
     }
