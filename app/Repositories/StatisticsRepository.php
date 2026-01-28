@@ -19,28 +19,34 @@ class StatisticsRepository
 
     public static function getUserActivityStats(int $months = 6): array
     {
-        return Cache::store('redis')->remember("user_activity_stats_{$months}", now()->addHours(6), function () use ($months) {
-            $startDate = Carbon::now()->subMonths($months - 1)->startOfMonth();
+        return Cache::store('redis')->remember(
+            "user_activity_stats_{$months}",
+            now()->addHours(6),
+            function () use ($months) {
+                $startDate = Carbon::now()->subMonths($months - 1)->startOfMonth();
 
-            $stats = User::select(
-                DB::raw("DATE_FORMAT(COALESCE(last_activity, created_at), '%Y-%m') as month"),
-                DB::raw('count(*) as count')
-            )
-                ->where(function ($query) use ($startDate) {
-                    $query->where('last_activity', '>=', $startDate)
-                        ->orWhere(function ($q) use ($startDate) {
-                            $q->whereNull('last_activity')
-                                ->where('created_at', '>=', $startDate);
-                        });
-                })
-                ->groupBy('month')
-                ->orderBy('month')
-                ->get()
-                ->pluck('count', 'month')
-                ->toArray();
+                $users = User::query()
+                    ->where(function ($query) use ($startDate) {
+                        $query->where('last_activity', '>=', $startDate)
+                            ->orWhere(function ($q) use ($startDate) {
+                                $q->whereNull('last_activity')
+                                    ->where('created_at', '>=', $startDate);
+                            });
+                    })
+                    ->get(['last_activity', 'created_at']);
 
-            return self::formatStatsData($stats, $months, $startDate);
-        });
+                $stats = $users
+                    ->groupBy(function ($user) {
+                        return Carbon::parse(
+                            $user->last_activity ?? $user->created_at
+                        )->format('Y-m');
+                    })
+                    ->map(fn($group) => $group->count())
+                    ->toArray();
+
+                return self::formatStatsData($stats, $months, $startDate);
+            }
+        );
     }
 
     public static function getDiskStats(): array
