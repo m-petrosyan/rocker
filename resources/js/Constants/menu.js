@@ -9,7 +9,7 @@ export default [
     { name: 'Bands', url: 'bands.index', icon: BandIcon, label: 'Bands list' },
     { name: 'Home', url: 'home', icon: Logo, label: 'Home page' },
     { name: 'Galleries', url: 'galleries.index', icon: GalleryIcon, label: 'Galleries lis' },
-    // { name: 'Community', url: 'community.index', icon: EventIcon },
+
     {
         name: 'Bot',
         url: 'https://t.me/RockMetalEventsbot',

@@ -7,7 +7,7 @@ use App\Http\Requests\Gallery\GalleryCreateRequest;
 use App\Http\Requests\Gallery\GalleryUpdateRequest;
 use App\Models\Gallery;
 use App\Repositories\BandRepository;
-use App\Repositories\GalleryReoisitory;
+use App\Repositories\GalleryRepository;
 use App\Services\GalleryService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
@@ -43,7 +43,7 @@ class GalleryController extends Controller
         $this->authorize('update', $gallery);
 
         return Inertia::render('Profile/Gallery/GalleryCreateEdit', [
-            'gallery' => GalleryReoisitory::getGallery($gallery),
+            'gallery' => GalleryRepository::getGallery($gallery),
             'bandsList' => BandRepository::bandNamesList(),
         ]);
     }

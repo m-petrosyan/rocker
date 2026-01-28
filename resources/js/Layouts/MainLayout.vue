@@ -39,7 +39,7 @@ onMounted(() => {
     window.navigator.standalone === true;
 });
 
-// useTelegramAuth();
+
 </script>
 
 <template>

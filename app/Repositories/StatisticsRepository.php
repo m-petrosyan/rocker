@@ -47,7 +47,6 @@ class StatisticsRepository
         $total = disk_total_space($path);
         $used = $total - $free;
 
-        // Calculate project size using shell command for speed, fallback to recursive iterator
         $projectSize = 0;
         if (function_exists('shell_exec') && !str_contains(ini_get('disable_functions'), 'shell_exec')) {
             $output = shell_exec("du -sb $path");

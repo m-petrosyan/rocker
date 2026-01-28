@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\Gallery;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class GalleryReoisitory
+class GalleryRepository
 {
     public static function getGallery(Gallery $gallery): Gallery
     {

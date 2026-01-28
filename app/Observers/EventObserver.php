@@ -37,9 +37,6 @@ class EventObserver
             ]
         );
 
-//        if (config('app.env') === 'production') {
-//            Notification::route('mail', config('mail.admin.address'))
-//                ->notify(new NewCreationNotification($event));
-//        }
+
     }
 }

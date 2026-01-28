@@ -128,7 +128,7 @@ class BandService
             Log::info('Albums updated for band ID: '.$band->id);
         } catch (\Exception $e) {
             Log::error('Failed to update albums: '.$e->getMessage());
-            throw $e; // Или обработать ошибку иным способом
+            throw $e;
         }
     }
 

@@ -6,7 +6,7 @@ use App\Models\PwaInstall;
 use App\Repositories\BandRepository;
 use App\Repositories\BlogRepository;
 use App\Repositories\EventRepository;
-use App\Repositories\GalleryReoisitory;
+use App\Repositories\GalleryRepository;
 use App\Repositories\UserRepository;
 use App\Repositories\StatisticsRepository;
 use Illuminate\Http\Request;
@@ -25,7 +25,7 @@ class DashboardController
         $items = match ($type) {
             'bands' => BandRepository::bandList(50, $sort),
             'events' => EventRepository::eventsList(50, 1, $past, $sort),
-            'galleries' => GalleryReoisitory::galleryList(50, $sort),
+            'galleries' => GalleryRepository::galleryList(50, $sort),
             default => UserRepository::usersList(50, $filter, $sort),
         };
 
@@ -36,7 +36,7 @@ class DashboardController
                 'users_bot' => UserRepository::count(true),
                 'events' => EventRepository::count(),
                 'events_active' => EventRepository::count(active: true),
-                'galleries' => GalleryReoisitory::count(),
+                'galleries' => GalleryRepository::count(),
                 'bands' => BandRepository::count(),
                 'blogs' => BlogRepository::count(),
                 'pwa' => PwaInstall::count(),

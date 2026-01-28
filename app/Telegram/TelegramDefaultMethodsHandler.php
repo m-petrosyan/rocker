@@ -20,14 +20,5 @@ trait TelegramDefaultMethodsHandler
         $this->chat->html("Chat migrated")->send();
     }
 
-    //    public function handleChatMessage(Stringable $text): void
-//    {
-////        Log::info(auth()->user());
-//        Log::info($text);
-//    }
 
-//    public function handleCommand(Stringable $text): void
-//    {
-//        Log::info($text);
-//    }
 }

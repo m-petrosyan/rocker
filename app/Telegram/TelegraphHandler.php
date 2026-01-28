@@ -19,14 +19,13 @@ class TelegraphHandler extends WebhookHandler
 
     public function handle(Request $request, TelegraphBot $bot): void
     {
-//        Log::info('handle', ['request' => $request->all()]);
-//        Log::info('handle', ['bot' => $bot]);
+
 
         $chatType = $request->input('callback_query.message.chat.type')
             ?? $request->input('message.chat.type')
             ?? $request->input('channel_post.chat.type')
             ?? null;
-//        Log::info($request);
+
         Log::info('chatType', [$chatType]);
 
         if ($chatType === 'private') {
@@ -48,7 +47,7 @@ class TelegraphHandler extends WebhookHandler
         $this->reply("👋 Welcome to Rocker Bot!");
         Log::info(333);
         Log::info('User ID:', ['id' => $this->chat?->user?->id]);
-//        auth()->loginUsingId($this->chat->user->id);
+
 
         $this->get_countries();
     }

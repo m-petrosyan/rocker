@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Log;
 
 trait TelegramSettingsHandler
 {
-/// Settings
+
     public function settings(): void
     {
         $buttons = [
@@ -87,19 +87,7 @@ Tickets:
             )
             ->send();
 
-//        $this->chat->message('test message')
-//            ->keyboard(
-//                Keyboard::make()
-//                    ->row([
-//                        Button::make('Delete')->action('delete')->param('id', '42'),
-//                        Button::make('Dismiss')->action('dismiss')->param('id', '42'),
-//                        Button::make('Dismiss')->action('dismiss')->param('id', '42'),
-//                    ])
-//                    ->row([
-//                        Button::make('open')->url('https://test.it'),
-//                    ])
-//            )
-//            ->send();
+
     }
 
     public function get_countries(): void

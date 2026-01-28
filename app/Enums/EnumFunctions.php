@@ -4,7 +4,7 @@ namespace App\Enums;
 
 trait EnumFunctions
 {
-//    static $options = null;
+
 
     public static function getKeysValues(
         string $without = '',

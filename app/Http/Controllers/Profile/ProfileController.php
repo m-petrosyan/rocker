@@ -12,7 +12,7 @@ use App\Models\User;
 use App\Repositories\BandRepository;
 use App\Repositories\BlogRepository;
 use App\Repositories\EventRepository;
-use App\Repositories\GalleryReoisitory;
+use App\Repositories\GalleryRepository;
 use App\Services\UserService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -41,7 +41,7 @@ class ProfileController
         return Inertia::render('Profile/Profile', [
             'user' => $user->load('links', 'settings', 'blockedRecord'),
             'owner' => $owner,
-            'galleries' => GalleryReoisitory::userGallery($user),
+            'galleries' => GalleryRepository::userGallery($user),
             'events' => EventRepository::userEvents($user, 100),
             'bands' => BandRepository::userBands($user),
             'blogs' => BlogRepository::userBlogs($user),

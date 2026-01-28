@@ -17,7 +17,7 @@ trait ComponentServiceTrait
             foreach ($bands['bands'] as $bandData) {
                 $band = Band::query()->firstOrCreate(
                     ['name' => $bandData['name']],
-//                    $bandData + ['user_id' => auth()->user()->id]
+
                 );
                 $bandIds[] = $band['id'];
             }

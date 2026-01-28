@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+
 use App\Notifications\CustomResetPassword;
 use App\Notifications\CustomVerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -58,7 +58,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         'is_blocked',
     ];
 
-//    protected $with = ['settings'];
+
 
     /**
      * Get the attributes that should be cast.
