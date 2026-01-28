@@ -7,6 +7,7 @@ use App\Models\Event;
 use App\Models\User;
 use App\Models\UserSettings;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class StatisticsRepository
@@ -18,65 +19,69 @@ class StatisticsRepository
 
     public static function getUserActivityStats(int $months = 6): array
     {
-        $startDate = Carbon::now()->subMonths($months - 1)->startOfMonth();
+        return Cache::store('redis')->remember("user_activity_stats_{$months}", now()->addHours(6), function () use ($months) {
+            $startDate = Carbon::now()->subMonths($months - 1)->startOfMonth();
 
-        $stats = User::select(
-            DB::raw("DATE_FORMAT(COALESCE(last_activity, created_at), '%Y-%m') as month"),
-            DB::raw('count(*) as count')
-        )
-            ->where(function ($query) use ($startDate) {
-                $query->where('last_activity', '>=', $startDate)
-                    ->orWhere(function ($q) use ($startDate) {
-                        $q->whereNull('last_activity')
-                            ->where('created_at', '>=', $startDate);
-                    });
-            })
-            ->groupBy('month')
-            ->orderBy('month')
-            ->get()
-            ->pluck('count', 'month')
-            ->toArray();
+            $stats = User::select(
+                DB::raw("DATE_FORMAT(COALESCE(last_activity, created_at), '%Y-%m') as month"),
+                DB::raw('count(*) as count')
+            )
+                ->where(function ($query) use ($startDate) {
+                    $query->where('last_activity', '>=', $startDate)
+                        ->orWhere(function ($q) use ($startDate) {
+                            $q->whereNull('last_activity')
+                                ->where('created_at', '>=', $startDate);
+                        });
+                })
+                ->groupBy('month')
+                ->orderBy('month')
+                ->get()
+                ->pluck('count', 'month')
+                ->toArray();
 
-        return self::formatStatsData($stats, $months, $startDate);
+            return self::formatStatsData($stats, $months, $startDate);
+        });
     }
 
     public static function getDiskStats(): array
     {
-        $path = base_path();
-        $free = disk_free_space($path);
-        $total = disk_total_space($path);
-        $used = $total - $free;
+        return Cache::store('redis')->remember('disk_stats', now()->addHours(1), function () {
+            $path = base_path();
+            $free = disk_free_space($path);
+            $total = disk_total_space($path);
+            $used = $total - $free;
 
-        $projectSize = 0;
-        if (function_exists('shell_exec') && !str_contains(ini_get('disable_functions'), 'shell_exec')) {
-            $output = shell_exec("du -sb $path");
-            if ($output) {
-                $projectSize = (int)explode("\t", $output)[0];
+            $projectSize = 0;
+            if (function_exists('shell_exec') && !str_contains(ini_get('disable_functions'), 'shell_exec')) {
+                $output = shell_exec("du -sb $path");
+                if ($output) {
+                    $projectSize = (int)explode("\t", $output)[0];
+                }
             }
-        }
 
-        if ($projectSize === 0) {
-            $projectSize = self::getDirectorySize($path);
-        }
+            if ($projectSize === 0) {
+                $projectSize = self::getDirectorySize($path);
+            }
 
-        $backupPath = storage_path('app/private/Rocker.am');
-        $backupSize = is_dir($backupPath) ? self::getDirectorySize($backupPath) : 0;
+            $backupPath = storage_path('app/private/Rocker.am');
+            $backupSize = is_dir($backupPath) ? self::getDirectorySize($backupPath) : 0;
 
-        $percentProject = ($projectSize / $total) * 100;
-        $percentBackup = ($backupSize / $total) * 100;
-        $percentUsed = ($used / $total) * 100;
+            $percentProject = ($projectSize / $total) * 100;
+            $percentBackup = ($backupSize / $total) * 100;
+            $percentUsed = ($used / $total) * 100;
 
-        return [
-            'free' => self::formatBytes($free),
-            'total' => self::formatBytes($total),
-            'used' => self::formatBytes($used),
-            'project' => self::formatBytes($projectSize),
-            'backups' => self::formatBytes($backupSize),
-            'percent_free' => round(($free / $total) * 100, 1),
-            'percent_used' => max(round($percentUsed, 1), $used > 0 ? 0.1 : 0),
-            'percent_project' => round($percentProject, 1),
-            'percent_backup' => round($percentBackup, 1),
-        ];
+            return [
+                'free' => self::formatBytes($free),
+                'total' => self::formatBytes($total),
+                'used' => self::formatBytes($used),
+                'project' => self::formatBytes($projectSize),
+                'backups' => self::formatBytes($backupSize),
+                'percent_free' => round(($free / $total) * 100, 1),
+                'percent_used' => max(round($percentUsed, 1), $used > 0 ? 0.1 : 0),
+                'percent_project' => round($percentProject, 1),
+                'percent_backup' => round($percentBackup, 1),
+            ];
+        });
     }
 
     protected static function getDirectorySize($path): int
