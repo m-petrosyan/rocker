@@ -142,7 +142,7 @@ const createBlog = () => {
         </div>
       </div>
       <SelectImages
-        limit="7"
+        limit="15"
         label="Click or drag files here (up to 15 images)"
         v-model:previews="data.preview"
         v-model:files="form.images"
