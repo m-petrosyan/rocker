@@ -44,7 +44,7 @@ class BlogCreateRequest extends FormRequest
             'author' => ['nullable', 'string', 'max:255'],
             'images' => ['nullable', 'array', 'max:15'],
             'images.*' => ['image', 'mimes:webp,jpeg,png,jpg', 'max:50000'],
-            'pdf_file' => ['nullable', 'file', 'mimes:pdf', 'max:10000'],
+            'pdf_file' => ['nullable', 'file', 'mimes:pdf', 'max:15000'],
         ];
     }
 
