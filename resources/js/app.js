@@ -11,6 +11,7 @@ import VueGtag from 'vue-gtag-next';
 import PrimeVue from 'primevue/config';
 import tooltipPlugin from '@/Plugins/tooltipPlugin.js';
 import { useTelegramAuth } from '@/Helpers/setAppUser.js';
+import '@splidejs/vue-splide/css';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 

@@ -42,6 +42,8 @@ class BlogCreateRequest extends FormRequest
             'bands.*.name' => ['required', 'string', 'max:255'],
             'bands.*.id' => ['nullable', 'integer', 'exists:bands,id'],
             'author' => ['nullable', 'string', 'max:255'],
+            'images' => ['nullable', 'array', 'max:15'],
+            'images.*' => ['image', 'mimes:webp,jpeg,png,jpg', 'max:50000'],
             'pdf_file' => ['nullable', 'file', 'mimes:pdf', 'max:10000'],
         ];
     }
@@ -64,7 +66,12 @@ class BlogCreateRequest extends FormRequest
             $hasPdfFile = !empty($this->file('pdf_file')) || !empty($this->file('pdf')) ||
                 !empty($this->input('pdf_file')) || !empty($this->input('pdf'));
 
+            $hasImages = !empty($this->file('images')) && is_array($this->file('images')) && count(
+                    $this->file('images')
+                ) > 0;
+
             if (!$hasPdfFile) {
+                // English validation
                 if (!empty($this->input('title.en')) || !empty($this->input('description.en')) || !$isContentEmpty(
                         $this->input('content.en')
                     )) {
@@ -80,20 +87,25 @@ class BlogCreateRequest extends FormRequest
                             'English description is required when any English field is provided.'
                         );
                     }
-                    $contentEn = $this->input('content.en');
-                    if ($isContentEmpty($contentEn)) {
-                        $validator->errors()->add(
-                            'content.en',
-                            'English content is required when any English field is provided.'
-                        );
-                    } elseif (strlen(trim(strip_tags($contentEn))) < 50) {
-                        $validator->errors()->add(
-                            'content.en',
-                            'English content must contain at least 50 characters excluding HTML tags.'
-                        );
+
+                    // Content is required only if no images
+                    if (!$hasImages) {
+                        $contentEn = $this->input('content.en');
+                        if ($isContentEmpty($contentEn)) {
+                            $validator->errors()->add(
+                                'content.en',
+                                'English content is required when any English field is provided.'
+                            );
+                        } elseif (strlen(trim(strip_tags($contentEn))) < 50) {
+                            $validator->errors()->add(
+                                'content.en',
+                                'English content must contain at least 50 characters excluding HTML tags.'
+                            );
+                        }
                     }
                 }
 
+                // Armenian validation
                 if (!empty($this->input('title.am')) || !empty($this->input('description.am')) || !$isContentEmpty(
                         $this->input('content.am')
                     )) {
@@ -109,20 +121,25 @@ class BlogCreateRequest extends FormRequest
                             'Armenian description is required when any Armenian field is provided.'
                         );
                     }
-                    $contentAm = $this->input('content.am');
-                    if ($isContentEmpty($contentAm)) {
-                        $validator->errors()->add(
-                            'content.am',
-                            'Armenian content is required and cannot consist only of HTML tags (e.g., <p><br></p> or <p></p>) when any Armenian field is provided.'
-                        );
-                    } elseif (strlen(trim(strip_tags($contentAm))) < 50) {
-                        $validator->errors()->add(
-                            'content.am',
-                            'Armenian content must contain at least 50 characters excluding HTML tags.'
-                        );
+
+                    // Content is required only if no images
+                    if (!$hasImages) {
+                        $contentAm = $this->input('content.am');
+                        if ($isContentEmpty($contentAm)) {
+                            $validator->errors()->add(
+                                'content.am',
+                                'Armenian content is required and cannot consist only of HTML tags (e.g., <p><br></p> or <p></p>) when any Armenian field is provided.'
+                            );
+                        } elseif (strlen(trim(strip_tags($contentAm))) < 50) {
+                            $validator->errors()->add(
+                                'content.am',
+                                'Armenian content must contain at least 50 characters excluding HTML tags.'
+                            );
+                        }
                     }
                 }
 
+                // Russian validation
                 if (!empty($this->input('title.ru')) || !empty($this->input('description.ru')) || !$isContentEmpty(
                         $this->input('content.ru')
                     )) {
@@ -138,17 +155,21 @@ class BlogCreateRequest extends FormRequest
                             'Russian description is required when any Russian field is provided.'
                         );
                     }
-                    $contentRu = $this->input('content.ru');
-                    if ($isContentEmpty($contentRu)) {
-                        $validator->errors()->add(
-                            'content.ru',
-                            'Russian content is required when any Russian field is provided.'
-                        );
-                    } elseif (strlen(trim(strip_tags($contentRu))) < 50) {
-                        $validator->errors()->add(
-                            'content.ru',
-                            'Russian content must contain at least 50 characters excluding HTML tags.'
-                        );
+
+                    // Content is required only if no images
+                    if (!$hasImages) {
+                        $contentRu = $this->input('content.ru');
+                        if ($isContentEmpty($contentRu)) {
+                            $validator->errors()->add(
+                                'content.ru',
+                                'Russian content is required when any Russian field is provided.'
+                            );
+                        } elseif (strlen(trim(strip_tags($contentRu))) < 50) {
+                            $validator->errors()->add(
+                                'content.ru',
+                                'Russian content must contain at least 50 characters excluding HTML tags.'
+                            );
+                        }
                     }
                 }
 

@@ -37,6 +37,21 @@ class BandRepository
             ->toArray();
     }
 
+    public static function getBand(Band $band, array $loads = []): Band
+    {
+        return $band->load(
+            'genres',
+            'galleries:id,title,user_id,date,cover',
+            'galleries.user',
+            'galleries.media',
+            'links',
+            'albums',
+            'events',
+            'blogs',
+            ...$loads
+        );
+    }
+
     public static function withoutPage(): array
     {
         return Band::query()->whereNull('user_id')->get(['id', 'name'])->toArray();

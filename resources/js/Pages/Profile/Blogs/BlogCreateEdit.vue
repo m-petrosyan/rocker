@@ -9,6 +9,7 @@ import Multiselect from '@/Components/Forms/MultiSelect.vue';
 import RadioSwichButton from '@/Components/Forms/RadioSwichButton.vue';
 import PDFViewer from '@/Components/Tools/PDFViewer.vue';
 import ErrorMessages from '@/Components/Messages/ErrorMessages.vue';
+import SelectImages from '@/Components/Forms/SelectImages.vue';
 
 const props = defineProps({
   blog: {
@@ -41,6 +42,7 @@ const form = useForm(
       ...props.blog,
       cover_file: null,
       pdf_file: null,
+      images: [],
       _method: 'PUT'
     }
     : {
@@ -50,6 +52,7 @@ const form = useForm(
       content: { en: '', am: '' },
       author: '',
       bands: [],
+      images: [],
       pdf_file: null,
       pdf: null
     }
@@ -138,6 +141,12 @@ const createBlog = () => {
           </div>
         </div>
       </div>
+      <SelectImages
+        limit="7"
+        label="Click or drag files here (up to 15 images)"
+        v-model:previews="data.preview"
+        v-model:files="form.images"
+      />
       <div class="relative mt-2">
         <TextEditor
           :key="data.lang"

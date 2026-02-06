@@ -30,6 +30,7 @@ class Blog extends Model implements Viewable, HasMedia
         'pdf',
         'cover',
         'bands',
+        'images_url',
     ];
 
     public array $translatable = ['title', 'description', 'content'];
@@ -52,6 +53,25 @@ class Blog extends Model implements Viewable, HasMedia
     public function getCoverAttribute(): array
     {
         return $this->getImage('cover');
+    }
+
+
+    public function getImagesUrlAttribute(): array
+    {
+        $mediaItems = $this->getMedia('images');
+
+        if ($mediaItems->isEmpty()) {
+            return [];
+        }
+
+        return $mediaItems->map(function (Media $media) {
+            return [
+                'id' => $media->id,
+                'large' => $media->getUrl('large'),
+                'thumb' => $media->getUrl('thumb'),
+                'original' => $media->getUrl(),
+            ];
+        })->toArray();
     }
 
     public function getPdfAttribute(): ?array

@@ -6,6 +6,7 @@ import { ref } from 'vue';
 import { fullUrl, getUrlQuery } from '@/Helpers/urlHelper.js';
 import SocialShare from '@/Components/Socials/SocialShare.vue';
 import PDFViewer from '@/Components/Tools/PDFViewer.vue';
+import Splide from '@/Components/Tools/Splide.vue';
 
 const props = defineProps({
   blog: {
@@ -69,6 +70,7 @@ const url = fullUrl();
         author : {{ blog.author }}
       </div>
     </div>
+    <Splide :images="blog.images_url" />
     <div class="md:w-5/6 mx-auto mt-8 md:p-0 p-3" v-html="blog.content[lang]" />
     <PDFViewer v-if="blog.pdf" :file="blog.pdf" />
   </GuestLayout>

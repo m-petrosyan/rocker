@@ -34,12 +34,14 @@
     "dependencies": {
         "@fawmi/vue-google-maps": "^0.9.79",
         "@primeuix/themes": "^1.0.1",
+        "@splidejs/vue-splide": "^0.6.12",
         "@tato30/vue-pdf": "^1.11.4",
         "@vuepic/vue-datepicker": "^11.0.2",
         "@vueup/vue-quill": "^1.2.0",
         "@vueuse/core": "^13.0.0",
         "@vueuse/integrations": "^13.0.0",
         "async-validator": "^4.2.5",
+        "chart.js": "^4.4.0",
         "compressorjs": "^1.2.1",
         "file-saver": "^2.0.5",
         "jszip": "^3.10.1",
@@ -52,7 +54,6 @@
         "vue-debounce": "^5.0.1",
         "vue-gtag-next": "^1.14.0",
         "vue-multiselect": "^3.2.0",
-        "vue3-google-map": "^0.21.1",
-        "chart.js": "^4.4.0"
+        "vue3-google-map": "^0.21.1"
     }
 }

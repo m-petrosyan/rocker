@@ -30,6 +30,10 @@ class BlogService
 
         $this->addSyncBand($blog, $attributes);
 
+        if (isset($attributes['images'])) {
+            $this->addImages($blog, $attributes['images']);
+        }
+
         Notification::route('mail', config('mail.admin.address'))
             ->notify(new NewCreationNotification($blog));
     }
@@ -55,6 +59,7 @@ class BlogService
     {
         $blog->clearMediaCollection('cover');
         $blog->clearMediaCollection('pdf');
+        $blog->clearMediaCollection('images');
 
         $blog->delete();
     }
