@@ -34,15 +34,14 @@ class EventController extends Controller
     {
         $this->eventService->store($request->validated());
 
-//        session()->flash('message', $response['message']);
+        session()->flash(
+            'message',
+            auth()->user()->role === 'user'
+                ? 'Thank you, the event has been created.<br> The event will be added to the list after moderation'
+                : 'Thank you, the event has been created.'
+        );
 
-        return redirect()->route('profile.index')
-            ->with(
-                'success',
-                auth()->user()->role === 'user'
-                    ? 'Thank you, the event has been created.<br> The event will be added to the list after moderation'
-                    : 'Thank you, the event has been created.'
-            );
+        return redirect()->route('profile.index');
     }
 
     public function update(EventUpdateRequest $request, Event $event)
