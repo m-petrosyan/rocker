@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Enums\EventStatusEnum;
 use App\Models\Event;
+use App\Notifications\EntityCreatedNotification;
 use Illuminate\Support\Facades\Gate;
 
 class EventObserver
@@ -29,17 +30,26 @@ class EventObserver
 
     public function created(Event $event): void
     {
+        $isApproved = Gate::allows('full-access');
+
         $event->status()->create(
             [
-                'status' => Gate::allows('full-access')
+                'status' => $isApproved
                     ? EventStatusEnum::ACCEPTED->value
                     : EventStatusEnum::PENDING->value,
             ]
         );
 
-//        if (config('app.env') === 'production') {
-//            Notification::route('mail', config('mail.admin.address'))
-//                ->notify(new NewCreationNotification($event));
-//        }
+        if (!$isApproved) {
+            $event->user?->notify(
+                new EntityCreatedNotification(
+                    'event',
+                    $event->title,
+                    route('events.show', $event),
+                    'pending'
+                )
+            );
+        }
     }
 }
+

@@ -3,6 +3,7 @@ import { Link } from '@inertiajs/vue3';
 import menu from '@/Constants/menu.js';
 import { onBeforeUnmount, ref, watch } from 'vue';
 import { isWebApp } from '@/Helpers/setAppUser.js';
+import NotificationIcon from '@/Components/Icons/NotificationIcon.vue';
 
 const showBurger = ref(false);
 const webApp = isWebApp();
@@ -50,8 +51,20 @@ onBeforeUnmount(() => {
         <span v-else>{{ item.name }}</span>
       </component>
     </div>
-    <div class="absolute top-0 right-2 flex gap-x-4 p-5 uppercase">
+    <div class="absolute top-0 right-2 flex gap-x-4 p-5 uppercase items-center">
       <template v-if="$page.props.auth?.user">
+        <Link
+          :href="route('profile.notifications.index')"
+          class="relative transition hover:opacity-70"
+        >
+          <NotificationIcon />
+          <span
+            v-if="$page.props.auth?.unreadNotificationsCount > 0"
+            class="absolute -top-1 -right-1 bg-orange text-white text-xs rounded-full min-w-4 h-4 flex items-center justify-center px-1"
+          >
+            {{ $page.props.auth.unreadNotificationsCount }}
+          </span>
+        </Link>
         <Link v-if="$page.props.auth?.user?.email_verified_at"
               :href="route('profile.show', {'username': $page.props.auth.user.username})">
           Profile
@@ -101,6 +114,19 @@ onBeforeUnmount(() => {
               class="transition hover:opacity-70">
               <h2 v-if="item.name">{{ item.name }}</h2>
             </component>
+          </li>
+          <li v-if="$page.props.auth.user">
+            <Link
+              :href="route('profile.notifications.index')"
+              class="relative flex items-center justify-center">
+              <span class="material-symbols-outlined text-2xl">notifications</span>
+              <span
+                v-if="$page.props.auth?.unreadNotificationsCount > 0"
+                class="absolute -top-1 -right-2 bg-purple-500 text-white text-xs rounded-full min-w-4 h-4 flex items-center justify-center px-1"
+              >
+                {{ $page.props.auth.unreadNotificationsCount > 99 ? '99+' : $page.props.auth.unreadNotificationsCount }}
+              </span>
+            </Link>
           </li>
           <li v-if="$page.props.auth.user">
             <Link

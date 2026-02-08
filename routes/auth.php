@@ -12,6 +12,7 @@ use App\Http\Controllers\Profile\EventRequestController;
 use App\Http\Controllers\Profile\GalleryController;
 use App\Http\Controllers\Profile\MediaController;
 use App\Http\Controllers\Profile\MergeProfilesController;
+use App\Http\Controllers\Profile\NotificationController;
 use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\Profile\BlockController;
 use Illuminate\Support\Facades\Route;
@@ -41,6 +42,11 @@ Route::middleware(['auth', 'email.verified.if.present', 'activity'])->as('profil
         Route::post('merge/code', [MergeProfilesController::class, 'getCode'])->name('merge.code');
         Route::post('merge', [MergeProfilesController::class, 'mergeBot'])->name('merge.bot');
         Route::post('user/{user}/block', [BlockController::class, 'store'])->name('user.block');
+
+        // Notifications routes
+        Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
+        Route::post('notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
+        Route::post('notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('notifications.read-all');
     }
 );
 

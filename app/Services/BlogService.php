@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Notifications\EntityCreatedNotification;
 use App\Notifications\NewCreationNotification;
 use App\Traits\ComponentServiceTrait;
 use Illuminate\Support\Facades\Notification;
@@ -36,6 +37,13 @@ class BlogService
 
         Notification::route('mail', config('mail.admin.address'))
             ->notify(new NewCreationNotification($blog));
+
+        // Notify user about blog creation
+        auth()->user()->notify(new EntityCreatedNotification(
+            'blog',
+            $attributes['title']['en'] ?? $attributes['title']['am'] ?? $attributes['title']['ru'] ?? 'Blog Post',
+            route('blogs.show', $blog)
+        ));
     }
 
     public function update($blog, $attributes): void

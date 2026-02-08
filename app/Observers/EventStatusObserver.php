@@ -8,6 +8,7 @@ use App\Jobs\EventNotificationDeleteJob;
 use App\Jobs\EventNotificationJob;
 use App\Models\EventStatus;
 use App\Models\User;
+use App\Notifications\EventStatusChangedNotification;
 use App\Traits\UsersBotNotificationTrait;
 use DefStudio\Telegraph\Keyboard\Button;
 use DefStudio\Telegraph\Keyboard\Keyboard;
@@ -68,10 +69,25 @@ class EventStatusObserver
             $eventStatus->event->user?->chat
                 ?->message("Thank you! The event has been added and will be sent to {$usersCount} 🤘 people.")
                 ->send();
+
+            // Send in-app notification about event approval
+            $eventStatus->event->user?->notify(new EventStatusChangedNotification(
+                $eventStatus->event->title,
+                route('events.show', $eventStatus->event),
+                'accepted'
+            ));
         } elseif ($eventStatus->isDirty('status') && $eventStatus->status === EventStatusEnum::REJECTED->value) {
             $eventStatus->event->user?->chat
                 ?->message("❌ Request to add event rejected, reason: $eventStatus->reason")
                 ->send();
+
+            // Send in-app notification about event rejection
+            $eventStatus->event->user?->notify(new EventStatusChangedNotification(
+                $eventStatus->event->title,
+                route('events.show', $eventStatus->event),
+                'rejected',
+                $eventStatus->reason
+            ));
         } elseif ($eventStatus->isDirty('status') && $eventStatus->status === EventStatusEnum::DELETED->value) {
             $users = $eventStatus->event->notifications()->withPivot('event_id', 'user_id', 'message_id')->get();
 

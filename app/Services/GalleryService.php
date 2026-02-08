@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Notifications\EntityCreatedNotification;
 use App\Notifications\NewCreationNotification;
 use App\Traits\ComponentServiceTrait;
 use Illuminate\Support\Arr;
@@ -27,6 +28,8 @@ class GalleryService
 
         Notification::route('mail', config('mail.admin.address'))
             ->notify(new NewCreationNotification($gallery));
+
+
     }
 
     public function update($gallery, $attributes): void

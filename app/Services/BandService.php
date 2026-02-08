@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Band;
 use App\Models\Genre;
+use App\Notifications\EntityCreatedNotification;
 use App\Notifications\NewCreationNotification;
 use App\Traits\ComponentServiceTrait;
 use Illuminate\Support\Arr;
@@ -55,6 +56,14 @@ class BandService
 
         Notification::route('mail', config('mail.admin.address'))
             ->notify(new NewCreationNotification($band));
+
+        auth()->user()->notify(
+            new EntityCreatedNotification(
+                'band',
+                $band->name,
+                route('bands.show', $band)
+            )
+        );
     }
 
     public function update(Band $band, array $attributes): void
