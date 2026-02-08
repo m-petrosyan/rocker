@@ -9,7 +9,7 @@ import DiskUsage from '@/Components/Elements/DiskUsage.vue';
 import DashboardFilterBar from '@/Components/Dashboard/DashboardFilterBar.vue';
 import EntityCard from '@/Components/Dashboard/EntityCard.vue';
 import { router } from '@inertiajs/vue3';
-import { getImageUrl, getTitle, getLink } from '@/Constants/dashboardConstants.js';
+import { getImageUrl, getLink, getTitle } from '@/Constants/dashboardConstants.js';
 
 const props = defineProps({
   users: {
@@ -93,7 +93,7 @@ const handleTogglePast = () => applyFilters({ past: !props.filters.past });
 
       <div class="mt-10 grid lg:grid-cols-2 gap-8" v-if="statistics.charts">
         <StatisticsChart
-          title="Active users"
+          title="Users"
           :labels="statistics.charts.users.labels"
           :datasets="[
             {

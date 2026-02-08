@@ -7,7 +7,8 @@ export const ENTITY_TYPES = {
 
 export const SORT_OPTIONS = {
     NEWEST: 'newest',
-    OLDEST: 'oldest'
+    OLDEST: 'oldest',
+    ACTIVE: 'active'
 };
 
 export const USER_FILTERS = {

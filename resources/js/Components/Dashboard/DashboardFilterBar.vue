@@ -60,6 +60,13 @@ const emit = defineEmits(['update:type', 'update:sort', 'update:filter', 'toggle
             >
               Oldest
             </button>
+            <button
+              v-if="filters.type === ENTITY_TYPES.USERS"
+              @click="emit('update:sort', SORT_OPTIONS.ACTIVE)"
+              :class="['px-3 py-1 text-sm rounded-md transition-all', filters.sort === SORT_OPTIONS.ACTIVE ? 'bg-white/10 text-white' : 'text-white/40 hover:text-white']"
+            >
+              Active
+            </button>
           </div>
         </div>
 

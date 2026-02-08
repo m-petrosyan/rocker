@@ -14,7 +14,11 @@ class UserRepository
             ->when($filter === 'blocked', fn($query) => $query->whereHas('blockedRecord'))
             ->when($filter === 'bot', fn($query) => $query->whereHas('chat'))
             ->when($filter === 'web', fn($query) => $query->doesntHave('chat'))
-            ->orderBy('created_at', $sort === 'oldest' ? 'asc' : 'desc')
+            ->when($sort === 'active', function ($query) {
+                $query->orderBy('last_activity', 'desc');
+            }, function ($query) use ($sort) {
+                $query->orderBy('created_at', $sort === 'oldest' ? 'asc' : 'desc');
+            })
             ->paginate($count);
     }
 
