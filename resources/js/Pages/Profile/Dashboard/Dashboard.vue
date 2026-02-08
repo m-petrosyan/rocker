@@ -95,9 +95,25 @@ const handleTogglePast = () => applyFilters({ past: !props.filters.past });
         <StatisticsChart
           title="Active users"
           :labels="statistics.charts.users.labels"
-          :data="statistics.charts.users.data"
+          :datasets="[
+            {
+              label: 'Active Users',
+              data: statistics.charts.users.active,
+              borderColor: '#FF5722',
+              backgroundColor: '#FF572233',
+              fill: true,
+              tension: 0.4
+            },
+            {
+              label: 'Registered Users',
+              data: statistics.charts.users.registered,
+              borderColor: '#2196F3',
+              backgroundColor: '#2196F333',
+              fill: true,
+              tension: 0.4
+            }
+          ]"
           type="line"
-          color="#FF5722"
         />
         <StatisticsChart
           title="New events"

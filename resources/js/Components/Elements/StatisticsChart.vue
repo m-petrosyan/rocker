@@ -7,6 +7,7 @@ const props = defineProps({
   title: String,
   labels: Array,
   data: Array,
+  datasets: Array,
   type: {
     type: String,
     default: 'line'
@@ -20,26 +21,31 @@ const props = defineProps({
 const chartCanvas = ref(null);
 
 onMounted(() => {
+  const chartDatasets = props.datasets || [{
+    label: props.title,
+    data: props.data,
+    borderColor: props.color,
+    backgroundColor: props.type === 'line' ? `${props.color}33` : props.color,
+    fill: props.type === 'line',
+    tension: 0.4,
+    borderRadius: props.type === 'bar' ? 4 : 0
+  }];
+
   new Chart(chartCanvas.value, {
     type: props.type,
     data: {
       labels: props.labels,
-      datasets: [{
-        label: props.title,
-        data: props.data,
-        borderColor: props.color,
-        backgroundColor: props.type === 'line' ? `${props.color}33` : props.color,
-        fill: props.type === 'line',
-        tension: 0.4,
-        borderRadius: props.type === 'bar' ? 4 : 0
-      }]
+      datasets: chartDatasets
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
         legend: {
-          display: false
+          display: !!props.datasets,
+          labels: {
+             color: '#fff'
+          }
         },
         tooltip: {
           backgroundColor: '#1a1a1a',

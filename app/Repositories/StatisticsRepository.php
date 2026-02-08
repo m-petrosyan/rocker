@@ -20,12 +20,13 @@ class StatisticsRepository
     public static function getUserActivityStats(int $months = 6): array
     {
         return Cache::store('redis')->remember(
-            "user_activity_stats_{$months}",
+            "user_stats_combined_{$months}",
             now()->addHours(6),
             function () use ($months) {
                 $startDate = Carbon::now()->subMonths($months - 1)->startOfMonth();
 
-                $users = User::query()
+
+                $activeUsers = User::query()
                     ->where(function ($query) use ($startDate) {
                         $query->where('last_activity', '>=', $startDate)
                             ->orWhere(function ($q) use ($startDate) {
@@ -35,7 +36,7 @@ class StatisticsRepository
                     })
                     ->get(['last_activity', 'created_at']);
 
-                $stats = $users
+                $activeStats = $activeUsers
                     ->groupBy(function ($user) {
                         return Carbon::parse(
                             $user->last_activity ?? $user->created_at
@@ -44,7 +45,34 @@ class StatisticsRepository
                     ->map(fn($group) => $group->count())
                     ->toArray();
 
-                return self::formatStatsData($stats, $months, $startDate);
+                $regStats = User::query()
+                    ->where('created_at', '>=', $startDate)
+                    ->get(['created_at'])
+                    ->groupBy(function ($user) {
+                        return $user->created_at->format('Y-m');
+                    })
+                    ->map(fn($group) => $group->count())
+                    ->toArray();
+
+
+                $labels = [];
+                $activeData = [];
+                $registeredData = [];
+
+                for ($i = 0; $i < $months; $i++) {
+                    $date = $startDate->copy()->addMonths($i);
+                    $monthKey = $date->format('Y-m');
+
+                    $labels[] = $date->translatedFormat('M Y');
+                    $activeData[] = $activeStats[$monthKey] ?? 0;
+                    $registeredData[] = $regStats[$monthKey] ?? 0;
+                }
+
+                return [
+                    'labels' => $labels,
+                    'active' => $activeData,
+                    'registered' => $registeredData,
+                ];
             }
         );
     }
