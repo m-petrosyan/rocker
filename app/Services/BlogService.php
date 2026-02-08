@@ -42,7 +42,8 @@ class BlogService
         auth()->user()->notify(new EntityCreatedNotification(
             'blog',
             $attributes['title']['en'] ?? $attributes['title']['am'] ?? $attributes['title']['ru'] ?? 'Blog Post',
-            route('blogs.show', $blog)
+            route('blogs.show', $blog),
+            'created'
         ));
     }
 

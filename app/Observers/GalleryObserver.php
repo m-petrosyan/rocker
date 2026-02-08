@@ -12,7 +12,8 @@ class GalleryObserver
         $gallery->user->notify(new EntityCreatedNotification(
             'gallery',
             $gallery->title ?? 'Gallery',
-            route('galleries.show', $gallery)
+            route('galleries.show', $gallery),
+            'created'
         ));
     }
 }

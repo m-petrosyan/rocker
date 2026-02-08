@@ -69,7 +69,7 @@ const getStatusBadge = (data) => {
             <div class="flex items-center gap-3 flex-wrap">
               {{ moment(notification.created_at).fromNow() }}
               <span
-                v-if="getStatusBadge(notification.data)"
+                v-if="getStatusBadge(notification.data) && notification.data.entity_type === 'event'"
                 class="text-xs px-2 py-0.5 rounded-full font-medium"
                 :class="getStatusBadge(notification.data).class"
               >
