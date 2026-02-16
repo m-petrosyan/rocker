@@ -34,9 +34,8 @@ const props = defineProps({
 
 <template>
   <NavLink :href="link" class="text-center group flex flex-col items-center gap-4">
-    <p>{{ imageUrl }}</p>
     <div
-      :style="{ backgroundImage: `url(${imageUrl})` }"
+      :style="{ backgroundImage: `url('${imageUrl}')` }"
       class="relative h-48 w-48 bg-no-repeat bg-contain bg-cover rounded-full overflow-hidden transition-transform group-hover:scale-105 shadow-2xl"
     >
       <div v-if="type === ENTITY_TYPES.USERS" class="absolute w-full bottom-0">
