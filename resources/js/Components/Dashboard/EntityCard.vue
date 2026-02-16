@@ -34,16 +34,17 @@ const props = defineProps({
 
 <template>
   <NavLink :href="link" class="text-center group flex flex-col items-center gap-4">
-    <div 
+    <p>{{ imageUrl }}</p>
+    <div
       :style="{ backgroundImage: `url(${imageUrl})` }"
       class="relative h-48 w-48 bg-no-repeat bg-contain bg-cover rounded-full overflow-hidden transition-transform group-hover:scale-105 shadow-2xl"
     >
       <div v-if="type === ENTITY_TYPES.USERS" class="absolute w-full bottom-0">
         <div class="flex justify-end px-4">
-          <img 
-            class="h-6" 
+          <img
+            class="h-6"
             v-if="item?.settings?.country && item?.settings?.country !== 'all'"
-            :src="`/icons/${item?.settings?.country}.png`" 
+            :src="`/icons/${item?.settings?.country}.png`"
             alt="flag"
           >
           <div v-else-if="item?.settings?.country === 'all'" class="flex imems-center gap-x-2">
@@ -59,14 +60,15 @@ const props = defineProps({
     </div>
 
     <div>
-      <div 
+      <div
         v-if="type === ENTITY_TYPES.USERS && item.is_blocked"
         class="bg-red text-white text-xs px-2 py-0.5 rounded mb-1 inline-block uppercase font-bold tracking-tighter"
       >
         Blocked
       </div>
       <div>
-        <p class="font-bold border-b border-transparent group-hover:border-primary transition-colors inline-block text-lg">
+        <p
+          class="font-bold border-b border-transparent group-hover:border-primary transition-colors inline-block text-lg">
           {{ title }}
         </p>
         <div v-if="type === ENTITY_TYPES.USERS">
@@ -74,7 +76,8 @@ const props = defineProps({
             tooltip="last acivity"
             :class="['block mt-1', {'opacity-75': !item.last_activity}]"
           >
-            {{ item.last_activity ? formatDateTime(item.last_activity, 'DD/MM/YY HH:mm') : formatDateTime(item.created_at, 'DD/MM/YY HH:mm') }}
+            {{ item.last_activity ? formatDateTime(item.last_activity, 'DD/MM/YY HH:mm') : formatDateTime(item.created_at, 'DD/MM/YY HH:mm')
+            }}
           </small>
         </div>
         <div v-else-if="item.date || item.start_date" class="block mt-1">
