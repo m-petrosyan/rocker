@@ -8,7 +8,7 @@ import Preloader from '@/Components/Preloader/Preloader.vue';
 import { emitter } from '@/Helpers/event-bus.js';
 
 const props = defineProps({
-  title: { type: String },
+  title: { type: String, default: '' },
   url: { type: String, default: '' },
   images: { type: Array, required: true },
   download: { type: Boolean, default: false },
@@ -132,14 +132,14 @@ onUnmounted(() => {
           v-if="image.thumb && image.thumb.trim()"
           :src="image.thumb"
           class="w-full h-full object-cover object-center rounded-md"
-          alt="Loading image"
+          :alt="title"
           @error="$event.target.src = image.original"
         />
         <img
           v-else-if="image.original"
           :src="image.original"
           class="w-full h-full object-cover object-center rounded-md"
-          alt="Loading image"
+          :alt="title"
         />
       </div>
     </div>
@@ -153,7 +153,7 @@ onUnmounted(() => {
         <img
           :src="currentImage.large"
           class="max-w-[100vw] max-h-[100vh] object-contain"
-          alt="Uploading"
+          :alt="title"
         />
 
         <button
