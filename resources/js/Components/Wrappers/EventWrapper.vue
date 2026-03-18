@@ -7,11 +7,12 @@ import EditIcon from '@/Components/Icons/EditIcon.vue';
 import DeleteIcon from '@/Components/Icons/DeleteIcon.vue';
 import { removePostalCode } from '@/Helpers/adressFormatHelper.js';
 import { formatDateTime } from '@/Helpers/dateFormatHelper.js';
-import ProcessIcon from '@/Components/Icons/ProcessIcon.vue';
+import AdSense from '@/Components/Elements/AdSense.vue';
+import { computed } from 'vue';
 
-defineProps({
+const props = defineProps({
   events: {
-    type: Object,
+    type: Array,
     required: true
   },
   add: {
@@ -52,17 +53,31 @@ const deleteEvent = (id) => {
     });
   }
 };
+
+const computedEvents = computed(() => {
+  if (props.request || props.events.length < 3) return props.events;
+
+  const eventsWithAd = [...props.events];
+  // Заменяем одно случайное событие на рекламу (если не режим редактирования профиля)
+  if (!props.profile && !props.owner) {
+    const randomIndex = Math.floor(Math.random() * Math.min(eventsWithAd.length, 8));
+    eventsWithAd[randomIndex] = { ...eventsWithAd[randomIndex], isAd: true };
+  }
+  return eventsWithAd;
+});
 </script>
 <template>
   <div class="relative">
     <h3 v-if="title" class="text-center">{{ title }}</h3>
     <div class="mt-10 grid gap-y-10 md:grid-cols-2 md:gap-4 lg:grid-cols-4 auto-rows-[600px] md:auto-rows-[400px]">
       <div
-        v-for="event in events"
-        :key="event.id"
+        v-for="event in computedEvents"
+        :key="event.id || 'ad-' + Math.random()"
         class="h-[600px] md:h-[400px]"
       >
+        <AdSense v-if="event.isAd" />
         <NavLink
+          v-else
           :href="route(request ? 'profile.event.requests' : 'events.show', event.id)"
           class="relative h-full w-full block bg-cover"
           :style="{ backgroundImage: `url(${event.poster.thumb})` }"
