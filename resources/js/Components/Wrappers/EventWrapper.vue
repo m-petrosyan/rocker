@@ -61,8 +61,10 @@ const computedEvents = computed(() => {
 
     const eventsWithAd = [...props.events];
 
-    // Вставляем рекламу всегда (в AdSense.vue решим, что показывать: саму рекламу или заглушку)
-    if (!props.profile && !props.owner) {
+    // ВРЕМЕННЫЙ ПЕРЕКЛЮЧАТЕЛЬ (Поменяйте на true, когда сайт пройдет проверку в Google)
+    const showAds = false;
+
+    if (showAds && !props.profile && !props.owner) {
         const randomIndex = Math.floor(
             Math.random() * Math.min(eventsWithAd.length, 8),
         );
