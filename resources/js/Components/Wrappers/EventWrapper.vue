@@ -58,10 +58,13 @@ const computedEvents = computed(() => {
   if (props.request || props.events.length < 3) return props.events;
 
   const eventsWithAd = [...props.events];
-  // Заменяем одно случайное событие на рекламу (если не режим редактирования профиля)
-  if (!props.profile && !props.owner) {
+  // Вставляем рекламу в случайную позицию (от 0 до 7), не удаляя событие
+  // Проверяем, не заблокирован ли AdSense (если скрипт не загрузился, не вставляем блок)
+  const isAdBlocked = !isSSR && (typeof window.adsbygoogle === 'undefined');
+
+  if (!props.profile && !props.owner && !isAdBlocked) {
     const randomIndex = Math.floor(Math.random() * Math.min(eventsWithAd.length, 8));
-    eventsWithAd[randomIndex] = { ...eventsWithAd[randomIndex], isAd: true };
+    eventsWithAd.splice(randomIndex, 0, { isAd: true, id: 'ad-block-' + Math.random() });
   }
   return eventsWithAd;
 });

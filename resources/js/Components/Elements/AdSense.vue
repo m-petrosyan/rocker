@@ -11,7 +11,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="adsense-container h-full w-full flex items-center justify-center bg-white/5 border border-white/10 rounded-xl overflow-hidden">
+  <div class="adsense-container h-full w-full flex items-center justify-center overflow-hidden">
     <ins class="adsbygoogle"
          style="display:block"
          data-ad-client="ca-pub-3905150332935722"
