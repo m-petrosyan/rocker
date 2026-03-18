@@ -12,6 +12,8 @@
     <link rel="icon" type="image/png" href="/favicon.png">
     <meta name="robots" content="index, follow">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3905150332935722"
+            crossorigin="anonymous"></script>
     <script type="application/ld+json">
         @verbatim
             {
