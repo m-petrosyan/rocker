@@ -9,10 +9,12 @@ import { removePostalCode } from '@/Helpers/adressFormatHelper.js';
 import { formatDateTime } from '@/Helpers/dateFormatHelper.js';
 import AdSense from '@/Components/Elements/AdSense.vue';
 import { computed } from 'vue';
+import { isSSR } from '@/Helpers/ssrHelper.js';
+import ProcessIcon from '@/Components/Icons/ProcessIcon.vue';
 
 const props = defineProps({
   events: {
-    type: Array,
+    type: Object,
     required: true
   },
   add: {
@@ -55,13 +57,14 @@ const deleteEvent = (id) => {
 };
 
 const computedEvents = computed(() => {
-  if (props.request || props.events.length < 3) return props.events;
+  if (props.request || !props.events || props.events.length < 3) return props.events;
 
   const eventsWithAd = [...props.events];
-  // Заменяем одно случайное событие на рекламу (если не режим редактирования профиля)
+
+  // Вставляем рекламу всегда (в AdSense.vue решим, что показывать: саму рекламу или заглушку)
   if (!props.profile && !props.owner) {
     const randomIndex = Math.floor(Math.random() * Math.min(eventsWithAd.length, 8));
-    eventsWithAd[randomIndex] = { ...eventsWithAd[randomIndex], isAd: true };
+    eventsWithAd.splice(randomIndex, 0, { isAd: true, id: 'ad-block-' + Math.random() });
   }
   return eventsWithAd;
 });
