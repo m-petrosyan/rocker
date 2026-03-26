@@ -13,7 +13,7 @@ const props = defineProps({
     files: { type: Object, required: true },
     classes: { type: String, default: '' },
     limit: { type: Number, default: 0 },
-    label: { type: String, default: 'Click or drag files here' }
+    label: { type: String, default: 'Click or drag files here' },
 });
 
 const form = useForm({});
@@ -26,7 +26,7 @@ const removeImage = (index, id) => {
         if (confirm('Are you sure you want to delete this image?')) {
             form.delete(route('profile.media.destroy', id), {
                 preserveState: false,
-                preserveScroll: true
+                preserveScroll: true,
             });
         }
     } else {
@@ -58,7 +58,7 @@ const compressForPreview = (file) => {
             maxHeight: 210,
             mimeType: 'image/jpeg',
             success: (compressedFile) => resolve(compressedFile),
-            error: () => resolve(file)
+            error: () => resolve(file),
         });
     });
 };
@@ -68,11 +68,12 @@ const processFiles = async (files) => {
     const fileList = Array.from(files);
 
     // Вычисляем оставшуюся емкость с учетом лимита
-    const remainingCapacity = props.limit > 0 ? props.limit - props.previews.length : fileList.length;
+    const remainingCapacity =
+        props.limit > 0 ? props.limit - props.previews.length : fileList.length;
 
     // Если нет свободного места, выводим предупреждение
     if (props.limit > 0 && remainingCapacity <= 0) {
-        alert(`Вы достигли максимального лимита в ${props.limit} изображений.`);
+        alert(`You have reached the maximum limit of ${props.limit} images.`);
         isLoading.value = false;
         return;
     }
@@ -86,11 +87,11 @@ const processFiles = async (files) => {
 
     // Добавляем существующие файлы из props.files
     if (props.files && props.files.length) {
-        Array.from(props.files).forEach(file => dataTransfer.items.add(file));
+        Array.from(props.files).forEach((file) => dataTransfer.items.add(file));
     }
 
     // Добавляем новые файлы
-    filesToProcess.forEach(file => dataTransfer.items.add(file));
+    filesToProcess.forEach((file) => dataTransfer.items.add(file));
     emit('update:files', dataTransfer.files);
 
     // Обрабатываем файлы по частям
@@ -117,15 +118,23 @@ const processFiles = async (files) => {
 
 const onDrop = (files) => {
     if (files) {
-        const validFiles = Array.from(files).filter(file => file.type.startsWith('image/'));
+        const validFiles = Array.from(files).filter((file) =>
+            file.type.startsWith('image/'),
+        );
         if (validFiles.length) processFiles(validFiles);
     }
 };
 
 const { isOverDropZone } = useDropZone(dropZoneRef, {
     onDrop,
-    dataTypes: ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'],
-    multiple: true
+    dataTypes: [
+        'image/jpeg',
+        'image/jpg',
+        'image/png',
+        'image/gif',
+        'image/webp',
+    ],
+    multiple: true,
 });
 
 const setCover = (index) => {
@@ -133,39 +142,52 @@ const setCover = (index) => {
 };
 
 const dropZoneClass = computed(() =>
-    isOverDropZone.value
-        ? 'border-orange bg-graydark2'
-        : 'border-gray'
+    isOverDropZone.value ? 'border-orange bg-graydark2' : 'border-gray',
 );
 </script>
 
 <template>
     <div :class="classes">
-        <div v-if="isLoading" class="flex items-center justify-center h-64">
-            <span class="text-2xl text-gray-500">Loading...</span>
+        <div v-if="isLoading" class="flex h-64 items-center justify-center">
+            <span class="text-gray-500 text-2xl">Loading...</span>
         </div>
 
         <div v-else>
-            <div class="grid grid-cols-3 md:grid-cols-6 gap-2">
+            <div class="grid grid-cols-3 gap-2 md:grid-cols-6">
                 <div
                     v-if="previews.length"
                     v-for="(preview, index) in previews"
                     :key="index"
-                    class="aspect-square relative"
+                    class="relative aspect-square"
                 >
-                    <img :src="preview.thumb ?? preview"
-                         :class="{'border border-2 border-orange brightness-125': cover === preview.id || cover === index}"
-                         class="w-full h-full object-cover object-center" alt="Image" />
+                    <img
+                        :src="preview.thumb ?? preview"
+                        :class="{
+                            'border border-2 border-orange brightness-125':
+                                cover === preview.id || cover === index,
+                        }"
+                        class="h-full w-full object-cover object-center"
+                        alt="Image"
+                    />
                     <div
-                        class="absolute left-0 top-0 md:opacity-0 hover:opacity-100 flex flex-col justify-between w-full h-full z-10 p-2 bg-blackTransparent2">
-                        <button v-if="useCover" type="button" class="w-fit"
-                                @click="setCover(index)"
-                                tooltip="Cover">
+                        class="absolute left-0 top-0 z-10 flex h-full w-full flex-col justify-between bg-blackTransparent2 p-2 hover:opacity-100 md:opacity-0"
+                    >
+                        <button
+                            v-if="useCover"
+                            type="button"
+                            class="w-fit"
+                            @click="setCover(index)"
+                            tooltip="Cover"
+                        >
                             <ImageIcon />
                         </button>
                         <div class="flex justify-end">
-                            <button type="button" class="w-fit" @click="removeImage(index, preview.id)"
-                                    tooltip="Delete">
+                            <button
+                                type="button"
+                                class="w-fit"
+                                @click="removeImage(index, preview.id)"
+                                tooltip="Delete"
+                            >
                                 <DeleteIcon />
                             </button>
                         </div>
@@ -186,7 +208,7 @@ const dropZoneClass = computed(() =>
                     ref="dropZoneRef"
                     for="files"
                     :class="[
-                        'w-full h-96 border-2 border-dashed flex items-center justify-center transition-all duration-200 cursor-pointer',
+                        'flex h-96 w-full cursor-pointer items-center justify-center border-2 border-dashed transition-all duration-200',
                         dropZoneClass,
                     ]"
                 >

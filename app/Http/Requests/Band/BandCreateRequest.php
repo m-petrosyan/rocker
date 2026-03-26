@@ -26,7 +26,7 @@ class BandCreateRequest extends FormRequest
             'name' => ['required', 'array', 'max:255'],
             'cover_file' => ['required', 'image', 'mimes:webp,jpeg,jpg,webp,png', 'max:15000'],
             'logo_file' => ['required', 'mimes:jpeg,jpg,webp,png,svg', 'max:4000'],
-            'images' => ['nullable', 'array', 'max:7'],
+            'images' => ['nullable', 'array', 'max:15'],
             'images.*' => ['image', 'mimes:webp,jpeg,png,jpg', 'max:50000'],
             'info' => ['required', 'string', 'min:100', 'max:4000'],
             'genres' => ['required', 'array', 'max:255'],
