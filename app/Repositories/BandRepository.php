@@ -39,17 +39,22 @@ class BandRepository
 
     public static function getBand(Band $band, array $loads = []): Band
     {
-        return $band->load(
-            'genres',
-            'galleries:id,title,user_id,date,cover',
-            'galleries.user',
-            'galleries.media',
-            'links',
-            'albums',
-            'events',
-            'blogs',
-            ...$loads
+        $relations = array_merge(
+            [
+                'genres',
+                'galleries:id,title,user_id,date,cover',
+                'galleries.user',
+                'galleries.media',
+                'links',
+                'albums',
+                'events' => fn($q) => $q->whereHas('status', fn($q) => $q->where('event_status.status', 'accepted')),
+                'events.status',
+                'blogs',
+            ],
+            $loads
         );
+
+        return $band->load($relations);
     }
 
     public static function withoutPage(): array
