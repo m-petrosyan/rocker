@@ -19,6 +19,7 @@ class BandRepository
     public static function bandList(int $limit = 50, string $sort = ''): LengthAwarePaginator
     {
         return Band::query()
+            ->with('genres')
             ->whereNotNull('user_id')
             ->whereNotNull('info')
             ->when(
