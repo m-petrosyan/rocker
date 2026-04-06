@@ -1,4 +1,5 @@
 <script setup>
+import { Link } from '@inertiajs/vue3';
 
 defineProps({
     genres: {
@@ -10,10 +11,13 @@ defineProps({
 
 <template>
     <div class="flex flex-wrap gap-x-2 gap-y-2">
-        <div
+        <Link
             v-for="genre in genres"
-            class="bg-red px-1 rounded-sm">
-            <div class="bg-red ">{{ genre.name }}</div>
-        </div>
+            :key="genre.id"
+            :href="route('bands.index', { genre: genre.slug })"
+            class="bg-red px-2 py-0.5 rounded-sm text-white hover:bg-orange transition-colors duration-300 text-sm font-medium"
+        >
+            {{ genre.name }}
+        </Link>
     </div>
 </template>

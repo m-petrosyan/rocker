@@ -19,7 +19,7 @@ class BandController extends Controller
             'bands' => BandRepository::bandList(),
             'genres' => \App\Models\Genre::whereHas('bands', function ($query) {
                 $query->whereNotNull('user_id')->whereNotNull('info');
-            })->orderBy('name')->get(['id', 'name']),
+            })->orderBy('name')->get(),
         ]);
     }
 

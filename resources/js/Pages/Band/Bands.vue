@@ -1,9 +1,9 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import BandWrapper from '@/Components/Wrappers/BandWrapper.vue';
 import NavLink from '@/Components/NavLink.vue';
-import { router } from '@inertiajs/vue3';
+import { router, usePage } from '@inertiajs/vue3';
 
 const props = defineProps({
   bands: {
@@ -23,17 +23,56 @@ const props = defineProps({
   }
 });
 
-const selectedGenreId = ref(null);
+const selectedGenreSlug = ref(null);
+const page = usePage();
+
+const syncGenreFromUrl = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    selectedGenreSlug.value = urlParams.get('genre');
+};
+
+onMounted(() => {
+    syncGenreFromUrl();
+});
+
+// Следим за изменениями URL (например, при нажатии кнопки "Назад" в браузере)
+watch(() => page.url, () => {
+    syncGenreFromUrl();
+});
 
 const filteredBands = computed(() => {
-  if (!selectedGenreId.value) return props.bands.data;
+  if (!selectedGenreSlug.value) return props.bands.data;
   return props.bands.data.filter(band =>
-    band.genres.some(genre => genre.id === selectedGenreId.value)
+    band.genres.some(genre => 
+        genre.slug === selectedGenreSlug.value || 
+        genre.id.toString() === selectedGenreSlug.value
+    )
   );
 });
 
-const selectGenre = (id) => {
-  selectedGenreId.value = selectedGenreId.value === id ? null : id;
+const selectGenre = (genre) => {
+  // Если передали null или объект с id: null (сброс фильтра)
+  if (!genre || genre.id === null) {
+    selectedGenreSlug.value = null;
+  } else {
+    const identifier = genre.slug || genre.id.toString();
+    selectedGenreSlug.value = selectedGenreSlug.value === identifier ? null : identifier;
+  }
+
+  // Обновляем URL
+  const url = new URL(window.location.href);
+  if (selectedGenreSlug.value) {
+    url.searchParams.set('genre', selectedGenreSlug.value);
+  } else {
+    url.searchParams.delete('genre');
+  }
+  
+  // Используем Inertia router для обновления URL
+  router.get(url.pathname, { genre: selectedGenreSlug.value || undefined }, {
+    preserveState: true,
+    preserveScroll: true,
+    replace: true
+  });
 };
 
 const wideFlags = ref({});
@@ -59,18 +98,18 @@ const onImgLoad = (e, id) => {
     <!-- Genre Filter -->
     <div class="mt-8 flex flex-wrap gap-2">
         <button
-            @click="selectedGenreId = null"
+            @click="selectGenre({ id: null, slug: null })"
             class="px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 border"
-            :class="!selectedGenreId ? 'bg-orange border-orange text-white' : 'bg-graydark2 border-graydark2 text-gray hover:border-gray'"
+            :class="!selectedGenreSlug ? 'bg-orange border-orange text-white' : 'bg-graydark2 border-graydark2 text-gray hover:border-gray'"
         >
             All Genres
         </button>
         <button
             v-for="genre in genres"
             :key="genre.id"
-            @click="selectGenre(genre.id)"
+            @click="selectGenre(genre)"
             class="px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 border"
-            :class="selectedGenreId === genre.id ? 'bg-orange border-orange text-white shadow-lg shadow-orange/20' : 'bg-graydark2 border-graydark2 text-gray hover:border-gray'"
+            :class="selectedGenreSlug === (genre.slug || genre.id.toString()) ? 'bg-orange border-orange text-white shadow-lg shadow-orange/20' : 'bg-graydark2 border-graydark2 text-gray hover:border-gray'"
         >
             {{ genre.name }}
         </button>
@@ -125,7 +164,7 @@ const onImgLoad = (e, id) => {
 
         <div v-if="filteredBands.length === 0" class="text-center py-20 text-gray">
             <p class="text-xl opacity-50">No bands found for this genre.</p>
-            <button @click="selectedGenreId = null" class="mt-4 text-orange font-bold hover:underline uppercase tracking-widest text-xs">Show all bands</button>
+            <button @click="selectGenre({ id: null, slug: null })" class="mt-4 text-orange font-bold hover:underline uppercase tracking-widest text-xs">Show all bands</button>
         </div>
     </div>
 
