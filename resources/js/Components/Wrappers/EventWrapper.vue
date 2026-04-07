@@ -10,6 +10,7 @@ import { formatDateTime } from '@/Helpers/dateFormatHelper.js';
 import AdSense from '@/Components/Elements/AdSense.vue';
 import { computed } from 'vue';
 import ProcessIcon from '@/Components/Icons/ProcessIcon.vue';
+import AddCard from '@/Components/Cards/AddCard.vue';
 
 const props = defineProps({
     events: {
@@ -244,18 +245,12 @@ const computedEvents = computed(() => {
                     </div>
                 </NavLink>
             </div>
-            <NavLink
+            <AddCard
                 v-if="add && !request"
+                title="Add event"
                 :href="route('profile.events.create')"
-                class="flex h-[600px] items-center gap-2 border-2 border-dashed border-graydark2 p-4 hover:border-orange hover:bg-graydark2 md:h-[400px]"
-            >
-                <div
-                    class="mx-auto flex w-32 flex-col items-center gap-y-4 rounded-lg"
-                >
-                    <h2 class="text-3xl">+</h2>
-                    <h3>Add event</h3>
-                </div>
-            </NavLink>
+                key="add-event"
+            />
         </div>
         <div v-if="more" class="col-span-full py-4 text-center">
             <NavLink

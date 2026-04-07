@@ -3,6 +3,7 @@ import { ref, computed, onMounted, watch } from 'vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import BandWrapper from '@/Components/Wrappers/BandWrapper.vue';
 import NavLink from '@/Components/NavLink.vue';
+import AddCard from '@/Components/Cards/AddCard.vue';
 import { router, usePage } from '@inertiajs/vue3';
 
 const props = defineProps({
@@ -43,8 +44,8 @@ watch(() => page.url, () => {
 const filteredBands = computed(() => {
   if (!selectedGenreSlug.value) return props.bands.data;
   return props.bands.data.filter(band =>
-    band.genres.some(genre => 
-        genre.slug === selectedGenreSlug.value || 
+    band.genres.some(genre =>
+        genre.slug === selectedGenreSlug.value ||
         genre.id.toString() === selectedGenreSlug.value
     )
   );
@@ -66,7 +67,7 @@ const selectGenre = (genre) => {
   } else {
     url.searchParams.delete('genre');
   }
-  
+
   // Используем Inertia router для обновления URL
   router.get(url.pathname, { genre: selectedGenreSlug.value || undefined }, {
     preserveState: true,
@@ -149,17 +150,11 @@ const onImgLoad = (e, id) => {
                 </div>
             </NavLink>
 
-            <NavLink
-                v-if="add && !selectedGenreId"
+            <AddCard
+                title="Add band"
                 :href="route('profile.bands.create')"
                 key="add-band"
-                class="flex min-h-64 items-center gap-2 border-2 border-dashed border-zinc-800 p-4 rounded-xl hover:border-orange hover:bg-zinc-900 transition-all duration-300 group"
-            >
-                <div class="mx-auto flex w-32 flex-col items-center gap-y-4">
-                    <h2 class="text-4xl group-hover:scale-125 transition-transform duration-300 text-zinc-600 group-hover:text-orange">+</h2>
-                    <h3 class="text-zinc-600 group-hover:text-orange transition-colors font-bold uppercase tracking-widest text-xs">Add band</h3>
-                </div>
-            </NavLink>
+            />
         </TransitionGroup>
 
         <div v-if="filteredBands.length === 0" class="text-center py-20 text-gray">
