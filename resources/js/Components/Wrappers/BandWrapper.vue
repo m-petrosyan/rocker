@@ -1,13 +1,15 @@
 <script setup>
-import { computed, onMounted, ref, watch } from 'vue';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
+import { computed, ref } from 'vue';
 import NavLink from '@/Components/NavLink.vue';
 import AddCard from '@/Components/Cards/AddCard.vue';
-import { router, usePage } from '@inertiajs/vue3';
 
 const props = defineProps({
     bands: {
         type: Object,
+    },
+    title: {
+        type: String,
+        default: '',
     },
     genres: {
         type: Array,
@@ -21,68 +23,18 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
-});
-
-const selectedGenreSlug = ref(null);
-const page = usePage();
-
-const syncGenreFromUrl = () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    selectedGenreSlug.value = urlParams.get('genre');
-};
-
-onMounted(() => {
-    syncGenreFromUrl();
-});
-
-// Следим за изменениями URL (например, при нажатии кнопки "Назад" в браузере)
-watch(
-    () => page.url,
-    () => {
-        syncGenreFromUrl();
+    more: {
+        type: Boolean,
+        default: false,
     },
-);
-
-const filteredBands = computed(() => {
-    if (!selectedGenreSlug.value) return props.bands.data;
-    return props.bands.data.filter((band) =>
-        band.genres.some(
-            (genre) =>
-                genre.slug === selectedGenreSlug.value ||
-                genre.id.toString() === selectedGenreSlug.value,
-        ),
-    );
 });
 
-const selectGenre = (genre) => {
-    // Если передали null или объект с id: null (сброс фильтра)
-    if (!genre || genre.id === null) {
-        selectedGenreSlug.value = null;
-    } else {
-        const identifier = genre.slug || genre.id.toString();
-        selectedGenreSlug.value =
-            selectedGenreSlug.value === identifier ? null : identifier;
-    }
-
-    // Обновляем URL
-    const url = new URL(window.location.href);
-    if (selectedGenreSlug.value) {
-        url.searchParams.set('genre', selectedGenreSlug.value);
-    } else {
-        url.searchParams.delete('genre');
-    }
-
-    // Используем Inertia router для обновления URL
-    router.get(
-        url.pathname,
-        { genre: selectedGenreSlug.value || undefined },
-        {
-            preserveState: true,
-            preserveScroll: true,
-            replace: true,
-        },
-    );
-};
+const bandsData = computed(() => {
+    if (!props.bands) return [];
+    if (Array.isArray(props.bands.data)) return props.bands.data;
+    if (Array.isArray(props.bands)) return props.bands;
+    return [];
+});
 
 const wideFlags = ref({});
 const onImgLoad = (e, id) => {
@@ -92,59 +44,8 @@ const onImgLoad = (e, id) => {
 </script>
 
 <template>
-    <GuestLayout
-        :meta="{
-            title: 'Bands - Discover Armenian rock and metal bands',
-            description:
-                'Discover Armenian rock and metal bands. Explore profiles, genres, photos, and stories from the Yerevan rock and metal scene on Rocker.am.',
-            keywords:
-                'armenian rock bands, armenian metal bands, yerevan rock scene, armenian hard rock, armenian heavy metal, armenian punk, armenian alternative rock, armenian folk metal, armenian thrash metal, armenian progressive rock, armenian doom metal, armenian post-rock, armenian gothic rock, armenian underground music' +
-                ', ' +
-                bands.data.map((band) => band.name).join(', '),
-        }"
-    >
-        <template #header> Bands</template>
-        <div class="text-pretty text-gray">
-            <h2 class="mb-6 text-lg font-medium text-gray text-orange/80">
-                Armenian Rock & Metal Bands
-            </h2>
-            <p>
-                Discover the best Armenian rock and metal bands on
-                <strong>Rocker.am</strong>. From legendary pioneers of the
-                Yerevan scene to emerging artists, explore the musicians shaping
-                Armenia’s rock and metal sound.
-            </p>
-        </div>
-
-        <!-- Genre Filter -->
-        <div class="mt-8 flex flex-wrap gap-2">
-            <button
-                @click="selectGenre({ id: null, slug: null })"
-                class="rounded-full border px-4 py-1.5 text-sm font-medium transition-all duration-300"
-                :class="
-                    !selectedGenreSlug
-                        ? 'border-orange bg-orange text-white'
-                        : 'border-graydark2 bg-graydark2 text-gray hover:border-gray'
-                "
-            >
-                All Genres
-            </button>
-            <button
-                v-for="genre in genres"
-                :key="genre.id"
-                @click="selectGenre(genre)"
-                class="rounded-full border px-4 py-1.5 text-sm font-medium transition-all duration-300"
-                :class="
-                    selectedGenreSlug === (genre.slug || genre.id.toString())
-                        ? 'border-orange bg-orange text-white shadow-lg shadow-orange/20'
-                        : 'border-graydark2 bg-graydark2 text-gray hover:border-gray'
-                "
-            >
-                {{ genre.name }}
-            </button>
-        </div>
-
-        <template #h1> Discover Armenian rock and metal bands</template>
+    <div class="relative">
+        <h3 v-if="title" class="text-center">{{ title }}</h3>
 
         <div class="relative mt-10">
             <TransitionGroup
@@ -153,7 +54,7 @@ const onImgLoad = (e, id) => {
                 class="grid gap-10 md:grid-cols-2 lg:grid-cols-4"
             >
                 <NavLink
-                    v-for="band in filteredBands"
+                    v-for="band in bandsData"
                     :href="route('bands.show', band.slug)"
                     :key="band.id"
                     class="group flex flex-col items-center transition-all duration-500"
@@ -196,33 +97,26 @@ const onImgLoad = (e, id) => {
             </TransitionGroup>
 
             <div
-                v-if="filteredBands.length === 0"
+                v-if="bandsData.length === 0"
                 class="py-20 text-center text-gray"
             >
-                <p class="text-xl opacity-50">No bands found for this genre.</p>
-                <button
-                    @click="selectGenre({ id: null, slug: null })"
-                    class="mt-4 text-xs font-bold uppercase tracking-widest text-orange hover:underline"
-                >
-                    Show all bands
-                </button>
+                <p class="text-xl opacity-50">No bands found.</p>
             </div>
         </div>
 
-        <div class="mt-10 text-pretty border-t border-zinc-800 pt-10 text-gray">
-            <p>
-                Each band page on <strong>Rocker.am</strong> photos, videos, and
-                information about upcoming concerts. Stay connected with the
-                Armenian rock scene and follow your favorite groups.
-            </p>
+        <div v-if="more" class="py-10 text-center">
+            <NavLink
+                :href="route('bands.index')"
+                label="Bands list"
+                class="font-bold text-orange"
+            >
+                Discover more Armenian bands
+            </NavLink>
         </div>
-    </GuestLayout>
+    </div>
 </template>
 
 <style scoped>
-/*
-  NEW ANIMATION: Smooth 3D Flip & Fade
-*/
 .grid-animation-move,
 .grid-animation-enter-active,
 .grid-animation-leave-active {
