@@ -105,7 +105,11 @@ const createBand = () => {
                         />
                         <div class="flex w-full flex-col gap-2 md:w-1/2">
                             <Multiselect
-                                tooltip="If the group name is already in the list, please select from the list"
+                                :tooltip="
+                                    band
+                                        ? ''
+                                        : 'If the group name is already in the list, please select from the list'
+                                "
                                 v-model="form.name"
                                 :options="bandsList"
                                 text="Name"
