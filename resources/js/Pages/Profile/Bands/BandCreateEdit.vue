@@ -107,14 +107,13 @@ const createBand = () => {
                             <Multiselect
                                 :tooltip="
                                     band
-                                        ? ''
+                                        ? 'You can only make minor corrections to the name (typos, etc.)'
                                         : 'If the group name is already in the list, please select from the list'
                                 "
                                 v-model="form.name"
-                                :options="bandsList"
+                                :options="band ? [] : bandsList"
                                 text="Name"
                                 class="w-2/3"
-                                :disabled="band"
                             />
                             <Multiselect
                                 tooltip="You can choose from the list or add if there is no list"
