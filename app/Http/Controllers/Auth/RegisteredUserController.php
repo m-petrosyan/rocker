@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\User\EmailVerificationSendRequest;
 use App\Http\Requests\User\RegisterRequest;
 use App\Models\User;
 use App\Services\UserRegisterService;
@@ -30,7 +29,6 @@ class RegisteredUserController extends Controller
 
     /**
      * Handle an incoming registration request.
-     *
      */
     public function store(RegisterRequest $request)
     {
@@ -39,10 +37,6 @@ class RegisteredUserController extends Controller
         return redirect()->route('login');
     }
 
-    /**
-     * @param  string  $email
-     * @return JsonResponse
-     */
     public function resend(string $email): JsonResponse
     {
         $user = User::where('email', $email)->first();

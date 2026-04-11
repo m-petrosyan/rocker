@@ -16,7 +16,6 @@ class GalleryRepository
         return $gallery;
     }
 
-
     public static function userGallery($user, array $appends = [])
     {
         return $user->galleries()
@@ -24,7 +23,6 @@ class GalleryRepository
             ->orderBy('created_at', 'desc')
             ->paginate(30);
     }
-
 
     public static function galleryList($limit = 50, $sort = 'newest'): LengthAwarePaginator
     {

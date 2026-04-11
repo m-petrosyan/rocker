@@ -12,7 +12,7 @@ class BlockController extends Controller
 {
     public function store(Request $request, User $user): RedirectResponse
     {
-        if (!auth()->user()->hasAnyRole(['admin', 'moderator'])) {
+        if (! auth()->user()->hasAnyRole(['admin', 'moderator'])) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -20,7 +20,7 @@ class BlockController extends Controller
             return back()->with('error', 'You cannot block yourself.');
         }
 
-        if ($user->hasRole('admin') && !auth()->user()->hasRole('admin')) {
+        if ($user->hasRole('admin') && ! auth()->user()->hasRole('admin')) {
             return back()->with('error', 'Moderators cannot block administrators.');
         }
 

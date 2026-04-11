@@ -6,7 +6,6 @@ use App\Enums\EventGenreEnum;
 use App\Enums\EventTypeEnum;
 use DefStudio\Telegraph\Keyboard\Button;
 
-
 trait EventFormatingTrait
 {
     public function getEventContent(object $event): string
@@ -81,11 +80,11 @@ trait EventFormatingTrait
             ->action('add_to_favorite')
             ->param('eventId', $event->id);
 
-        if (!empty($event->link)) {
+        if (! empty($event->link)) {
             $buttons[] = Button::make('Event link')->url($event->link);
         }
 
-        if (!empty($event->ticket)) {
+        if (! empty($event->ticket)) {
             $buttons[] = Button::make('Tickets')->url($event->ticket);
         }
 

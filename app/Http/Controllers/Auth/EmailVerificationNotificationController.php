@@ -11,9 +11,7 @@ use Illuminate\Http\Request;
 
 class EmailVerificationNotificationController extends Controller
 {
-    public function __construct(protected UserRegisterService $userRegisterService)
-    {
-    }
+    public function __construct(protected UserRegisterService $userRegisterService) {}
 
     public function store(Request $request): RedirectResponse
     {
@@ -46,12 +44,12 @@ class EmailVerificationNotificationController extends Controller
     {
         $isMatch = $this->userRegisterService->verify($emailVerificationRequest->validated());
 
-        if (!$isMatch) {
-            return back()->withErrors(['error' => "Invalid or expired verification code."]);
+        if (! $isMatch) {
+            return back()->withErrors(['error' => 'Invalid or expired verification code.']);
         }
 
         if (auth()->user()->hasVerifiedEmail()) {
-            return back()->withErrors(['error' => "Email already verified."]);
+            return back()->withErrors(['error' => 'Email already verified.']);
         }
         session()->flash('message', 'Email successfully verified.');
 

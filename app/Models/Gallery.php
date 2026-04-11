@@ -12,7 +12,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Gallery extends Model implements Viewable, HasMedia
+class Gallery extends Model implements HasMedia, Viewable
 {
     use InteractsWithMedia, InteractsWithViews, MediaTrait;
 
@@ -33,7 +33,6 @@ class Gallery extends Model implements Viewable, HasMedia
     protected $hidden = [
         'media',
     ];
-
 
     public function user(): BelongsTo
     {
@@ -73,12 +72,11 @@ class Gallery extends Model implements Viewable, HasMedia
         ];
     }
 
-
     public function imagesUrl(): array
     {
         $mediaItems = $this->getMedia('images');
 
-        return $mediaItems->isEmpty() ? [] : $mediaItems->map(fn(Media $media) => [
+        return $mediaItems->isEmpty() ? [] : $mediaItems->map(fn (Media $media) => [
             'id' => $media->id,
             'large' => $media->getUrl('large'),
             'thumb' => $media->getUrl('thumb'),

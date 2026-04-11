@@ -15,9 +15,10 @@ use Illuminate\Queue\SerializesModels;
 
 class EventCahnnelNotificationJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels, EventFormatingTrait;
+    use Dispatchable, EventFormatingTrait, InteractsWithQueue, Queueable, SerializesModels;
 
     public Event $event;
+
     public string $mode;
 
     public function __construct(protected int $eventId, string $mode = 'real')
@@ -31,7 +32,6 @@ class EventCahnnelNotificationJob implements ShouldQueue
 
         $keyboard = Keyboard::make();
         $buttons = [];
-
 
         $city = $this->set_city($event);
         $channel = null;
@@ -58,15 +58,15 @@ class EventCahnnelNotificationJob implements ShouldQueue
             }
         }
 
-        if (!empty($event->link)) {
+        if (! empty($event->link)) {
             $buttons[] = Button::make('Event link')->url($event->link);
         }
 
-        if (!empty($event->ticket)) {
+        if (! empty($event->ticket)) {
             $buttons[] = Button::make('Tickets')->url($event->ticket);
         }
 
-        if (!empty($buttons)) {
+        if (! empty($buttons)) {
             $keyboard->buttons($buttons);
         }
 

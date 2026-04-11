@@ -11,12 +11,11 @@ use DefStudio\Telegraph\Keyboard\Keyboard;
 
 trait TelegramEventsHandler
 {
-
     public function events_list(): void
     {
         auth()->user()->chat->action(ChatActions::TYPING)->send();
 
-        if (!auth()->user()->settings->country) {
+        if (! auth()->user()->settings->country) {
             $this->chat->message(trans('messages.indicate_country'))->send();
 
             $this->get_countries();

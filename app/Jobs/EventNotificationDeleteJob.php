@@ -9,13 +9,10 @@ class EventNotificationDeleteJob implements ShouldQueue
 {
     use Queueable;
 
-
     /**
      * Create a new job instance.
      */
-    public function __construct(protected object $event, protected object $user, protected int $msgId)
-    {
-    }
+    public function __construct(protected object $event, protected object $user, protected int $msgId) {}
 
     /**
      * Execute the job.

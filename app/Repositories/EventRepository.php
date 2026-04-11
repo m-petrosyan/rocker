@@ -23,9 +23,9 @@ class EventRepository
 
         $order = $sort === 'oldest' ? 'asc' : 'desc';
 
-        if (!$past && $sort === 'newest') {
+        if (! $past && $sort === 'newest') {
             $order = 'asc';
-        } elseif (!$past && $sort === 'oldest') {
+        } elseif (! $past && $sort === 'oldest') {
             $order = 'desc';
         }
 
@@ -35,10 +35,10 @@ class EventRepository
                 $query->whereIn('country', $country === 'all' ? ['am', 'ge'] : [$country]);
             })
             ->with(['status'])
-            ->when(!$past, fn($query) => $query->whereDate('start_date', '>=', today()))
-            ->when($past, fn($query) => $query->whereDate('start_date', '<', today()))
-            ->when(isset($filters['from']), fn($query) => $query->whereDate('start_date', '>=', $filters['from']))
-            ->when(isset($filters['to']), fn($query) => $query->whereDate('start_date', '<=', $filters['to']))
+            ->when(! $past, fn ($query) => $query->whereDate('start_date', '>=', today()))
+            ->when($past, fn ($query) => $query->whereDate('start_date', '<', today()))
+            ->when(isset($filters['from']), fn ($query) => $query->whereDate('start_date', '>=', $filters['from']))
+            ->when(isset($filters['to']), fn ($query) => $query->whereDate('start_date', '<=', $filters['to']))
             ->orderBy('start_date', $order)
             ->paginate($limit, ['*'], 'page', $page);
     }
@@ -66,7 +66,7 @@ class EventRepository
     {
         return Event::query()
             ->whereRelation('status', 'status', '=', $status)
-            ->when($active, fn($query) => $query->whereDate('start_date', '>=', today()))
+            ->when($active, fn ($query) => $query->whereDate('start_date', '>=', today()))
             ->count();
     }
 }

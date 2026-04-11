@@ -12,14 +12,13 @@ use Illuminate\Support\Facades\Log;
 
 class TelegraphHandler extends WebhookHandler
 {
-    use TelegramSettingsHandler,
+    use TelegramDefaultMethodsHandler,
         TelegramEventsHandler,
         TelegramMenuHandler,
-        TelegramDefaultMethodsHandler;
+        TelegramSettingsHandler;
 
     public function handle(Request $request, TelegraphBot $bot): void
     {
-
 
         $chatType = $request->input('callback_query.message.chat.type')
             ?? $request->input('message.chat.type')
@@ -39,15 +38,14 @@ class TelegraphHandler extends WebhookHandler
 
     public function start(): void
     {
-        $this->reply("🤘");
+        $this->reply('🤘');
         Log::info(111);
         $this->chat->action(ChatActions::TYPING)->send();
         Log::info(222);
 
-        $this->reply("👋 Welcome to Rocker Bot!");
+        $this->reply('👋 Welcome to Rocker Bot!');
         Log::info(333);
         Log::info('User ID:', ['id' => $this->chat?->user?->id]);
-
 
         $this->get_countries();
     }
@@ -69,7 +67,6 @@ class TelegraphHandler extends WebhookHandler
 
         Cache::store('redis')->put("chat:{$this->chat->chat_id}:last_menu_id", $msg->telegraphMessageId(), 432000);
     }
-
 
     public function prepareMessageParams(string $chatId, ?int $currentMessageId): ?int
     {

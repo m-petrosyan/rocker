@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Blog;
 
+use Illuminate\Contracts\Validation\ValidationRule;
+
 class BlogUpdateRequest extends BlogCreateRequest
 {
     /**
@@ -15,7 +17,7 @@ class BlogUpdateRequest extends BlogCreateRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {

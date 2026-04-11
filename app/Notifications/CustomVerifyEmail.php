@@ -16,6 +16,7 @@ class CustomVerifyEmail extends VerifyEmail
      * Get the verification URL for the given notifiable.
      *
      * @param  mixed  $notifiable
+     *
      * @throws RandomException
      */
     protected function verificationUrl($notifiable): array
@@ -35,7 +36,6 @@ class CustomVerifyEmail extends VerifyEmail
         return ['url' => config('app.url').'/verification?code='.urlencode($hash), 'hash' => $hash];
     }
 
-
     protected function buildMailMessage($data): MailMessage
     {
         return (new MailMessage)
@@ -46,8 +46,6 @@ class CustomVerifyEmail extends VerifyEmail
     /**
      * Get the mail representation of the notification.
      *
-     * @param $notifiable
-     * @return MailMessage
      * @throws RandomException
      */
     public function toMail($notifiable): MailMessage

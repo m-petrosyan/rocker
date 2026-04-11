@@ -50,12 +50,10 @@ class MergeProfilesController extends Controller
                 $secondaryUser->last_activity,
             ])->filter()->max();
 
-
             $primaryUser->created_at = collect([
                 $primaryUser->created_at,
                 $secondaryUser->created_at,
             ])->filter()->min();
-
 
             $primaryUser->updated_at = collect([
                 $primaryUser->updated_at,
@@ -63,7 +61,7 @@ class MergeProfilesController extends Controller
             ])->filter()->min();
 
             $exists = User::where('username', $secondaryUser->username)->exists();
-            if (!$exists) {
+            if (! $exists) {
                 $primaryUser->username = $secondaryUser->username;
             }
 

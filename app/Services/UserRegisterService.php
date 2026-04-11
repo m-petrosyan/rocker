@@ -17,7 +17,7 @@ class UserRegisterService
 
         $user->createToken('auth_token')->plainTextToken;
     }
- 
+
     public function login(): string
     {
         $user = auth()->user();
@@ -47,8 +47,8 @@ class UserRegisterService
 
     public function emailSender(object $request): void
     {
-        if (!session()->has('email')) {
-            if ($request?->user() && !$request->query('code')) {
+        if (! session()->has('email')) {
+            if ($request?->user() && ! $request->query('code')) {
                 $user = $request->user();
                 event(new Registered($user));
                 session()->put('email', $user->email);

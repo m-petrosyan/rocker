@@ -18,9 +18,7 @@ class GalleryController extends Controller
 {
     use AuthorizesRequests;
 
-    public function __construct(protected GalleryService $galleryService)
-    {
-    }
+    public function __construct(protected GalleryService $galleryService) {}
 
     public function create(): Response
     {

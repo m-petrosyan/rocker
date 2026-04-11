@@ -41,7 +41,6 @@ class GoogleAuthController extends Controller
         }
     }
 
-
     protected function generateUniqueUsername(string $name): string
     {
         $username = strtolower(str_replace(' ', '', $name));
@@ -55,5 +54,4 @@ class GoogleAuthController extends Controller
 
         return $username;
     }
-
 }

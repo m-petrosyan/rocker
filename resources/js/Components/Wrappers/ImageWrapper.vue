@@ -43,11 +43,11 @@ const nextImage = () => {
   }
 };
 
-const downloadImage = () => {
-  if (currentImage.value && currentImage.value.original) {
+const downloadImage = (img = currentImage.value) => {
+  if (img && img.original) {
     const link = document.createElement('a');
-    link.href = currentImage.value.original;
-    link.download = currentImage.value.original.split('/').pop() || 'image';
+    link.href = img.original;
+    link.download = img.original.split('/').pop() || 'image';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -107,13 +107,13 @@ onUnmounted(() => {
     <div v-if="download" class="flex justify-between items-center">
       <SocialShare :title :url />
       <button
-        class="flex gap-x-2 items-center font-bold top-0 right-0 text-white rounded-lg p-2"
+        class="flex gap-x-2 items-center font-bold text-white bg-orange hover:bg-orange-600 transition-colors duration-200 rounded-lg px-4 py-2"
         @click="downloadAllImages"
         title="Download all images as ZIP"
         :disabled="isLoading"
       >
         <span v-if="isLoading">Downloading...</span>
-        <span v-else>Download {{ images.length }}</span>
+        <span v-else>Download all ({{ images.length }} photos)</span>
         <DownloadIcon />
       </button>
     </div>
@@ -125,7 +125,7 @@ onUnmounted(() => {
         v-if="images.length"
         v-for="(image, index) in images"
         :key="index"
-        class="aspect-square overflow-hidden relative cursor-pointer"
+        class="aspect-square overflow-hidden relative cursor-pointer group"
         @click="openModal(index)"
       >
         <img
@@ -141,6 +141,15 @@ onUnmounted(() => {
           class="w-full h-full object-cover object-center rounded-md"
           :alt="title"
         />
+
+        <button
+          v-if="download"
+          class="absolute top-2 right-2 p-2 rounded-full bg-black bg-opacity-50 text-white opacity-0 group-hover:opacity-100 hover:bg-orange hover:opacity-100 transition-all duration-300"
+          @click.stop="downloadImage(image)"
+          title="Download image"
+        >
+          <DownloadIcon />
+        </button>
       </div>
     </div>
 
@@ -219,8 +228,10 @@ onUnmounted(() => {
         </button>
 
         <button v-if="download"
-                class="absolute top-2 right-10 text-white bg-opacity-75 rounded-full p-2"
+                class="absolute top-2 right-14 text-white bg-black bg-opacity-50 hover:bg-orange transition-colors duration-200 rounded-full p-2"
                 @click="downloadImage"
+                title="Download image"
+
         >
           <DownloadIcon />
         </button>

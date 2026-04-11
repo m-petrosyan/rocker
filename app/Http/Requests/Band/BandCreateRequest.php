@@ -52,7 +52,6 @@ class BandCreateRequest extends FormRequest
             'links.*.url.required' => 'Each URL must be provided.',
             'links.*.url.url' => 'Each URL must be a valid url address.',
 
-
             'albums.*.title.required' => 'Each album must include a title.',
             'albums.*.year.required' => 'Each album must include a release year.',
             'albums.*.year.digits' => 'The release year must be exactly 4 digits (e.g., 2024).',

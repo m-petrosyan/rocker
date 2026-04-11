@@ -4,12 +4,10 @@ namespace App\Enums;
 
 trait EnumFunctions
 {
-
-
     public static function getKeysValues(
         string $without = '',
-        array|null $modifyKeyName = null,
-        string|null $options = null
+        ?array $modifyKeyName = null,
+        ?string $options = null
     ): array {
         $cases = $options ? self::$options() : self::cases();
 
@@ -28,7 +26,6 @@ trait EnumFunctions
 
         return $enumKeyValuePairs;
     }
-
 
     public static function getValues(string $without = ''): array
     {

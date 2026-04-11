@@ -1,5 +1,6 @@
 <?php
 
+use App\Providers\RouteServiceProvider;
 use Illuminate\Support\ServiceProvider;
 
 return [
@@ -41,7 +42,7 @@ return [
     |
     */
 
-    'debug' => (bool)env('APP_DEBUG', false),
+    'debug' => (bool) env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -126,6 +127,6 @@ return [
     ],
 
     'providers' => ServiceProvider::defaultProviders()->merge([
-        App\Providers\RouteServiceProvider::class,
+        RouteServiceProvider::class,
     ])->toArray(),
 ];

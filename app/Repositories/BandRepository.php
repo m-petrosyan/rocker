@@ -15,7 +15,6 @@ class BandRepository
             ->paginate(30);
     }
 
-
     public static function bandList(int $limit = 50, string $sort = ''): LengthAwarePaginator
     {
         return Band::query()
@@ -24,8 +23,8 @@ class BandRepository
             ->whereNotNull('info')
             ->when(
                 $sort,
-                fn($query) => $query->orderBy('created_at', $sort === 'oldest' ? 'asc' : 'desc'),
-                fn($query) => $query->inRandomOrder()
+                fn ($query) => $query->orderBy('created_at', $sort === 'oldest' ? 'asc' : 'desc'),
+                fn ($query) => $query->inRandomOrder()
             )
             ->paginate($limit, ['id', 'name', 'slug']);
     }
@@ -33,7 +32,7 @@ class BandRepository
     public static function bandNamesList(bool $createdFirst = true): array
     {
         return Band::query()
-            ->when($createdFirst, fn($query) => $query->orderByDesc('user_id'))
+            ->when($createdFirst, fn ($query) => $query->orderByDesc('user_id'))
             ->get(['id', 'name'])
             ->toArray();
     }
@@ -48,7 +47,7 @@ class BandRepository
                 'galleries.media',
                 'links',
                 'albums',
-                'events' => fn($q) => $q->whereHas('status', fn($q) => $q->where('event_status.status', 'accepted')),
+                'events' => fn ($q) => $q->whereHas('status', fn ($q) => $q->where('event_status.status', 'accepted')),
                 'events.status',
                 'blogs',
             ],

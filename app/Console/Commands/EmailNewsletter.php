@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Notification;
 class EmailNewsletter extends Command
 {
     protected $signature = 'app:email-newsletter';
+
     protected $description = 'Send newsletter via Notification using bulk mailer';
 
     public function handle(): void
@@ -26,7 +27,7 @@ class EmailNewsletter extends Command
 
         foreach ($emails as $email) {
             dump($email);
-            Notification::route('mail', $email)->notify(new NewsletterNotification());
+            Notification::route('mail', $email)->notify(new NewsletterNotification);
 
             $this->info("Sent to: $email");
         }
@@ -34,4 +35,3 @@ class EmailNewsletter extends Command
         config(['mail.default' => $originalMailer]);
     }
 }
-

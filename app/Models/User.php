@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-
 use App\Notifications\CustomResetPassword;
 use App\Notifications\CustomVerifyEmail;
+use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -19,11 +19,10 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements MustVerifyEmail, HasMedia
+class User extends Authenticatable implements HasMedia, MustVerifyEmail
 {
-
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasRoles, HasApiTokens, HasFactory, Notifiable, InteractsWithMedia;
+    /** @use HasFactory<UserFactory> */
+    use HasApiTokens, HasFactory, HasRoles, InteractsWithMedia, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -57,8 +56,6 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
         'image',
         'is_blocked',
     ];
-
-
 
     /**
      * Get the attributes that should be cast.
@@ -162,7 +159,7 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     {
         $media = $this->getMedia('images')->first();
 
-        if (!$media) {
+        if (! $media) {
             return null;
         }
 

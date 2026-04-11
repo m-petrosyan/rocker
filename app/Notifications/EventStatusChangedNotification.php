@@ -10,8 +10,11 @@ class EventStatusChangedNotification extends Notification
     use Queueable;
 
     protected string $eventTitle;
+
     protected string $eventUrl;
+
     protected string $status;
+
     protected ?string $reason;
 
     /**
@@ -57,7 +60,7 @@ class EventStatusChangedNotification extends Notification
     {
         return match ($this->status) {
             'accepted' => "🎉 Great news! Your event \"{$this->eventTitle}\" has been approved!",
-            'rejected' => "❌ Unfortunately, your event \"{$this->eventTitle}\" was rejected." . ($this->reason ? " Reason: {$this->reason}" : ''),
+            'rejected' => "❌ Unfortunately, your event \"{$this->eventTitle}\" was rejected.".($this->reason ? " Reason: {$this->reason}" : ''),
             'deleted' => "Your event \"{$this->eventTitle}\" has been deleted.",
             default => "The status of your event \"{$this->eventTitle}\" has been changed to {$this->status}.",
         };

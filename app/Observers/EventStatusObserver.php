@@ -47,7 +47,7 @@ class EventStatusObserver
             }
 
             $eventStatus->event->user?->chat
-                ?->message("✅ Your event request has been sent for review. You will be notified once it is processed.")
+                ?->message('✅ Your event request has been sent for review. You will be notified once it is processed.')
                 ->send();
         }
     }

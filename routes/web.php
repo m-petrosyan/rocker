@@ -19,7 +19,6 @@ Route::get('/test', function () {
     return Inertia::render('Test');
 });
 
-
 Route::get('/', HomeController::class)->name('home');
 Route::get('events/past', [EventController::class, 'past'])->name('events.past');
 Route::resource('events', EventController::class)->only('index', 'show');

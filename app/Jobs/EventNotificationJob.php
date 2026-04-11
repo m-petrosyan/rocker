@@ -12,15 +12,12 @@ use Illuminate\Support\Facades\Log;
 
 class EventNotificationJob implements ShouldQueue
 {
-    use Queueable, EventFormatingTrait;
-
+    use EventFormatingTrait, Queueable;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(protected int $eventId, protected int $userId)
-    {
-    }
+    public function __construct(protected int $eventId, protected int $userId) {}
 
     /**
      * Execute the job.
@@ -33,7 +30,6 @@ class EventNotificationJob implements ShouldQueue
         $content = $this->getEventContent($event);
         $buttons = $this->getButtons($event);
 
-
         Log::info('poster', [$event->poster['large']]);
 
         $msg = $user->chat
@@ -44,7 +40,7 @@ class EventNotificationJob implements ShouldQueue
 
         Log::info('TG RAW RAW', [
             'status' => $msg->getStatusCode(),
-            'body' => (string)$msg->getBody(),
+            'body' => (string) $msg->getBody(),
         ]);
 
         $messageId = $msg?->telegraphMessageId();

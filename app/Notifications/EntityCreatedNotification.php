@@ -10,8 +10,11 @@ class EntityCreatedNotification extends Notification
     use Queueable;
 
     protected string $entityType;
+
     protected string $entityTitle;
+
     protected string $entityUrl;
+
     protected string $status;
 
     /**

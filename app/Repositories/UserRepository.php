@@ -11,9 +11,9 @@ class UserRepository
     {
         return User::with(['roles', 'settings'])
             ->withCount(['bands', 'events', 'blogs', 'galleries', 'chat'])
-            ->when($filter === 'blocked', fn($query) => $query->whereHas('blockedRecord'))
-            ->when($filter === 'bot', fn($query) => $query->whereHas('chat'))
-            ->when($filter === 'web', fn($query) => $query->doesntHave('chat'))
+            ->when($filter === 'blocked', fn ($query) => $query->whereHas('blockedRecord'))
+            ->when($filter === 'bot', fn ($query) => $query->whereHas('chat'))
+            ->when($filter === 'web', fn ($query) => $query->doesntHave('chat'))
             ->when($sort === 'active', function ($query) {
                 $query->orderBy('last_activity', 'desc');
             }, function ($query) use ($sort) {
@@ -27,8 +27,8 @@ class UserRepository
         return User::query()
             ->when(
                 $bot,
-                fn($query) => $query->whereHas('chat'),
-                fn($query) => $query->doesntHave('chat')
+                fn ($query) => $query->whereHas('chat'),
+                fn ($query) => $query->doesntHave('chat')
             )->count();
     }
 }

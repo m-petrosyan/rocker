@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Blog;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Validator;
 
@@ -9,8 +10,6 @@ class BlogCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
     public function authorize(): bool
     {
@@ -20,7 +19,7 @@ class BlogCreateRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
@@ -50,9 +49,6 @@ class BlogCreateRequest extends FormRequest
 
     /**
      * Add custom validation logic after the initial rules.
-     *
-     * @param  Validator  $validator
-     * @return void
      */
     public function withValidator(Validator $validator): void
     {
@@ -63,18 +59,18 @@ class BlogCreateRequest extends FormRequest
                 return empty($cleaned);
             };
 
-            $hasPdfFile = !empty($this->file('pdf_file')) || !empty($this->file('pdf')) ||
-                !empty($this->input('pdf_file')) || !empty($this->input('pdf'));
+            $hasPdfFile = ! empty($this->file('pdf_file')) || ! empty($this->file('pdf')) ||
+                ! empty($this->input('pdf_file')) || ! empty($this->input('pdf'));
 
-            $hasImages = !empty($this->file('images')) && is_array($this->file('images')) && count(
-                    $this->file('images')
-                ) > 0;
+            $hasImages = ! empty($this->file('images')) && is_array($this->file('images')) && count(
+                $this->file('images')
+            ) > 0;
 
-            if (!$hasPdfFile) {
+            if (! $hasPdfFile) {
                 // English validation
-                if (!empty($this->input('title.en')) || !empty($this->input('description.en')) || !$isContentEmpty(
-                        $this->input('content.en')
-                    )) {
+                if (! empty($this->input('title.en')) || ! empty($this->input('description.en')) || ! $isContentEmpty(
+                    $this->input('content.en')
+                )) {
                     if (empty($this->input('title.en'))) {
                         $validator->errors()->add(
                             'title.en',
@@ -89,7 +85,7 @@ class BlogCreateRequest extends FormRequest
                     }
 
                     // Content is required only if no images
-                    if (!$hasImages) {
+                    if (! $hasImages) {
                         $contentEn = $this->input('content.en');
                         if ($isContentEmpty($contentEn)) {
                             $validator->errors()->add(
@@ -106,9 +102,9 @@ class BlogCreateRequest extends FormRequest
                 }
 
                 // Armenian validation
-                if (!empty($this->input('title.am')) || !empty($this->input('description.am')) || !$isContentEmpty(
-                        $this->input('content.am')
-                    )) {
+                if (! empty($this->input('title.am')) || ! empty($this->input('description.am')) || ! $isContentEmpty(
+                    $this->input('content.am')
+                )) {
                     if (empty($this->input('title.am'))) {
                         $validator->errors()->add(
                             'title.am',
@@ -123,7 +119,7 @@ class BlogCreateRequest extends FormRequest
                     }
 
                     // Content is required only if no images
-                    if (!$hasImages) {
+                    if (! $hasImages) {
                         $contentAm = $this->input('content.am');
                         if ($isContentEmpty($contentAm)) {
                             $validator->errors()->add(
@@ -140,9 +136,9 @@ class BlogCreateRequest extends FormRequest
                 }
 
                 // Russian validation
-                if (!empty($this->input('title.ru')) || !empty($this->input('description.ru')) || !$isContentEmpty(
-                        $this->input('content.ru')
-                    )) {
+                if (! empty($this->input('title.ru')) || ! empty($this->input('description.ru')) || ! $isContentEmpty(
+                    $this->input('content.ru')
+                )) {
                     if (empty($this->input('title.ru'))) {
                         $validator->errors()->add(
                             'title.ru',
@@ -157,7 +153,7 @@ class BlogCreateRequest extends FormRequest
                     }
 
                     // Content is required only if no images
-                    if (!$hasImages) {
+                    if (! $hasImages) {
                         $contentRu = $this->input('content.ru');
                         if ($isContentEmpty($contentRu)) {
                             $validator->errors()->add(
@@ -174,16 +170,16 @@ class BlogCreateRequest extends FormRequest
                 }
 
                 $allEmpty = (empty($this->input('title.en')) && empty(
-                        $this->input(
-                            'description.en'
-                        )
-                        ) && $isContentEmpty($this->input('content.en'))) &&
+                    $this->input(
+                        'description.en'
+                    )
+                ) && $isContentEmpty($this->input('content.en'))) &&
                     (empty($this->input('title.am')) && empty($this->input('description.am')) && $isContentEmpty(
-                            $this->input('content.am')
-                        )) &&
+                        $this->input('content.am')
+                    )) &&
                     (empty($this->input('title.ru')) && empty($this->input('description.ru')) && $isContentEmpty(
-                            $this->input('content.ru')
-                        ));
+                        $this->input('content.ru')
+                    ));
 
                 if ($allEmpty) {
                     $validator->errors()->add(

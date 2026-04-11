@@ -15,9 +15,9 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Event extends Model implements Viewable, HasMedia
+class Event extends Model implements HasMedia, Viewable
 {
-    use InteractsWithViews, MediaTrait, InteractsWithMedia;
+    use InteractsWithMedia, InteractsWithViews, MediaTrait;
 
     protected $fillable = [
         'title',
@@ -93,7 +93,7 @@ class Event extends Model implements Viewable, HasMedia
         return $date->format('d.m.y');
     }
 
-    public function getEndTimeAttribute($value): string|null
+    public function getEndTimeAttribute($value): ?string
     {
         return $value ? Carbon::parse($value)->format('H:i') : null;
     }
@@ -122,7 +122,6 @@ class Event extends Model implements Viewable, HasMedia
     {
         return $this->getImage('poster');
     }
-
 
     public function registerMediaConversions(?Media $media = null): void
     {

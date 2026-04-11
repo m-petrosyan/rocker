@@ -6,7 +6,7 @@ use App\Traits\ComponentServiceTrait;
 
 class EventService
 {
-    use  ComponentServiceTrait;
+    use ComponentServiceTrait;
 
     public function store($attributes): void
     {
@@ -34,7 +34,7 @@ class EventService
     public function destroy($event): void
     {
         $event->status()->first()->update(['status' => 'deleted']);
-//        $event->delete();
-//        $event->clearMediaCollection('poster');
+        //        $event->delete();
+        //        $event->clearMediaCollection('poster');
     }
 }

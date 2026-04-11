@@ -11,9 +11,7 @@ use Inertia\Response;
 
 class EmailVerificationPromptController extends Controller
 {
-    public function __construct(protected UserRegisterService $userRegisterService)
-    {
-    }
+    public function __construct(protected UserRegisterService $userRegisterService) {}
 
     /**
      * Display the email verification prompt.

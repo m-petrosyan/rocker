@@ -19,7 +19,7 @@ class BandService
     {
         if (isset($attributes['name']['id'])) {
             $band = Band::query()->find($attributes['name']['id']);
-            if (!$band->user_id) {
+            if (! $band->user_id) {
                 $band->update(
                     ['name' => $attributes['name']['name'], 'user_id' => auth()->id()] +
                     $attributes
@@ -38,7 +38,6 @@ class BandService
         if (isset($attributes['links'])) {
             $this->updateLinks($band, $attributes['links']);
         }
-
 
         $this->addImage($band, $attributes['cover_file'], 'cover');
 
@@ -80,7 +79,6 @@ class BandService
         }
 
         $this->setGenres($band, $attributes);
-
 
         if (isset($attributes['links'])) {
             $this->updateLinks($band, $attributes['links']);
@@ -140,7 +138,6 @@ class BandService
             throw $e;
         }
     }
-
 
     public function destroy(Band $band): void
     {

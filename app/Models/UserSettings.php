@@ -15,5 +15,4 @@ class UserSettings extends Model
         'events_notifications',
         'events_concerts',
     ];
-
 }

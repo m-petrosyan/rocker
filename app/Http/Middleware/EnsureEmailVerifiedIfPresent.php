@@ -11,7 +11,7 @@ class EnsureEmailVerifiedIfPresent
     {
         $user = $request->user();
 
-        if ($user && $user->email && !$user->hasVerifiedEmail()) {
+        if ($user && $user->email && ! $user->hasVerifiedEmail()) {
             abort(403, 'Email not verified.');
         }
 

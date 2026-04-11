@@ -4,6 +4,8 @@ use App\Http\Middleware\LastActivityMiddleware;
 use App\Models\Bot;
 use App\Models\UserBot;
 use App\Telegram\TelegraphHandler;
+use DefStudio\Telegraph\Storage\CacheStorageDriver;
+use DefStudio\Telegraph\Storage\FileStorageDriver;
 use DefStudio\Telegraph\Telegraph;
 
 return [
@@ -18,7 +20,6 @@ return [
      * allowed values: html|markdown|MarkdownV2
      */
     'default_parse_mode' => Telegraph::PARSE_HTML,
-
 
     'webhook' => [
         /*
@@ -58,7 +59,6 @@ return [
          * to verify the authenticity of the webhook
          */
         'secret' => env('TELEGRAPH_WEBHOOK_SECRET'),
-
 
         'chat_id' => env('TELEGRAPH_CHAT_ID'),
 
@@ -111,7 +111,6 @@ return [
         'store_unknown_chats_in_db' => true,
     ],
 
-
     'configs' => [
         'token' => env('TELEGRAM_BOT_TOKEN'),
         'name' => env('TELEGRAM_BOT_NAME'),
@@ -141,7 +140,7 @@ return [
                  * Telegraph cache driver to be used, must implement
                  * DefStudio\Telegraph\Contracts\StorageDriver contract
                  */
-                'driver' => \DefStudio\Telegraph\Storage\FileStorageDriver::class,
+                'driver' => FileStorageDriver::class,
 
                 /*
                  * Laravel Storage disk to use. See /config/filesystems/disks for available disks
@@ -159,7 +158,7 @@ return [
                  * Telegraph cache driver to be used, must implement
                  * DefStudio\Telegraph\Contracts\StorageDriver contract
                  */
-                'driver' => \DefStudio\Telegraph\Storage\CacheStorageDriver::class,
+                'driver' => CacheStorageDriver::class,
 
                 /*
                  * Laravel Cache store to use. See /config/cache/stores for available stores

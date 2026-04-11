@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Profile\BandController;
+use App\Http\Controllers\Profile\BlockController;
 use App\Http\Controllers\Profile\BlogController;
 use App\Http\Controllers\Profile\DashboardController;
 use App\Http\Controllers\Profile\EventController;
@@ -14,7 +15,6 @@ use App\Http\Controllers\Profile\MediaController;
 use App\Http\Controllers\Profile\MergeProfilesController;
 use App\Http\Controllers\Profile\NotificationController;
 use App\Http\Controllers\Profile\ProfileController;
-use App\Http\Controllers\Profile\BlockController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'email.verified.if.present', 'role:admin|moderator|organizer', 'activity'])
@@ -24,7 +24,6 @@ Route::middleware(['auth', 'email.verified.if.present', 'role:admin|moderator|or
         Route::get('event/{event}/requests', [EventRequestController::class, 'show'])->name('event.requests');
         Route::put('event/{event}/requests', [EventRequestController::class, 'update'])->name('event.request.update');
     });
-
 
 Route::middleware(['auth', 'email.verified.if.present', 'activity'])->as('profile.')->prefix('profile')->group(
     function () {
@@ -58,7 +57,6 @@ Route::middleware('auth')->group(function () {
         ->middleware(['throttle:6,1'])
         ->name('verification.verify');
 
-
     Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
         ->name('password.confirm');
 
@@ -69,6 +67,5 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
 });
-
 
 Route::post('/telegram/auth', [AuthenticatedSessionController::class, 'tgWebAuth']);

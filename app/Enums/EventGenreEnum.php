@@ -4,7 +4,7 @@ namespace App\Enums;
 
 enum EventGenreEnum: string
 {
-    use  EnumFunctions;
+    use EnumFunctions;
 
     case ROCK = 'rock';
     case METAL = 'metal';

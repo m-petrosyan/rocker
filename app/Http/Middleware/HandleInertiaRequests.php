@@ -35,12 +35,11 @@ class HandleInertiaRequests extends Middleware
         }
 
         $url = $request->url();
-        $page = (int)$request->get('page');
+        $page = (int) $request->get('page');
 
         $canonical = $page > 0
             ? $url.'?page='.$page
             : $url;
-
 
         return [
             ...parent::share($request),
@@ -53,11 +52,11 @@ class HandleInertiaRequests extends Middleware
                 'unreadNotificationsCount' => $request->user()?->unreadNotifications()->count() ?? 0,
             ],
             'flash' => [
-                'message' => fn() => $request->session()->get('message'),
-                'success' => fn() => $request->session()->get('success'),
-                'error' => fn() => $request->session()->get('error'),
+                'message' => fn () => $request->session()->get('message'),
+                'success' => fn () => $request->session()->get('success'),
+                'error' => fn () => $request->session()->get('error'),
             ],
-            'ziggy' => fn() => [
+            'ziggy' => fn () => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],

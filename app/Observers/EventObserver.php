@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Gate;
 
 class EventObserver
 {
-
     public function creating(Event $event): void
     {
         $cities = ['yerevan', 'tbilisi', 'gyumri', 'batumi', 'dilijan', 'kutaisi'];
@@ -40,7 +39,7 @@ class EventObserver
             ]
         );
 
-        if (!$isApproved) {
+        if (! $isApproved) {
             $event->user?->notify(
                 new EntityCreatedNotification(
                     'event',
@@ -52,4 +51,3 @@ class EventObserver
         }
     }
 }
-

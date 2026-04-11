@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CheckUserBlocked;
 use App\Http\Middleware\EnsureEmailVerifiedIfPresent;
 use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\LastActivityMiddleware;
@@ -24,7 +25,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->web(append: [
             HandleInertiaRequests::class,
-            \App\Http\Middleware\CheckUserBlocked::class,
+            CheckUserBlocked::class,
             AddLinkHeadersForPreloadedAssets::class,
         ]);
         $middleware->alias([
@@ -32,7 +33,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => RoleMiddleware::class,
             'permission' => PermissionMiddleware::class,
             'activity' => LastActivityMiddleware::class,
-            'blocked' => \App\Http\Middleware\CheckUserBlocked::class,
+            'blocked' => CheckUserBlocked::class,
         ]);
     })
     ->withSchedule(function (Schedule $schedule) {
@@ -43,7 +44,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $schedule->command('backup:clean')->cron('0 23 */14 * *');
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        if (!app()->environment('local')) {
+        if (! app()->environment('local')) {
             Integration::handles($exceptions);
         }
         $exceptions->render(function (NotFoundHttpException $e, $request) {

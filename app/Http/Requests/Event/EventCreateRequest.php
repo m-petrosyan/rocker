@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Event;
 
 use App\Enums\EventTypeEnum;
-use App\Enums\GenreEnum;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;

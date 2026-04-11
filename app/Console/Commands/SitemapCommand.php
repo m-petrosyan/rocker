@@ -11,6 +11,7 @@ use Spatie\Sitemap\Tags\Url;
 class SitemapCommand extends Command
 {
     protected $signature = 'app:sitemap';
+
     protected $description = 'Generate the sitemap for the application';
 
     public function handle(): void
@@ -57,7 +58,7 @@ class SitemapCommand extends Command
                 $chat->message($message)->send();
             }
         } catch (\Throwable $e) {
-            Log::error("Failed to send Telegram message: ".$e->getMessage());
+            Log::error('Failed to send Telegram message: '.$e->getMessage());
         }
     }
 }

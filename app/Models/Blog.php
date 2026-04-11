@@ -13,9 +13,9 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Translatable\HasTranslations;
 
-class Blog extends Model implements Viewable, HasMedia
+class Blog extends Model implements HasMedia, Viewable
 {
-    use InteractsWithViews, HasTranslations, MediaTrait, InteractsWithMedia;
+    use HasTranslations, InteractsWithMedia, InteractsWithViews, MediaTrait;
 
     protected $fillable = [
         'user_id',
@@ -55,7 +55,6 @@ class Blog extends Model implements Viewable, HasMedia
         return $this->getImage('cover');
     }
 
-
     public function getImagesUrlAttribute(): array
     {
         $mediaItems = $this->getMedia('images');
@@ -77,7 +76,7 @@ class Blog extends Model implements Viewable, HasMedia
     public function getPdfAttribute(): ?array
     {
         $media = $this->getMedia('pdf')->first();
-        if (!$media) {
+        if (! $media) {
             return null;
         }
 

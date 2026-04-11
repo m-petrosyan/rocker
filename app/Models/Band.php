@@ -14,9 +14,9 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Band extends Model implements Viewable, HasMedia
+class Band extends Model implements HasMedia, Viewable
 {
-    use  InteractsWithMedia, InteractsWithViews, MediaTrait;
+    use InteractsWithMedia, InteractsWithViews, MediaTrait;
 
     protected $fillable = [
         'name',
@@ -39,7 +39,6 @@ class Band extends Model implements Viewable, HasMedia
     protected $casts = [
         'cover_position' => 'array',
     ];
-
 
     public function blogs(): BelongsToMany
     {
@@ -87,7 +86,6 @@ class Band extends Model implements Viewable, HasMedia
     {
         return $this->getImage('logo');
     }
-
 
     public function getImagesUrlAttribute(): array
     {

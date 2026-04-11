@@ -22,9 +22,7 @@ use Inertia\Response;
 
 class ProfileController
 {
-    public function __construct(protected UserService $userService)
-    {
-    }
+    public function __construct(protected UserService $userService) {}
 
     public function index(): Response
     {

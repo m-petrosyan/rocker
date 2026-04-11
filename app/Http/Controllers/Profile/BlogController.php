@@ -17,9 +17,7 @@ class BlogController extends Controller
 {
     use AuthorizesRequests;
 
-    public function __construct(protected BlogService $blogService)
-    {
-    }
+    public function __construct(protected BlogService $blogService) {}
 
     /**
      * Show the form for creating a new resource.

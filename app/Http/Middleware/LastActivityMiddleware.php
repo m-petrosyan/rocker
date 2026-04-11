@@ -17,9 +17,9 @@ class LastActivityMiddleware
     {
         $user = auth()->user();
 
-        if ($user && (!$user->last_activity || ($user->last_activity && now()->subMinutes('2')->gte(
-                        $user->last_activity
-                    )))) {
+        if ($user && (! $user->last_activity || ($user->last_activity && now()->subMinutes('2')->gte(
+            $user->last_activity
+        )))) {
             $user->update([
                 'last_activity' => now(),
             ]);

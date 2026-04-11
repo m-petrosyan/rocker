@@ -13,9 +13,7 @@ class NewCreationNotification extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct(protected $model)
-    {
-    }
+    public function __construct(protected $model) {}
 
     /**
      * Get the notification's delivery channels.

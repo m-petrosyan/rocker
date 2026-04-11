@@ -8,6 +8,7 @@ use Illuminate\Console\Command;
 class CheckDiskSpaceCommand extends Command
 {
     protected $signature = 'disk:check';
+
     protected $description = 'Check disk space ';
 
     public function handle(): void
@@ -20,11 +21,11 @@ class CheckDiskSpaceCommand extends Command
         if ($usedSpace >= $prcent) {
             $chat = UserBot::where('chat_id', config('telegraph.webhook.chat_id'))->firstOrFail();
 
-            $chat->message("⚠️ Disk is ".(int)$usedSpace."%  full!")->send();
+            $chat->message('⚠️ Disk is '.(int) $usedSpace.'%  full!')->send();
 
             $this->info('Notification sent to Telegram.');
         } else {
-            $this->info("Disk is less than ".$prcent."% full.");
+            $this->info('Disk is less than '.$prcent.'% full.');
         }
     }
 }

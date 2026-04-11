@@ -4,7 +4,7 @@ namespace App\Traits;
 
 trait MediaTrait
 {
-    public function getImage($name, array|null $fields = null): array
+    public function getImage($name, ?array $fields = null): array
     {
         $mediaData = $this->getFirstMedia($name);
 

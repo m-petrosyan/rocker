@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Log;
 
 trait ComponentServiceTrait
 {
-    public function addSyncBand(Model $model, array|null $bands): void
+    public function addSyncBand(Model $model, ?array $bands): void
     {
         if (isset($bands['bands'])) {
             $bandIds = [];
@@ -25,7 +25,6 @@ trait ComponentServiceTrait
         }
     }
 
-
     public function addImage(Model $model, object $image, string $name): void
     {
         if ($image instanceof UploadedFile && $image->isValid()) {
@@ -34,7 +33,7 @@ trait ComponentServiceTrait
         }
     }
 
-    public function addImages(Model $model, array|null $images, $name = 'images'): void
+    public function addImages(Model $model, ?array $images, $name = 'images'): void
     {
         if (isset($images)) {
             foreach ($images as $image) {
@@ -61,7 +60,7 @@ trait ComponentServiceTrait
         return $venueId;
     }
 
-    public function setCover(Model $model, int|null $cover): void
+    public function setCover(Model $model, ?int $cover): void
     {
         if (isset($cover) && ($cover !== $model->cover)) {
             $images = $model->imagesUrl();
@@ -71,9 +70,9 @@ trait ComponentServiceTrait
 
     public function updateLinks(Model $model, $links = []): void
     {
-        if (!empty($links) && is_array($links)) {
+        if (! empty($links) && is_array($links)) {
             try {
-                $newUrls = array_map(fn($link) => $link['url'], $links);
+                $newUrls = array_map(fn ($link) => $link['url'], $links);
                 $existingUrls = $model->links()->pluck('url')->toArray();
 
                 $model->links()->whereNotIn('url', $newUrls)->delete();

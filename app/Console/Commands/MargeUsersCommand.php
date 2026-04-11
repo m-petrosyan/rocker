@@ -68,7 +68,7 @@ class MargeUsersCommand extends Command
             );
 
             $exists = User::where('username', $secondaryUser->username)->exists();
-            if (!$exists) {
+            if (! $exists) {
                 $primaryUser->username = $secondaryUser->username;
             }
 

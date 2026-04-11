@@ -19,9 +19,7 @@ class BandController extends Controller
 {
     use AuthorizesRequests;
 
-    public function __construct(protected BandService $bandService)
-    {
-    }
+    public function __construct(protected BandService $bandService) {}
 
     /**
      * Show the form for creating a new resource.

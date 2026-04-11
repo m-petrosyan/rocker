@@ -3,15 +3,12 @@
 namespace App\Telegram;
 
 use App\Enums\EventGenreEnum;
-use App\Enums\GenreEnum;
 use DefStudio\Telegraph\Keyboard\Button;
 use DefStudio\Telegraph\Keyboard\Keyboard;
 use Illuminate\Support\Facades\Log;
 
-
 trait TelegramSettingsHandler
 {
-
     public function settings(): void
     {
         $buttons = [
@@ -30,7 +27,6 @@ trait TelegramSettingsHandler
             $lastMessageId
         );
     }
-
 
     public function test()
     {
@@ -87,7 +83,6 @@ Tickets:
             )
             ->send();
 
-
     }
 
     public function get_countries(): void
@@ -115,7 +110,6 @@ Tickets:
         $this->sendMessageWithButton(trans('messages.indicate_country'), $buttons, $lastMessageId);
     }
 
-
     public function get_genres(): void
     {
         $buttons = [
@@ -136,12 +130,11 @@ Tickets:
         $this->sendMessageWithButton(trans('messages.indicate_genre'), $buttons, $lastMessageId);
     }
 
-
     public function get_cities($country = null): void
     {
         $country = $country ?? auth()->user()->settings->country;
 
-        if (!$country) {
+        if (! $country) {
             $this->get_countries();
         }
 
@@ -163,7 +156,6 @@ Tickets:
 
         $this->sendMessageWithButton(trans('messages.indicate_city'), $buttons, $lastMessageId);
     }
-
 
     public function get_notifications(): void
     {
@@ -208,14 +200,14 @@ Tickets:
             $this->settings();
         }
 
-        $this->reply("Saved");
+        $this->reply('Saved');
     }
 
     public function add_to_favorite(int $eventId): void
     {
         auth()->user()->favorites()->syncWithoutDetaching([$eventId]);
 
-        $this->reply("Added");
+        $this->reply('Added');
     }
 
     public function remove_from_favorite(int $eventId): void
@@ -227,10 +219,9 @@ Tickets:
             Button::make('Some tex')->action('action')->width(0.33),
         ];
 
-
         $lastMessageId = $this->prepareMessageParams($this->chat->chat_id, $this->message?->id());
         $this->sendMessageWithButton(trans('menu.menu'), $buttons, $lastMessageId);
 
-        $this->reply("Removed");
+        $this->reply('Removed');
     }
 }

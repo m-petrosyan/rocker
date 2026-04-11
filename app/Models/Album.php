@@ -12,7 +12,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Album extends Model implements HasMedia
 {
-    use  InteractsWithMedia, MediaTrait;
+    use InteractsWithMedia, MediaTrait;
 
     protected $fillable = [
         'band_id',

@@ -11,7 +11,7 @@ class NotificationController
     /**
      * Display a listing of notifications.
      */
-        public function index(): Response
+    public function index(): Response
     {
         $user = auth()->user();
 

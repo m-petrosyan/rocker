@@ -26,5 +26,4 @@ class EmailVerificationRequest extends FormRequest
             'code' => ['required', 'string'],
         ];
     }
-
 }

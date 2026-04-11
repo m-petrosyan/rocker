@@ -16,7 +16,7 @@ class GenreSlugSeeder extends Seeder
         Genre::whereNull('slug')->orWhere('slug', '')->get()->each(function (Genre $genre) {
             $genre->update(['slug' => Str::slug($genre->name)]);
         });
-        
+
         $this->command->info('Slugs updated for missing genres.');
     }
 }

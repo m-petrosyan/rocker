@@ -5,7 +5,6 @@ namespace App\Providers;
 use App\Events\EventRequestNotifyEvent;
 use App\Events\ImageSendRequested;
 use App\Events\UserCreatedEvent;
-use App\Listeners\EventConfirmUpdatedListener;
 use App\Listeners\EventRequestNotifyListener;
 use App\Listeners\SendImageListener;
 use App\Listeners\UserCreatedListener;
@@ -23,16 +22,16 @@ use Illuminate\Support\ServiceProvider;
 class EventServiceProvider extends ServiceProvider
 {
     protected array $listen = [
-//        UserCreatedEvent::class => [
-//            UserCreatedListener::class,
-//            UsersCountNotificationListener::class,
-//        ],
-//        EventRequestNotifyEvent::class => [
-//            EventRequestNotifyListener::class,
-//        ],
-//        ImageSendRequested::class => [
-//            SendImageListener::class,
-//        ],
+        //        UserCreatedEvent::class => [
+        //            UserCreatedListener::class,
+        //            UsersCountNotificationListener::class,
+        //        ],
+        //        EventRequestNotifyEvent::class => [
+        //            EventRequestNotifyListener::class,
+        //        ],
+        //        ImageSendRequested::class => [
+        //            SendImageListener::class,
+        //        ],
     ];
 
     /**

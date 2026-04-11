@@ -18,7 +18,6 @@ class UserBotObserver
         while ($attempt <= $maxAttempts) {
             $data = $userBot->memberInfo($userBot->chat_id)->user()->toArray();
 
-
             $data['name'] = $data['first_name'].' '.$data['last_name'];
 
             if (empty($data['username']) || User::where('username', $data['username'])->exists()) {

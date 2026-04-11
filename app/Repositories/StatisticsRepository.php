@@ -25,7 +25,6 @@ class StatisticsRepository
             function () use ($months) {
                 $startDate = Carbon::now()->subMonths($months - 1)->startOfMonth();
 
-
                 $activeUsers = User::query()
                     ->where(function ($query) use ($startDate) {
                         $query->where('last_activity', '>=', $startDate)
@@ -42,7 +41,7 @@ class StatisticsRepository
                             $user->last_activity ?? $user->created_at
                         )->format('Y-m');
                     })
-                    ->map(fn($group) => $group->count())
+                    ->map(fn ($group) => $group->count())
                     ->toArray();
 
                 $regStats = User::query()
@@ -51,9 +50,8 @@ class StatisticsRepository
                     ->groupBy(function ($user) {
                         return $user->created_at->format('Y-m');
                     })
-                    ->map(fn($group) => $group->count())
+                    ->map(fn ($group) => $group->count())
                     ->toArray();
-
 
                 $labels = [];
                 $activeData = [];
@@ -86,10 +84,10 @@ class StatisticsRepository
             $used = $total - $free;
 
             $projectSize = 0;
-            if (function_exists('shell_exec') && !str_contains(ini_get('disable_functions'), 'shell_exec')) {
+            if (function_exists('shell_exec') && ! str_contains(ini_get('disable_functions'), 'shell_exec')) {
                 $output = shell_exec("du -sb $path");
                 if ($output) {
-                    $projectSize = (int)explode("\t", $output)[0];
+                    $projectSize = (int) explode("\t", $output)[0];
                 }
             }
 

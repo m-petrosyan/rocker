@@ -10,7 +10,6 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class MediaController extends Controller
 {
-
     public function store(ImageUploadRequest $imageUploadRequest): JsonResponse
     {
         $media = auth()->user()
@@ -26,5 +25,4 @@ class MediaController extends Controller
 
         return redirect()->back()->withInput();
     }
-
 }

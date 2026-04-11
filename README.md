@@ -66,3 +66,9 @@ mysql -u root -p rocker < db-dumps/mysql-rocker.sql
 
 local
 sudo service redis-server start
+
+pint
+
+```
+./vendor/bin/pint
+```

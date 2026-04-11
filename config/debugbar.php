@@ -239,7 +239,7 @@ return [
             // run memory_reset_peak_usage before collecting
             'with_baseline' => env('DEBUGBAR_OPTIONS_MEMORY_WITH_BASELINE', false),
             // Set boot memory usage as memory peak baseline
-            'precision' => (int)env('DEBUGBAR_OPTIONS_MEMORY_PRECISION', 0),
+            'precision' => (int) env('DEBUGBAR_OPTIONS_MEMORY_PRECISION', 0),
             // Memory rounding precision
         ],
         'auth' => [
@@ -255,7 +255,7 @@ return [
             'with_params' => env('DEBUGBAR_OPTIONS_WITH_PARAMS', true),
             // Render SQL with the parameters substituted
             'exclude_paths' => [       // Paths to exclude entirely from the collector
-                //'vendor/laravel/framework/src/Illuminate/Session', // Exclude sessions queries
+                // 'vendor/laravel/framework/src/Illuminate/Session', // Exclude sessions queries
             ],
             'backtrace' => env('DEBUGBAR_OPTIONS_DB_BACKTRACE', true),
             // Use a backtrace to find the origin of the query in your files.
@@ -276,9 +276,9 @@ return [
             // Only track queries that last longer than this time in ms
             'memory_usage' => env('DEBUGBAR_OPTIONS_DB_MEMORY_USAGE', false),
             // Show queries memory usage
-            'soft_limit' => (int)env('DEBUGBAR_OPTIONS_DB_SOFT_LIMIT', 100),
+            'soft_limit' => (int) env('DEBUGBAR_OPTIONS_DB_SOFT_LIMIT', 100),
             // After the soft limit, no parameters/backtrace are captured
-            'hard_limit' => (int)env('DEBUGBAR_OPTIONS_DB_HARD_LIMIT', 500),
+            'hard_limit' => (int) env('DEBUGBAR_OPTIONS_DB_HARD_LIMIT', 500),
             // After the hard limit, queries are ignored
         ],
         'mail' => [
@@ -290,7 +290,7 @@ return [
             // Add the views to the timeline
             'data' => env('DEBUGBAR_OPTIONS_VIEWS_DATA', false),
             // True for all data, 'keys' for only names, false for no parameters.
-            'group' => (int)env('DEBUGBAR_OPTIONS_VIEWS_GROUP', 50),
+            'group' => (int) env('DEBUGBAR_OPTIONS_VIEWS_GROUP', 50),
             // Group duplicate views. Pass value to auto-group, or true/false to force
             'inertia_pages' => env('DEBUGBAR_OPTIONS_VIEWS_INERTIA_PAGES', 'js/Pages'),
             // Path for Inertia views
@@ -382,5 +382,5 @@ return [
      | By default, the Debugbar limits the number of frames returned by the 'debug_backtrace()' function.
      | If you need larger stacktraces, you can increase this number. Setting it to 0 will result in no limit.
      */
-    'debug_backtrace_limit' => (int)env('DEBUGBAR_DEBUG_BACKTRACE_LIMIT', 50),
+    'debug_backtrace_limit' => (int) env('DEBUGBAR_DEBUG_BACKTRACE_LIMIT', 50),
 ];

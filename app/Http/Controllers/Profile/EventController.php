@@ -17,9 +17,7 @@ class EventController extends Controller
 {
     use AuthorizesRequests;
 
-    public function __construct(protected EventService $eventService)
-    {
-    }
+    public function __construct(protected EventService $eventService) {}
 
     public function create(): Response
     {
@@ -28,7 +26,6 @@ class EventController extends Controller
             'user' => auth()->user()->load('settings'),
         ]);
     }
-
 
     public function store(EventCreateRequest $request): RedirectResponse
     {
@@ -54,7 +51,6 @@ class EventController extends Controller
 
         return redirect()->route('profile.index');
     }
-
 
     public function edit(Event $event): Response
     {

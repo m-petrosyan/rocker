@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
-
 class MergeUsersSeeder extends Seeder
 {
     public function run(): void
@@ -25,10 +24,10 @@ class MergeUsersSeeder extends Seeder
                     $this->command->info('Processing user: '.$item['id']);
 
                     $username = filled($item['username']) ? $item['username'] : (Str::slug(
-                            $item['first_name'] ?? 'user'
-                        ).'_'.Str::random(
-                            6
-                        ).$item['id']);
+                        $item['first_name'] ?? 'user'
+                    ).'_'.Str::random(
+                        6
+                    ).$item['id']);
 
                     if ($item['id'] > 1034) {
                         dump($item['username']);
@@ -71,7 +70,7 @@ class MergeUsersSeeder extends Seeder
 
                         $eventsCount = count($item['events']);
                         $this->command->info('Processing user: '.$user['id'].' events: '.$eventsCount);
-                        collect($item['events'])->chunk(1)->each(function ($eventChunk) use ($user, $eventsCount) {
+                        collect($item['events'])->chunk(1)->each(function ($eventChunk) use ($user) {
                             foreach ($eventChunk as $event) {
                                 $this->command->info('Processing event: '.$event['id']);
 
@@ -101,9 +100,9 @@ class MergeUsersSeeder extends Seeder
                                         'status' => $event['confirm'] ? EventStatusEnum::ACCEPTED->value : EventStatusEnum::PENDING->value,
                                         'reason' => $event['confirm']['reason'] ?? ($event['delete']['reason'] ?? null),
                                         'created_at' => $event['confirm']['created_at'] ?? ($event['delete']['created_at'] ?? now(
-                                            )),
+                                        )),
                                         'updated_at' => $event['confirm']['updated_at'] ?? ($event['delete']['updated_at'] ?? now(
-                                            )),
+                                        )),
                                     ]);
                                     //
                                     if (isset($event['media'][0]['original_url'])) {

@@ -7,8 +7,8 @@ use App\Repositories\BandRepository;
 use App\Repositories\BlogRepository;
 use App\Repositories\EventRepository;
 use App\Repositories\GalleryRepository;
-use App\Repositories\UserRepository;
 use App\Repositories\StatisticsRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -52,7 +52,7 @@ class DashboardController
                 'filter' => $filter,
                 'sort' => $sort,
                 'past' => $past,
-            ]
+            ],
         ]);
     }
 }
