@@ -195,6 +195,9 @@
       <path value="$PROJECT_DIR$/vendor/php-debugbar/php-debugbar" />
       <path value="$PROJECT_DIR$/vendor/laravel/horizon" />
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php85" />
+      <path value="$PROJECT_DIR$/vendor/laravel/boost" />
+      <path value="$PROJECT_DIR$/vendor/laravel/mcp" />
+      <path value="$PROJECT_DIR$/vendor/laravel/roster" />
     </include_path>
   </component>
   <component name="PhpInterpreters">
