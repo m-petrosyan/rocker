@@ -113,7 +113,7 @@ onUnmounted(() => {
         :disabled="isLoading"
       >
         <span v-if="isLoading">Downloading...</span>
-        <span v-else>Download all ({{ images.length }} photos)</span>
+        <span v-else>Download ({{ images.length }} photos)</span>
         <DownloadIcon />
       </button>
     </div>
@@ -229,9 +229,8 @@ onUnmounted(() => {
 
         <button v-if="download"
                 class="absolute top-2 right-14 text-white bg-black bg-opacity-50 hover:bg-orange transition-colors duration-200 rounded-full p-2"
-                @click="downloadImage"
+                @click="downloadImage()"
                 title="Download image"
-
         >
           <DownloadIcon />
         </button>
