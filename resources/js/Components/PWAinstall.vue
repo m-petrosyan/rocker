@@ -94,7 +94,15 @@ const close = () => {
         margin: 0 0 0.5rem 0;
         letter-spacing: 0;
       ">
-                <span v-if="showIosPrompt">Install Rocker.am: tap Share icon below and select "Add to Home Screen"</span>
+                <span v-if="showIosPrompt">
+                    Install Rocker.am: tap
+                    <svg style="width: 1.2em; height: 1.2em; vertical-align: text-bottom; margin: 0 0.1em; display: inline-block; color: #3b82f6;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                        <polyline points="16 6 12 2 8 6"></polyline>
+                        <line x1="12" y1="2" x2="12" y2="15"></line>
+                    </svg>
+                    below <span class="pwa-animate-bounce">↓</span> and select "Add to Home Screen"
+                </span>
                 <span v-else>Install Rocker.am events</span>
             </p>
             <div style="
@@ -137,3 +145,17 @@ const close = () => {
         </div>
     </div>
 </template>
+
+<style scoped>
+@keyframes pwa-bounce-down {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(4px); }
+}
+.pwa-animate-bounce {
+    display: inline-block;
+    animation: pwa-bounce-down 1.5s infinite;
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #3b82f6;
+}
+</style>
