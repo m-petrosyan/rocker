@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue';
 import { router } from '@inertiajs/vue3';
 
 const showPrompt = ref(false);
+const showIosPrompt = ref(false);
 let deferredEvent = null;
 
 const isInstalled = () => {
@@ -10,14 +11,30 @@ const isInstalled = () => {
         window.navigator.standalone;
 };
 
+const isIOS = () => {
+    return [
+      'iPad Simulator',
+      'iPhone Simulator',
+      'iPod Simulator',
+      'iPad',
+      'iPhone',
+      'iPod'
+    ].includes(navigator.platform)
+    || (navigator.userAgent.includes("Mac") && "ontouchend" in document);
+};
+
 onMounted(() => {
     if (isInstalled() || localStorage.getItem('pwaDismissed')) return;
 
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredEvent = e;
-        setTimeout(() => showPrompt.value = true, 1000);
-    });
+    if (isIOS()) {
+        setTimeout(() => showIosPrompt.value = true, 1000);
+    } else {
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredEvent = e;
+            setTimeout(() => showPrompt.value = true, 1000);
+        });
+    }
 });
 
 const install = async () => {
@@ -39,12 +56,13 @@ const dismiss = () => {
 
 const close = () => {
     showPrompt.value = false;
+    showIosPrompt.value = false;
     deferredEvent = null;
 };
 </script>
 <template>
     <div
-        v-if="showPrompt"
+        v-if="showPrompt || showIosPrompt"
         style="
       position: fixed;
       bottom: 1rem;
@@ -76,7 +94,8 @@ const close = () => {
         margin: 0 0 0.5rem 0;
         letter-spacing: 0;
       ">
-                Install Rocker.am events
+                <span v-if="showIosPrompt">Install Rocker.am: tap Share icon below and select "Add to Home Screen"</span>
+                <span v-else>Install Rocker.am events</span>
             </p>
             <div style="
         display: flex;
@@ -95,9 +114,11 @@ const close = () => {
             cursor: pointer;
           "
                 >
-                    Later
+                    <span v-if="showIosPrompt">Close</span>
+                    <span v-else>Later</span>
                 </button>
                 <button
+                    v-if="!showIosPrompt"
                     @click="install"
                     style="
             background: #dc2626;
