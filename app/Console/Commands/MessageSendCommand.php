@@ -35,7 +35,7 @@ class MessageSendCommand extends Command
 
         $to = $this->choice('Send to', ['user', 'all users']);
 
-        $imageUrl = $this->ask('Image URL (press Enter to skip)');
+        $imageUrl = $this->ask('Image path in public/ (e.g. images/photo.jpg) or press Enter to skip');
 
         if ($to === 'user') {
             $userId = $this->ask('User id');

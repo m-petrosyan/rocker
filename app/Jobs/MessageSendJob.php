@@ -23,7 +23,7 @@ class MessageSendJob implements ShouldQueue
         $chat = $user->chat;
 
         if ($this->imageUrl) {
-            $chat->photo($this->imageUrl)->send();
+            $chat->photo(public_path($this->imageUrl))->send();
         }
 
         $msg = $chat
