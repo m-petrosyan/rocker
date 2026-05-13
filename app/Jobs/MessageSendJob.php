@@ -22,33 +22,31 @@ class MessageSendJob implements ShouldQueue
         $user = User::findOrFail($this->userId)->load('chat');
         $chat = $user->chat;
 
-        Log::info('MessageSendJob: Processing', [
-            'user_id' => $this->userId,
-            'image_url' => $this->imageUrl,
-            'message' => $this->message,
-        ]);
+        if (! $chat) {
+            Log::error("MessageSendJob: User {$this->userId} has no telegram chat connected.");
 
-        $telegraph = $chat->html($this->message);
+            return;
+        }
+
+        $telegraph = $chat;
 
         if ($this->imageUrl) {
-            $path = public_path($this->imageUrl);
-            $exists = file_exists($path);
-
-            Log::info('MessageSendJob: Image check', [
-                'path' => $path,
-                'exists' => $exists,
-            ]);
-
-            if ($exists) {
-                $telegraph = $chat->photo($path)->html($this->message);
+            if (str_starts_with($this->imageUrl, 'http')) {
+                $telegraph = $telegraph->photo($this->imageUrl);
             } else {
-                Log::warning("MessageSendJob: Image not found at {$path}");
+                $path = public_path($this->imageUrl);
+                if (file_exists($path)) {
+                    $telegraph = $telegraph->photo($path);
+                } else {
+                    Log::warning("MessageSendJob: Local image not found at {$path}");
+                }
             }
         }
 
-        $msg = $telegraph->send();
+        $msg = $telegraph->html($this->message)->send();
 
-        Log::info('TG RAW', [
+        Log::info('TG RAW RESPONSE', [
+            'user_id' => $this->userId,
             'status' => $msg->getStatusCode(),
             'body' => (string) $msg->getBody(),
         ]);
@@ -58,7 +56,7 @@ class MessageSendJob implements ShouldQueue
         if ($messageId) {
             Log::info("TG send OK user {$user->id} message {$messageId}");
         } else {
-            Log::warning("NO MESSAGE ID user {$user->id}");
+            Log::warning("NO MESSAGE ID user {$user->id}. Response: ".(string) $msg->getBody());
         }
     }
 }

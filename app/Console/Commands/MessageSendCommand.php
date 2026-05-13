@@ -37,6 +37,19 @@ class MessageSendCommand extends Command
 
         $imageUrl = $this->ask('Image path in public/ (e.g. images/photo.jpg) or press Enter to skip');
 
+        if ($imageUrl) {
+            $fullPath = public_path($imageUrl);
+            if (! file_exists($fullPath)) {
+                $this->error("File not found: $fullPath");
+                if (! $this->confirm('Send without image?')) {
+                    return;
+                }
+                $imageUrl = null;
+            } else {
+                $this->info("Image confirmed: $fullPath");
+            }
+        }
+
         if ($to === 'user') {
             $userId = $this->ask('User id');
             $user = User::findOrFail($userId);
