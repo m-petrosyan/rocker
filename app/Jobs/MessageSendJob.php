@@ -3,24 +3,38 @@
 namespace App\Jobs;
 
 use App\Models\User;
-use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
+use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Support\Facades\Log;
 
 class MessageSendJob implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Queueable;
 
     public function __construct(
-        public string $message,
-        public int $userId,
+        protected string $message,
+        protected int $userId,
     ) {}
 
     public function handle(): void
     {
-        $user = User::findOrFail($this->userId);
+        $user = User::findOrFail($this->userId)->load('chat');
 
+        $msg = $user->chat
+            ->html($this->message)
+            ->send();
+
+        Log::info('TG RAW', [
+            'status' => $msg->getStatusCode(),
+            'body' => (string) $msg->getBody(),
+        ]);
+
+        $messageId = $msg?->telegraphMessageId();
+
+        if ($messageId) {
+            Log::info("TG send OK user {$user->id} message {$messageId}");
+        } else {
+            Log::warning("NO MESSAGE ID user {$user->id}");
+        }
     }
 }
