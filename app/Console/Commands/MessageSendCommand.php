@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\EventNotificationJob;
+use App\Jobs\MessageSendJob;
 use App\Models\User;
 use App\Traits\UsersBotNotificationTrait;
 use Illuminate\Console\Command;
@@ -38,11 +38,11 @@ class MessageSendCommand extends Command
         if ($to === 'user') {
             $userId = $this->ask('User id');
             $user = User::findOrFail($userId);
-            dispatch(new EventNotificationJob($message, $user->id));
+            dispatch(new MessageSendJob($message, $user->id));
         } else {
             $users = User::all();
             foreach ($users as $user) {
-                dispatch(new EventNotificationJob($message, $user->id));
+                dispatch(new MessageSendJob($message, $user->id));
             }
             Log::info('message sent to users: '.$users->count());
         }
