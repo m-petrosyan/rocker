@@ -22,11 +22,24 @@ class MessageSendJob implements ShouldQueue
         $user = User::findOrFail($this->userId)->load('chat');
         $chat = $user->chat;
 
+        Log::info('MessageSendJob: Processing', [
+            'user_id' => $this->userId,
+            'image_url' => $this->imageUrl,
+            'message' => $this->message,
+        ]);
+
         $telegraph = $chat->html($this->message);
 
         if ($this->imageUrl) {
             $path = public_path($this->imageUrl);
-            if (file_exists($path)) {
+            $exists = file_exists($path);
+
+            Log::info('MessageSendJob: Image check', [
+                'path' => $path,
+                'exists' => $exists,
+            ]);
+
+            if ($exists) {
                 $telegraph = $chat->photo($path)->html($this->message);
             } else {
                 Log::warning("MessageSendJob: Image not found at {$path}");
