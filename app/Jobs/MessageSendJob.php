@@ -23,40 +23,45 @@ class MessageSendJob implements ShouldQueue
         $chat = $user->chat;
 
         if (! $chat) {
-            Log::error("MessageSendJob: User {$this->userId} has no telegram chat connected.");
+            Log::error("MessageSendJob: No chat for user {$this->userId}");
 
             return;
         }
 
-        $telegraph = $chat;
+        // Определяем, шлем мы фото или только текст
+        $sendPhoto = false;
+        $path = '';
 
         if ($this->imageUrl) {
-            if (str_starts_with($this->imageUrl, 'http')) {
-                $telegraph = $telegraph->photo($this->imageUrl);
+            $path = str_starts_with($this->imageUrl, 'http') ? $this->imageUrl : public_path($this->imageUrl);
+            if (str_starts_with($path, 'http') || file_exists($path)) {
+                $sendPhoto = true;
             } else {
-                $path = public_path($this->imageUrl);
-                if (file_exists($path)) {
-                    $telegraph = $telegraph->photo($path);
-                } else {
-                    Log::warning("MessageSendJob: Local image not found at {$path}");
-                }
+                Log::warning("MessageSendJob: Image not found at {$path}");
             }
         }
 
-        $msg = $telegraph->html($this->message)->send();
+        // Отправка
+        if ($sendPhoto) {
+            $msg = $chat->photo($path)->html($this->message)->send();
+        } else {
+            $msg = $chat->html($this->message)->send();
+        }
 
-        Log::info('TG RAW RESPONSE', [
+        Log::info('TG PRODUCTION TEST', [
             'user_id' => $this->userId,
+            'sent_as_photo' => $sendPhoto,
+            'path' => $path,
             'status' => $msg->getStatusCode(),
-            'body' => (string) $msg->getBody(),
+            'response' => (string) $msg->getBody(),
         ]);
 
         $messageId = $msg?->telegraphMessageId();
 
         if ($messageId) {
-            Log::info("TG send OK user {$user->id} message {$messageId}");
+            Log::info("TG SUCCESS: user {$user->id}, message {$messageId}");
         } else {
-            Log::warning("NO MESSAGE ID user {$user->id}. Response: ".(string) $msg->getBody());
+            Log::error("TG FAILED: user {$user->id}, response: ".(string) $msg->getBody());
         }
     }
 }
