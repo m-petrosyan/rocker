@@ -21,7 +21,7 @@ class MessageSendJob implements ShouldQueue
         $user = User::findOrFail($this->userId)->load('chat');
 
         $msg = $user->chat
-            ->html($this->message)
+            ->html(str_replace('\n', "\n", $this->message))
             ->send();
 
         Log::info('TG RAW', [

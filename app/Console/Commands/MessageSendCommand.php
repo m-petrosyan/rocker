@@ -31,7 +31,7 @@ class MessageSendCommand extends Command
      */
     public function handle(): void
     {
-        $message = $this->ask('Message text');
+        $message = $this->ask('Message text (use \n for new lines)');
 
         $to = $this->choice('Send to', ['user', 'all users']);
 
