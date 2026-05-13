@@ -20,19 +20,15 @@ class MessageSendJob implements ShouldQueue
     public function handle(): void
     {
         $user = User::findOrFail($this->userId)->load('chat');
-
         $chat = $user->chat;
 
         if ($this->imageUrl) {
-            $msg = $chat
-                ->photo($this->imageUrl)
-                ->html(str_replace('\n', "\n", $this->message))
-                ->send();
-        } else {
-            $msg = $chat
-                ->html(str_replace('\n', "\n", $this->message))
-                ->send();
+            $chat->photo($this->imageUrl)->send();
         }
+
+        $msg = $chat
+            ->html($this->message)
+            ->send();
 
         Log::info('TG RAW', [
             'status' => $msg->getStatusCode(),
