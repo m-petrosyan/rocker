@@ -35,14 +35,16 @@ class MessageSendCommand extends Command
 
         $to = $this->choice('Send to', ['user', 'all users']);
 
+        $imageUrl = $this->ask('Image URL (press Enter to skip)');
+
         if ($to === 'user') {
             $userId = $this->ask('User id');
             $user = User::findOrFail($userId);
-            dispatch(new MessageSendJob($message, $user->id));
+            dispatch(new MessageSendJob($message, $user->id, $imageUrl));
         } else {
             $users = User::all();
             foreach ($users as $user) {
-                dispatch(new MessageSendJob($message, $user->id));
+                dispatch(new MessageSendJob($message, $user->id, $imageUrl));
             }
             Log::info('message sent to users: '.$users->count());
         }

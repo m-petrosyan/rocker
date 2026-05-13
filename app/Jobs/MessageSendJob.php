@@ -14,15 +14,25 @@ class MessageSendJob implements ShouldQueue
     public function __construct(
         protected string $message,
         protected int $userId,
+        protected ?string $imageUrl = null,
     ) {}
 
     public function handle(): void
     {
         $user = User::findOrFail($this->userId)->load('chat');
 
-        $msg = $user->chat
-            ->html(str_replace('\n', "\n", $this->message))
-            ->send();
+        $chat = $user->chat;
+
+        if ($this->imageUrl) {
+            $msg = $chat
+                ->photo($this->imageUrl)
+                ->html(str_replace('\n', "\n", $this->message))
+                ->send();
+        } else {
+            $msg = $chat
+                ->html(str_replace('\n', "\n", $this->message))
+                ->send();
+        }
 
         Log::info('TG RAW', [
             'status' => $msg->getStatusCode(),
