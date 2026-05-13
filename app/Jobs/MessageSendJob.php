@@ -22,13 +22,18 @@ class MessageSendJob implements ShouldQueue
         $user = User::findOrFail($this->userId)->load('chat');
         $chat = $user->chat;
 
+        $telegraph = $chat->html($this->message);
+
         if ($this->imageUrl) {
-            $chat->photo(public_path($this->imageUrl))->send();
+            $path = public_path($this->imageUrl);
+            if (file_exists($path)) {
+                $telegraph = $chat->photo($path)->html($this->message);
+            } else {
+                Log::warning("MessageSendJob: Image not found at {$path}");
+            }
         }
 
-        $msg = $chat
-            ->html($this->message)
-            ->send();
+        $msg = $telegraph->send();
 
         Log::info('TG RAW', [
             'status' => $msg->getStatusCode(),
