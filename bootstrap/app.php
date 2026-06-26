@@ -42,9 +42,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $schedule->command('backup:run')->daily()->at('19:30');
         $schedule->command('app:old-event-messages-delete')->weekly();
         $schedule->command('backup:clean')->cron('0 23 */14 * *');
-        $schedule->command('app:fetch-telegram-posts --source=sadsadsasdasadsa')->everyMinute();
-        $schedule->command('app:fetch-telegram-posts --source=yerevanmetal')->everyFourHours();
-        $schedule->command('app:fetch-telegram-posts --source=tbilisimetal')->everyFourHours();
+        //        $schedule->command('app:fetch-telegram-posts --source=sadsadsasdasadsa')->everyMinute();
+        $schedule->command('app:fetch-telegram-posts --source=yerevanmetal')->dailyAt('21:00');
+        $schedule->command('app:fetch-telegram-posts --source=tbilisimetal')->dailyAt('21:00');
     })
     ->withExceptions(function (Exceptions $exceptions) {
         if (! app()->environment('local')) {
