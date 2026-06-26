@@ -2,6 +2,7 @@
 import NavLink from '@/Components/NavLink.vue';
 import Modal from '@/Components/Modal/Modal.vue';
 import EditIcon from '@/Components/Icons/EditIcon.vue';
+import InputError from '@/Components/InputError.vue';
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 
@@ -29,7 +30,7 @@ const openModal = ref(false);
 
 const submit = (status) => {
   form.status = status;
-  
+
   form.put(route('profile.event.request.update', props.event.id), {
     preserveScroll: true,
     onSuccess: () => openModal.value = false,
@@ -42,6 +43,7 @@ const submit = (status) => {
 <template>
   <div class="profile">
     <h2 class="mt-5 text-center text-red">This event is pending approval by admin.</h2>
+    <InputError :message="form.errors.status" class="mt-3 justify-center text-center text-red border-red-dotted border" />
     <div class="flex gap-2 mx-auto w-fit mt-5">
       <button @click="toggleModal" class="rounded bg-red px-4 py-2 text-white hover:bg-red-600">
         Reject

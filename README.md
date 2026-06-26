@@ -72,3 +72,10 @@ pint
 ```
 ./vendor/bin/pint
 ```
+
+> test group scrapping
+```
+php artisan app:fetch-telegram-posts --delete-webhook --source=yerevanmetal --limit=5
+php artisan app:fetch-telegram-posts --source=sadsadsasdasadsa --delete-webhook --wait=60
+
+```

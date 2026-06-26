@@ -34,6 +34,8 @@ class Event extends Model implements HasMedia, Viewable
         'start_date',
         'start_time',
         'notify_count',
+        'tg_source_chat_id',
+        'tg_source_message_id',
     ];
 
     protected $casts = [
@@ -76,21 +78,41 @@ class Event extends Model implements HasMedia, Viewable
         return $this->status?->reason ?? '';
     }
 
-    public function getDateTimeAttribute(): bool|Carbon
+    public function getDateTimeAttribute(): bool|Carbon|null
     {
-        return Carbon::createFromFormat('Y-m-d,H:i', $this->attributes['start_date'].','.$this->start_time);
+        $startDate = $this->attributes['start_date'] ?? null;
+        $startTime = $this->attributes['start_time'] ?? null;
+
+        if (! $startDate) {
+            return null;
+        }
+
+        if ($startTime) {
+            return Carbon::parse($startDate.' '.$startTime);
+        }
+
+        return Carbon::parse($startDate);
     }
 
-    public function getStartTimeAttribute($value): string
+    public function getStartTimeAttribute($value): ?string
     {
+        if (! $value) {
+            return null;
+        }
+
         return Carbon::parse($value)->format('H:i');
     }
 
-    public function getStartDateShortAttribute(): string
+    public function getStartDateShortAttribute(): ?string
     {
-        $date = Carbon::createFromFormat('Y-m-d', $this->attributes['start_date']);
+        $startDate = $this->attributes['start_date'] ?? null;
+        if (! $startDate) {
+            return null;
+        }
 
-        return $date->format('d.m.y');
+        $date = Carbon::createFromFormat('Y-m-d', $startDate);
+
+        return $date ? $date->format('d.m.y') : null;
     }
 
     public function getEndTimeAttribute($value): ?string

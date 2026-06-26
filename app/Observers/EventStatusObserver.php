@@ -27,7 +27,9 @@ class EventStatusObserver
                 dispatch(new EventNotificationJob($eventStatus->event->id, $user->id))->delay(now()->addSeconds(5));
             }
 
-            dispatch(new EventCahnnelNotificationJob($eventStatus->event->id));
+            if (! $eventStatus->event->tg_source_chat_id) {
+                dispatch(new EventCahnnelNotificationJob($eventStatus->event->id));
+            }
 
             $eventStatus->event->refreshNotifyCount($this->usersList($eventStatus->event, true));
         } else {
@@ -60,7 +62,9 @@ class EventStatusObserver
                 dispatch(new EventNotificationJob($eventStatus->event->id, $user->id));
             }
 
-            dispatch(new EventCahnnelNotificationJob($eventStatus->event->id));
+            if (! $eventStatus->event->tg_source_chat_id) {
+                dispatch(new EventCahnnelNotificationJob($eventStatus->event->id));
+            }
 
             $usersCount = $this->usersList($eventStatus->event, true);
 

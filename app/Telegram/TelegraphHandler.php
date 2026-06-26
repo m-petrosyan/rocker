@@ -2,6 +2,7 @@
 
 namespace App\Telegram;
 
+use App\Services\TelegramPostImportService;
 use DefStudio\Telegraph\Enums\ChatActions;
 use DefStudio\Telegraph\Handlers\WebhookHandler;
 use DefStudio\Telegraph\Keyboard\Keyboard;
@@ -29,11 +30,26 @@ class TelegraphHandler extends WebhookHandler
 
         if ($chatType === 'private') {
             parent::handle($request, $bot);
-        } else {
-            Log::info('Group or channel chat detected, ignoring');
 
             return;
         }
+
+        $payload = $request->input('message')
+            ?? $request->input('channel_post')
+            ?? $request->input('edited_message')
+            ?? $request->input('edited_channel_post');
+
+        if (is_array($payload)) {
+            try {
+                app(TelegramPostImportService::class)->import($payload);
+            } catch (\Throwable $e) {
+                Log::error('TelegramPostImport failed', ['error' => $e->getMessage()]);
+            }
+
+            return;
+        }
+
+        Log::info('Group or channel chat detected, ignoring');
     }
 
     public function start(): void

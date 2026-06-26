@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Enums\EventGenreEnum;
 use App\Enums\EventTypeEnum;
+use Carbon\Carbon;
 use DefStudio\Telegraph\Keyboard\Button;
 
 trait EventFormatingTrait
@@ -93,6 +94,11 @@ trait EventFormatingTrait
                 ->url(route('events.show', $event->id));
         }
 
+        $googleUrl = $this->buildGoogleCalendarUrl($event);
+        if ($googleUrl) {
+            $buttons[] = Button::make('Add to Google Calendar')->url($googleUrl);
+        }
+
         if ($event->cordinates) {
             $buttons[] = Button::make('Get map')->action('get_location')
                 ->param('latitude', substr($event->cordinates['latitude'], 0, 10))
@@ -100,5 +106,35 @@ trait EventFormatingTrait
         }
 
         return $buttons;
+    }
+
+    private function buildGoogleCalendarUrl(object $event): ?string
+    {
+        if (empty($event->start_date)) {
+            return null;
+        }
+
+        $tz = 'Asia/Yerevan';
+
+        $start = $event->start_date instanceof Carbon
+            ? $event->start_date->copy()->setTimezone($tz)
+            : Carbon::parse($event->start_date, $tz);
+
+        if ($event->start_time) {
+            [$hours, $minutes] = explode(':', $event->start_time);
+            $start->setTime((int) $hours, (int) $minutes);
+        }
+
+        $end = (clone $start)->addHours(3);
+
+        $query = http_build_query([
+            'action' => 'TEMPLATE',
+            'text' => $event->title,
+            'details' => strip_tags($event->content ?? ''),
+            'location' => $event->location ?? '',
+            'dates' => $start->utc()->format('Ymd\THis\Z').'/'.$end->utc()->format('Ymd\THis\Z'),
+        ]);
+
+        return 'https://calendar.google.com/calendar/render?'.$query;
     }
 }
