@@ -227,7 +227,7 @@ const computedEvents = computed(() => {
                                 class="flex max-w-[112px] items-start items-center gap-1 text-right"
                             >
                                 <TicketIcon class="mt-0.5 h-5 w-5 shrink-0 opacity-70" />
-                                    <p class="font-bold text-white px-1">
+                                    <p class="font-bold text-white px-1 truncate">
                                         {{ event.price || 'Tickets' }}
                                     </p>
                             </div>
