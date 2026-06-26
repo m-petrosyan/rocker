@@ -131,8 +131,10 @@ class FetchTelegramPostsCommand extends Command
 
         try {
             Http::timeout(10)
+                ->asJson()
                 ->post("{$apiUrl}/bot{$token}/setWebhook", [
                     'url' => $url,
+                    'allowed_updates' => [],
                 ])
                 ->throw();
 
