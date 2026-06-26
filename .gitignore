@@ -29,3 +29,4 @@ yarn-error.log
 /public/sitemap-temp.xml
 todo.md
 /graphify-out/
+.env.bak
