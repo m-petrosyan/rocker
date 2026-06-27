@@ -36,12 +36,14 @@ try {
                 setup({ App, props, plugin }) {
                     console.log('Setting up SSR app with component:', props.component || 'unknown');
                     try {
+                        const ziggyData = page.props?.ziggy ?? {};
+                        const ziggyLocation = ziggyData.location ?? ziggyData.url ?? 'http://localhost';
                         const app = createSSRApp({ render: () => h(App, props) })
                             .use(plugin)
                             .use(PrimeVue, { ssr: true })
                             .use(ZiggyVue, {
-                                ...page.props.ziggy,
-                                location: new URL(page.props.ziggy.location)
+                                ...ziggyData,
+                                location: new URL(ziggyLocation)
                             });
 
                         // Ensure $route is globally available
