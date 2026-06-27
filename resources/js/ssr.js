@@ -9,75 +9,45 @@ import tooltipDirective from '@/Directives/tooltipDirective.js';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
-console.log('Starting Inertia SSR server...');
+createServer((page) => createInertiaApp({
+    page,
+    render: renderToString,
+    title: (title) => `${title ? title + ' - ' : ''}${appName}`,
+    resolve: (name) => resolvePageComponent(
+        `./Pages/${name}.vue`,
+        import.meta.glob('./Pages/**/*.vue')
+    ),
+    setup({ App, props, plugin }) {
+        const ziggyData = page.props?.ziggy;
+        const ziggyRoutes = ziggyData?.routes || {};
 
-try {
-    const server = createServer(async (page) => {
-        console.log('PAGE DEBUG - ziggy in props:', 'ziggy' in (page.props || {}), 'props keys:', Object.keys(page.props || {}).join(','));
-        try {
-            return await createInertiaApp({
-                page,
-                render: renderToString,
-                title: (title) => `${title ? title + ' - ' : ''}${appName}`,
-                resolve: async (name) => {
-                    console.log('Resolving page:', name);
-                    const pages = import.meta.glob('./Pages/**/*.vue', { eager: false });
-                    const pageComponent = await resolvePageComponent(
-                        `./Pages/${name}.vue`,
-                        pages
-                    );
-                    if (!pageComponent) {
-                        console.error('Page not found:', name);
-                        throw new Error(`Page ${name} not found`);
-                    }
-                    console.log('Resolved page component:', name);
-                    return pageComponent;
-                },
-                setup({ App, props, plugin }) {
-                    console.log('Setting up SSR app with component:', props.component || 'unknown');
-                    try {
-                        const ziggyData = page.props?.ziggy;
-                        const ziggyRoutes = ziggyData?.routes || {};
+        const app = createSSRApp({ render: () => h(App, props) })
+            .use(plugin)
+            .use(PrimeVue, { ssr: true });
 
-                        const app = createSSRApp({ render: () => h(App, props) })
-                            .use(plugin)
-                            .use(PrimeVue, { ssr: true });
-
-                        // Build URLs directly from ziggyData.routes, bypassing Ziggy Router entirely.
-                        const ssrRoute = (name, params) => {
-                            try {
-                                const def = ziggyRoutes[name];
-                                if (!def) { return '#'; }
-                                let url = def.uri;
-                                if (params && typeof params === 'object') {
-                                    for (const [k, v] of Object.entries(params)) {
-                                        url = url.replace(`{${k}}`, encodeURIComponent(v));
-                                        url = url.replace(`{${k}?}`, encodeURIComponent(v));
-                                    }
-                                }
-                                url = url.replace(/\/{[^}?]+\?}/g, '');
-                                return url.startsWith('/') ? url : '/' + url;
-                            } catch (_) { return '#'; }
-                        };
-
-                        app.config.globalProperties.route = ssrRoute;
-                        app.config.globalProperties.$route = ssrRoute;
-                        app.directive('tooltip', tooltipDirective);
-
-                        return app;
-                    } catch (setupError) {
-                        console.error('Error in SSR app setup:', setupError);
-                        throw setupError;
+        // Build URLs from ziggyData.routes, bypassing Ziggy Router at runtime.
+        const ssrRoute = (name, params) => {
+            try {
+                const def = ziggyRoutes[name];
+                if (!def) return '#';
+                let url = def.uri;
+                if (params && typeof params === 'object') {
+                    for (const [k, v] of Object.entries(params)) {
+                        url = url.replace(`{${k}}`, encodeURIComponent(v));
+                        url = url.replace(`{${k}?}`, encodeURIComponent(v));
                     }
                 }
-            });
-        } catch (error) {
-            console.error('SSR Setup Error:', error);
-            throw error;
-        }
-    });
+                url = url.replace(/\/\{[^}?]+\?\}/g, '');
+                return url.startsWith('/') ? url : '/' + url;
+            } catch {
+                return '#';
+            }
+        };
 
-    console.log('SSR server initialized:', server);
-} catch (error) {
-    console.error('SSR Server Initialization Failed:', error);
-}
+        app.config.globalProperties.route = ssrRoute;
+        app.config.globalProperties.$route = ssrRoute;
+        app.directive('tooltip', tooltipDirective);
+
+        return app;
+    }
+}));
