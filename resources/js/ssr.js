@@ -3,7 +3,7 @@ import createServer from '@inertiajs/vue3/server';
 import { renderToString } from '@vue/server-renderer';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createSSRApp, h } from 'vue';
-import { route as ziggyRoute, ZiggyVue } from '../../vendor/tightenco/ziggy';
+import { route as ziggyRoute } from '../../vendor/tightenco/ziggy';
 import PrimeVue from 'primevue/config';
 import tooltipDirective from '@/Directives/tooltipDirective.js';
 
@@ -36,6 +36,7 @@ try {
                 setup({ App, props, plugin }) {
                     console.log('Setting up SSR app with component:', props.component || 'unknown');
                     try {
+                        // Build a safe Ziggy config from page props with fallbacks
                         const ziggyData = page.props?.ziggy;
                         const defaultZiggy = {
                             url: 'http://localhost',
@@ -48,16 +49,23 @@ try {
                             ? { ...defaultZiggy, ...ziggyData }
                             : defaultZiggy;
                         const ziggyLocation = ziggyConfig.location ?? ziggyConfig.url ?? 'http://localhost';
+
                         const app = createSSRApp({ render: () => h(App, props) })
                             .use(plugin)
-                            .use(PrimeVue, { ssr: true })
-                            .use(ZiggyVue, {
+                            .use(PrimeVue, { ssr: true });
+
+                        // Create a route function with the config baked in via closure.
+                        // This avoids relying on ZiggyVue plugin internals during SSR,
+                        // which can fail if global ziggy config is not available.
+                        const routeWithConfig = (name, params, absolute) =>
+                            ziggyRoute(name, params, absolute, {
                                 ...ziggyConfig,
                                 location: new URL(ziggyLocation)
                             });
 
-                        // Ensure $route is globally available
-                        app.config.globalProperties.$route = ziggyRoute;
+                        // Set both route and $route so templates and script work
+                        app.config.globalProperties.route = routeWithConfig;
+                        app.config.globalProperties.$route = routeWithConfig;
                         app.directive('tooltip', tooltipDirective);
 
                         return app;
