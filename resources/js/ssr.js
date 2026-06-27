@@ -55,16 +55,29 @@ try {
                             .use(plugin)
                             .use(PrimeVue, { ssr: true });
 
-                        // Create a route function with the config baked in via closure.
-                        // Catches any Ziggy errors during SSR to prevent 502 crashes.
-                        const routeWithConfig = (name, params, absolute) => {
+                        // Create a route function that builds URLs directly from ziggyData.routes.
+                        // This completely bypasses Ziggy's Router class which has issues during SSR.
+                        const routeWithConfig = (name, params) => {
                             try {
-                                return ziggyRoute(name, params, absolute, {
-                                    ...ziggyConfig,
-                                    location: new URL(ziggyLocation)
-                                });
+                                const routeDef = ziggyData?.routes?.[name];
+                                if (!routeDef) {
+                                    console.error('SSR route not found in ziggyData:', name);
+                                    return '#';
+                                }
+                                let url = routeDef.uri;
+                                if (params && typeof params === 'object') {
+                                    for (const [key, value] of Object.entries(params)) {
+                                        url = url.replace(`{${key}}`, encodeURIComponent(value));
+                                        url = url.replace(`{${key}?}`, encodeURIComponent(value));
+                                    }
+                                }
+                                // Remove remaining optional parameters
+                                url = url.replace(/\/{[^}?]+\?}/g, '');
+                                // Ensure leading slash
+                                if (!url.startsWith('/')) url = '/' + url;
+                                return url;
                             } catch (e) {
-                                console.error('SSR route fallback for:', name, e.message);
+                                console.error('SSR route error:', name, e.message);
                                 return '#';
                             }
                         };
