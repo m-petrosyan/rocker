@@ -3,7 +3,7 @@ import createServer from '@inertiajs/vue3/server';
 import { renderToString } from '@vue/server-renderer';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createSSRApp, h } from 'vue';
-import { route as ziggyRoute } from '../../vendor/tightenco/ziggy';
+
 import PrimeVue from 'primevue/config';
 import tooltipDirective from '@/Directives/tooltipDirective.js';
 
@@ -36,51 +36,32 @@ try {
                 setup({ App, props, plugin }) {
                     console.log('Setting up SSR app with component:', props.component || 'unknown');
                     try {
-                        // Build a safe Ziggy config from page props with fallbacks
                         const ziggyData = page.props?.ziggy;
-                        console.error('ZIGGY ROUTES COUNT:', ziggyData ? Object.keys(ziggyData.routes || {}).length : 0, 'defaults type:', typeof ziggyData?.defaults, Array.isArray(ziggyData?.defaults));
-                        const defaultZiggy = {
-                            url: 'http://localhost',
-                            port: null,
-                            defaults: {},
-                            routes: {},
-                            location: 'http://localhost',
-                        };
-                        const ziggyConfig = ziggyData
-                            ? { ...defaultZiggy, ...ziggyData }
-                            : defaultZiggy;
-                        const ziggyLocation = ziggyConfig.location ?? ziggyConfig.url ?? 'http://localhost';
+                        const ziggyRoutes = ziggyData?.routes || {};
 
                         const app = createSSRApp({ render: () => h(App, props) })
                             .use(plugin)
                             .use(PrimeVue, { ssr: true });
 
-                        // Create a route function that builds URLs directly from ziggyData.routes.
-                        // This completely bypasses Ziggy's Router class which has issues during SSR.
-                        const routeWithConfig = (name, params) => {
+                        // Build URLs directly from ziggyData.routes, bypassing Ziggy Router entirely.
+                        const ssrRoute = (name, params) => {
                             try {
-                                const routeDef = ziggyData?.routes?.[name];
-                                if (!routeDef) {
-                                    console.error('SSR route not found in ziggyData:', name);
-                                    return '#';
-                                }
-                                let url = routeDef.uri;
+                                const def = ziggyRoutes[name];
+                                if (!def) { return '#'; }
+                                let url = def.uri;
                                 if (params && typeof params === 'object') {
-                                    for (const [key, value] of Object.entries(params)) {
-                                        url = url.replace(`{${key}}`, encodeURIComponent(value));
-                                        url = url.replace(`{${key}?}`, encodeURIComponent(value));
+                                    for (const [k, v] of Object.entries(params)) {
+                                        url = url.replace(`{${k}}`, encodeURIComponent(v));
+                                        url = url.replace(`{${k}?}`, encodeURIComponent(v));
                                     }
                                 }
-                                // Remove remaining optional parameters
                                 url = url.replace(/\/{[^}?]+\?}/g, '');
-                                // Ensure leading slash
-                                if (!url.startsWith('/')) url = '/' + url;
-                                return url;
-                            } catch (e) {
-                                console.error('SSR route error:', name, e.message);
-                                return '#';
-                            }
+                                return url.startsWith('/') ? url : '/' + url;
+                            } catch (_) { return '#'; }
                         };
+
+                        app.config.globalProperties.route = ssrRoute;
+                        app.config.globalProperties.$route = ssrRoute;
 
                         // Set both route and $route so templates and script work
                         app.config.globalProperties.route = routeWithConfig;
