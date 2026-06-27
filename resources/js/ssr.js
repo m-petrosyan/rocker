@@ -62,10 +62,6 @@ try {
 
                         app.config.globalProperties.route = ssrRoute;
                         app.config.globalProperties.$route = ssrRoute;
-
-                        // Set both route and $route so templates and script work
-                        app.config.globalProperties.route = routeWithConfig;
-                        app.config.globalProperties.$route = routeWithConfig;
                         app.directive('tooltip', tooltipDirective);
 
                         return app;
