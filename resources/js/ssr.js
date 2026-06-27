@@ -13,7 +13,7 @@ console.log('Starting Inertia SSR server...');
 
 try {
     const server = createServer(async (page) => {
-        console.log('Page Props:', JSON.stringify(page.props, null, 2));
+        console.log('PAGE DEBUG - ziggy in props:', 'ziggy' in (page.props || {}), 'props keys:', Object.keys(page.props || {}).join(','));
         try {
             return await createInertiaApp({
                 page,
