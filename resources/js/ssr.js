@@ -36,13 +36,23 @@ try {
                 setup({ App, props, plugin }) {
                     console.log('Setting up SSR app with component:', props.component || 'unknown');
                     try {
-                        const ziggyData = page.props?.ziggy ?? {};
-                        const ziggyLocation = ziggyData.location ?? ziggyData.url ?? 'http://localhost';
+                        const ziggyData = page.props?.ziggy;
+                        const defaultZiggy = {
+                            url: 'http://localhost',
+                            port: null,
+                            defaults: {},
+                            routes: {},
+                            location: 'http://localhost',
+                        };
+                        const ziggyConfig = ziggyData
+                            ? { ...defaultZiggy, ...ziggyData }
+                            : defaultZiggy;
+                        const ziggyLocation = ziggyConfig.location ?? ziggyConfig.url ?? 'http://localhost';
                         const app = createSSRApp({ render: () => h(App, props) })
                             .use(plugin)
                             .use(PrimeVue, { ssr: true })
                             .use(ZiggyVue, {
-                                ...ziggyData,
+                                ...ziggyConfig,
                                 location: new URL(ziggyLocation)
                             });
 
