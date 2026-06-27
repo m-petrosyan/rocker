@@ -63,7 +63,7 @@ try {
                                     location: new URL(ziggyLocation)
                                 });
                             } catch (e) {
-                                console.warn('SSR route fallback for:', name, e.message);
+                                console.error('SSR route fallback for:', name, e.message);
                                 return '#';
                             }
                         };
