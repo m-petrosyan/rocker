@@ -38,6 +38,7 @@ try {
                     try {
                         // Build a safe Ziggy config from page props with fallbacks
                         const ziggyData = page.props?.ziggy;
+                        console.error('ZIGGY ROUTES COUNT:', ziggyData ? Object.keys(ziggyData.routes || {}).length : 0, 'defaults type:', typeof ziggyData?.defaults, Array.isArray(ziggyData?.defaults));
                         const defaultZiggy = {
                             url: 'http://localhost',
                             port: null,
