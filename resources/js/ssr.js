@@ -55,13 +55,18 @@ try {
                             .use(PrimeVue, { ssr: true });
 
                         // Create a route function with the config baked in via closure.
-                        // This avoids relying on ZiggyVue plugin internals during SSR,
-                        // which can fail if global ziggy config is not available.
-                        const routeWithConfig = (name, params, absolute) =>
-                            ziggyRoute(name, params, absolute, {
-                                ...ziggyConfig,
-                                location: new URL(ziggyLocation)
-                            });
+                        // Catches any Ziggy errors during SSR to prevent 502 crashes.
+                        const routeWithConfig = (name, params, absolute) => {
+                            try {
+                                return ziggyRoute(name, params, absolute, {
+                                    ...ziggyConfig,
+                                    location: new URL(ziggyLocation)
+                                });
+                            } catch (e) {
+                                console.warn('SSR route fallback for:', name, e.message);
+                                return '#';
+                            }
+                        };
 
                         // Set both route and $route so templates and script work
                         app.config.globalProperties.route = routeWithConfig;
