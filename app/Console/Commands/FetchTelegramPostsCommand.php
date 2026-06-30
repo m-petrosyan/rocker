@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\AdminPendingEventNotificationJob;
 use App\Models\Event;
 use App\Services\TelegramPostImportService;
 use Illuminate\Console\Command;
@@ -235,6 +236,7 @@ class FetchTelegramPostsCommand extends Command
 
             if ($event) {
                 $processed++;
+                dispatch(new AdminPendingEventNotificationJob($event->id));
                 $this->line("✅ Event #{$event->id} — «{$event->title}»");
             } else {
                 $skipped++;

@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Enums\EventTypeEnum;
-use App\Jobs\AdminPendingEventNotificationJob;
 use App\Models\Event;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -67,8 +66,6 @@ class TelegramPostImportService
         ]);
 
         $this->attachPoster($event, $photos);
-
-        dispatch(new AdminPendingEventNotificationJob($event->id));
 
         Log::info('TelegramPostImport: создан pending Event', [
             'event_id' => $event->id,
