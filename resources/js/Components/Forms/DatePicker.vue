@@ -15,6 +15,10 @@ const props = defineProps({
   flow: {
     type: Array,
     default: () => ['calendar', 'time']
+  },
+  minDate: {
+    type: String,
+    default: null
   }
 });
 
@@ -55,6 +59,10 @@ const format = (date) => {
 const useTime = computed(() => {
   return props.flow.includes('time');
 });
+
+const minDateValue = computed(() => {
+  return props.minDate ? new Date(props.minDate) : null;
+});
 </script>
 
 <template>
@@ -63,6 +71,7 @@ const useTime = computed(() => {
       v-model="defaultDateTime"
       :format="format"
       :flow="flow"
+      :min-date="minDateValue"
       dark
       inline
     />

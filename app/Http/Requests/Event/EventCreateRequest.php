@@ -37,11 +37,24 @@ class EventCreateRequest extends FormRequest
             'bands.*.name' => ['required', 'string', 'max:255'],
             'bands.*.id' => ['nullable', 'integer', 'exists:bands,id'],
             'start_date' => ['required', 'date', 'after_or_equal:today'],
+            'end_date' => [
+                'nullable',
+                'date',
+                'after_or_equal:start_date',
+            ],
             'start_time' => ['required', 'date_format:H:i'],
             'content' => ['required', 'string', 'min:10', 'max:750'],
             'price' => ['nullable', 'string', 'max:20'],
             'link' => ['nullable', 'url', 'max:1000'],
             'ticket' => ['nullable', 'url', 'max:1000'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'end_date.required' => 'The end date field is required for festivals.',
+            'end_date.after_or_equal' => 'The festival end date must be on or after the start date.',
         ];
     }
 

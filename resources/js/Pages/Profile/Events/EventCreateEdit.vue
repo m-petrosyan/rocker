@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, reactive } from 'vue';
+import { computed, onMounted, reactive, ref, watch } from 'vue';
 import RadioSwichButton from '@/Components/Forms/RadioSwichButton.vue';
 import { useForm } from '@inertiajs/vue3';
 import DatePicker from '@/Components/Forms/DatePicker.vue';
@@ -30,7 +30,7 @@ const props = defineProps({
 
 const types = [
   { name: 'CONCERT', key: 'concert' },
-  { name: 'EVENT', key: 'event' }
+  { name: 'EVENT', key: 'event' },
 ];
 
 const genres = [
@@ -54,6 +54,8 @@ const data = reactive({
   disable: false
 });
 
+const festEnabled = ref(!!props.event?.end_date);
+
 const form = useForm(
   props.event?.id
     ? {
@@ -70,6 +72,7 @@ const form = useForm(
       location: null,
       cordinates: null,
       start_date: null,
+      end_date: null,
       start_time: null,
       poster_file: null,
       link: null,
@@ -86,12 +89,44 @@ onMounted(() => {
 });
 
 const submitEvent = () => {
-  form.post(route(form.id ? 'profile.events.update' : 'profile.events.store', form.id), {
-    preserveScroll: false
-  });
+  if (festEnabled.value && !form.end_date) {
+    form.setError('end_date', 'The festival end date is required.');
+
+    return;
+  }
+
+  if (festEnabled.value && form.start_date && form.end_date < form.start_date) {
+    form.setError('end_date', 'The festival end date must be on or after the start date.');
+
+    return;
+  }
+
+  form
+    .transform((data) => ({
+      ...data,
+      end_date: festEnabled.value ? data.end_date : null,
+    }))
+    .post(route(form.id ? 'profile.events.update' : 'profile.events.store', form.id), {
+      preserveScroll: false,
+    });
 };
 
 const selectedCountry = computed(() => form.country === 'am' ? 'Armenia' : form.country === 'ge' ? 'Georgia' : null);
+
+const toggleFest = () => {
+  festEnabled.value = !festEnabled.value;
+
+  if (!festEnabled.value) {
+    form.end_date = null;
+    form.clearErrors('end_date');
+  }
+};
+
+watch(() => form.start_date, (startDate) => {
+  if (festEnabled.value && form.end_date && startDate && form.end_date < startDate) {
+    form.end_date = null;
+  }
+});
 </script>
 
 <template>
@@ -119,8 +154,7 @@ const selectedCountry = computed(() => form.country === 'am' ? 'Armenia' : form.
           <div class="w-full md:w-1/2">
             <Preview
               label="preview"
-              class="h-full min-h-96"
-              labelClass="h-full"
+              class="w-full aspect-[616/576]"
               :image="form.poster?.large"
               blur
               v-model:preview="form.poster_file"
@@ -152,10 +186,29 @@ const selectedCountry = computed(() => form.country === 'am' ? 'Armenia' : form.
                          :options="bandsList"
                          text="Bands"
                          multiple />
+            <button
+              type="button"
+              class="w-full rounded-lg border border-orange/40 px-5 py-2 text-sm font-medium text-white transition hover:bg-orange"
+              :class="festEnabled ? 'bg-orange' : 'bg-graydark2'"
+              @click="toggleFest"
+            >
+              {{ festEnabled ? 'Fest ✓' : 'Fest' }}
+            </button>
             <DatePicker
               v-model:start_date="form.start_date"
               v-model:start_time="form.start_time"
             />
+            <div v-if="festEnabled" class="rounded-lg border border-orange/40 bg-black/20 p-3">
+              <p class="mb-2 text-sm font-semibold text-orange">Festival end date</p>
+              <DatePicker
+                v-model:start_date="form.end_date"
+                :flow="['calendar']"
+                :min-date="form.start_date"
+              />
+              <p v-if="form.errors.end_date" class="mt-2 text-sm text-red">
+                {{ form.errors.end_date }}
+              </p>
+            </div>
 
           </div>
         </div>

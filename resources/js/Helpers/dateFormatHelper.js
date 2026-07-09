@@ -36,6 +36,6 @@ export const toIso8601WithEnd = (date, time) => {
     return { start: isoStart, end: isoEnd };
 };
 
-export const isPastDate = (date) => {
-    return moment(date).isBefore(moment(), 'day');
+export const isPastDate = (date, endDate = null) => {
+    return moment(endDate ?? date).isBefore(moment(), 'day');
 };

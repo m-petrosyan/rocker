@@ -27,7 +27,8 @@ trait EventFormatingTrait
             $eventData['genre'] = sprintf("%s\n\n", $this->formatGenre($event->genre));
         }
 
-        $eventData['type'] = sprintf("%s\n\n", $this->formatEventType($event->type));
+        $isFest = ! empty($event->end_date);
+        $eventData['type'] = sprintf("%s\n\n", $this->formatEventType($event->type, $isFest));
 
         if ($event->price) {
             $eventData['price'] = sprintf("💵 %s\n\n", $event->price);
@@ -62,9 +63,16 @@ trait EventFormatingTrait
         return sprintf('%s / %s', trans('genres.rock'), trans('genres.metal'));
     }
 
-    private function formatEventType(string $type): string
+    private function formatEventType(string $type, bool $isFest = false): string
     {
-        return $type === EventTypeEnum::CONCERT->value ? '🎙️ concert' : '🎉 event';
+        if ($isFest) {
+            return '🎪 fest';
+        }
+
+        return match ($type) {
+            EventTypeEnum::CONCERT->value => '🎙️ concert',
+            default => '🎉 event',
+        };
     }
 
     private function appendBotSignature(string $content): string
@@ -125,7 +133,9 @@ trait EventFormatingTrait
             $start->setTime((int) $hours, (int) $minutes);
         }
 
-        $end = (clone $start)->addHours(3);
+        $end = ! empty($event->end_date)
+            ? Carbon::parse($event->end_date, $tz)->endOfDay()
+            : (clone $start)->addHours(3);
 
         $query = http_build_query([
             'action' => 'TEMPLATE',

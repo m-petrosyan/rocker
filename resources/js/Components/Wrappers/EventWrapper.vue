@@ -166,6 +166,12 @@ const computedEvents = computed(() => {
 
                     <div class="absolute right-3 top-3 z-20 flex flex-col items-end gap-2">
                         <div
+                            v-if="event.end_date"
+                            class="rounded-md bg-orange px-2 py-1 text-xs font-black uppercase tracking-wide text-white shadow-lg"
+                        >
+                            Fest
+                        </div>
+                        <div
                             v-if="event.country"
                             class="rounded-md bg-white p-1 shadow-lg"
                         >
@@ -208,6 +214,12 @@ const computedEvents = computed(() => {
                             class="mb-1 text-xs font-black uppercase tracking-normal text-orange"
                         >
                             {{ event.genre }}
+                        </p>
+                        <p
+                            v-if="event.end_date"
+                            class="mb-1 text-[11px] font-semibold uppercase tracking-wide text-orange-200"
+                        >
+                            {{ formatDateTime(event.start_date, 'DD MMM') }} - {{ formatDateTime(event.end_date, 'DD MMM') }}
                         </p>
                         <h4
                             class="max-h-[48px] overflow-hidden text-[22px] font-black uppercase leading-[1.05] text-white drop-shadow"

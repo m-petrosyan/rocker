@@ -35,8 +35,32 @@ class EventRepository
                 $query->whereIn('country', $country === 'all' ? ['am', 'ge'] : [$country]);
             })
             ->with(['status'])
-            ->when(! $past, fn ($query) => $query->whereDate('start_date', '>=', today()))
-            ->when($past, fn ($query) => $query->whereDate('start_date', '<', today()))
+            ->when(! $past, function ($query) {
+                $query->where(function ($upcomingQuery) {
+                    $upcomingQuery
+                        ->whereDate('start_date', '>=', today())
+                        ->orWhere(function ($festivalQuery) {
+                            $festivalQuery
+                                ->whereNotNull('end_date')
+                                ->whereDate('end_date', '>=', today());
+                        });
+                });
+            })
+            ->when($past, function ($query) {
+                $query->where(function ($pastQuery) {
+                    $pastQuery
+                        ->where(function ($standardQuery) {
+                            $standardQuery
+                                ->whereNull('end_date')
+                                ->whereDate('start_date', '<', today());
+                        })
+                        ->orWhere(function ($festivalQuery) {
+                            $festivalQuery
+                                ->whereNotNull('end_date')
+                                ->whereDate('end_date', '<', today());
+                        });
+                });
+            })
             ->when(isset($filters['from']), fn ($query) => $query->whereDate('start_date', '>=', $filters['from']))
             ->when(isset($filters['to']), fn ($query) => $query->whereDate('start_date', '<=', $filters['to']))
             ->orderBy('start_date', $order)
@@ -56,7 +80,15 @@ class EventRepository
         return $user?->events()
             ->with('status')
             ->withCount(['views'])
-            ->whereDate('start_date', '>=', today('Asia/Yerevan'))
+            ->where(function ($query) {
+                $query
+                    ->whereDate('start_date', '>=', today('Asia/Yerevan'))
+                    ->orWhere(function ($festivalQuery) {
+                        $festivalQuery
+                            ->whereNotNull('end_date')
+                            ->whereDate('end_date', '>=', today('Asia/Yerevan'));
+                    });
+            })
             ->whereRelation('status', 'status', '!=', EventStatusEnum::DELETED->value)
             ->orderBy('start_date')
             ->paginate($count);
@@ -66,7 +98,17 @@ class EventRepository
     {
         return Event::query()
             ->whereRelation('status', 'status', '=', $status)
-            ->when($active, fn ($query) => $query->whereDate('start_date', '>=', today()))
+            ->when($active, function ($query) {
+                $query->where(function ($activeQuery) {
+                    $activeQuery
+                        ->whereDate('start_date', '>=', today())
+                        ->orWhere(function ($festivalQuery) {
+                            $festivalQuery
+                                ->whereNotNull('end_date')
+                                ->whereDate('end_date', '>=', today());
+                        });
+                });
+            })
             ->count();
     }
 }

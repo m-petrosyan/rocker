@@ -32,6 +32,7 @@ class Event extends Model implements HasMedia, Viewable
         'location',
         'cordinates',
         'start_date',
+        'end_date',
         'start_time',
         'notify_count',
         'tg_source_chat_id',
@@ -40,6 +41,7 @@ class Event extends Model implements HasMedia, Viewable
 
     protected $casts = [
         'cordinates' => 'json',
+        'end_date' => 'date:Y-m-d',
     ];
 
     protected $appends = [
@@ -59,6 +61,7 @@ class Event extends Model implements HasMedia, Viewable
 
     protected array $dates = [
         'start_date',
+        'end_date',
         'created_at',
         'updated_at',
     ];

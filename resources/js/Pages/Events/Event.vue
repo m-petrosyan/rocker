@@ -15,6 +15,7 @@ import BandTags from '@/Components/Tags/BandTags.vue';
 import { formatDateTime, isPastDate } from '@/Helpers/dateFormatHelper.js';
 import NavLink from '@/Components/NavLink.vue';
 import UserIcon from '@/Components/Icons/UserIcon.vue';
+import { computed } from 'vue';
 
 const url = fullUrl();
 
@@ -34,9 +35,16 @@ const props = defineProps({
   }
 });
 
-const type = props.event && props.event.type === 2 ? 'concert' : 'event';
+const type = computed(() => {
+  if (props.event?.type === 'concert' || props.event?.type === 2) {
+    return 'concert';
+  }
 
-const isPast = isPastDate(props.event.start_date);
+  return 'event';
+});
+
+const isPast = isPastDate(props.event.start_date, props.event.end_date);
+const isFest = computed(() => !!props.event?.end_date);
 </script>
 
 <template>
@@ -100,6 +108,9 @@ const isPast = isPastDate(props.event.start_date);
     <div class="text-center text-red">
       <p>genre: {{ event.genre }}</p>
       <p>type: {{ type }}</p>
+      <p v-if="isFest && event.end_date">
+        fest dates: {{ formatDateTime(event.start_date, 'DD MMM YYYY') }} - {{ formatDateTime(event.end_date, 'DD MMM YYYY') }}
+      </p>
     </div>
     <div class="mt-4" v-if="event.bands?.length">
       <h4 class="text-center">Bands</h4>
