@@ -62,6 +62,26 @@ const isFest = computed(() => !!props.event?.end_date);
         fetchpriority="high"
       />
       <div
+        v-if="isFest"
+        class="absolute left-0 top-0 z-20 flex h-28 flex-col items-center justify-center rounded-br-xl bg-orange px-4 text-xl shadow-lg"
+        :class="isPast ? 'bg-graydarker':'bg-orange'"
+      >
+        <p class="text-xs font-black uppercase tracking-wide">Fest</p>
+        <div class="mt-1 flex items-center gap-x-2">
+          <div class="text-center">
+            <p class="text-3xl font-black leading-none">{{ formatDateTime(event.start_date, 'D') }}</p>
+            <p class="mt-0.5 text-[10px] font-bold leading-none">{{ formatDateTime(event.start_date, 'MMM').toUpperCase() }}</p>
+          </div>
+          <span class="text-2xl font-black leading-none">—</span>
+          <div class="text-center">
+            <p class="text-3xl font-black leading-none">{{ formatDateTime(event.end_date, 'D') }}</p>
+            <p class="mt-0.5 text-[10px] font-bold leading-none">{{ formatDateTime(event.end_date, 'MMM').toUpperCase() }}</p>
+          </div>
+        </div>
+        <small class="mt-1 text-xs font-semibold">{{ event.start_time }}</small>
+      </div>
+      <div
+        v-else
         class="absolute inset-0 z-20 flex h-28 w-28 flex-col items-center justify-center text-xl"
         :class="isPast ? 'bg-graydarker':'bg-orange'"
       >
@@ -101,16 +121,19 @@ const isFest = computed(() => !!props.event?.end_date);
     </div>
 
     <h1>
-      {{ event.title }} – {{ type }}, {{ moment(event.start_date, 'DD MMMM YYYY').format('DD MMMM YYYY') }},
+      {{ event.title }} – {{ isFest ? 'fest' : type }},
+      <template v-if="isFest">
+        {{ formatDateTime(event.start_date, 'DD MMM YYYY') }} — {{ formatDateTime(event.end_date, 'DD MMM YYYY') }},
+      </template>
+      <template v-else>
+        {{ moment(event.start_date, 'DD MMMM YYYY').format('DD MMMM YYYY') }},
+      </template>
       {{ removePostalCode(event.location) }}
     </h1>
     <h2 class="mt-6 text-center text-2xl">{{ event.title }}</h2>
     <div class="text-center text-red">
       <p>genre: {{ event.genre }}</p>
-      <p>type: {{ type }}</p>
-      <p v-if="isFest && event.end_date">
-        fest dates: {{ formatDateTime(event.start_date, 'DD MMM YYYY') }} - {{ formatDateTime(event.end_date, 'DD MMM YYYY') }}
-      </p>
+      <p>type: {{ isFest ? 'fest' : type }}</p>
     </div>
     <div class="mt-4" v-if="event.bands?.length">
       <h4 class="text-center">Bands</h4>
