@@ -57,7 +57,7 @@ class Band extends Model implements HasMedia, Viewable
 
     public function galleries(): BelongsToMany
     {
-        return $this->belongsToMany(Gallery::class)->orderBy('date', 'asc');
+        return $this->belongsToMany(Gallery::class)->orderBy('date', 'desc');
     }
 
     public function genres(): BelongsToMany
