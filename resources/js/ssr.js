@@ -31,10 +31,29 @@ createServer((page) => createInertiaApp({
                 const def = ziggyRoutes[name];
                 if (!def) return '#';
                 let url = def.uri;
-                if (params && typeof params === 'object') {
-                    for (const [k, v] of Object.entries(params)) {
-                        url = url.replace(`{${k}}`, encodeURIComponent(v));
-                        url = url.replace(`{${k}?}`, encodeURIComponent(v));
+                if (params != null) {
+                    if (typeof params === 'object' && !Array.isArray(params)) {
+                        // Object params: route('events.show', { event: 123 })
+                        for (const [k, v] of Object.entries(params)) {
+                            url = url.replace(`{${k}}`, encodeURIComponent(v));
+                            url = url.replace(`{${k}?}`, encodeURIComponent(v));
+                        }
+                    } else if (Array.isArray(params)) {
+                        // Array params: route('some.route', [val1, val2])
+                        if (def.parameters) {
+                            def.parameters.forEach((param, i) => {
+                                if (i < params.length) {
+                                    url = url.replace(`{${param}}`, encodeURIComponent(params[i]));
+                                    url = url.replace(`{${param}?}`, encodeURIComponent(params[i]));
+                                }
+                            });
+                        }
+                    } else if (def.parameters && def.parameters.length > 0) {
+                        // Scalar params: route('events.show', eventId)
+                        // Ziggy maps the scalar to the first required parameter
+                        const firstParam = def.parameters[0];
+                        url = url.replace(`{${firstParam}}`, encodeURIComponent(params));
+                        url = url.replace(`{${firstParam}?}`, encodeURIComponent(params));
                     }
                 }
                 url = url.replace(/\/\{[^}?]+\?\}/g, '');
