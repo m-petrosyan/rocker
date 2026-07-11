@@ -2,7 +2,6 @@
 
 namespace App\Telegram;
 
-use App\Services\TelegramPostImportService;
 use DefStudio\Telegraph\Enums\ChatActions;
 use DefStudio\Telegraph\Handlers\WebhookHandler;
 use DefStudio\Telegraph\Keyboard\Keyboard;
@@ -20,7 +19,6 @@ class TelegraphHandler extends WebhookHandler
 
     public function handle(Request $request, TelegraphBot $bot): void
     {
-
         $chatType = $request->input('callback_query.message.chat.type')
             ?? $request->input('message.chat.type')
             ?? $request->input('channel_post.chat.type')
@@ -34,22 +32,9 @@ class TelegraphHandler extends WebhookHandler
             return;
         }
 
-        $payload = $request->input('message')
-            ?? $request->input('channel_post')
-            ?? $request->input('edited_message')
-            ?? $request->input('edited_channel_post');
-
-        if (is_array($payload)) {
-            try {
-                app(TelegramPostImportService::class)->import($payload);
-            } catch (\Throwable $e) {
-                Log::error('TelegramPostImport failed', ['error' => $e->getMessage()]);
-            }
-
-            return;
-        }
-
-        Log::info('Group or channel chat detected, ignoring');
+        // Каналы и группы обрабатываются только по расписанию
+        // через команду app:fetch-telegram-posts (cron: 21:00)
+        Log::info('Group or channel chat detected, ignoring (will be processed by schedule)');
     }
 
     public function start(): void
