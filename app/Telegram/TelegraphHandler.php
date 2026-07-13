@@ -2,6 +2,7 @@
 
 namespace App\Telegram;
 
+use App\Services\TelegramPostImportService;
 use DefStudio\Telegraph\Enums\ChatActions;
 use DefStudio\Telegraph\Handlers\WebhookHandler;
 use DefStudio\Telegraph\Keyboard\Keyboard;
@@ -32,9 +33,29 @@ class TelegraphHandler extends WebhookHandler
             return;
         }
 
-        // Каналы и группы обрабатываются только по расписанию
-        // через команду app:fetch-telegram-posts (cron: 21:00)
-        Log::info('Group or channel chat detected, ignoring (will be processed by schedule)');
+        // Обработка постов из групп/каналов через TelegramPostImportService
+        $payload = $request->input('channel_post') ?? $request->input('message');
+
+        if ($payload) {
+            try {
+                $service = app(TelegramPostImportService::class);
+                $event = $service->import($payload);
+
+                if ($event) {
+                    Log::info('Event created from group post via webhook', [
+                        'event_id' => $event->id,
+                        'chat_type' => $chatType,
+                    ]);
+                }
+            } catch (\Throwable $e) {
+                Log::error('Error processing group post via webhook', [
+                    'error' => $e->getMessage(),
+                    'chat_type' => $chatType,
+                ]);
+            }
+        } else {
+            Log::info('Group/channel update without message payload', ['chat_type' => $chatType]);
+        }
     }
 
     public function start(): void
