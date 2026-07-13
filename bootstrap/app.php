@@ -43,9 +43,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $schedule->command('app:old-event-messages-delete')->weekly();
 
         $schedule->command('backup:clean')->cron('0 23 */14 * *');
-        //        $schedule->command('app:fetch-telegram-posts --source=sadsadsasdasadsa')->everyMinute();
-        $schedule->command('app:fetch-telegram-posts --source=yerevanmetal --delete-webhook')->dailyAt('23:00');
-        $schedule->command('app:fetch-telegram-posts --source=tbilisimetal --delete-webhook')->dailyAt('23:05');
+        $schedule->command('app:notify-pending-events')->dailyAt('23:00');
     })
     ->withExceptions(function (Exceptions $exceptions) {
         if (! app()->environment('local')) {
