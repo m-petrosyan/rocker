@@ -7,7 +7,9 @@ use App\Enums\CountryEnum;
 use App\Enums\EventGenreEnum;
 use App\Enums\EventStatusEnum;
 use App\Http\Requests\Profile\ProfileImageUpdateRequest;
+use App\Http\Requests\User\SaveFacebookSourceRequest;
 use App\Http\Requests\User\UserUpdateRequest;
+use App\Jobs\FetchFacebookEventsJob;
 use App\Models\User;
 use App\Repositories\BandRepository;
 use App\Repositories\BlogRepository;
@@ -37,7 +39,7 @@ class ProfileController
         }
 
         return Inertia::render('Profile/Profile', [
-            'user' => $user->load('links', 'settings', 'blockedRecord'),
+            'user' => $user->load('links', 'settings', 'facebookPages', 'blockedRecord'),
             'owner' => $owner,
             'galleries' => GalleryRepository::userGallery($user),
             'events' => EventRepository::userEvents($user, 100),
@@ -52,7 +54,7 @@ class ProfileController
     public function edit(Request $request): Response
     {
         return Inertia::render('Profile/Settings/Settings', [
-            'user' => auth()->user()->load('links', 'settings', 'chat', 'mergeCode'),
+            'user' => auth()->user()->load('links', 'settings', 'facebookPages', 'chat', 'mergeCode'),
             'owner' => true,
             'countries' => CountryEnum::getKeysValues(),
             'cities' => CityEnum::getKeysValues(options: $request->country ?? auth()->user()->settings?->country),
@@ -77,5 +79,48 @@ class ProfileController
             ->toMediaCollection('images');
 
         session()->flash('message', 'The image has been updated.');
+    }
+
+    public function saveFacebookSource(
+        SaveFacebookSourceRequest $request,
+    ): RedirectResponse {
+        $user = auth()->user();
+        $url = $request->input('fb_page_url');
+
+        // Save to new table
+        $user->facebookPages()->create([
+            'page_url' => $url,
+        ]);
+
+        // Dispatch async import (Browsershot is too slow for sync HTTP request)
+        FetchFacebookEventsJob::dispatch($user);
+
+        session()->flash('message', '✅ Facebook page connected! Events will be imported within the next few minutes.');
+
+        return redirect()->route('profile.index');
+    }
+
+    public function deleteFacebookSource(Request $request): RedirectResponse
+    {
+        $user = auth()->user();
+        $url = $request->input('fb_page_url');
+
+        if (! $url) {
+            session()->flash('message', 'URL is required.');
+
+            return redirect()->route('profile.index');
+        }
+
+        $deleted = $user->facebookPages()
+            ->where('page_url', $url)
+            ->delete();
+
+        if ($deleted) {
+            session()->flash('message', '❌ Facebook page disconnected.');
+        } else {
+            session()->flash('message', 'Page not found.');
+        }
+
+        return redirect()->route('profile.index');
     }
 }

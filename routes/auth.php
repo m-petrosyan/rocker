@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
+use App\Http\Controllers\Auth\FacebookAuthController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Profile\BandController;
 use App\Http\Controllers\Profile\BlockController;
@@ -41,6 +42,8 @@ Route::middleware(['auth', 'email.verified.if.present', 'activity'])->as('profil
         Route::post('merge/code', [MergeProfilesController::class, 'getCode'])->name('merge.code');
         Route::post('merge', [MergeProfilesController::class, 'mergeBot'])->name('merge.bot');
         Route::post('user/{user}/block', [BlockController::class, 'store'])->name('user.block');
+        Route::post('facebook-source', [ProfileController::class, 'saveFacebookSource'])->name('facebook.source');
+        Route::delete('facebook-source', [ProfileController::class, 'deleteFacebookSource'])->name('facebook.source.delete');
 
         // Notifications routes
         Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
@@ -69,3 +72,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::post('/telegram/auth', [AuthenticatedSessionController::class, 'tgWebAuth']);
+
+// Facebook OAuth
+Route::middleware(['auth', 'activity'])->prefix('auth/facebook')->name('auth.facebook.')->group(function () {
+    Route::get('redirect', [FacebookAuthController::class, 'redirect'])->name('redirect');
+    Route::get('callback', [FacebookAuthController::class, 'callback'])->name('callback');
+});

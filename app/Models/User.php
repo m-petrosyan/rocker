@@ -139,6 +139,11 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
         return $this->hasOne(UserSettings::class);
     }
 
+    public function facebookPages(): HasMany
+    {
+        return $this->hasMany(UserFacebookPage::class);
+    }
+
     public function favorites(): BelongsToMany
     {
         return $this->belongsToMany(Event::class, 'event_user_favorites')

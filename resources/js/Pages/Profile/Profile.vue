@@ -15,10 +15,13 @@ import EventIcon from '@/Components/Icons/EventIcon.vue';
 import Modal from '@/Components/Modal.vue';
 import DangerButton from '@/Components/DangerButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/Forms/TextInput.vue';
 import InputError from '@/Components/InputError.vue';
-import { useForm } from '@inertiajs/vue3';
+import FacebookIcon from '@/Components/Icons/FacebookIcon.vue';
+import ErrorMessages from '@/Components/Messages/ErrorMessages.vue';
+import { router, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 
@@ -60,6 +63,35 @@ const props = defineProps({
 const webApp = isWebApp();
 
 const showBlockModal = ref(false);
+const showFbModal = ref(false);
+
+const fbForm = useForm({
+  fb_page_url: ''
+});
+
+const openFbModal = () => {
+  fbForm.fb_page_url = '';
+  showFbModal.value = true;
+};
+
+const closeFbModal = () => {
+  showFbModal.value = false;
+  fbForm.reset();
+};
+
+const saveFbSource = () => {
+  fbForm.post(route('profile.facebook.source'), {
+    onSuccess: () => closeFbModal()
+  });
+};
+
+const deleteFbPage = (url) => {
+  if (!confirm('Disconnect this Facebook page? All imported events will remain on the site.')) return;
+  router.delete(route('profile.facebook.source.delete'), {
+    data: { fb_page_url: url },
+    preserveScroll: true,
+  });
+};
 const blockForm = useForm({
   reason: ''
 });
@@ -83,6 +115,8 @@ const blockUser = () => {
       <div v-if="user.is_blocked" class="bg-red-600 text-white text-center p-4 font-bold text-xl rounded mb-4">
         BLOCKED
       </div>
+
+      <ErrorMessages :messages="$page.props.errors" />
 
       <div v-if="['admin', 'moderator'].includes($page.props.auth.user?.role) && !owner && !user.is_blocked"
            class="flex justify-end px-4">
@@ -129,6 +163,35 @@ const blockUser = () => {
             <a v-for="link in user.links" :key="link.id" :href="link.url"
                target="_blank">{{ getHostname(link.url)
               }}</a>
+          </div>
+
+          <!-- Facebook Sources Connect (up to 3) -->
+          <div v-if="owner" class="mt-6 space-y-3">
+            <div v-for="fbPage in user.facebook_pages" :key="fbPage.id"
+                 class="flex items-center justify-between gap-2 bg-gray-800 bg-opacity-50 rounded-lg px-3 py-2">
+              <span class="text-xs text-gray-300 truncate flex-1 text-left">
+                {{ fbPage.page_url }}
+              </span>
+              <button @click="deleteFbPage(fbPage.page_url)"
+                      class="text-red-400 hover:text-red-300 text-lg leading-none shrink-0"
+                      title="Disconnect">
+                &times;
+              </button>
+            </div>
+
+            <button v-if="user.facebook_pages?.length < 3"
+              @click="openFbModal"
+              class="flex items-center justify-center gap-2 mx-auto px-4 py-2 text-gray-400 hover:text-white text-sm font-medium rounded-lg transition-colors duration-200"
+            >
+              <FacebookIcon size="18px" />
+              <span>{{ user.facebook_pages?.length ? '➕ Add another page' : 'Connect Facebook page' }}</span>
+            </button>
+            <p v-if="user.facebook_pages?.length" class="mt-1 text-xs text-gray-500">
+              Connected: {{ user.facebook_pages.length }} / 3
+            </p>
+            <p class="mt-2 text-xs text-gray-500 leading-relaxed">
+              New events from connected pages will be automatically imported every day.
+            </p>
           </div>
         </div>
       </div>
@@ -192,6 +255,42 @@ const blockUser = () => {
           >
             Block User
           </DangerButton>
+        </div>
+      </div>
+    </Modal>
+
+    <!-- Facebook Source Modal -->
+    <Modal :show="showFbModal" @close="closeFbModal">
+      <div class="p-6 text-white bg-black">
+        <h2 class="text-lg font-medium flex items-center gap-2">
+          <FacebookIcon size="22px" class="text-blue-500" />
+          Connect Facebook page
+        </h2>
+        <p class="mt-2 text-sm text-gray-400">
+          Enter the URL of the Facebook page from which the bot will automatically collect new events.
+        </p>
+        <div class="mt-6">
+          <InputLabel for="fb_page_url" value="Facebook Page URL" class="text-white" />
+          <TextInput
+            id="fb_page_url"
+            v-model="fbForm.fb_page_url"
+            type="url"
+            class="mt-1 block w-full bg-gray-800 text-white border-gray-700"
+            placeholder="https://www.facebook.com/YourPage"
+          />
+          <InputError :message="fbForm.errors.fb_page_url" class="mt-2" />
+        </div>
+        <div class="mt-6 flex justify-end gap-3">
+          <SecondaryButton @click="closeFbModal">Cancel</SecondaryButton>
+          <PrimaryButton
+            class="bg-blue-600 hover:bg-blue-700"
+            :class="{ 'opacity-25': fbForm.processing }"
+            :disabled="fbForm.processing"
+            @click="saveFbSource"
+          >
+            <FacebookIcon size="16px" class="inline mr-1" />
+            {{ fbForm.processing ? 'Saving...' : 'Connect' }}
+          </PrimaryButton>
         </div>
       </div>
     </Modal>

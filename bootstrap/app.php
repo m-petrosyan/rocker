@@ -43,6 +43,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $schedule->command('app:old-event-messages-delete')->weekly();
 
         $schedule->command('backup:clean')->cron('0 23 */14 * *');
+        $schedule->command('app:fetch-facebook-events')->dailyAt('06:00');
     })
     ->withExceptions(function (Exceptions $exceptions) {
         if (! app()->environment('local')) {
