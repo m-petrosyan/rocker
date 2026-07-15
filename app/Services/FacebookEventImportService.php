@@ -181,7 +181,7 @@ class FacebookEventImportService
                     'country' => $country,
                     'city' => $user->settings->city ?? config('facebook.default_city', 'yerevan'),
                     'location' => Str::limit($fbEvent['location'] ?: '—', 255, ''),
-                    'type' => EventTypeEnum::EVENT->value,
+                    'type' => EventTypeEnum::CONCERT->value,
                     'start_date' => $fbEvent['start_date'],
                     'end_date' => $fbEvent['end_date'],
                     'start_time' => $fbEvent['start_time'],

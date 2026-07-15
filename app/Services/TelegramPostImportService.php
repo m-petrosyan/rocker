@@ -59,7 +59,7 @@ class TelegramPostImportService
             'country' => $source['country'],
             'city' => $source['city'],
             'location' => '—',
-            'type' => EventTypeEnum::EVENT->value,
+            'type' => EventTypeEnum::CONCERT->value,
             'link' => $this->buildMessageLink($chatId, $messageId),
             'tg_source_chat_id' => $chatId,
             'tg_source_message_id' => $messageId,
