@@ -302,24 +302,20 @@ class FacebookEventImportService
 
             // Enrich events with images from rendered DOM (DOM images are the actual event posters)
             if (! empty($events) && ! empty($eventImages)) {
-                // Filter only high-quality images (min 500px width)
-                $highQualityImages = array_filter($eventImages, function ($img) {
-                    return ($img['naturalWidth'] ?? 0) >= 500;
+                // Sort images by quality (descending by width)
+                usort($eventImages, function ($a, $b) {
+                    return ($b['naturalWidth'] ?? 0) - ($a['naturalWidth'] ?? 0);
                 });
-                $highQualityImages = array_values($highQualityImages);
 
-                Log::debug('FacebookEventImport: High quality images', ['count' => count($highQualityImages), 'images' => $highQualityImages]);
-
-                // If no high-quality images, use all images (fallback)
-                $imagesToUse = ! empty($highQualityImages) ? $highQualityImages : $eventImages;
+                Log::debug('FacebookEventImport: Sorted images by quality', ['count' => count($eventImages), 'images' => $eventImages]);
 
                 foreach ($events as $i => $ev) {
-                    if (isset($imagesToUse[$i])) {
-                        $events[$i]['image_url'] = $imagesToUse[$i]['src'];
+                    if (isset($eventImages[$i])) {
+                        $events[$i]['image_url'] = $eventImages[$i]['src'];
                         Log::debug('FacebookEventImport: DOM image assigned', [
                             'event' => $ev['name'],
-                            'img_size' => $imagesToUse[$i]['naturalWidth'].'px',
-                            'high_quality' => ($imagesToUse[$i]['naturalWidth'] ?? 0) >= 500,
+                            'img_size' => $eventImages[$i]['naturalWidth'].'px',
+                            'high_quality' => ($eventImages[$i]['naturalWidth'] ?? 0) >= 500,
                         ]);
                     }
                 }
