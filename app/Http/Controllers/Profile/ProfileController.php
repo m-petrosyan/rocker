@@ -87,15 +87,14 @@ class ProfileController
         $user = auth()->user();
         $url = $request->input('fb_page_url');
 
-        // Save to new table
         $user->facebookPages()->create([
             'page_url' => $url,
         ]);
 
-        // Dispatch async import (Browsershot is too slow for sync HTTP request)
-        FetchFacebookEventsJob::dispatch($user);
+        // Dispatch job to import events in background
+        FetchFacebookEventsJob::dispatch($user->id);
 
-        session()->flash('message', '✅ Facebook page connected! Events will be imported within the next few minutes.');
+        session()->flash('message', '✅ Facebook page connected! Events are being imported now.');
 
         return redirect()->route('profile.index');
     }

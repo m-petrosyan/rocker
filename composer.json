@@ -55,6 +55,9 @@
         }
     },
     "scripts": {
+        "post-install-cmd": [
+            "@php -r \"if(\\file_exists('vendor/spatie/browsershot/bin/browser.cjs')) { \\$c = \\file_get_contents('vendor/spatie/browsershot/bin/browser.cjs'); \\$c = \\str_replace(\"require('puppeteer')\", \"(await import('puppeteer')).default || (await import('puppeteer'))\", \\$c); \\file_put_contents('vendor/spatie/browsershot/bin/browser.cjs', \\$c); echo \"Patched browsershot for Node.js v22\\n\"; }\""
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"

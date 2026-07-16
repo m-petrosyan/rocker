@@ -25,7 +25,7 @@ class FetchFacebookEventsCommand extends Command
             $query->where('id', $userId);
         }
 
-        $users = $query->with('facebookPages')->get();
+        $users = $query->with('facebookPages', 'settings')->get();
 
         if ($users->isEmpty()) {
             $this->info('No users with connected Facebook pages found.');
