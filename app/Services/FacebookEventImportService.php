@@ -226,7 +226,7 @@ class FacebookEventImportService
     {
         try {
             $resultJson = Browsershot::url($url)
-                ->setChromePath('/usr/bin/google-chrome-stable')
+                ->setChromePath(config('browsershot.chrome_path', '/usr/bin/chromium-browser'))
                 ->setOption('args', ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'])
                 ->windowSize(1920, 1080)
                 ->waitUntilNetworkIdle()
@@ -325,7 +325,7 @@ class FacebookEventImportService
     {
         try {
             $resultJson = Browsershot::url($eventUrl)
-                ->setChromePath('/usr/bin/google-chrome-stable')
+                ->setChromePath(config('browsershot.chrome_path', '/usr/bin/chromium-browser'))
                 ->setOption('args', ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'])
                 ->windowSize(1920, 1080)
                 ->waitUntilNetworkIdle()
@@ -465,7 +465,7 @@ class FacebookEventImportService
     {
         try {
             $resultJson = Browsershot::url($photoUrl)
-                ->setChromePath('/usr/bin/google-chrome-stable')
+                ->setChromePath(config('browsershot.chrome_path', '/usr/bin/chromium-browser'))
                 ->setOption('args', ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'])
                 ->windowSize(1920, 1080)
                 ->waitUntilNetworkIdle()
