@@ -85,6 +85,14 @@ class ProfileController
         SaveFacebookSourceRequest $request,
     ): RedirectResponse {
         $user = auth()->user();
+
+        // Temporarily restrict Facebook import to admins only
+        if (! $user->isAdmin()) {
+            session()->flash('error', 'Facebook import is temporarily disabled for regular users.');
+
+            return redirect()->route('profile.index');
+        }
+
         $url = $request->input('fb_page_url');
 
         $user->facebookPages()->create([

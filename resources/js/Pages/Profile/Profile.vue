@@ -165,8 +165,8 @@ const blockUser = () => {
               }}</a>
           </div>
 
-          <!-- Facebook Sources Connect (up to 3) -->
-          <div v-if="owner" class="mt-6 space-y-3">
+          <!-- Facebook Sources Connect (up to 3) - Admin only -->
+          <div v-if="owner && auth.isAdmin" class="mt-6 space-y-3">
             <div v-for="fbPage in user.facebook_pages" :key="fbPage.id"
                  class="flex items-center justify-between gap-2 bg-gray-800 bg-opacity-50 rounded-lg px-3 py-2">
               <span class="text-xs text-gray-300 truncate flex-1 text-left">

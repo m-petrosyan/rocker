@@ -272,16 +272,6 @@ class FacebookEventImportService
                             }
                         });
 
-                        // Try to upgrade image URLs to higher quality versions
-                        eventImages.forEach(function(img) {
-                            var src = img.src;
-                            // Replace small size parameters with large ones
-                            src = src.replace(/stp=dst-[a-z]+_[a-z0-9]+_s[0-9]+x[0-9]+/, "stp=dst-jpg_tt6");
-                            src = src.replace(/cstp=mx[0-9]+x[0-9]+/, "cstp=mx1920x1005");
-                            src = src.replace(/ctp=s[0-9]+x[0-9]+/, "ctp=s1920x1005");
-                            img.src = src;
-                        });
-
                         return JSON.stringify({
                             html: document.documentElement.outerHTML,
                             event_images: eventImages
