@@ -295,6 +295,9 @@ class FacebookEventImportService
                 'images_from_dom' => count($eventImages),
             ]);
 
+            // Log all available images for debugging
+            Log::debug('FacebookEventImport: Available DOM images', ['images' => $eventImages]);
+
             $events = $this->parseAllEventsFromHtml($html);
 
             // Enrich events with images from rendered DOM (DOM images are the actual event posters)
