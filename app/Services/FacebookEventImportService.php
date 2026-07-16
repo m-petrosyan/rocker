@@ -310,12 +310,16 @@ class FacebookEventImportService
 
                 Log::debug('FacebookEventImport: High quality images', ['count' => count($highQualityImages), 'images' => $highQualityImages]);
 
+                // If no high-quality images, use all images (fallback)
+                $imagesToUse = ! empty($highQualityImages) ? $highQualityImages : $eventImages;
+
                 foreach ($events as $i => $ev) {
-                    if (isset($highQualityImages[$i])) {
-                        $events[$i]['image_url'] = $highQualityImages[$i]['src'];
+                    if (isset($imagesToUse[$i])) {
+                        $events[$i]['image_url'] = $imagesToUse[$i]['src'];
                         Log::debug('FacebookEventImport: DOM image assigned', [
                             'event' => $ev['name'],
-                            'img_size' => $highQualityImages[$i]['naturalWidth'].'px',
+                            'img_size' => $imagesToUse[$i]['naturalWidth'].'px',
+                            'high_quality' => ($imagesToUse[$i]['naturalWidth'] ?? 0) >= 500,
                         ]);
                     }
                 }
