@@ -910,6 +910,7 @@ class FacebookEventImportService
     private function attachCover(Event $event, string $imageUrl): bool
     {
         try {
+            Log::debug('FacebookEventImport: Attempting to download cover', ['url' => $imageUrl]);
             $response = Http::timeout(15)
                 ->withHeaders([
                     'Referer' => 'https://www.facebook.com/',
@@ -918,12 +919,14 @@ class FacebookEventImportService
                 ])
                 ->get($imageUrl);
             if (! $response->successful()) {
-                Log::debug('FacebookEventImport: HTTP cover download failed', ['status' => $response->status()]);
+                Log::warning('FacebookEventImport: HTTP cover download failed', ['status' => $response->status()]);
 
                 return false;
             }
             $contents = $response->body();
             if (empty($contents)) {
+                Log::warning('FacebookEventImport: Empty image content');
+
                 return false;
             }
             $tmp = tempnam(sys_get_temp_dir(), 'fb_cover_');
@@ -931,10 +934,11 @@ class FacebookEventImportService
             $event->addMedia($tmp)
                 ->usingFileName('fb_event_'.time().'.jpg')
                 ->toMediaCollection('poster');
+            Log::info('FacebookEventImport: Cover attached successfully', ['event_id' => $event->id]);
 
             return true;
         } catch (\Throwable $e) {
-            Log::warning('FacebookEventImport: could not download cover', ['error' => $e->getMessage()]);
+            Log::error('FacebookEventImport: could not download cover', ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
 
             return false;
         }
