@@ -196,13 +196,21 @@ class FacebookEventImportService
                 // Attach cover (try: photo page > listing page DOM > data URL)
                 $imageAttached = false;
                 if (! $imageAttached && $photoPageUrl) {
+                    Log::debug('FacebookEventImport: Trying photo page', ['url' => $photoPageUrl]);
                     $photoImageUrl = $this->fetchPhotoPageImage($photoPageUrl, $cookies);
                     if ($photoImageUrl) {
+                        Log::debug('FacebookEventImport: Photo page image found', ['url' => $photoImageUrl]);
                         $imageAttached = $this->attachCover($event, $photoImageUrl);
+                    } else {
+                        Log::debug('FacebookEventImport: Photo page image not found');
                     }
                 }
                 if (! $imageAttached && $fbEvent['image_url']) {
+                    Log::debug('FacebookEventImport: Trying event image_url', ['url' => $fbEvent['image_url']]);
                     $imageAttached = $this->attachCover($event, $fbEvent['image_url']);
+                }
+                if (! $imageAttached) {
+                    Log::warning('FacebookEventImport: No image attached', ['event' => $fbEvent['name']]);
                 }
 
                 $stats['imported']++;
