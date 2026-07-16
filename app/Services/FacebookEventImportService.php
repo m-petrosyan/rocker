@@ -302,12 +302,20 @@ class FacebookEventImportService
 
             // Enrich events with images from rendered DOM (DOM images are the actual event posters)
             if (! empty($events) && ! empty($eventImages)) {
+                // Filter only high-quality images (min 500px width)
+                $highQualityImages = array_filter($eventImages, function ($img) {
+                    return ($img['naturalWidth'] ?? 0) >= 500;
+                });
+                $highQualityImages = array_values($highQualityImages);
+
+                Log::debug('FacebookEventImport: High quality images', ['count' => count($highQualityImages), 'images' => $highQualityImages]);
+
                 foreach ($events as $i => $ev) {
-                    if (isset($eventImages[$i])) {
-                        $events[$i]['image_url'] = $eventImages[$i]['src'];
+                    if (isset($highQualityImages[$i])) {
+                        $events[$i]['image_url'] = $highQualityImages[$i]['src'];
                         Log::debug('FacebookEventImport: DOM image assigned', [
                             'event' => $ev['name'],
-                            'img_size' => $eventImages[$i]['naturalWidth'].'px',
+                            'img_size' => $highQualityImages[$i]['naturalWidth'].'px',
                         ]);
                     }
                 }
@@ -509,6 +517,8 @@ class FacebookEventImportService
                 Log::info('FacebookEventImport: photo page image found', [
                     'width' => $parsed['width'] ?? 0,
                 ]);
+            } else {
+                Log::debug('FacebookEventImport: photo page image not found');
             }
 
             return $src ?: null;
