@@ -33,19 +33,25 @@ class EventStatusObserver
 
             $eventStatus->event->refreshNotifyCount($this->usersList($eventStatus->event, true));
         } else {
+            $isScraped = (bool) $eventStatus->event->tg_source_chat_id;
             $moderators = User::role(['moderator', 'admin'])->whereHas('chat')->get();
 
             foreach ($moderators as $user) {
-                $user->chat
-                    ->message('🎉 new event request')
+                $msg = $user->chat
+                    ->message($isScraped ? '📎new scraped event' : '🎉 new event request')
                     ->keyboard(
                         Keyboard::make()->buttons([
                             Button::make('Event link')->webApp(
                                 route('profile.event.requests', $eventStatus->event->id)
                             ),
                         ])
-                    )
-                    ->send();
+                    );
+
+                if ($isScraped) {
+                    $msg->silent();
+                }
+
+                $msg->send();
             }
 
             $eventStatus->event->user?->chat
