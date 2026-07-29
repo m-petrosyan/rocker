@@ -29,14 +29,10 @@ const searchCountries = (text) => {
   data.queryText = text.query;
 
   if (data.queryText?.length >= 2) {
-    data.places = [];
-
     fetch(`/api/venues/search?q=${encodeURIComponent(data.queryText)}`)
       .then(response => response.json())
       .then(venues => {
-        if (venues.length > 0) {
-          data.places = venues;
-        }
+        data.places = venues;
       })
       .catch(error => {
         console.log('error', error);
