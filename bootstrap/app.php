@@ -42,7 +42,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $schedule->command('backup:run')->daily()->at('19:30');
         $schedule->command('app:old-event-messages-delete')->weekly();
 
-        $schedule->command('backup:clean')->cron('0 23 */14 * *');
+        $schedule->command('backup:clean')->daily()->at('20:30');
         $schedule->command('app:fetch-facebook-events')->dailyAt('06:00');
     })
     ->withExceptions(function (Exceptions $exceptions) {
