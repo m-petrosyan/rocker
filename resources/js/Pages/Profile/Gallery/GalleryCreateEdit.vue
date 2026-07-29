@@ -44,6 +44,7 @@ const form = useForm(
 
 onBeforeMount(() => {
     if (props.gallery?.venue) {
+        // eslint-disable-next-line no-unused-vars
         const { id, ...rest } = props.gallery.venue;
         Object.assign(form, rest);
     }
@@ -155,7 +156,7 @@ const submitGallery = () => {
                             text="Bands"
                             multiple
                         />
-                        <GoogleAutocomplate :form :selectedCountry />
+                        <GoogleAutocomplate :form />
                     </div>
                 </div>
                 <ProgressBar

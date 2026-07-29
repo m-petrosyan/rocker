@@ -27,6 +27,22 @@ const data = reactive({
 
 const searchCountries = (text) => {
   data.queryText = text.query;
+
+  if (data.queryText?.length >= 2) {
+    data.places = [];
+
+    fetch(`/api/venues/search?q=${encodeURIComponent(data.queryText)}`)
+      .then(response => response.json())
+      .then(venues => {
+        if (venues.length > 0) {
+          data.places = venues;
+        }
+      })
+      .catch(error => {
+        console.log('error', error);
+      });
+  }
+
   return data.places;
 };
 const warningText = ref('');
@@ -58,15 +74,29 @@ const getPlacesQuery = () => {
     body: raw
   };
 
-  fetch('https://google.serper.dev/places', requestOptions)
+  const fetchGooglePlaces = fetch('https://google.serper.dev/places', requestOptions)
     .then(response => response.json())
     .then(response => {
-      data.places = response.places.filter(item => {
-        item.name = item.title + ' ' + item.address;
-        return item;
-      });
+      return (response.places ?? []).map(item => ({
+        ...item,
+        name: [item.title, item.address].filter(Boolean).join(' '),
+      }));
     })
-    .catch(error => console.log('error', error));
+    .catch(error => {
+      console.log('error', error);
+      return [];
+    });
+
+  fetchGooglePlaces.then(googlePlaces => {
+      if (googlePlaces.length === 0) return;
+
+      const existingCids = new Set(data.places.map(p => p.cid).filter(Boolean));
+      const newOnes = googlePlaces.filter(p => !p.cid || !existingCids.has(p.cid));
+
+      if (newOnes.length > 0) {
+        data.places = [...data.places, ...newOnes];
+      }
+    });
 };
 
 watch(() => data.selectedCountry, (value) => {
