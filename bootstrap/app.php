@@ -39,6 +39,12 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withSchedule(function (Schedule $schedule) {
         $schedule->command('disk:check')->daily()->at('18:30');
         $schedule->command('app:sitemap')->daily()->at('19:00');
+
+        $schedule->exec('rm -rf '.storage_path('app/backup-temp'))
+            ->daily()
+            ->at('19:25')
+            ->description('Cleanup stale backup temp directory before backup');
+
         $schedule->command('backup:run')->daily()->at('19:30');
         $schedule->command('app:old-event-messages-delete')->weekly();
 
