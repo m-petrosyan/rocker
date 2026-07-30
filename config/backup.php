@@ -38,6 +38,7 @@ return [
                 'exclude' => [
                     base_path('vendor'),
                     base_path('node_modules'),
+                    storage_path('app/public/tmp'),
                 ],
 
                 /*

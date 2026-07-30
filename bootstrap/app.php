@@ -49,6 +49,12 @@ return Application::configure(basePath: dirname(__DIR__))
         $schedule->command('app:old-event-messages-delete')->weekly();
 
         $schedule->command('backup:clean')->daily()->at('20:30');
+
+        $schedule->exec('find '.storage_path('app/public/tmp').' -type f -mtime +1 -delete && find '.storage_path('app/public/tmp').' -type d -empty -delete')
+            ->daily()
+            ->at('03:00')
+            ->description('Cleanup stale uploaded temp files and empty directories older than 1 day');
+
         $schedule->command('app:fetch-facebook-events')->dailyAt('06:00');
     })
     ->withExceptions(function (Exceptions $exceptions) {
