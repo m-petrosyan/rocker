@@ -48,7 +48,7 @@ class EventStatusObserver
                     );
 
                 if ($isScraped) {
-                    $msg->silent();
+                    $msg = $msg->silent();
                 }
 
                 $msg->send();
