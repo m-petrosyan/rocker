@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Guest;
 
+use App\Enums\EventStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Repositories\EventRepository;
 use App\Services\EventService;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -22,6 +24,8 @@ class EventController extends Controller
 
     public function show(Event $event): Response
     {
+        $this->authorizeRejectedEvent($event);
+
         views($event)->record();
 
         return Inertia::render('Events/Event', [
@@ -40,5 +44,20 @@ class EventController extends Controller
             ),
             'isPast' => true,
         ]);
+    }
+
+    private function authorizeRejectedEvent(Event $event): void
+    {
+        $status = $event->status?->status;
+
+        if ($status !== EventStatusEnum::REJECTED->value) {
+            return;
+        }
+
+        $user = auth()->user();
+
+        if (! $user || ($user->id !== $event->user_id && ! Gate::allows('full-access'))) {
+            abort(404);
+        }
     }
 }

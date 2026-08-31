@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Enums\EventStatusEnum;
 use App\Models\Event;
+use App\Models\EventStatus;
 use Illuminate\Console\Command;
 
 class CleanUnapprovedEventsCommand extends Command
@@ -20,7 +21,7 @@ class CleanUnapprovedEventsCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Delete events whose status has not been changed from pending (not approved)';
+    protected $description = 'Reject events whose status has not been changed from pending for more than 2 days';
 
     /**
      * Execute the console command.
@@ -34,17 +35,19 @@ class CleanUnapprovedEventsCommand extends Command
             ->where('created_at', '<', now()->subDays(2))
             ->pluck('id');
 
-        $count = $pendingEventIds->count();
-
-        if ($count === 0) {
+        if ($pendingEventIds->isEmpty()) {
             $this->info('No unapproved events found.');
 
             return Command::SUCCESS;
         }
 
-        Event::whereIn('id', $pendingEventIds)->delete();
+        EventStatus::whereIn('event_id', $pendingEventIds)
+            ->update([
+                'status' => EventStatusEnum::REJECTED->value,
+                'reason' => 'Auto-rejected: no action taken within 2 days',
+            ]);
 
-        $this->info("Deleted {$count} unapproved event(s).");
+        $this->info("Rejected {$pendingEventIds->count()} unapproved event(s).");
 
         return Command::SUCCESS;
     }
