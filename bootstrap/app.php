@@ -56,6 +56,8 @@ return Application::configure(basePath: dirname(__DIR__))
             ->description('Cleanup stale uploaded temp files and empty directories older than 1 day');
 
         $schedule->command('app:fetch-facebook-events')->dailyAt('06:00');
+
+        $schedule->command('app:clean-unapproved-events')->cron('0 0 */2 * *');
     })
     ->withExceptions(function (Exceptions $exceptions) {
         if (! app()->environment('local')) {
