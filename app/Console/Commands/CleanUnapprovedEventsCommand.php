@@ -31,6 +31,7 @@ class CleanUnapprovedEventsCommand extends Command
             ->whereHas('status', function ($query) {
                 $query->where('status', EventStatusEnum::PENDING->value);
             })
+            ->where('created_at', '<', now()->subDays(2))
             ->pluck('id');
 
         $count = $pendingEventIds->count();
